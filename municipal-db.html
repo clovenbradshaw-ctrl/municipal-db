@@ -23672,7 +23672,7 @@ function tlAnchor(anchor) {
   const label = e ? truncate(entityLabel(e), 40) : anchor.slice(-12);
   return `<button class="tl-anchor-link" data-open-anchor="${anchor}">${escC(label)}</button>`;
 }
-function tlFields(obj, indent) {
+function tlFields(obj) {
   return Object.entries(obj).map(([k, v]) => {
     const isAnchor = k === "anchor" || k.endsWith("_anchor");
     if (v == null) return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv dim">null</span></div>`;
@@ -23704,7 +23704,7 @@ function renderTimeline() {
     if (op === OP.SYN) return `[${(c.input_anchors || []).map(tlAnchor).join(", ")}] → <span class="tl-val">${truncate(JSON.stringify(c.output), 90)}</span>`;
     return "";
   };
-  document.getElementById("tl").innerHTML = rows.map((e, i) => {
+  document.getElementById("tl").innerHTML = rows.map((e) => {
     const op = TYPE_TO_OP[e.type]; if (!op) return "";
     const c = e.content;
     const oi = EVENTS.indexOf(e);
