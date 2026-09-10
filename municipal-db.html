@@ -28,12 +28,14 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 
 .shell{display:grid;grid-template-rows:auto 1fr;height:100vh;background:var(--bg);}
 .topbar{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--border-strong);background:#fff;flex-shrink:0;}
-.topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;}
-.search-wrap{flex:1;margin:0 24px;display:flex;justify-content:center;}
-.search-input{width:min(360px,100%);border:1px solid var(--border);background:var(--surface-2);padding:6px 10px;font-family:var(--mono);font-size:12.5px;}
+.topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;white-space:nowrap;}
+.search-wrap{flex:1;max-width:620px;margin:0 8px;display:flex;align-items:center;gap:6px;min-width:0;}
+.search-input{flex:1;min-width:0;width:100%;border:1px solid var(--border);background:var(--surface-2);padding:6px 10px;font-family:var(--mono);font-size:12.5px;}
 .search-input::placeholder{color:var(--text-faint);font-style:italic;}
 .search-input:focus{background:#fff;}
-.topbar .stats{display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);}
+.search-go{flex-shrink:0;border:1px solid var(--border);background:var(--surface-2);color:var(--text-dim);padding:5px 11px;font-size:12.5px;line-height:1.2;font-family:var(--mono);cursor:pointer;}
+.search-go:hover{background:#fff;color:var(--text-bright);border-color:var(--border-strong);}
+.topbar .stats{display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);margin-left:auto;white-space:nowrap;}
 .topbar .stats b{color:var(--text-bright);}
 .topbar .stats .bad{color:var(--red);font-weight:700;}
 .topbar .stats .ok{color:var(--green);font-weight:700;}
@@ -356,7 +358,10 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 <div class="shell">
   <div class="topbar">
     <span class="brand">municipal registry</span>
-    <div class="search-wrap"><input id="search-input" class="search-input" type="text" placeholder="activate — search any field…" autocomplete="off" spellcheck="false" title="activation search: resolves referents by field, then spreads one hop over the edge graph"></div>
+    <div class="search-wrap">
+      <input id="search-input" class="search-input" type="text" placeholder="search any field — Enter to activate" autocomplete="off" spellcheck="false" title="activation search: resolves referents by field, then spreads one hop over the edge graph">
+      <button class="search-go" id="search-go" type="button" title="search">⌕</button>
+    </div>
     <span class="stats" id="stats"></span>
   </div>
   <div class="shell-body">
@@ -22745,7 +22750,7 @@ function renderTable(type) {
   const filterEl = document.getElementById("table-filter");
   if (filterEl) {
     filterEl.value = tableFilter;
-    filterEl.oninput = () => { tableFilter = filterEl.value; renderTable(type); };
+    filterEl.onkeydown = (ev) => { if (ev.key === "Enter") { tableFilter = filterEl.value; renderTable(type); } };
     document.getElementById("table-filter-clear").onclick = () => { tableFilter = ""; renderTable(type); };
   }
 
@@ -24147,15 +24152,11 @@ function applySearch(q) {
   if (!q.trim() && currentView.kind === "search") { currentView = preSearchView || { kind: "table", type: "municipality" }; }
   renderChrome();
 }
-let searchTimer = 0;
-searchInput.addEventListener("input", () => {
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => applySearch(searchInput.value), 140);
-});
 searchInput.addEventListener("keydown", (ev) => {
-  if (ev.key === "Enter") { clearTimeout(searchTimer); applySearch(searchInput.value); }
-  else if (ev.key === "Escape" && searchInput.value) { clearTimeout(searchTimer); searchInput.value = ""; applySearch(""); }
+  if (ev.key === "Enter") applySearch(searchInput.value);
+  else if (ev.key === "Escape" && searchInput.value) { searchInput.value = ""; applySearch(""); }
 });
+document.getElementById("search-go").addEventListener("click", () => applySearch(searchInput.value));
 
 loadCustomSchemas();
 loadEvents().then((evs) => { EVENTS = evs; state = fold(EVENTS); renderChrome(); settleBulkAfterLoad(); });
