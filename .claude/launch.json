@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "municipal-db",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8934", "--directory", "/Users/mlacy/municpal db"],
+      "port": 8934
+    }
+  ]
+}
