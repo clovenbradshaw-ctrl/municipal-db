@@ -29,7 +29,11 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 .shell{display:grid;grid-template-rows:auto 1fr;height:100vh;background:var(--bg);}
 .topbar{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--border-strong);background:#fff;flex-shrink:0;}
 .topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;}
-.topbar .stats{margin-left:auto;display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);}
+.search-wrap{flex:1;margin:0 24px;display:flex;justify-content:center;}
+.search-input{width:min(360px,100%);border:1px solid var(--border);background:var(--surface-2);padding:6px 10px;font-family:var(--mono);font-size:12.5px;}
+.search-input::placeholder{color:var(--text-faint);font-style:italic;}
+.search-input:focus{background:#fff;}
+.topbar .stats{display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);}
 .topbar .stats b{color:var(--text-bright);}
 .topbar .stats .bad{color:var(--red);font-weight:700;}
 .topbar .stats .ok{color:var(--green);font-weight:700;}
@@ -104,6 +108,31 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .tl-anchor-link{background:none;border:none;padding:0;font:inherit;color:var(--text-faint);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;}
 .tl-anchor-link:hover{color:var(--text-bright);}
 
+/* ── activation → search ── */
+.tv-filter{margin-left:auto;display:flex;align-items:center;gap:6px;}
+.tv-filter .table-filter{width:190px;background:var(--surface-2);}
+.tv-filter .table-filter:focus{background:#fff;}
+.tv-filter .fclear{color:var(--text-dim);border:1px solid var(--border);background:#fff;width:22px;height:22px;line-height:1;font-weight:700;}
+.tv-filter .fclear:hover{border-color:var(--red);color:var(--red);}
+.tv-filter.has-filter .table-filter{border-color:var(--triad-structure);background:#fff;}
+.search-body{padding:16px 18px;flex:1;min-height:0;overflow:auto;}
+.search-hint{padding:40px 18px;color:var(--text-faint);font-size:12.5px;font-style:italic;}
+.search-meta{font-size:11px;color:var(--text-dim);border:1px solid var(--border);background:var(--surface);padding:8px 12px;line-height:1.7;margin:12px 18px 0;}
+.search-meta b{color:var(--text-bright);}
+.search-meta .tok{color:var(--triad-structure);font-weight:700;}
+.search-meta .cut{color:var(--signal);}
+.search-meta .void{color:var(--red);}
+.search-group-head{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--text-dim);font-weight:700;margin:16px 0 6px;}
+.search-group-head .gcount{color:var(--text-faint);font-weight:500;margin-left:4px;}
+.search-row{display:block;width:100%;text-align:left;border:1px solid var(--border);background:#fff;margin-bottom:5px;padding:7px 12px;cursor:pointer;font-family:var(--mono);}
+.search-row:hover{border-color:var(--border-strong);background:var(--surface-2);}
+.search-row .search-label{font-size:12.5px;font-weight:600;color:var(--text-bright);}
+.search-row .search-score{float:right;font-size:10px;color:var(--text-faint);font-variant-numeric:tabular-nums;}
+.search-row .search-partial{font-size:9px;text-transform:uppercase;letter-spacing:.6px;color:var(--yellow);border:1px solid var(--yellow);margin-left:8px;padding:0 4px;vertical-align:1px;}
+.search-evidence{display:block;margin-top:2px;font-size:11px;color:var(--text-dim);line-height:1.5;}
+.search-evidence .em{color:var(--triad-structure);}
+.search-evidence .nb{font-weight:700;color:var(--text-bright);}
+
 /* ── profile panel ── */
 .profile-overlay{position:fixed;inset:0;z-index:300;display:none;}
 .profile-overlay.open{display:block;}
@@ -145,6 +174,74 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .anchor-link{display:inline-block;background:none;border:none;padding:0;font:inherit;font-size:12.5px;line-height:1.45;color:var(--text-bright);cursor:pointer;text-align:left;text-decoration:none;border-bottom:1px solid transparent;}
 .anchor-link:hover{border-bottom-color:var(--triad-structure);color:var(--triad-structure);}
 .anchor-link:hover{color:var(--triad-structure);text-decoration-color:var(--triad-structure);}
+
+/* ── form surface ── */
+.form-head{padding:13px 18px;border-bottom:1px solid var(--border-strong);display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;background:var(--surface);flex-shrink:0;}
+.form-head h2{font-weight:700;font-size:16px;color:var(--text-bright);letter-spacing:.2px;text-transform:lowercase;}
+.form-head .crumb{font-size:12px;color:var(--text-dim);font-weight:500;}
+.form-body{padding:18px;flex:1;overflow-y:auto;max-width:720px;}
+.form-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+.form-selector button{padding:6px 14px;border:1px solid var(--border);background:#fff;color:var(--text);font-family:var(--mono);font-size:12px;cursor:pointer;font-weight:600;letter-spacing:.2px;}
+.form-selector button:hover{border-color:var(--border-strong);background:var(--surface-2);}
+.form-selector button.active{border-color:#000;color:var(--text-bright);background:var(--surface-2);font-weight:700;}
+.form-section{margin-bottom:24px;border:1px solid var(--border);background:#fff;}
+.form-section-head{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;}
+.form-section-head .sec-count{font-size:10px;color:var(--text-faint);font-weight:500;margin-left:auto;}
+.form-section-head .sec-badge{font-size:9px;padding:1px 6px;border:1px solid var(--border-strong);background:#fff;font-weight:700;}
+.form-section-head .sec-badge.missing{border-color:var(--red);color:var(--red);}
+.form-section-head .sec-badge.ok{border-color:var(--green);color:var(--green);}
+.form-fields{padding:12px;}
+.form-row{display:grid;grid-template-columns:140px 1fr;gap:0 10px;align-items:baseline;margin-bottom:8px;}
+.form-row label{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:lowercase;letter-spacing:.3px;padding:5px 0;}
+.form-row label .req{color:var(--red);margin-left:2px;}
+.form-row input,.form-row textarea,.form-row select{width:100%;font-size:12px;padding:5px 8px;}
+.form-row textarea{min-height:48px;resize:vertical;}
+.form-row .field-hint{font-size:10px;color:var(--text-faint);grid-column:2;margin-top:-4px;margin-bottom:4px;}
+.form-row.missing input,.form-row.missing textarea{border-color:var(--red);background:#fff8f8;}
+.form-row.filled input,.form-row.filled textarea{border-color:var(--green);background:#f8fff8;}
+.form-actions{display:flex;gap:10px;padding:12px;border-top:1px solid var(--border);background:var(--surface-2);}
+.form-actions button{padding:7px 18px;font-family:var(--mono);font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border-strong);background:#fff;color:var(--text);}
+.form-actions button:hover{border-color:#000;background:var(--surface-2);}
+.form-actions button.primary{background:var(--text-bright);color:#fff;border-color:#000;}
+.form-actions button.primary:hover{opacity:.9;}
+.form-empty{padding:40px 18px;color:var(--text-dim);text-align:center;font-size:13px;}
+.form-empty .hint{font-size:11px;color:var(--text-faint);margin-top:8px;}
+.form-missing-summary{margin-bottom:20px;padding:10px 14px;border:1px solid var(--red);background:#fff8f8;font-size:12px;color:var(--red);}
+.form-missing-summary b{font-weight:700;}
+.form-missing-summary .ok{color:var(--green);border-color:var(--green);background:#f8fff8;}
+/* ── schema editor ── */
+.schema-editor-wrap{margin-top:24px;border:1px solid var(--border-strong);background:#fff;}
+.schema-editor-head{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;}
+.schema-editor-body{padding:14px;}
+.se-field-row{display:grid;grid-template-columns:130px 1fr;gap:4px 10px;align-items:center;margin-bottom:6px;}
+.se-field-row label{font-size:11px;font-weight:700;color:var(--text-dim);text-transform:lowercase;}
+.se-field-row input,.se-field-row select{width:100%;font-size:12px;padding:4px 7px;}
+.se-section-block{border:1px solid var(--border);margin-bottom:12px;padding:10px;background:var(--surface);}
+.se-section-block .se-sec-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;}
+.se-section-block .se-sec-head .se-remove{margin-left:auto;color:var(--red);font-size:10px;padding:2px 6px;border:1px solid var(--border);background:#fff;cursor:pointer;}
+.se-section-block .se-sec-head .se-remove:hover{border-color:var(--red);background:#fff8f8;}
+.se-fields-list{display:flex;flex-direction:column;gap:4px;}
+.se-field-entry{display:grid;grid-template-columns:120px 90px 1fr auto;gap:4px 6px;align-items:center;}
+.se-field-entry input,.se-field-entry select{font-size:11px;padding:3px 5px;}
+.se-field-entry .se-rm-field{font-size:10px;color:var(--red);padding:2px 4px;border:1px solid var(--border);background:#fff;cursor:pointer;}
+.se-field-entry .se-rm-field:hover{border-color:var(--red);}
+.se-add-field{font-size:10px;padding:3px 8px;border:1px dashed var(--border-strong);background:#fff;color:var(--text-dim);cursor:pointer;margin-top:4px;}
+.se-add-field:hover{border-color:#000;color:var(--text-bright);}
+.se-suggest{font-size:10px;padding:3px 8px;border:1px dashed var(--blue);background:#f8f8ff;color:var(--blue);cursor:pointer;margin-top:4px;}
+.se-suggest:hover{border-style:solid;background:#fff;}
+.se-corpus-hint{font-size:10px;color:var(--text-faint);margin-top:6px;line-height:1.5;}
+.se-add-section{padding:6px 12px;border:1px dashed var(--border-strong);background:var(--surface-2);color:var(--text-dim);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;text-transform:uppercase;letter-spacing:.5px;margin-top:12px;width:100%;}
+.se-add-section:hover{border-color:#000;color:var(--text-bright);background:#fff;}
+.se-actions{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--border);background:var(--surface-2);}
+.se-actions button{padding:6px 14px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border-strong);background:#fff;color:var(--text);}
+.se-actions button:hover{border-color:#000;background:var(--surface-2);}
+.se-actions button.primary{background:var(--text-bright);color:#fff;border-color:#000;}
+.se-actions button.danger{border-color:var(--red);color:var(--red);}
+.form-entity-card{padding:10px 12px;border:1px solid var(--border);margin-bottom:6px;display:flex;align-items:center;gap:10px;background:var(--surface);}
+.form-entity-card .card-label{font-size:12px;font-weight:600;flex:1;}
+.form-entity-card .card-meta{font-size:10px;color:var(--text-faint);}
+.form-entity-card .card-check{width:16px;height:16px;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);}
+.form-entity-card .card-check.has{border-color:var(--green);background:#f0fff0;}
 </style>
 </head>
 <body>
@@ -152,6 +249,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 <div class="shell">
   <div class="topbar">
     <span class="brand">municipal registry</span>
+    <div class="search-wrap"><input id="search-input" class="search-input" type="text" placeholder="activate — search any field…" autocomplete="off" spellcheck="false" title="activation search: resolves referents by field, then spreads one hop over the edge graph"></div>
     <span class="stats" id="stats"></span>
   </div>
   <div class="shell-body">
@@ -165,6 +263,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
         <div id="sb-tables"></div>
       </div>
       <div class="sb-section" style="border-bottom:none;">
+        <button class="sb-log-link" id="sb-form">▣ form (required fields)</button>
         <button class="sb-log-link" id="sb-log">≡ event log (raw timeline)</button>
         <button class="sb-reset" id="reset-btn">reset to seed corpus</button>
         <div class="sb-storage" id="storage-status">loading…</div>
@@ -21876,6 +21975,115 @@ const FIELD_SPECS = {
 
 let currentView = { kind: "table", type: "municipality" };
 let tableSubview = "records";
+let tableFilter = "";
+let searchQuery = "";
+let preSearchView = null;
+
+/* ── activation → search ──
+   The holograph's retrieval rule (§6): a query activates referents — resolved
+   through the index, never by string alone where the index can resolve — the
+   activation spreads one hop over what the record holds, and the cut is
+   measured, with the budget named on the record, not worn as a measurement.
+   Here the "index" is the fold itself: tokens hit entity fields, all-token
+   hits rank above partials, neighbours carry the activated referents they
+   actually touch, and the window and its floor are shown in the meta line. */
+const SEARCH_HIGH_FIELDS = ["name", "section", "apn", "address", "party", "holder", "distinction", "mark", "county", "state", "chapter"];
+const SEARCH_FIELD_WEIGHT = new Map(SEARCH_HIGH_FIELDS.map((f) => [f, 2]));
+const HOP_DECAY = 0.3;                  // activation that survives one hop (dmdWindow-equivalent, fixed & disclosed)
+const SEARCH_DIRECT_MAX = 24;           // declared ceiling on the direct set — named, not measured
+const SEARCH_NEIGHBOR_MAX = 24;         // declared ceiling on the one-hop set
+const CUT_FLOOR_DIVISOR = 6;            // a direct hit below max/6 drops unless it matched every token
+
+function searchTokens(q) {
+  return String(q).toLowerCase().split(/[\s,;:'"()\[\]{}!?/\\-]+/).map((t) => t.replace(/\.+$/, "")).filter((t) => t.length > 0);
+}
+function searchPhrases(q) {
+  const out = [];
+  const re = /[0-9]+(?:\.[0-9]+)+/g;
+  let m;
+  while ((m = re.exec(String(q)))) out.push(m[0]);
+  return out;
+}
+function tokenHitsIn(e, tokens, phrases = []) {
+  let score = 0;
+  const hits = new Map();
+  const tokMatched = new Array(tokens.length).fill(false);
+  for (const k of Object.keys(e)) {
+    if (k.charCodeAt(0) === 95) continue;
+    const raw = e[k];
+    if (raw === null || raw === undefined) continue;
+    const s = String(raw).toLowerCase();
+    if (!s) continue;
+    for (let i = 0; i < tokens.length; i++) {
+      if (s.includes(tokens[i])) { tokMatched[i] = true; score += SEARCH_FIELD_WEIGHT.get(k) ?? 1; if (!hits.has(k)) hits.set(k, raw); }
+    }
+    for (const p of phrases) {
+      if (s.includes(p)) { score += 3; if (!hits.has(k)) hits.set(k, raw); }
+    }
+  }
+  const tl = e._type && e._type.toLowerCase();
+  if (tl) {
+    const ti = tokens.indexOf(tl);
+    if (ti !== -1 && !tokMatched[ti]) { tokMatched[ti] = true; score += 2; hits.set("_type", e._type); }
+  }
+  if (score === 0) return null;
+  const all = tokMatched.every(Boolean);
+  return { score: all ? score : score * 0.4, all, hits, hitList: [...hits.keys()] };
+}
+function hasAllTokens(e, tokens) {
+  if (!tokens.length) return true;
+  const matched = new Array(tokens.length).fill(false);
+  for (const k of Object.keys(e)) {
+    if (k.charCodeAt(0) === 95) continue;
+    const raw = e[k];
+    if (raw === null || raw === undefined) continue;
+    const s = String(raw).toLowerCase();
+    if (!s) continue;
+    for (let i = 0; i < tokens.length; i++) {
+      if (!matched[i] && s.includes(tokens[i])) matched[i] = true;
+    }
+    if (matched.every(Boolean)) return true;
+  }
+  return false;
+}
+
+function activateSearch(q) {
+  const tokens = searchTokens(q);
+  const phrases = searchPhrases(q);
+  if (!tokens.length && !phrases.length) return null;
+  const direct = [];
+  for (const e of allEntities()) {
+    const m = tokenHitsIn(e, tokens, phrases);
+    if (m) direct.push({ anchor: e._anchor, e, ...m });
+  }
+  direct.sort((a, b) => b.score - a.score || entityLabel(a.e).localeCompare(entityLabel(b.e)));
+  const maxScore = direct.length ? direct[0].score : 0;
+  const cutFloor = maxScore / CUT_FLOOR_DIVISOR;
+  const directCut = direct.filter((d) => d.all || d.score >= cutFloor).slice(0, SEARCH_DIRECT_MAX);
+
+  const referentSet = new Set(directCut.map((d) => d.anchor));
+  const nbMap = new Map();
+  for (const c of state.connections) {
+    const hasSrc = referentSet.has(c.source);
+    const hasTgt = referentSet.has(c.target);
+    if (!hasSrc && !hasTgt) continue;
+    const nbAnchor = hasSrc ? c.target : c.source;
+    if (referentSet.has(nbAnchor)) continue;
+    let nb = nbMap.get(nbAnchor);
+    if (!nb) { nb = { e: state.entities[nbAnchor], refs: new Set(), rels: new Set() }; nbMap.set(nbAnchor, nb); }
+    nb.refs.add(hasSrc ? c.source : c.target);
+    nb.rels.add(c.type);
+  }
+  const neighborList = [];
+  for (const [anchor, nb] of nbMap) {
+    if (!nb.e) continue;          // dangling edge the fold flagged, never a phantom
+    neighborList.push({ anchor, e: nb.e, refCount: nb.refs.size, rels: [...nb.rels], score: nb.refs.size * HOP_DECAY });
+  }
+  neighborList.sort((a, b) => b.score - a.score || entityLabel(a.e).localeCompare(entityLabel(b.e)));
+  const neighbors = neighborList.slice(0, SEARCH_NEIGHBOR_MAX);
+
+  return { tokens, phrases, directCut, directTotal: direct.length, cutFloor, neighborTotal: neighborList.length, neighbors };
+}
 
 /* ── sidebar ── */
 function renderSidebar() {
@@ -21890,9 +22098,12 @@ function renderSidebar() {
   }).join("");
 
   document.getElementById("sb-log").classList.toggle("active", currentView.kind === "log");
+  const fmtBtn = document.getElementById("sb-form");
+  if (fmtBtn) fmtBtn.classList.toggle("active", currentView.kind === "form");
 
-  document.querySelectorAll("[data-goto-table]").forEach((b) => b.onclick = () => { currentView = { kind: "table", type: b.dataset.gotoTable }; tableSubview = "records"; renderChrome(); });
+  document.querySelectorAll("[data-goto-table]").forEach((b) => b.onclick = () => { currentView = { kind: "table", type: b.dataset.gotoTable }; tableSubview = "records"; tableFilter = ""; renderChrome(); });
   document.getElementById("sb-log").onclick = () => { currentView = { kind: "log" }; renderChrome(); };
+  document.getElementById("sb-form").onclick = () => { currentView = { kind: "form" }; renderChrome(); };
 }
 
 /* ── table (grid) view ── */
@@ -21903,20 +22114,36 @@ function renderTable(type) {
   const cols = [...fieldSet];
   const ddlFields = (FIELD_SPECS[type] || cols.map((c) => [c, "text"])).map(([k, ty]) => `  <span class="id">${k}</span> <span class="ty">${ty}</span>`).join("\n");
 
+  const ftoks = searchTokens(tableFilter);
+  const shown = ftoks.length ? items.filter((e) => hasAllTokens(e, ftoks)) : items;
+
   const main = document.getElementById("main");
   main.innerHTML = `
-    <div class="tv-head"><h2>${type}</h2><span class="crumb">${items.length} row${items.length === 1 ? "" : "s"}</span></div>
+    <div class="tv-head"><h2>${type}</h2><span class="crumb">${shown.length} / ${items.length} row${items.length === 1 ? "" : "s"}${tableFilter ? ` · filter “${tableFilter}”` : ""}</span>
+      <span class="tv-filter ${tableFilter ? "has-filter" : ""}"><input class="table-filter" id="table-filter" type="text" placeholder="filter rows…" autocomplete="off" spellcheck="false"><button class="fclear" id="table-filter-clear" title="clear filter">×</button></span>
+    </div>
     <div class="tv-tabs">
-      <button class="tv-tab ${tableSubview === "records" ? "active" : ""}" data-subview="records">records <span class="trows">${items.length}</span></button>
+      <button class="tv-tab ${tableSubview === "records" ? "active" : ""}" data-subview="records">records <span class="trows">${shown.length}</span></button>
       <button class="tv-tab meta ${tableSubview === "schema" ? "active" : ""}" data-subview="schema">schema</button>
     </div>
     <div class="tv-body ${tableSubview === "schema" ? "pad" : ""}" id="tv-subview"></div>`;
 
   document.querySelectorAll("[data-subview]").forEach((b) => b.onclick = () => { tableSubview = b.dataset.subview; renderTable(type); });
 
+  const filterEl = document.getElementById("table-filter");
+  if (filterEl) {
+    filterEl.value = tableFilter;
+    filterEl.oninput = () => { tableFilter = filterEl.value; renderTable(type); };
+    document.getElementById("table-filter-clear").onclick = () => { tableFilter = ""; renderTable(type); };
+  }
+
   const sub = document.getElementById("tv-subview");
   if (tableSubview === "schema") {
     sub.innerHTML = `<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
+    return;
+  }
+  if (!shown.length) {
+    sub.innerHTML = `<div class="search-body"><p class="search-hint">no rows match “${tableFilter}” in ${type}.</p></div>`;
     return;
   }
 
@@ -21931,7 +22158,7 @@ function renderTable(type) {
     </div>`;
 
   const tbody = document.getElementById("grid-body");
-  tbody.innerHTML = items.map((e, i) => {
+  tbody.innerHTML = shown.map((e, i) => {
     const cons = state.connections.filter((c) => c.source === e._anchor || c.target === e._anchor);
     const partition = state.partitions[e._anchor];
     return `<tr class="row" data-idx="${i}">
@@ -21944,10 +22171,616 @@ function renderTable(type) {
 
   tbody.querySelectorAll("tr.row").forEach((tr) => {
     tr.addEventListener("click", () => {
-      const e = items[Number(tr.dataset.idx)];
+      const e = shown[Number(tr.dataset.idx)];
       openProfile(e._anchor);
     });
   });
+}
+
+/* ── form surface — per-jurisdiction required fields ──
+   The form is driven entirely off JURISDICTION_SCHEMAS below: pick a
+   jurisdiction, and every field renders from that schema, not from
+   hardcoded HTML. Anything the schema demands that FIELD_SPECS cannot
+   represent is surfaced as a "data structure gap" instead of silently
+   dropped, so you can reverse the schema into the model it needs. */
+let formJurisdiction = null;
+let draftValues = {};
+
+const JURISDICTION_SCHEMAS = {
+  "Middletown, RI": {
+    muniAnchor: "municipality_1b09307071e888",
+    chapter: "Ch. 98 — Short-Term Rental Leases",
+    note: "Every dwelling unit let for ≤31 days must be registered with the registrar before occupancy.",
+    sections: [
+      { type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true,
+        fields: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enumerated", "select", "true | false"], ["source_url", "url", "verbatim code anchor"]],
+        min: 1 },
+      { type: "parcel", label: "parcels", card: "parcel", rel: "owns", repeat: true,
+        fields: [["apn", "text"], ["address", "text"], ["bedrooms", "number"], ["zoning", "text"]],
+        min: 1 },
+      { type: "owner", label: "owners", card: "owner", rel: "is_contact_for", repeat: true,
+        fields: [["name", "text"], ["phone", "tel"], ["mailing_address", "text"], ["email", "email"]],
+        min: 1 },
+      { type: "standing", label: "standings", card: "standing", rel: "opened_against", repeat: true,
+        fields: [["distinction", "text"], ["consequence", "textarea"], ["openedAt", "date"]],
+        min: 0 }
+    ]
+  },
+  "Chicago, IL": {
+    muniAnchor: "municipality_a8035cf65308a",
+    chapter: "Ch. 4-14 — Shared Housing Units",
+    note: "Shared housing registrants pay a $500 license fee · 25-unit cap · stairway rekey within 72 hrs.",
+    sections: [
+      { type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true,
+        fields: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enumerated", "select", "true | false"], ["source_url", "url"]],
+        min: 1 },
+      { type: "figure", label: "figures", card: "figure", rel: "figured-as", repeat: true,
+        fields: [["party", "text"], ["modality", "select", "mandatory | prohibited | permissive"], ["extraction_method", "text"]],
+        min: 1 },
+      { type: "parcel", label: "parcels", card: "parcel", rel: "owns", repeat: true,
+        fields: [["apn", "text"], ["address", "text"], ["bedrooms", "number"], ["zoning", "text"]],
+        min: 1 },
+      { type: "owner", label: "owners", card: "owner", rel: "is_contact_for", repeat: true,
+        fields: [["name", "text"], ["email", "email"], ["phone", "tel"]],
+        min: 1 }
+    ]
+  },
+  "St. Augustine, FL": {
+    muniAnchor: "municipality_348f9b351b965",
+    chapter: "§28-159 (Ord. 2010-24) — grandfathered under Fla. Stat. 509.032(7)(b)",
+    note: "Grandfathered STR ordinance; state preemption status already recorded in the corpus.",
+    sections: [
+      { type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true,
+        fields: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enumerated", "select", "true | false"], ["source_url", "url"]],
+        min: 1 },
+      { type: "kind", label: "kinds", card: "kind", rel: "instantiates", repeat: true,
+        fields: [["name", "text"], ["description", "textarea"], ["standing_criterion", "textarea"]],
+        min: 0 },
+      { type: "parcel", label: "parcels", card: "parcel", rel: "owns", repeat: true,
+        fields: [["apn", "text"], ["address", "text"], ["zoning", "text"]],
+        min: 1 },
+      { type: "sub-zone", label: "sub-zones", card: "sub-zone", rel: "instantiates", repeat: true,
+        fields: [["name", "text"], ["renewal_cycle_years", "number", "FBC 509 rebuild cycle"]],
+        min: 0 }
+    ]
+  },
+  "Talent, OR": {
+    muniAnchor: "municipality_12ffea31677787",
+    chapter: "TMC 18.137.070 (Ord. 952)",
+    note: "STR registration tied to a state RBO; LLC/local contact requirements.",
+    sections: [
+      { type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true,
+        fields: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enumerated", "select", "true | false"], ["source_url", "url"]],
+        min: 1 },
+      { type: "owner", label: "owners", card: "owner", rel: "is_local_responsible_party_for", repeat: true,
+        fields: [["name", "text"], ["phone", "tel"], ["email", "email"], ["mailing_address", "text"]],
+        min: 1 },
+      { type: "parcel", label: "parcels", card: "parcel", rel: "owns", repeat: true,
+        fields: [["apn", "text"], ["address", "text"], ["zoning", "text"]],
+        min: 1 },
+      { type: "figure", label: "figures", card: "figure", rel: "figured-as", repeat: true,
+        fields: [["party", "text"], ["modality", "select"], ["extraction_method", "text"]],
+        min: 0 }
+    ]
+  },
+  "Fort Worth, TX": {
+    muniAnchor: "municipality_c79c856993a8f",
+    chapter: "Code Ch. 7, Art. XIII — STR Registration (Ord. 26005-02-2023)",
+    note: "STR registration + annual renewal; registered agent required.",
+    sections: [
+      { type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true,
+        fields: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enumerated", "select", "true | false"], ["source_url", "url"]],
+        min: 1 },
+      { type: "owner", label: "owners", card: "owner", rel: "registered_agent_for", repeat: true,
+        fields: [["name", "text"], ["phone", "tel"], ["mailing_address", "text"]],
+        min: 1 },
+      { type: "parcel", label: "parcels", card: "parcel", rel: "owns", repeat: true,
+        fields: [["apn", "text"], ["address", "text"], ["bedrooms", "number"], ["zoning", "text"]],
+        min: 1 },
+      { type: "sub-zone", label: "sub-zones", card: "sub-zone", rel: "instantiates", repeat: true,
+        fields: [["name", "text"], ["renewal_cycle_years", "number"]],
+        min: 0 }
+    ]
+  }
+};
+
+function formFieldHint(entry) { return entry[2] || ""; }
+
+function schemaFieldsFor(type) { return (FIELD_SPECS[type] || []).map((f) => f[0]); }
+
+function formHasSpecField(sec, key) {
+  return schemaFieldsFor(sec.type).includes(key);
+}
+
+function validateJurisdiction(schema) {
+  const report = { ok: true, sections: [], gaps: [], missing: 0, stats: {} };
+  const linked = state.connections
+    .filter((c) => c.source === schema.muniAnchor || c.target === schema.muniAnchor)
+    .map((c) => c.source === schema.muniAnchor ? c.target : c.source)
+    .map((a) => state.entities[a])
+    .filter(Boolean) || [];
+  const byType = {};
+  linked.forEach((e) => { (byType[e._type] = byType[e._type] || []).push(e); });
+
+  for (const sec of schema.sections) {
+    const specKeys = schemaFieldsFor(sec.type);
+    const need = sec.fields.map((f) => f[0]);
+    const schemaGaps = need.filter((f) => !specKeys.includes(f));
+    if (schemaGaps.length) {
+      report.gaps.push({ type: sec.type, fields: schemaGaps });
+      report.ok = false;
+    }
+    const existing = byType[sec.type] || [];
+    const presentCount = existing.filter((e) => sec.fields.every(([k]) => e[k] !== undefined && e[k] !== null && e[k] !== "")).length;
+    report.sections.push({ schema: sec, existing: existing.length, complete: presentCount, missing: Math.max(sec.min - presentCount, 0) });
+    report.missing += Math.max(sec.min - presentCount, 0);
+    report.stats[sec.type] = { existing: existing.length, complete: presentCount };
+  }
+  if (report.missing > 0) report.ok = false;
+  return report;
+}
+
+function inputTagFor(sec, entry) {
+  const [, ty] = entry;
+  const type = ty === "url" ? "text" : ty === "email" ? "email" : ty === "tel" ? "tel" : ty === "number" ? "number" : ty === "date" ? "date" : "text";
+  if (ty === "select") return { tag: "select", type };
+  if (ty === "textarea") return { tag: "textarea", type };
+  return { tag: "input", type };
+}
+function selectOptions(entry) {
+  if (entry.length < 3) return [];
+  return String(entry[2]).split(/\s*\|\s*/).map((m) => m.trim());
+}
+
+function renderFormContent() {
+  const content = document.getElementById("form-content");
+  if (!content) return;
+  const schema = mergeSchemas()[formJurisdiction];
+  if (!schema) { content.innerHTML = `<div class="form-empty">select a jurisdiction.</div>`; return; }
+  const report = validateJurisdiction(schema);
+  const j = formJurisdiction.replace(/[^a-z0-9]/gi, "");
+  const isCustom = !!customSchemas[formJurisdiction];
+
+  const gapsHtml = report.gaps.length
+    ? `<div class="form-missing-summary"><b>data structure gap —</b> required by ${formJurisdiction} but not declared in FIELD_SPECS (disabled below until added):<br>${
+        report.gaps.map((g) => `<b>${g.type}</b>: ${g.fields.join(", ")}`).join(" · ")
+      }<br><button style="margin-top:6px;padding:3px 10px;border:1px solid var(--red);background:#fff;color:var(--red);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;" data-sync-spec>+ adopt these into FIELD_SPECS</button></div>`
+    : "";
+
+  const editBtn = isCustom
+    ? `<div class="form-missing-summary" style="border-color:var(--blue);color:var(--blue);background:#f8f8ff;"><b>custom schema</b> — this jurisdiction was defined dynamically.<br>
+       <button style="margin-top:6px;padding:3px 10px;border:1px solid var(--blue);background:#fff;color:var(--blue);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;" data-edit-schema>✎ edit schema</button></div>`
+    : "";
+
+  const summary = `<div class="form-missing-summary" style="${report.ok ? "border-color:var(--green);background:#f8fff8;color:var(--green);" : "border-color:var(--red);"}"">
+      ${report.ok
+        ? "<b>complete —</b> every required record for this jurisdiction exists in the corpus."
+        : `<b>${report.missing} record${report.missing === 1 ? "" : "s"} short</b> — fill the forms below to satisfy <b>${formJurisdiction}</b>.`}
+    </div>`;
+
+  const sectionsHtml = report.sections.map((r) => {
+    const sec = r.schema;
+    const badge = r.missing > 0
+      ? `<span class="sec-badge missing">${r.missing} missing</span>`
+      : `<span class="sec-badge ok">${r.complete} present</span>`;
+    const fieldsHtml = sec.fields.map((entry) => {
+      const [key] = entry;
+      const hasSpec = formHasSpecField(sec, key);
+      const id = `f-${sec.type}-${key}-${j}`;
+      const val = draftValues[id] !== undefined ? draftValues[id] : "";
+      const attrs = hasSpec ? "" : " disabled";
+      let input;
+      if (entry[1] === "select") {
+        input = `<select id="${id}" data-key="${key}"${attrs}>${[""].concat(selectOptions(entry)).map((m) => `<option ${val === m ? "selected" : ""}>${m}</option>`).join("")}</select>`;
+      } else if (entry[1] === "textarea") {
+        input = `<textarea id="${id}" data-key="${key}"${attrs}>${val}</textarea>`;
+      } else {
+        input = `<input id="${id}" data-key="${key}" type="${inputTagFor(sec, entry).type}"${attrs} value="${val.replace(/"/g, "&quot;")}">`;
+      }
+      const missDot = hasSpec ? "" : `<span class="req" title="not in FIELD_SPECS">◇</span>`;
+      return `<div class="form-row ${hasSpec ? "" : "missing"}">
+        <label>${key} <span class="req">*</span>${missDot}</label>
+        <div>${input}</div>
+        ${formFieldHint(entry) ? `<div class="field-hint">${formFieldHint(entry)}</div>` : ""}
+      </div>`;
+    }).join("");
+    return `<div class="form-section">
+      <div class="form-section-head">${sec.label} <span class="sec-count">${r.existing} in corpus</span>${badge}</div>
+      <div class="form-fields">${fieldsHtml}</div>
+      <div class="form-actions">
+        <button class="primary" data-add-card="${sec.type}">+ add ${sec.card}</button>
+      </div>
+      <div class="form-result" id="res-${sec.type}-${j}"></div>
+    </div>`;
+  }).join("");
+
+  content.innerHTML = gapsHtml + editBtn + summary + sectionsHtml;
+
+  document.querySelectorAll("#form-content input, #form-content textarea, #form-content select").forEach((el) => {
+    el.addEventListener("input", () => { draftValues[el.id] = el.value; });
+  });
+  document.querySelectorAll("[data-add-card]").forEach((b) => b.onclick = () => addFormCard(b.dataset.addCard, b));
+  const syncBtn = document.querySelector("[data-sync-spec]");
+  if (syncBtn) syncBtn.onclick = () => syncFieldSpecs();
+  const editBtnEl = document.querySelector("[data-edit-schema]");
+  if (editBtnEl) editBtnEl.onclick = () => { const merged = mergeSchemas()[formJurisdiction]; renderSchemaEditor(merged); };
+}
+
+function syncFieldSpecs() {
+  const schema = mergeSchemas()[formJurisdiction];
+  if (!schema) return;
+  schema.sections.forEach((sec) => {
+    if (!FIELD_SPECS[sec.type]) FIELD_SPECS[sec.type] = [];
+    const have = schemaFieldsFor(sec.type);
+    sec.fields.forEach(([key, ty]) => {
+      if (!have.includes(key)) FIELD_SPECS[sec.type].push([key, ty === "textarea" ? "textarea" : ty === "select" ? "text" : ty === "tel" ? "text" : ty === "email" ? "text" : ty === "url" ? "text" : ty === "number" ? "number" : ty === "date" ? "date" : "text"]);
+    });
+  });
+  setStorageMsg("FIELD_SPECS updated — disabled fields now live.");
+  renderFormContent();
+}
+
+function renderForm() {
+  const main = document.getElementById("main");
+  const schemas = mergeSchemas();
+  const jurs = Object.keys(schemas);
+  if (!formJurisdiction || !schemas[formJurisdiction]) formJurisdiction = jurs[0];
+  const isCustom = !!customSchemas[formJurisdiction];
+  main.innerHTML = `
+    <div class="form-head"><h2>required-fields form</h2><span class="crumb">intake — one record set per jurisdiction${isCustom ? " · custom schema" : ""}</span></div>
+    <div class="form-body">
+      <div class="form-selector">
+        ${jurs.map((j) => `<button data-jur="${j}" class="${formJurisdiction === j ? "active" : ""}">${j}</button>`).join("")}
+        <button data-new-schema style="border-style:dashed;border-color:var(--green);color:var(--green);">+ new schema</button>
+      </div>
+      <div id="form-content"></div>
+    </div>`;
+  document.querySelectorAll("[data-jur]").forEach((b) => b.onclick = () => {
+    formJurisdiction = b.dataset.jur;
+    draftValues = {};
+    renderForm();
+  });
+  document.querySelectorAll("[data-new-schema]").forEach((b) => b.onclick = () => renderSchemaEditor());
+  renderFormContent();
+}
+
+let formSequencer = 0;
+async function addFormCard(type, btn) {
+  const schema = mergeSchemas()[formJurisdiction];
+  const sec = schema.sections.find((s) => s.type === type);
+  if (!sec) return;
+  const j = formJurisdiction.replace(/[^a-z0-9]/gi, "");
+  const container = document.getElementById(`res-${sec.type}-${j}`);
+
+  const payload = {};
+  const missing = [];
+  sec.fields.forEach(([key]) => {
+    if (!formHasSpecField(sec, key)) return;
+    const id = `f-${sec.type}-${key}-${j}`;
+    const el = document.getElementById(id);
+    if (!el) return;
+    const v = (el.value || "").trim();
+    if (!v) { missing.push(key); return; }
+    payload[key] = (sec.type === "parcel" && key === "bedrooms") || (key === "renewal_cycle_years")
+      ? Number(v)
+      : key === "enumerated" ? v === "true"
+      : v;
+  });
+
+  if (missing.length) {
+    container.innerHTML = `<div class="form-missing-summary" style="margin:0;border:none;border-top:1px solid var(--border);font-size:11px;"><b>still missing:</b> ${missing.join(", ")}</div>`;
+    return;
+  }
+
+  const ts = Date.now();
+  const sender = "@michael:hyphae.social";
+  formSequencer += 1;
+  const ins = buildIns(sec.type, payload, { sender, ts: ts + formSequencer });
+  const con = buildCon(ins.anchor, schema.muniAnchor, sec.rel, { sender, ts: ts + formSequencer + 1, id: `$con_${ins.anchor.slice(-8)}_${formJurisdiction.toLowerCase().replace(/[^a-z0-9-_]/g, "-")}_${sec.rel}` });
+
+  EVENTS.push(ins, con);
+  state = fold(EVENTS);
+  await saveEvents();
+  draftValues = {};
+  setStorageMsg(`added ${sec.type} · anchor ${ins.anchor.slice(-10)}`);
+  renderChrome();
+}
+
+/* ── schema editor — dynamic jurisdiction schema builder ──
+   Lets you define new jurisdiction schemas without touching source code.
+   Persists custom schemas to localStorage. Works backwards from the
+   schema to detect FIELD_SPECS gaps and auto-adopt missing fields. */
+
+let customSchemas = {};
+let editingSchema = null;
+let editingSections = [];
+
+function loadCustomSchemas() {
+  try { customSchemas = JSON.parse(localStorage.getItem("_customJurisdictionSchemas") || "{}"); } catch { customSchemas = {}; }
+}
+function saveCustomSchemas() {
+  localStorage.setItem("_customJurisdictionSchemas", JSON.stringify(customSchemas));
+  setStorageMsg("custom schemas saved.");
+}
+
+function mergeSchemas() {
+  const merged = { ...JURISDICTION_SCHEMAS };
+  for (const [name, schema] of Object.entries(customSchemas)) {
+    if (!merged[name]) merged[name] = schema;
+  }
+  return merged;
+}
+
+const FIELD_TYPES = ["text", "textarea", "select", "number", "date", "url", "email", "tel"];
+const ENTITY_TYPE_OPTS = ["obligation", "parcel", "owner", "standing", "figure", "kind", "sub-zone", "municipality", "jurisdiction"];
+
+function schemaToSections(schema) {
+  return schema.sections.map((s) => ({
+    type: s.type,
+    label: s.label || s.type + "s",
+    card: s.card || s.type,
+    rel: s.rel || "holds",
+    repeat: s.repeat !== false,
+    min: s.min || 0,
+    fields: s.fields.map((f) => ({ key: f[0], type: f[1], hint: f[2] || "" })),
+  }));
+}
+
+function sectionsToSchema(sections, meta) {
+  return {
+    muniAnchor: meta.muniAnchor,
+    chapter: meta.chapter,
+    note: meta.note,
+    sections: sections.map((s) => ({
+      type: s.type,
+      label: s.label,
+      card: s.card,
+      rel: s.rel,
+      repeat: s.repeat,
+      min: s.min,
+      fields: s.fields.map((f) => [f.key, f.type, f.hint].filter(Boolean)),
+    })),
+  };
+}
+
+function getMunicipalities() {
+  return Object.values(state.entities).filter((e) => e._type === "municipality");
+}
+
+function getJurisdictions() {
+  return Object.values(state.entities).filter((e) => e._type === "jurisdiction");
+}
+
+/* corpus-driven suggestions — reverse the data structure: every key that
+   actually appears on corpus records of a type is the universe of fields
+   that type can carry, so the schema editor offers them as candidates. */
+function corpusFieldsForType(type) {
+  const keys = new Set();
+  const count = new Map();
+  for (const e of Object.values(state.entities)) {
+    if (e._type !== type) continue;
+    for (const [k, v] of Object.entries(e)) {
+      if (k.startsWith("_")) continue;
+      if (v === null || v === undefined) continue;
+      keys.add(k);
+      count.set(k, (count.get(k) || 0) + 1);
+    }
+  }
+  return { keys: [...keys].sort(), counts: Object.fromEntries(count) };
+}
+
+function corpusFieldSuggestions(type) {
+  const { keys } = corpusFieldsForType(type);
+  const known = (FIELD_SPECS[type] || []).map((f) => f[0]);
+  const options = new Set([...known, ...keys]);
+  return [...options];
+}
+
+function keysByTypeHint(type) {
+  const { counts } = corpusFieldsForType(type);
+  const specKeys = schemaFieldsFor(type);
+  const live = Object.keys(counts).filter((k) => k in counts);
+  const corpusOnly = live.filter((k) => !specKeys.includes(k) && k !== counts[k]);
+  const declared = specKeys.filter((k) => counts[k]);
+  const undeclared = specKeys.filter((k) => !counts[k]);
+  return `corpus carries ${live.length} field${live.length === 1 ? "" : "s"} on ${type} records` +
+    (corpusOnly.length ? ` — corpus-only, not in FIELD_SPECS: ${corpusOnly.slice(0, 8).join(", ")}${corpusOnly.length > 8 ? "…" : ""}` : "") +
+    (undeclared.length ? ` — in FIELD_SPECS but no corpus record carries: ${undeclared.slice(0, 8).join(", ")}` : "");
+}
+
+function renderSchemaEditor(targetSchema = null) {
+  const content = document.getElementById("form-content");
+  if (!content) return;
+
+  if (targetSchema) {
+    editingSchema = targetSchema;
+    editingSections = schemaToSections(targetSchema);
+  } else {
+    editingSchema = null;
+    editingSections = [{ type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true, min: 1, fields: [{ key: "holder", type: "text", hint: "" }] }];
+  }
+
+  const munis = getMunicipalities();
+  const defaultMuni = munis.length ? munis[0]._anchor : "";
+  const meta = editingSchema || { muniAnchor: defaultMuni, chapter: "", note: "" };
+
+  let html = `<div class="schema-editor-wrap">
+    <div class="schema-editor-head">schema editor — <span>${editingSchema ? "editing" : "new jurisdiction"}</span></div>
+    <div class="schema-editor-body">
+      <div class="se-field-row"><label>name</label><input id="se-name" type="text" value="${editingSchema ? editingSchema.name || "" : ""}" placeholder="e.g. Portland, OR"></div>
+      <div class="se-field-row"><label>muni anchor</label><select id="se-muni">
+        <option value="">— select —</option>
+        ${munis.map((m) => `<option value="${m._anchor}" ${meta.muniAnchor === m._anchor ? "selected" : ""}>${m.name || m._anchor.slice(-10)}</option>`).join("")}
+      </select></div>
+      <div class="se-field-row"><label>chapter</label><input id="se-chapter" type="text" value="${meta.chapter || ""}" placeholder="e.g. Ch. 18 — STR Registration"></div>
+      <div class="se-field-row"><label>note</label><input id="se-note" type="text" value="${meta.note || ""}" placeholder="brief summary"></div>
+
+      <div style="margin-top:14px;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">sections — what the jurisdiction requires</div>
+      <div id="se-sections-list"></div>
+      <button class="se-add-section" id="se-add-section">+ add section</button>
+    </div>
+    <div class="se-actions">
+      <button class="primary" id="se-save">${editingSchema ? "update schema" : "create schema"}</button>
+      <button id="se-cancel">cancel</button>
+      ${editingSchema ? `<button class="danger" id="se-delete">delete</button>` : ""}
+    </div>
+  </div>`;
+
+  content.innerHTML = html;
+  renderSectionsList();
+
+  document.getElementById("se-add-section").onclick = () => {
+    editingSections.push({ type: "obligation", label: "obligations", card: "obligation", rel: "holds", repeat: true, min: 1, fields: [{ key: "holder", type: "text", hint: "" }] });
+    renderSectionsList();
+  };
+  document.getElementById("se-save").onclick = () => saveSchemaFromEditor();
+  document.getElementById("se-cancel").onclick = () => { editingSchema = null; renderForm(); };
+  if (editingSchema) {
+    document.getElementById("se-delete").onclick = () => {
+      const name = editingSchema.name;
+      if (name && confirm(`Delete schema "${name}"?`)) {
+        delete customSchemas[name];
+        saveCustomSchemas();
+        editingSchema = null;
+        renderForm();
+      }
+    };
+  }
+}
+
+function renderSectionsList() {
+  const list = document.getElementById("se-sections-list");
+  if (!list) return;
+  list.innerHTML = editingSections.map((sec, si) => {
+    const suggestions = corpusFieldSuggestions(sec.type);
+    const suggestOpts = suggestions.map((s) => `<option value="${s}">`).join("");
+    const fieldsHtml = sec.fields.map((f, fi) => `
+      <div class="se-field-entry">
+        <input data-si="${si}" data-fi="${fi}" data-k="key" type="text" value="${f.key}" placeholder="field name" list="se-dl-${si}">
+        <select data-si="${si}" data-fi="${fi}" data-k="type">
+          ${FIELD_TYPES.map((t) => `<option ${f.type === t ? "selected" : ""}>${t}</option>`).join("")}
+        </select>
+        <input data-si="${si}" data-fi="${fi}" data-k="hint" type="text" value="${f.hint}" placeholder="hint (optional)">
+        <button class="se-rm-field" data-si="${si}" data-fi="${fi}">×</button>
+      </div>`).join("");
+
+    return `<div class="se-section-block">
+      <div class="se-sec-head">
+        <select data-si="${si}" data-k="type">
+          ${ENTITY_TYPE_OPTS.map((t) => `<option ${sec.type === t ? "selected" : ""}>${t}</option>`).join("")}
+        </select>
+        <input data-si="${si}" data-k="label" type="text" value="${sec.label}" placeholder="label" style="width:90px;font-size:11px;padding:2px 5px;">
+        <input data-si="${si}" data-k="rel" type="text" value="${sec.rel}" placeholder="relation" style="width:120px;font-size:11px;padding:2px 5px;">
+        <span style="font-size:10px;color:var(--text-faint);">min</span>
+        <input data-si="${si}" data-k="min" type="number" value="${sec.min}" min="0" style="width:40px;font-size:11px;padding:2px 5px;">
+        <button class="se-remove" data-si="${si}">remove</button>
+      </div>
+      <datalist id="se-dl-${si}">${suggestOpts}</datalist>
+      <div class="se-fields-list">${fieldsHtml}</div>
+      <button class="se-add-field" data-si="${si}">+ add field</button>
+      <button class="se-suggest" data-si="${si}" title="scaffold fields from keys that actually appear on ${sec.type} records in the corpus (and FIELD_SPECS)">◇ auto-scaffold from corpus ∪ FIELD_SPECS</button>
+      <div class="se-corpus-hint">${keysByTypeHint(sec.type)}</div>
+    </div>`;
+  }).join("");
+
+  list.querySelectorAll("[data-k]").forEach((el) => {
+    el.addEventListener("change", () => {
+      const si = Number(el.dataset.si);
+      const k = el.dataset.k;
+      if (el.dataset.fi !== undefined) {
+        editingSections[si].fields[Number(el.dataset.fi)][k] = el.value;
+      } else {
+        if (k === "min") editingSections[si][k] = Number(el.value);
+        else if (k === "type") {
+          editingSections[si][k] = el.value;
+          editingSections[si].label = el.value + "s";
+          editingSections[si].card = el.value;
+          renderSectionsList();
+        }
+        else editingSections[si][k] = el.value;
+      }
+    });
+    el.addEventListener("input", () => {
+      const si = Number(el.dataset.si);
+      if (el.dataset.fi !== undefined) {
+        editingSections[si].fields[Number(el.dataset.fi)][el.dataset.k] = el.value;
+      }
+    });
+  });
+
+  list.querySelectorAll(".se-suggest").forEach((btn) => {
+    btn.onclick = () => {
+      const si = Number(btn.dataset.si);
+      const type = editingSections[si].type;
+      const have = new Set(editingSections[si].fields.map((f) => f.key));
+      const suggestion = corpusFieldSuggestions(type);
+      const added = [];
+      for (const key of suggestion) {
+        if (!have.has(key)) {
+          editingSections[si].fields.push({ key, type: "text", hint: "" });
+          have.add(key);
+          added.push(key);
+        }
+      }
+      renderSectionsList();
+      setStorageMsg(`scaffolded ${added.length} field${added.length === 1 ? "" : "s"} for ${type}: ${added.slice(0, 10).join(", ")}${added.length > 10 ? "…" : ""}`);
+    };
+  });
+
+  list.querySelectorAll(".se-rm-field").forEach((btn) => {
+    btn.onclick = () => {
+      editingSections[Number(btn.dataset.si)].fields.splice(Number(btn.dataset.fi), 1);
+      renderSectionsList();
+    };
+  });
+
+  list.querySelectorAll(".se-add-field").forEach((btn) => {
+    btn.onclick = () => {
+      editingSections[Number(btn.dataset.si)].fields.push({ key: "", type: "text", hint: "" });
+      renderSectionsList();
+    };
+  });
+
+  list.querySelectorAll(".se-remove").forEach((btn) => {
+    btn.onclick = () => {
+      editingSections.splice(Number(btn.dataset.si), 1);
+      renderSectionsList();
+    };
+  });
+}
+
+function saveSchemaFromEditor() {
+  const name = document.getElementById("se-name").value.trim();
+  if (!name) { alert("jurisdiction name is required."); return; }
+  const muniAnchor = document.getElementById("se-muni").value;
+  if (!muniAnchor) { alert("select a municipality anchor."); return; }
+  const chapter = document.getElementById("se-chapter").value.trim();
+  const note = document.getElementById("se-note").value.trim();
+
+  const validSections = editingSections.filter((s) => s.fields.length > 0);
+  if (!validSections.length) { alert("add at least one section with fields."); return; }
+
+  const schema = sectionsToSchema(validSections, { muniAnchor, chapter, note });
+  schema.name = name;
+
+  customSchemas[name] = schema;
+  saveCustomSchemas();
+
+  editingSchema = null;
+  formJurisdiction = name;
+  renderForm();
+
+  setStorageMsg(`schema "${name}" created — ${validSections.length} section(s), ${validSections.reduce((n, s) => n + s.fields.length, 0)} fields`);
+}
+
+function detectSpecGaps(schema) {
+  const gaps = [];
+  for (const sec of schema.sections) {
+    const specKeys = schemaFieldsFor(sec.type);
+    const missing = sec.fields.filter((f) => !specKeys.includes(f.key));
+    if (missing.length) gaps.push({ type: sec.type, fields: missing });
+  }
+  return gaps;
 }
 
 /* ── profile panel — every record, one at a time, with drill-down ──
@@ -22048,6 +22881,63 @@ function renderProfile() {
 }
 
 
+/* ── activation → view ── */
+function renderSearch() {
+  const q = searchQuery.trim();
+  const main = document.getElementById("main");
+  if (!q) {
+    main.innerHTML = `<div class="search-body"><p class="search-hint">type in the top bar to activate referents — every token resolves against any field, all-token hits rank above partials, then the activation spreads one hop over the edge graph. The window and its cut are named on the record, not worn as a measurement.</p></div>`;
+    return;
+  }
+  const r = activateSearch(q);
+  const noResolve = r.directCut.length === 0;
+  const heading = `<div class="tv-head"><h2>activate “${q}”</h2><span class="crumb">activation view</span></div>`;
+  const tokStr = `${r.tokens.length ? `<span class="tok">[${r.tokens.join(" ")}]</span>` : ""}${r.phrases.length ? ` <span class="tok" title="contiguous phrase">“${r.phrases.join(" / ")}”</span>` : ""}`;
+  const meta = `<div class="search-meta">
+    tokens ${tokStr} ·
+    <b>${r.directCut.length}</b> direct${r.directCut.length === r.directTotal ? "" : ` of <b>${r.directTotal}</b>`} ·
+    <b>${r.neighbors.length}</b> of <b>${r.neighborTotal}</b> one-hop activated ·
+    <span class="cut">cut at score ${r.cutFloor.toFixed(2)} (window ${SEARCH_DIRECT_MAX}/${SEARCH_NEIGHBOR_MAX}, hop decay ${HOP_DECAY})</span>
+  </div>`;
+  if (noResolve) {
+    const voidTok = [...r.tokens, ...r.phrases].map((t) => `<span class="tok">${t}</span>`).join(" ");
+    main.innerHTML = `${heading}
+      <div class="search-body"><div class="search-meta">tokens ${tokStr} · <span class="void">void — no referent resolved so far, nothing reached</span></div>
+      <p class="search-hint">nothing in the fold carries <b>${voidTok}</b>. Surface reading fallback: the term collapses to no activation; try another spelling or a field value (e.g. a section “98.04”, an apn, a “residential” zone).</p></div>`;
+    return;
+  }
+
+  const directRows = r.directCut.map((d) => {
+    const ev = d.hitList.map((k) => `<span class="em">${k}</span>`).join(" · ");
+    return `<button class="search-row" data-open-anchor="${d.anchor}">
+      <span class="search-score">${d.score.toFixed(2)}</span>
+      <span class="rel-type-tag">${d.e._type}</span>
+      <span class="search-label">${entityLabel(d.e)}</span>${d.all ? "" : `<span class="search-partial" title="not every token matched this row">partial</span>`}
+      <span class="search-evidence">${ev || `<span class="em">${d.e._type}</span>`}</span>
+    </button>`;
+  }).join("");
+
+  const nbRows = r.neighbors.map((nb) => {
+    const rels = nb.rels.map((rt) => `<span class="em">${rt}</span>`).join(", ");
+    return `<button class="search-row" data-open-anchor="${nb.anchor}">
+      <span class="search-score">${nb.score.toFixed(2)}</span>
+      <span class="rel-type-tag">${nb.e._type}</span>
+      <span class="search-label">${entityLabel(nb.e)}</span>
+      <span class="search-evidence">one hop · connected to <span class="nb">${nb.refCount}</span> × activated referent${nb.refCount === 1 ? "" : "s"} · ${rels}</span>
+    </button>`;
+  }).join("");
+
+  main.innerHTML = `${heading}${meta}
+    <div class="search-body">
+      <div class="search-group-head">hop 0 — direct matches<span class="gcount">${r.directCut.length}</span></div>
+      ${directRows}
+      <div class="search-group-head">hop 1 — one hop from activated<span class="gcount">${nbRows ? r.neighbors.length : 0}</span></div>
+      ${nbRows || `<p class="search-hint">no neighbours: the activated referents carry no edges in the record.</p>`}
+    </div>`;
+  document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
+}
+
+
 /* ── timeline (raw event log) ── */
 const TYPE_TO_OP = { "io.matrix-events.ins": OP.INS, "io.matrix-events.con": OP.CON, "io.matrix-events.def": OP.DEF, "io.matrix-events.eva": OP.EVA, "io.matrix-events.rec": OP.REC, "io.matrix-events.seg": OP.SEG, "io.matrix-events.syn": OP.SYN };
 function renderTimeline() {
@@ -22081,6 +22971,8 @@ function renderChrome() {
   renderSidebar();
   if (currentView.kind === "table") renderTable(currentView.type);
   else if (currentView.kind === "log") renderTimeline();
+  else if (currentView.kind === "form") renderForm();
+  else if (currentView.kind === "search") renderSearch();
 }
 
 document.getElementById("reset-btn").addEventListener("click", async () => {
@@ -22097,6 +22989,25 @@ document.getElementById("profile-backdrop").addEventListener("click", closeProfi
 document.getElementById("profile-back").addEventListener("click", goBackProfile);
 document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && profileStack.length) closeProfile(); });
 
+/* ── activation search wiring ── */
+const searchInput = document.getElementById("search-input");
+function applySearch(q) {
+  searchQuery = q;
+  if (q.trim() && currentView.kind !== "search") { preSearchView = currentView; currentView = { kind: "search" }; }
+  if (!q.trim() && currentView.kind === "search") { currentView = preSearchView || { kind: "table", type: "municipality" }; }
+  renderChrome();
+}
+let searchTimer = 0;
+searchInput.addEventListener("input", () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => applySearch(searchInput.value), 140);
+});
+searchInput.addEventListener("keydown", (ev) => {
+  if (ev.key === "Enter") { clearTimeout(searchTimer); applySearch(searchInput.value); }
+  else if (ev.key === "Escape" && searchInput.value) { clearTimeout(searchTimer); searchInput.value = ""; applySearch(""); }
+});
+
+loadCustomSchemas();
 loadEvents().then((evs) => { EVENTS = evs; state = fold(EVENTS); renderChrome(); });
 </script>
 </body>
