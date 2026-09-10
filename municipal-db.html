@@ -22123,6 +22123,9 @@ const bulk = {
 
 function fmtInt(n) { return (n | 0).toLocaleString("en-US"); }
 function opfsAvail() { return !!(navigator.storage && navigator.storage.getDirectory); }
+function bulkHttpMsg() {
+  return "OPFS refuses file:// origins even though Chrome counts them as secure — serve this folder over localhost instead: <code>python3 -m http.server 8000</code> in the municipal-db directory, then open <code>http://localhost:8000/municipal-db.html</code> and toggle again.";
+}
 function bulkMaterializedCount(t) { return t === "parcel" ? bulk.materialized.parcel.size : bulk.materialized.owner.size; }
 function visibleEntityCount() {
   let n = Object.keys(state.entities).length;
@@ -22168,9 +22171,10 @@ function setBulkBtn(mode) {
 }
 
 /* ── OPFS store ── */
+let _bulkDirH = null;
 async function bulkDir() {
-  const root = await navigator.storage.getDirectory();
-  return root.getDirectoryHandle(BULK_DIR, { create: true });
+  if (!_bulkDirH) _bulkDirH = await navigator.storage.getDirectory().then((root) => root.getDirectoryHandle(BULK_DIR, { create: true }));
+  return _bulkDirH;
 }
 async function bulkFile(name, create) {
   const d = await bulkDir();
@@ -22181,6 +22185,17 @@ async function bulkWrite(name, parts) {
   const w = await fh.createWritable();
   try { for (const p of parts) await w.write(p); }
   finally { await w.close(); }
+}
+async function bulkPublish(names) {
+  const d = await bulkDir();
+  for (const n of names) {
+    const tmp = await d.getFileHandle(n + ".tmp", { create: true });
+    await tmp.move(n);
+  }
+}
+async function bulkVerify(name, expectedBytes) {
+  const f = await (await bulkFile(name, false)).getFile();
+  return f.size === expectedBytes;
 }
 async function bulkRead(name) {
   const fh = await bulkFile(name, false);
@@ -22193,6 +22208,7 @@ async function bulkPurge() {
     try { await d.removeEntry(n); } catch (e) { /* already gone */ }
   }
   bulk.built = false; bulk.data = null;
+  _bulkDirH = null;
 }
 
 /* ── binary format ──
@@ -22206,7 +22222,9 @@ async function bulkPurge() {
    BULK_CITIES (also = i%5 / j%5). */
 
 async function bulkLoad() {
-  const [pab, oab, eab] = await Promise.all([bulkRead("parcels.bin"), bulkRead("owners.bin"), bulkRead("edges.bin")]);
+  const pab = await bulkRead("parcels.bin");
+  const oab = await bulkRead("owners.bin");
+  const eab = await bulkRead("edges.bin");
   const split = (ab, heapLen) => ({ heap: new Uint8Array(ab, 92, heapLen), rows: new Uint8Array(ab, 92 + heapLen) });
   const pk = new DataView(pab, 0, 92);
   const ok = new DataView(oab, 0, 92);
@@ -22374,10 +22392,23 @@ function buildBulkDataset() {
       if (m.type === "done") {
         clearTimeout(to);
         try {
-          setBulkStatus("generation complete — writing binary blobs to OPFS…");
-          await bulkWrite("parcels.bin", [m.parcels.header, m.parcels.heap, m.parcels.rows]);
-          await bulkWrite("owners.bin", [m.owners.header, m.owners.heap, m.owners.rows]);
-          await bulkWrite("edges.bin", [m.edges.header, m.edges.ownerPerParcel, m.edges.parcelCity, m.edges.ownerCity]);
+          setBulkStatus("generation complete — writing binary blobs to OPFS (one pass each, unhurried)…");
+          const files = [
+            ["parcels.bin", [m.parcels.header, m.parcels.heap, m.parcels.rows]],
+            ["owners.bin", [m.owners.header, m.owners.heap, m.owners.rows]],
+            ["edges.bin", [m.edges.header, m.edges.ownerPerParcel, m.edges.parcelCity, m.edges.ownerCity]],
+          ];
+          for (const [name, parts] of files) {
+            const n = parts.reduce((a, p) => a + p.byteLength, 0);
+            setBulkStatus("writing " + name + " (" + fmtInt(n) + " bytes)…");
+            await bulkWrite(name + ".tmp", parts);
+            if (!(await bulkVerify(name + ".tmp", n))) throw new Error(name + " write came back short — refusing to publish.");
+          }
+          await bulkPublish(files.map(([name]) => name));
+          for (const [name, parts] of files) {
+            const n = parts.reduce((a, p) => a + p.byteLength, 0);
+            if (!(await bulkVerify(name, n))) throw new Error(name + " did not survive publish — purging and staying off.");
+          }
           bulk.built = true;
           resolve();
         } catch (e) { reject(e); }
@@ -22421,8 +22452,8 @@ function bulkStopGovernor() { clearInterval(bulk.govTimer); }
 /* ── activate / deactivate ── */
 async function bulkActivate() {
   if (bulk.busy) return;
-  if (!window.isSecureContext || !opfsAvail()) {
-    setBulkStatus("OPFS needs a secure context — open this over http://localhost or https.", true);
+  if (!window.isSecureContext || !opfsAvail() || location.protocol === "file:") {
+    setBulkStatus(location.protocol === "file:" ? bulkHttpMsg() : "OPFS needs a secure context — open this over http://localhost or https.", true);
     return;
   }
   bulk.busy = true;
@@ -22444,7 +22475,13 @@ async function bulkActivate() {
     state = fold(EVENTS);
     renderChrome();
     setBulkBtn("");
-    setBulkStatus("could not start — " + escHtml(e && e.message || e) + ". App is unaffected (seed corpus still live).", true);
+    if (location.protocol === "file:") {
+      setBulkStatus(bulkHttpMsg(), true);
+    } else if (e && (e.name === "SecurityError" || /unsafe for access|too many calls/i.test(String(e.message)))) {
+      setBulkStatus("OPFS declined the request now (" + escHtml(e.message) + "). Reload once and retry after a pause — the browser rate-limits file resources. Generation will run guarded and unhurried; the app is unaffected either way (seed corpus still live).", true);
+    } else {
+      setBulkStatus("could not start — " + escHtml(e && e.message || e) + ". App is unaffected (seed corpus still live).", true);
+    }
   } finally {
     bulk.busy = false;
   }
@@ -24135,7 +24172,7 @@ function refreshPurgeBtn() {
   purgeBtn.style.display = bulk.built ? "" : "none";
 }
 async function bulkRestore() {
-  if (!window.isSecureContext || !opfsAvail()) return;
+  if (location.protocol === "file:" || !window.isSecureContext || !opfsAvail()) { console.warn("bulk restore skipped:", location.protocol); return; }
   bulk.busy = true;
   setBulkBtn("working");
   try {
