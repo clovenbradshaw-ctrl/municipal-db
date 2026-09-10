@@ -96,17 +96,41 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 
 
 .timeline{font-size:12px;}
-.tl-row{display:flex;gap:10px;padding:5px 16px;border-bottom:1px solid var(--surface-3);align-items:baseline;}
+.tl-entry{border-bottom:1px solid var(--surface-3);}
+.tl-row{display:flex;gap:8px;padding:5px 16px;align-items:baseline;cursor:pointer;}
 .tl-row:hover{background:var(--surface-2);}
+.tl-exp{flex-shrink:0;width:12px;background:none;border:none;padding:0;font:inherit;color:var(--text-faint);cursor:pointer;transition:transform .12s ease;transform:rotate(0deg);}
+.tl-entry.open .tl-exp{transform:rotate(90deg);}
 .tl-idx{color:var(--text-faint);font-size:10.5px;width:38px;flex-shrink:0;}
 .tl-glyph{width:16px;flex-shrink:0;font-weight:700;text-align:center;}
 .tl-glyph.existence{color:var(--triad-existence);} .tl-glyph.structure{color:var(--triad-structure);} .tl-glyph.significance{color:var(--triad-significance);}
 .tl-key{width:34px;flex-shrink:0;color:var(--text-dim);font-weight:600;}
 .tl-body{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .tl-anchor{color:var(--text-faint);} .tl-path{color:var(--triad-structure);} .tl-val{color:var(--text-bright);} .tl-rel{color:var(--triad-significance);}
-.tl-sender{color:var(--text-faint);font-size:10.5px;margin-left:10px;}
+.tl-sender{color:var(--text-faint);font-size:10.5px;margin-left:10px;white-space:nowrap;}
 .tl-anchor-link{background:none;border:none;padding:0;font:inherit;color:var(--text-faint);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;}
 .tl-anchor-link:hover{color:var(--text-bright);}
+.tl-detail{display:none;padding:8px 16px 12px 74px;background:var(--surface-2);}
+.tl-entry.open .tl-detail{display:block;}
+.tl-meta{display:flex;flex-wrap:wrap;gap:4px 14px;color:var(--text-dim);font-size:10.5px;margin-bottom:8px;font-family:var(--mono);}
+.tl-meta .m-type{color:var(--triad-structure);font-weight:700;}
+.tl-meta .m-id{color:var(--text-faint);}
+.tl-content{display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;align-items:baseline;}
+.tl-f{display:contents;}
+.tl-f .tlk{color:var(--text-faint);font-family:var(--mono);font-size:11px;white-space:nowrap;padding-right:4px;}
+.tl-f .tlv{min-width:0;overflow-wrap:anywhere;word-break:break-word;}
+.tl-f .tlv.dim{color:var(--text-faint);}
+.tl-f .tlv.str{color:var(--text);}
+.tl-f .tlv.num{color:var(--triad-significance);}
+.tl-f .tlv.json{color:var(--text-dim);font-family:var(--mono);font-size:11px;white-space:pre-wrap;}
+.tl-sub{display:grid;grid-template-columns:max-content 1fr;gap:2px 12px;align-items:baseline;margin-left:14px;border-left:1px solid var(--surface-3);padding-left:10px;grid-column:2;}
+.tl-raw{margin-top:10px;border:1px solid var(--surface-3);border-radius:4px;background:var(--surface-1);}
+.tl-raw summary{display:flex;gap:6px;align-items:center;cursor:pointer;padding:5px 10px;color:var(--text-faint);font-size:10.5px;font-family:var(--mono);user-select:none;}
+.tl-raw summary:hover{color:var(--text);}
+.tl-raw pre{margin:0;padding:10px;color:var(--text-dim);font-family:var(--mono);font-size:11px;line-height:1.45;max-height:320px;overflow:auto;white-space:pre;border-top:1px solid var(--surface-3);}
+.tl-copy{background:none;border:none;padding:0 2px;font:inherit;color:var(--triad-structure);cursor:pointer;}
+.tl-copy:hover{text-decoration:underline;}
+.tl-hint{color:var(--text-faint);font-size:10.5px;}
 
 /* ── activation → search ── */
 .tv-filter{margin-left:auto;display:flex;align-items:center;gap:6px;}
@@ -300,6 +324,27 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .comp-actions button.open:hover{background:#f8f8ff;}
 .comp-more{font-size:10.5px;color:var(--text-dim);padding:4px 12px;background:var(--surface-2);border-top:1px solid var(--surface-3);font-style:italic;}
 .comp-empty{padding:40px 18px;color:var(--text-faint);font-style:italic;text-align:center;}
+
+/* ── bulk dataset — mechanical parcels/owners, binary on OPFS ── */
+.bulk-section{margin-top:8px;padding-top:8px;border-top:1px dashed var(--surface-3);display:flex;flex-direction:column;align-items:stretch;}
+.bulk-btn{border:1px solid var(--surface-3);background:#fff;border-radius:6px;padding:7px 10px;font-family:var(--font);font-size:12px;font-weight:700;cursor:pointer;width:100%;text-align:left;display:flex;align-items:center;gap:7px;color:var(--text-dim);transition:all .15s;}
+.bulk-btn .bdot{width:8px;height:8px;border-radius:50%;background:var(--text-faint);flex:none;transition:all .15s;}
+.bulk-btn:hover{border-color:var(--text-faint);color:var(--text-bright);}
+.bulk-btn:disabled{opacity:.55;cursor:not-allowed;}
+.bulk-btn.on{border-color:var(--green);color:var(--green);background:#f7fff7;}
+.bulk-btn.on .bdot{background:var(--green);box-shadow:0 0 6px var(--green);}
+.bulk-btn.working{border-color:var(--blue);color:var(--blue);}
+.bulk-btn.working .bdot{background:var(--blue);animation:bulkPulse 1.1s infinite;}
+@keyframes bulkPulse{50%{opacity:.25;}}
+.bulk-status{font-size:10.5px;color:var(--text-dim);line-height:1.45;margin-top:6px;word-break:break-word;}
+.bulk-status b{color:var(--text);}
+.bulk-status.err{color:var(--red);}
+.bulk-status .bulk-purge{color:var(--red);border:1px solid var(--red);background:#fff;border-radius:4px;font-family:var(--mono);font-size:9.5px;padding:1px 6px;margin-top:5px;cursor:pointer;}
+.bulk-strip{background:linear-gradient(90deg,#f2fbf2,#eef6ff);border:1px solid var(--surface-3);border-radius:6px;padding:6px 12px;font-size:11px;color:#2c3e43;margin:0 0 10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+.bulk-strip .bs-k{color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;font-size:9.5px;font-weight:700;}
+.bulk-strip .chip{background:#fff;border:1px solid var(--surface-3);border-radius:10px;padding:1px 8px;font-family:var(--mono);font-size:10px;white-space:nowrap;}
+.bulk-strip .bar{flex:1;}
+.bulk-scan{font-size:10.5px;color:var(--text-dim);padding:4px 12px;font-style:italic;font-variant-numeric:tabular-nums;}
 </style>
 </head>
 <body>
@@ -326,6 +371,11 @@ table.grid tr.row.expanded{background:var(--surface-2);}
         <button class="sb-log-link" id="sb-log">≡ event log (raw timeline)</button>
         <button class="sb-reset" id="reset-btn">reset to seed corpus</button>
         <div class="sb-storage" id="storage-status">loading…</div>
+      </div>
+      <div class="sb-section bulk-section">
+        <button class="bulk-btn" id="bulk-btn" title="Run on OPFS: mechanically fabricate 1,000,000 parcels + 750,000 owners, pack them into compact binary blobs, persist them to the Origin Private File System, and overlay a bounded working set into the fold. Serve over localhost/https — OPFS needs a secure context."><span class="bdot"></span>bulk dataset · 1M parcels / 750k owners</button>
+        <div class="bulk-status" id="bulk-status">off — fabricated records stay binary in OPFS when generated</div>
+        <button class="bulk-purge" id="bulk-purge" style="display:none;" title="delete parcels.bin / owners.bin / edges.bin from OPFS">purge OPFS bulk files</button>
       </div>
     </div>
     <div class="main" id="main"></div>
@@ -22015,6 +22065,462 @@ function setStorageMsg(msg, isErr) {
   el.textContent = msg; el.style.color = isErr ? "var(--red)" : "";
 }
 
+/* ══ bulk dataset — mechanically fabricated parcels/owners, binary on OPFS ══
+   Run-on-OPFS pattern from clovenbradshaw-ctrl/bare-metal-eo-matrix-app
+   (src/store.js + src/memory.js): the heavy records are fabricated once,
+   packed into compact binary blobs, and persisted to the Origin Private File
+   System. They are NEVER all materialised as events in the heap. A bounded
+   working set (the "preview") is folded into state so the app stays live,
+   the full magnitudes are reported against the totals, rows can be streamed
+   out of the binary on filter/search inside a strict materialisation budget,
+   and an adaptive governor sheds the set — then drops the overlay entirely —
+   if the heap reports pressure. Nothing here touches EVENTS or localStorage,
+   so toggling off restores the seed corpus exactly: `state = fold(EVENTS)`. */
+
+const BULK_PARCELS = 1000000;
+const BULK_OWNERS = 750000;
+const BULK_SENDER = "@mechanical:bulk.example";
+const BULK_OW_BASE = 1788998500000;
+const BULK_PA_BASE = 1788999500000;
+const BULK_ED_BASE = 1789000000000;
+const BULK_PREVIEW_PARCELS = 1200;
+const BULK_EXTRA_BUDGET = 600;
+const BULK_MAX_SCAN_MATCHES = 40;
+const BULK_BUDGET_BYTES = 512 * 1024 * 1024;
+const BULK_SOFT = 0.75;
+const BULK_CRIT = 0.9;
+const BULK_DIR = "municipal-db-bulk";
+const BULK_ZONING = ["residential", "residential-condo", "mixed-use", "commercial"];
+const BULK_FIRST = ["Ada","Abel","Althea","Bianca","Binyam","Cedric","Chiara","Daria","Dev","Diego","Elena","Ester","Farid","Freya","Gideon","Greta","Hana","Hugo","Irina","Joel","Jonas","Kaya","Leon","Marisol","Nathan","Noor","Odette","Orlando","Paola","Paulo","Priya","Rahul","Ravi","Selma","Sofia","Talia","Tariq","Tomas","Uma","Unai","Valentina","Victor","Wen","Wilhelm","Wren","Xavier","Yara","Zane","Zoe","Zora"];
+const BULK_LAST = ["Adler","Alvarez","Beaumont","Bianchi","Campos","Carver","Chen","Delgado","Doolittle","Dufresne","Espinoza","Ewing","Forester","Gable","Gagnon","Griffith","Hasan","Holloway","Horvat","Ingram","Jebsen","Johnston","Kim","Lambert","Lindqvist","Martins","Moreau","Nguyen","Novak","Oduya","Osei","Pascoe","Patel","Rios","Romano","Steiner","Tanaka","Ueda","Vickers","Whitfield","Wright","Yang","Zeller","Zito"];
+const BULK_CITIES = [
+  { name: "Middletown", state: "RI", apn: "MID", area: "401", muni: "municipality_1b09307071e888",
+    streets: ["E Main St","West Main Rd","Third Beach Rd","Turner Rd","Valley Rd","Aquidneck Ave","Green End Ave","Sachuest Point Rd","Purgatory Rd","Oliphant Ln"] },
+  { name: "Chicago", state: "IL", apn: "CHI", area: "312", muni: "municipality_a8035cf65308a",
+    streets: ["W Armitage Ave","W Diversey Pkwy","N Kedzie Ave","N Damen Ave","W Grand Ave","N Milwaukee Ave","W Chicago Ave","N Western Ave","W Belmont Ave","N Halsted St"] },
+  { name: "St. Augustine", state: "FL", apn: "STA", area: "904", muni: "municipality_348f9b351b965",
+    streets: ["San Marco Ave","Marine St","Cordova St","King St","St George St","Vilano Rd","Old Beach Rd","Ponte Vedra Blvd","A1A Beach Blvd","May St"] },
+  { name: "Talent", state: "OR", apn: "TAL", area: "541", muni: "municipality_12ffea31677787",
+    streets: ["Evening Dove Ln","Crowfoot Rd","Rapp Ln","Glengary Rd","Greenway Dr","Wagner Creek Rd","Old Hwy 99","Valley View Rd","S Pacific Hwy","Garfield St"] },
+  { name: "Fort Worth", state: "TX", apn: "FTW", area: "817", muni: "municipality_c79c856993a8f",
+    streets: ["W Magnolia Ave","Hemphill St","Vickery Blvd","Rosedale St","Camp Bowie Blvd","S Main St","W 7th St","Samuels Ave","White Settlement Rd","Greenbriar Ln"] },
+];
+const BULK_TOTAL_EDGES = 2 * BULK_PARCELS + BULK_OWNERS;   // owns + registered_in + is_contact_for
+
+const bulk = {
+  on: false, busy: false, built: false, data: null, cache: new Map(),
+  previewCap: BULK_PREVIEW_PARCELS,
+  materialized: { parcel: new Set(), owner: new Set() },
+  totalEdges: BULK_TOTAL_EDGES,
+  totals: { parcel: BULK_PARCELS, owner: BULK_OWNERS },
+  lastSample: null, govTimer: 0, scanToken: 0,
+  evCount: 0,
+};
+
+function fmtInt(n) { return (n | 0).toLocaleString("en-US"); }
+function opfsAvail() { return !!(navigator.storage && navigator.storage.getDirectory); }
+function bulkMaterializedCount(t) { return t === "parcel" ? bulk.materialized.parcel.size : bulk.materialized.owner.size; }
+function visibleEntityCount() {
+  let n = Object.keys(state.entities).length;
+  if (bulk.on) n += (bulk.totals.parcel + bulk.totals.owner) - (bulk.materialized.parcel.size + bulk.materialized.owner.size);
+  return n;
+}
+function visibleEdgeCount() {
+  let n = state.connections.length;
+  if (bulk.on) n += bulk.totalEdges - (bulk.materialized.parcel.size * 2 + bulk.materialized.owner.size);
+  return n;
+}
+function showCount(t) {
+  const base = byType(t).length;
+  if (bulk.on && bulk.totals[t]) return base + (bulk.totals[t] - bulkMaterializedCount(t));
+  return base;
+}
+function bulkStripHtml(type) {
+  const tot = bulk.totals[type];
+  const mat = bulkMaterializedCount(type);
+  const mem = bulk.lastSample !== null ? Math.round(bulk.lastSample * 100) + "% heap" : (bulkMemLabel() || "");
+  return `<div class="bulk-strip"><span class="bs-k">bulk on</span>
+    <span class="chip">${fmtInt(tot)} ${type}s in binary OPFS file</span>
+    <span class="chip">${fmtInt(mat)} resident in the fold</span>
+    <span class="bar"></span>
+    ${mem ? `<span class="chip">${mem}</span>` : ""}</div>`;
+}
+function bulkBulkType(t) { return t === "parcel" || t === "owner"; }
+
+function setBulkStatus(msg, isErr) {
+  const el = document.getElementById("bulk-status");
+  if (!el) return;
+  el.classList.toggle("err", !!isErr);
+  el.innerHTML = msg;
+}
+function setBulkBtn(mode) {
+  const b = document.getElementById("bulk-btn");
+  if (!b) return;
+  b.classList.toggle("on", bulk.on);
+  b.classList.toggle("working", mode === "working");
+  b.disabled = mode === "working";
+  b.innerHTML = `<span class="bdot"></span>` + (mode === "working" ? "building…" : bulk.on ? "bulk dataset on" : "bulk dataset · 1M parcels / 750k owners");
+}
+
+/* ── OPFS store ── */
+async function bulkDir() {
+  const root = await navigator.storage.getDirectory();
+  return root.getDirectoryHandle(BULK_DIR, { create: true });
+}
+async function bulkFile(name, create) {
+  const d = await bulkDir();
+  return d.getFileHandle(name, { create });
+}
+async function bulkWrite(name, parts) {
+  const fh = await bulkFile(name, true);
+  const w = await fh.createWritable();
+  try { for (const p of parts) await w.write(p); }
+  finally { await w.close(); }
+}
+async function bulkRead(name) {
+  const fh = await bulkFile(name, false);
+  const f = await fh.getFile();
+  return await f.arrayBuffer();
+}
+async function bulkPurge() {
+  const d = await bulkDir();
+  for (const n of ["parcels.bin", "owners.bin", "edges.bin"]) {
+    try { await d.removeEntry(n); } catch (e) { /* already gone */ }
+  }
+  bulk.built = false; bulk.data = null;
+}
+
+/* ── binary format ──
+   parcels.bin / owners.bin: 92-byte header, then a UTF-8 string heap, then
+   fixed-width rows. Each row stores (u32 offset, u32 len) per string column
+   into the heap.
+     parcel row (21 B): apn(0:off,len) | address(8:off,len) | zone(u8@16) | bedrooms(u32@17)
+     owner  row (32 B): name(0) | phone(8) | mailing_address(16) | email(24) — each (off,len)
+   edges.bin: 16-byte header, then Uint32Array ownerPerParcel(1M) | Uint8Array
+   parcelCity(1M) | Uint8Array ownerCity(750k). City codes are an index into
+   BULK_CITIES (also = i%5 / j%5). */
+
+async function bulkLoad() {
+  const [pab, oab, eab] = await Promise.all([bulkRead("parcels.bin"), bulkRead("owners.bin"), bulkRead("edges.bin")]);
+  const split = (ab, heapLen) => ({ heap: new Uint8Array(ab, 92, heapLen), rows: new Uint8Array(ab, 92 + heapLen) });
+  const pk = new DataView(pab, 0, 92);
+  const ok = new DataView(oab, 0, 92);
+  const parcel = split(pab, pk.getUint32(12, true));
+  const owner = split(oab, ok.getUint32(12, true));
+  const ed = new DataView(eab);
+  const np = ed.getUint32(8, true), no = ed.getUint32(12, true);
+  bulk.data = {
+    parcel, owner,
+    ownerPerParcel: new Uint32Array(eab, 16, np),
+    parcelCity: new Uint8Array(eab, 16 + np * 4, np),
+    ownerCity: new Uint8Array(eab, 16 + np * 4 + np, no),
+  };
+  bulk.built = true;
+}
+
+const _bulkTd = new TextDecoder();
+function bulkDecode(type, idx) {
+  const d = bulk.data;
+  const isP = type === "parcel";
+  const Coll = isP ? d.parcel : d.owner;
+  const w = isP ? 21 : 32;
+  const off = idx * w;
+  const dv = new DataView(Coll.rows.buffer, Coll.rows.byteOffset + off, w);
+  const str = (k) => {
+    const o = dv.getUint32(k * 8, true), l = dv.getUint32(k * 8 + 4, true);
+    return _bulkTd.decode(Coll.heap.subarray(o, o + l));
+  };
+  if (isP) return { payload: { apn: str(0), address: str(1), bedrooms: dv.getUint32(17, true), zoning: BULK_ZONING[dv.getUint8(16)] }, ts: BULK_PA_BASE + idx };
+  return { payload: { name: str(0), phone: str(1), mailing_address: str(2), email: str(3) }, ts: BULK_OW_BASE + idx };
+}
+
+/* ── events for the fold ── */
+function bulkEvent(type, idx) {
+  const key = type + ":" + idx;
+  let ev = bulk.cache.get(key);
+  if (ev) return ev;
+  const { payload, ts } = bulkDecode(type, idx);
+  ev = buildIns(type, payload, { sender: BULK_SENDER, ts });
+  bulk.cache.set(key, ev);
+  return ev;
+}
+function bulkCon(source, target, rel, tag, ts) {
+  return buildCon(source, target, rel, { sender: BULK_SENDER, ts, id: "$bulk_" + tag });
+}
+function bulkCityOfParcel(i) { return bulk.data ? bulk.data.parcelCity[i] : i % 5; }
+function bulkOwnerOf(i) { return bulk.data ? bulk.data.ownerPerParcel[i] : i % BULK_OWNERS; }
+
+function bulkMaterializeParcel(i) {
+  if (bulk.materialized.parcel.size + bulk.materialized.owner.size >= bulkBudget()) return false;
+  bulk.materialized.parcel.add(i);
+  bulk.materialized.owner.add(bulkOwnerOf(i));
+  return true;
+}
+function bulkMaterializeOwner(j) {
+  if (bulk.materialized.parcel.size + bulk.materialized.owner.size >= bulkBudget()) return false;
+  bulk.materialized.owner.add(j);
+  if (j < BULK_PARCELS) bulk.materialized.parcel.add(j);
+  const j2 = j + BULK_OWNERS;
+  if (j2 < BULK_PARCELS) bulk.materialized.parcel.add(j2);
+  return true;
+}
+function bulkBudget() { return bulk.previewCap * 2 + BULK_EXTRA_BUDGET; }
+function bulkMaterializedEvents() {
+  const evs = [];
+  const addedP = new Set(), addedO = new Set();
+  for (const i of [...bulk.materialized.parcel].sort((a, b) => a - b)) {
+    if (!addedP.has(i)) { evs.push(bulkEvent("parcel", i)); addedP.add(i); }
+    const oi = bulkOwnerOf(i);
+    if (!addedO.has(oi)) { evs.push(bulkEvent("owner", oi)); addedO.add(oi); }
+    const c = bulkCityOfParcel(i);
+    evs.push(bulkCon(bulkEvent("parcel", i).anchor, bulkEvent("owner", oi).anchor, "owns", "owns_" + i, BULK_ED_BASE + i));
+    evs.push(bulkCon(bulkEvent("parcel", i).anchor, BULK_CITIES[c].muni, "registered_in", "reg_" + i, BULK_ED_BASE + BULK_PARCELS + i));
+  }
+  for (const j of [...bulk.materialized.owner].sort((a, b) => a - b)) {
+    if (!addedO.has(j)) { evs.push(bulkEvent("owner", j)); addedO.add(j); }
+    evs.push(bulkCon(bulkEvent("owner", j).anchor, BULK_CITIES[j % 5].muni, "is_contact_for", "contact_" + j, BULK_ED_BASE + 2 * BULK_PARCELS + j));
+  }
+  return evs;
+}
+function bulkRefresh() {
+  const evs = EVENTS.concat(bulkMaterializedEvents());
+  state = fold(evs);
+  bulk.evCount = evs.length;
+}
+function bulkResetPreview() {
+  bulk.materialized.parcel.clear();
+  bulk.materialized.owner.clear();
+  bulk.cache.clear();
+  const idxs = [];
+  for (let k = 0; k < bulk.previewCap; k++) idxs.push(Math.floor(k * (BULK_PARCELS - 1) / Math.max(bulk.previewCap - 1, 1)));
+  for (const i of idxs) bulkMaterializeParcel(i);
+  bulkRefresh();
+}
+
+/* ── generator worker ── */
+const WORKER_SRC = String.raw`'use strict';
+var ZONING=['residential','residential-condo','mixed-use','commercial'];
+var FIRST=["Ada","Abel","Althea","Bianca","Binyam","Cedric","Chiara","Daria","Dev","Diego","Elena","Ester","Farid","Freya","Gideon","Greta","Hana","Hugo","Irina","Joel","Jonas","Kaya","Leon","Marisol","Nathan","Noor","Odette","Orlando","Paola","Paulo","Priya","Rahul","Ravi","Selma","Sofia","Talia","Tariq","Tomas","Uma","Unai","Valentina","Victor","Wen","Wilhelm","Wren","Xavier","Yara","Zane","Zoe","Zora"];
+var LAST=["Adler","Alvarez","Beaumont","Bianchi","Campos","Carver","Chen","Delgado","Doolittle","Dufresne","Espinoza","Ewing","Forester","Gable","Gagnon","Griffith","Hasan","Holloway","Horvat","Ingram","Jebsen","Johnston","Kim","Lambert","Lindqvist","Martins","Moreau","Nguyen","Novak","Oduya","Osei","Pascoe","Patel","Rios","Romano","Steiner","Tanaka","Ueda","Vickers","Whitfield","Wright","Yang","Zeller","Zito"];
+var CITIES=[
+ {name:'Middletown',state:'RI',apn:'MID',area:'401',streets:['E Main St','West Main Rd','Third Beach Rd','Turner Rd','Valley Rd','Aquidneck Ave','Green End Ave','Sachuest Point Rd','Purgatory Rd','Oliphant Ln']},
+ {name:'Chicago',state:'IL',apn:'CHI',area:'312',streets:['W Armitage Ave','W Diversey Pkwy','N Kedzie Ave','N Damen Ave','W Grand Ave','N Milwaukee Ave','W Chicago Ave','N Western Ave','W Belmont Ave','N Halsted St']},
+ {name:'St. Augustine',state:'FL',apn:'STA',area:'904',streets:['San Marco Ave','Marine St','Cordova St','King St','St George St','Vilano Rd','Old Beach Rd','Ponte Vedra Blvd','A1A Beach Blvd','May St']},
+ {name:'Talent',state:'OR',apn:'TAL',area:'541',streets:['Evening Dove Ln','Crowfoot Rd','Rapp Ln','Glengary Rd','Greenway Dr','Wagner Creek Rd','Old Hwy 99','Valley View Rd','S Pacific Hwy','Garfield St']},
+ {name:'Fort Worth',state:'TX',apn:'FTW',area:'817',streets:['W Magnolia Ave','Hemphill St','Vickery Blvd','Rosedale St','Camp Bowie Blvd','S Main St','W 7th St','Samuels Ave','White Settlement Rd','Greenbriar Ln']}
+];
+var SENDER='@mechanical:bulk.example';
+var OWN_BASE=1788998500000, PAR_BASE=1788999500000;
+var enc=new TextEncoder();
+function H(){this._b=new Uint8Array(1<<20);this.len=0;
+ this.need=function(n){if(this._b.length-this.len<n){var nc=this._b.length*2;while(nc<this.len+n)nc*=2;var nb=new Uint8Array(nc);nb.set(this._b.subarray(0,this.len));this._b=nb;}};
+ this.push=function(s){var b=enc.encode(s);this.need(b.length);this._b.set(b,this.len);var o=this.len;this.len+=b.length;return[o,b.length];};
+ this.out=function(){return this._b.slice(0,this.len).buffer;};}
+function headerFor(magic,count,heapLen,rowWidth,baseTs){var h=new Uint8Array(92);var v=new DataView(h.buffer);
+ h[0]=magic[0];h[1]=magic[1];h[2]=magic[2];h[3]=magic[3];h[4]=1;h[6]=SENDER.length;
+ v.setUint32(8,count,true);v.setUint32(12,heapLen,true);v.setFloat64(16,baseTs,true);v.setUint32(24,rowWidth,true);
+ for(var i=0;i<SENDER.length;i++)h[28+i]=SENDER.charCodeAt(i);return h.buffer;}
+function doParcels(n,post){var heap=new H(),w=21,rows=new Uint8Array(n*w),dv=new DataView(rows.buffer),i,c,city,apn,num,addr,zone,beds,r,o;
+ for(i=0;i<n;i++){c=i%5;city=CITIES[c];apn=city.apn+'-'+String(i).padStart(7,'0');num=1000+((i*37)%8900);
+  if(((i>>1)&1)===0){addr=num+' '+city.streets[(i>>2)%city.streets.length]+', '+city.name+', '+city.state;}
+  else{addr='PO Box '+ (10400+((i*13)%8600)) +', '+city.name+', '+city.state;}
+  zone=i&3;beds=1+((i*7)&3);o=i*w;r=[heap.push(apn),heap.push(addr)];
+  dv.setUint32(o+0,r[0][0],true);dv.setUint32(o+4,r[0][1],true);
+  dv.setUint32(o+8,r[1][0],true);dv.setUint32(o+12,r[1][1],true);
+  dv.setUint8(o+16,zone);dv.setUint32(o+17,beds,true);
+  if(i%50000===0)post('parcels',i,n);}
+ post('parcels',n,n);
+ return{header:headerFor([0x4d,0x44,0x42,0x50],n,heap.len,w,PAR_BASE),heap:heap.out(),rows:rows.buffer};}
+function doOwners(n,post){var heap=new H(),w=32,rows=new Uint8Array(n*w),dv=new DataView(rows.buffer),j,c,city,f,l,suf,name,phone,mail,email,r,o,k;
+ for(j=0;j<n;j++){c=j%5;city=CITIES[c];f=FIRST[(j*7)%FIRST.length];l=LAST[(j>>2)%LAST.length];suf=(j%17===0)?' Jr.':((j%23===0)?' III':'');
+  name=f+' '+l+suf;phone='('+city.area+') 555-'+String(1000+(j%9000)).padStart(4,'0');
+  if((j&1)===0){mail=(1000+((j*7)%8900))+' '+city.streets[(j>>2)%city.streets.length]+', '+city.name+', '+city.state;}
+  else{mail='PO Box '+ (10400+((j*13)%8600)) +', '+city.name+', '+city.state;}
+  email=f.toLowerCase()+'.'+l.toLowerCase()+j+'@mailbox.example';o=j*w;r=[heap.push(name),heap.push(phone),heap.push(mail),heap.push(email)];
+  for(k=0;k<4;k++){dv.setUint32(o+k*8,r[k][0],true);dv.setUint32(o+k*8+4,r[k][1],true);}
+  if(j%50000===0)post('owners',j,n);}
+ post('owners',n,n);
+ return{header:headerFor([0x4d,0x44,0x42,0x4f],n,heap.len,w,OWN_BASE),heap:heap.out(),rows:rows.buffer};}
+function doEdges(np,no){var opp=new Uint32Array(np),i,pc=new Uint8Array(np),oc=new Uint8Array(no),h=new Uint8Array(16),v=new DataView(h.buffer);
+ for(i=0;i<np;i++){opp[i]=i%no;pc[i]=i%5;}
+ for(i=0;i<no;i++)oc[i]=i%5;
+ h[0]=0x4d;h[1]=0x44;h[2]=0x42;h[3]=0x45;h[4]=1;v.setUint32(8,np,true);v.setUint32(12,no,true);
+ return{header:h.buffer,ownerPerParcel:opp.buffer,parcelCity:pc.buffer,ownerCity:oc.buffer};}
+onmessage=function(m){try{
+ var P=m.data.parcels,O=m.data.owners;
+ postMessage({type:'progress',phase:'meshing',done:0,total:1});
+ var ownerRes=doOwners(O,function(p,d,t){postMessage({type:'progress',phase:d===t?'owners ready':'owners',done:d,total:t});});
+ var parcelRes=doParcels(P,function(p,d,t){postMessage({type:'progress',phase:d===t?'parcels ready':'parcels',done:d,total:t});});
+ var edgeRes=doEdges(P,O);
+ postMessage({type:'done',owners:ownerRes,parcels:parcelRes,edges:edgeRes},[ownerRes.header,ownerRes.heap,ownerRes.rows,parcelRes.header,parcelRes.heap,parcelRes.rows,edgeRes.header,edgeRes.ownerPerParcel,edgeRes.parcelCity,edgeRes.ownerCity]);
+ }catch(e){postMessage({type:'error',message:String(e&&e.stack||e)});}};
+`;
+
+function buildBulkDataset() {
+  return new Promise((resolve, reject) => {
+    let worker;
+    try { worker = new Worker(URL.createObjectURL(new Blob([WORKER_SRC], { type: "application/javascript" }))); }
+    catch (e) { reject(e); return; }
+    const to = setTimeout(() => { try { worker.terminate(); } catch (e) {} reject(new Error("bulk generation timed out (180s)")); }, 180000);
+    worker.onmessage = async (ev) => {
+      const m = ev.data;
+      if (m.type === "progress") { setBulkStatus("generating " + m.phase + " — " + fmtInt(m.done) + " / " + fmtInt(m.total)); return; }
+      if (m.type === "error") { clearTimeout(to); try { worker.terminate(); } catch (e) {} reject(new Error(m.message || "generator failed")); return; }
+      if (m.type === "done") {
+        clearTimeout(to);
+        try {
+          setBulkStatus("generation complete — writing binary blobs to OPFS…");
+          await bulkWrite("parcels.bin", [m.parcels.header, m.parcels.heap, m.parcels.rows]);
+          await bulkWrite("owners.bin", [m.owners.header, m.owners.heap, m.owners.rows]);
+          await bulkWrite("edges.bin", [m.edges.header, m.edges.ownerPerParcel, m.edges.parcelCity, m.edges.ownerCity]);
+          bulk.built = true;
+          resolve();
+        } catch (e) { reject(e); }
+        finally { try { worker.terminate(); } catch (e) {} }
+      }
+    };
+    worker.onerror = (e) => { clearTimeout(to); try { worker.terminate(); } catch (x) {} reject(new Error(e.message || "generator worker failed")); };
+    worker.postMessage({ parcels: BULK_PARCELS, owners: BULK_OWNERS });
+  });
+}
+
+/* ── governor ── */
+function bulkMemFraction() {
+  const m = (typeof performance !== "undefined") ? performance.memory : null;
+  return m && m.usedJSHeapSize ? m.usedJSHeapSize / BULK_BUDGET_BYTES : null;
+}
+function bulkMemLabel() {
+  const m = (typeof performance !== "undefined") ? performance.memory : null;
+  if (!m) return "";
+  return fmtInt(Math.round(m.usedJSHeapSize / 1048576)) + "MB/" + fmtInt(Math.round(BULK_BUDGET_BYTES / 1048576)) + "MB heap";
+}
+function bulkGovernor() {
+  if (!bulk.on) return;
+  const f = bulkMemFraction();
+  if (f === null) { bulk.lastSample = null; return; }
+  bulk.lastSample = f;
+  if (f >= BULK_CRIT) { disableBulk(); setBulkStatus("governor shed the overlay at critical heap (" + bulkMemLabel() + ") — seed corpus restored, binary files kept in OPFS.", true); return; }
+  if (f >= BULK_SOFT) {
+    const ncap = Math.max(200, Math.floor(bulk.previewCap / 2));
+    if (ncap < bulk.previewCap) {
+      bulk.previewCap = ncap;
+      bulkResetPreview();
+      renderChrome();
+      setBulkStatus("governor clamped heap at " + bulkMemLabel() + " — preview halved to " + fmtInt(bulk.previewCap) + " parcels.");
+    }
+  }
+}
+function bulkGovernorLoop() { bulkStopGovernor(); bulk.govTimer = setInterval(bulkGovernor, 2500); }
+function bulkStopGovernor() { clearInterval(bulk.govTimer); }
+
+/* ── activate / deactivate ── */
+async function bulkActivate() {
+  if (bulk.busy) return;
+  if (!window.isSecureContext || !opfsAvail()) {
+    setBulkStatus("OPFS needs a secure context — open this over http://localhost or https.", true);
+    return;
+  }
+  bulk.busy = true;
+  setBulkBtn("working");
+  try {
+    if (!bulk.built) await buildBulkDataset();
+    await bulkLoad();
+    bulk.on = true;
+    bulkResetPreview();
+    localStorage.setItem("_mdb-bulk-on", "1");
+    renderChrome();
+    setBulkBtn("");
+    refreshPurgeBtn();
+    setBulkStatus("on — <b>" + fmtInt(BULK_PARCELS) + "</b> parcels / <b>" + fmtInt(BULK_OWNERS) + "</b> owners as binary in OPFS; <b>" + fmtInt(bulk.materialized.parcel.size) + "</b> parcels + <b>" + fmtInt(bulk.materialized.owner.size) + "</b> owners resident in the fold. Filter/search streams over the files, capped at " + fmtInt(BULK_MAX_SCAN_MATCHES) + " matches." + (bulkMemLabel() ? " <span style='color:var(--text-faint)'>(" + bulkMemLabel() + ")</span>" : ""));
+    bulkGovernorLoop();
+  } catch (e) {
+    console.error("bulk activate failed:", e);
+    bulk.on = false;
+    state = fold(EVENTS);
+    renderChrome();
+    setBulkBtn("");
+    setBulkStatus("could not start — " + (e && e.message || e) + ". App is unaffected (seed corpus still live).", true);
+  } finally {
+    bulk.busy = false;
+  }
+}
+function disableBulk() {
+  bulk.on = false;
+  bulkStopGovernor();
+  bulk.scanToken += 1;
+  bulk.materialized.parcel.clear();
+  bulk.materialized.owner.clear();
+  bulk.cache.clear();
+  state = fold(EVENTS);
+  localStorage.removeItem("_mdb-bulk-on");
+  renderChrome();
+  setBulkBtn("");
+}
+
+/* ── streaming scan over the binary (table filter + activation search) ── */
+const BULK_APN_RE = /^(MID|CHI|STA|TAL|FTW)-(\d{1,7})$/i;
+function bulkShim(type, idx) {
+  const { payload } = bulkDecode(type, idx);
+  return { type, _type: type, idx, payload };
+}
+function bulkAnchor(type, idx) { return bulkEvent(type, idx).anchor; }
+
+/* Returns a cancel handle. Scans every row, decodes just to test tokens,
+   and hands matched shims to onBatch in bounded batches. Materialising
+   happens in the caller (bulkMaterialize* + bulkRefresh) so the fold and the
+   rendered rows stay consistent. */
+function bulkScanRows(type, tokens, onBatch, onDone, onProgress) {
+  bulk.scanToken += 1;
+  const tok = bulk.scanToken;
+  const d = bulk.data;
+  let cancelled = false;
+  const handle = { cancel() { cancelled = true; } };
+  if (!d || !tokens.length) {
+    queueMicrotask(() => onDone && onDone(0));
+    return handle;
+  }
+  const q = tokens.map((t) => t.toLowerCase());
+  (async () => {
+    const total = bulk.totals[type];
+    const CH = 2048;
+    let scanned = 0;
+    let batch = [];
+    const flush = async () => {
+      if (!batch.length) return;
+      const b = batch;
+      batch = [];
+      try { await onBatch(b, handle); } catch (e) { console.error("bulk scan batch failed:", e); }
+    };
+    for (let start = 0; start < total && !cancelled && tok === bulk.scanToken; start += CH) {
+      const end = Math.min(total, start + CH);
+      for (let i = start; i < end && !cancelled && tok === bulk.scanToken; i++) {
+        const sh = bulkShim(type, i);
+        const hay = Object.values(sh.payload).join(" ").toLowerCase();
+        if (q.every((t) => hay.includes(t))) {
+          batch.push(sh);
+          if (batch.length >= 8) await flush();
+        }
+      }
+      scanned = end;
+      onProgress && onProgress(scanned, total);
+      if (!cancelled && tok === bulk.scanToken) await new Promise((r) => setTimeout(r, 0));
+    }
+    if (!cancelled && tok === bulk.scanToken) await flush();
+    if (!cancelled && tok === bulk.scanToken) onDone && onDone(scanned);
+  })();
+  return handle;
+}
+
+/* Fast path: a bare APN like "MID-0001234" resolves in O(1). */
+function bulkApnProbe(tok, max) {
+  const m = BULK_APN_RE.exec(tok);
+  if (!m) return [];
+  const i = parseInt(m[2], 10);
+  if (i >= BULK_PARCELS) return [];
+  if (BULK_CITIES[i % 5].apn !== m[1].toUpperCase()) return [];
+  return [{ type: "parcel", _type: "parcel", idx: i, payload: bulkDecode("parcel", i).payload }];
+}
+
 function allEntities() { return Object.values(state.entities); }
 function byType(t) { return allEntities().filter((e) => e._type === t); }
 function entityLabel(e) { return e.name || e.text || e.distinction || e.party || e.apn || e.section || (e._type + " " + e._anchor.slice(-6)); }
@@ -22147,11 +22653,11 @@ function activateSearch(q) {
 /* ── sidebar ── */
 function renderSidebar() {
   document.getElementById("sb-tables").innerHTML = ENTITY_TYPES.map((t) => {
-    const n = byType(t).length;
+    const n = showCount(t);
     const active = currentView.kind === "table" && currentView.type === t;
     return `<div class="sb-table-head ${active ? "active" : ""}">
       <button class="sb-table-link" data-goto-table="${t}">
-        <span class="sb-table-name">${t}</span><span class="sb-table-count">${n}</span>
+        <span class="sb-table-name">${t}</span><span class="sb-table-count">${fmtInt(n)}</span>
       </button>
     </div>`;
   }).join("");
@@ -22178,12 +22684,14 @@ function renderTable(type) {
 
   const ftoks = searchTokens(tableFilter);
   const shown = ftoks.length ? items.filter((e) => hasAllTokens(e, ftoks)) : items;
+  const isBulkType = bulk.on && bulkBulkType(type);
 
   const main = document.getElementById("main");
   main.innerHTML = `
-    <div class="tv-head"><h2>${type}</h2><span class="crumb">${shown.length} / ${items.length} row${items.length === 1 ? "" : "s"}${tableFilter ? ` · filter “${tableFilter}”` : ""}</span>
+    <div class="tv-head"><h2>${type}</h2><span class="crumb">${shown.length} / ${fmtInt(showCount(type))} row${showCount(type) === 1 ? "" : "s"}${tableFilter ? ` · filter “${tableFilter}”` : ""}</span>
       <span class="tv-filter ${tableFilter ? "has-filter" : ""}"><input class="table-filter" id="table-filter" type="text" placeholder="filter rows…" autocomplete="off" spellcheck="false"><button class="fclear" id="table-filter-clear" title="clear filter">×</button></span>
     </div>
+    ${isBulkType ? bulkStripHtml(type) : ""}
     <div class="tv-tabs">
       <button class="tv-tab ${tableSubview === "records" ? "active" : ""}" data-subview="records">records <span class="trows">${shown.length}</span></button>
       <button class="tv-tab meta ${tableSubview === "schema" ? "active" : ""}" data-subview="schema">schema</button>
@@ -22204,7 +22712,7 @@ function renderTable(type) {
     sub.innerHTML = `<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
     return;
   }
-  if (!shown.length) {
+  if (!shown.length && !isBulkType) {
     sub.innerHTML = `<div class="search-body"><p class="search-hint">no rows match “${tableFilter}” in ${type}.</p></div>`;
     return;
   }
@@ -22215,8 +22723,10 @@ function renderTable(type) {
         <table class="grid">
           <thead><tr><th></th>${cols.map((c) => `<th>${c}</th>`).join("")}<th>links</th><th>state</th></tr></thead>
           <tbody id="grid-body"></tbody>
+          ${isBulkType ? `<tbody id="grid-bulk-body"></tbody>` : ""}
         </table>
       </div>
+      ${isBulkType ? `<div class="bulk-scan" id="bulk-scan-line"></div>` : ""}
     </div>`;
 
   const tbody = document.getElementById("grid-body");
@@ -22237,6 +22747,68 @@ function renderTable(type) {
       openProfile(e._anchor);
     });
   });
+
+  if (isBulkType) wireBulkTable(type, cols, ftoks);
+}
+
+/* Streaming filter over the bulk binary. The base rows above are rendered
+   from the materialised set; the scan decodes the *file* row by row, hands
+   matches to materialisation under a hard budget, and appends matched rows
+   without re-rendering the table (so focus survives keystrokes). */
+function wireBulkTable(type, cols, ftoks) {
+  const bulkBody = document.getElementById("grid-bulk-body");
+  const scanLine = document.getElementById("bulk-scan-line");
+  if (!bulkBody) return;
+  let matchCount = 0;
+  bulkBody.addEventListener("click", (ev) => {
+    const tr = ev.target.closest("tr.row");
+    if (tr && tr.dataset.anchor) openProfile(tr.dataset.anchor);
+  });
+
+  const appendRow = (entity) => {
+    const cons = state.connections.filter((c) => c.source === entity._anchor || c.target === entity._anchor);
+    const partition = state.partitions[entity._anchor];
+    const row = document.createElement("tr");
+    row.className = "row";
+    row.dataset.anchor = entity._anchor;
+    row.innerHTML = `<td>▸</td>
+      ${cols.map((c) => `<td>${entity[c] !== undefined ? String(entity[c]) : ""}</td>`).join("")}
+      <td>${cons.length}</td>
+      <td>${partition ? escC(partition) : ""}</td>`;
+    bulkBody.appendChild(row);
+  };
+
+  const onBatch = async (matches, handle) => {
+    let added = 0;
+    for (const m of matches) {
+      const ok = m._type === "parcel" ? bulkMaterializeParcel(m.idx) : bulkMaterializeOwner(m.idx);
+      if (!ok) { handle.cancel(); setScan("materialisation budget hit — further matches left binary on disk."); break; }
+      added++;
+    }
+    if (!added) return;
+    bulkRefresh();
+    for (const m of matches) {
+      const e = state.entities[bulkAnchor(m._type, m.idx)];
+      if (e) { appendRow(e); matchCount++; }
+      if (matchCount >= BULK_MAX_SCAN_MATCHES) { handle.cancel(); setScan("hit " + fmtInt(BULK_MAX_SCAN_MATCHES) + " match cap — rest of file untouched."); break; }
+    }
+  };
+  const setScan = (t) => { if (scanLine) scanLine.textContent = t; };
+
+  if (!ftoks.length) { setScan("bulk overlay active — " + fmtInt(bulk.totals[type]) + " more rows held binary in OPFS; entering a filter streams over the file."); return; }
+
+  const fast = bulkApnProbe(ftoks[0], BULK_MAX_SCAN_MATCHES);
+  if (fast.length) {
+    onBatch(fast, { cancel() {} }).then(() => { setScan("apn fast-path: " + fmtInt(matchCount) + " row materialised."); });
+    return;
+  }
+
+  setScan("streaming " + fmtInt(bulk.totals[type]) + " rows from the OPFS file…");
+  bulkScanRows(type, ftoks, onBatch,
+    (scanned) => setScan(matchCount
+      ? "file scanned (" + fmtInt(scanned) + " rows) — " + fmtInt(matchCount) + " matches materialised."
+      : "file scanned (" + fmtInt(scanned) + " rows) — no matches."),
+    (done, total) => { if (scanLine && done % 65536 === 0) scanLine.textContent = "streamed " + fmtInt(done) + " / " + fmtInt(total) + " rows…"; });
 }
 
 /* ── form surface — per-jurisdiction required fields ──
@@ -22404,9 +22976,10 @@ function renderFormContent() {
   const isCustom = !!customSchemas[formJurisdiction];
 
   const gapsHtml = report.gaps.length
-    ? `<div class="form-missing-summary"><b>data structure gap —</b> required by ${formJurisdiction} but not declared in FIELD_SPECS (disabled below until added):<br>${
-        report.gaps.map((g) => `<b>${g.type}</b>: ${g.fields.join(", ")}`).join(" · ")
-      }<br><button style="margin-top:6px;padding:3px 10px;border:1px solid var(--red);background:#fff;color:var(--red);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;" data-sync-spec>+ adopt these into FIELD_SPECS</button></div>`
+    ? `<div class="form-missing-summary"><b>${formJurisdiction} needs fields the workbook doesn't define yet.</b><br>
+        They're turned off in the forms below until you add them:<br>
+        ${report.gaps.map((g) => `<b>${g.type}</b> · ${g.fields.map((f) => `&quot;${f}&quot;`).join(", ")}`).join(" &nbsp;·&nbsp; ")}<br>
+        <button style="margin-top:6px;padding:3px 10px;border:1px solid var(--red);background:#fff;color:var(--red);font-family:var(--mono);font-size:11px;font-weight:700;cursor:pointer;" data-sync-spec>+ add these fields to the workbook</button></div>`
     : "";
 
   const editBtn = isCustom
@@ -22416,8 +22989,8 @@ function renderFormContent() {
 
   const summary = `<div class="form-missing-summary" style="${report.ok ? "border-color:var(--green);background:#f8fff8;color:var(--green);" : "border-color:var(--red);"}"">
       ${report.ok
-        ? "<b>complete —</b> every required record for this jurisdiction exists in the corpus."
-        : `<b>${report.missing} record${report.missing === 1 ? "" : "s"} short</b> — fill the forms below to satisfy <b>${formJurisdiction}</b>.`}
+        ? `<b>complete —</b> ${formJurisdiction}'s required records are all on file.`
+        : `<b>${report.missing} more record${report.missing === 1 ? "" : "s"} needed</b> — fill the forms below to finish <b>${formJurisdiction}</b>.`}
     </div>`;
 
   const sectionsHtml = report.sections.map((r) => {
@@ -22439,7 +23012,7 @@ function renderFormContent() {
       } else {
         input = `<input id="${id}" data-key="${key}" type="${inputTagFor(sec, entry).type}"${attrs} value="${val.replace(/"/g, "&quot;")}">`;
       }
-      const missDot = hasSpec ? "" : `<span class="req" title="not in FIELD_SPECS">◇</span>`;
+      const missDot = hasSpec ? "" : `<span class="req" title="turned off — not part of the workbook fields yet">◇</span>`;
       return `<div class="form-row ${hasSpec ? "" : "missing"}">
         <label>${key} <span class="req">*</span>${missDot}</label>
         <div>${input}</div>
@@ -22478,7 +23051,7 @@ function syncFieldSpecs() {
       if (!have.includes(key)) FIELD_SPECS[sec.type].push([key, ty === "textarea" ? "textarea" : ty === "select" ? "text" : ty === "tel" ? "text" : ty === "email" ? "text" : ty === "url" ? "text" : ty === "number" ? "number" : ty === "date" ? "date" : "text"]);
     });
   });
-  setStorageMsg("FIELD_SPECS updated — disabled fields now live.");
+  setStorageMsg("fields added — the disabled fields are now enabled.");
   renderFormContent();
 }
 
@@ -22530,7 +23103,7 @@ async function addFormCard(type, btn) {
   });
 
   if (missing.length) {
-    container.innerHTML = `<div class="form-missing-summary" style="margin:0;border:none;border-top:1px solid var(--border);font-size:11px;"><b>still missing:</b> ${missing.join(", ")}</div>`;
+    container.innerHTML = `<div class="form-missing-summary" style="margin:0;border:none;border-top:1px solid var(--border);font-size:11px;"><b>still to fill:</b> ${missing.join(", ")}</div>`;
     return;
   }
 
@@ -22953,6 +23526,25 @@ function renderSearch() {
   }
   const r = activateSearch(q);
   const noResolve = r.directCut.length === 0;
+
+  /* bulk overlay — an exact-APN probe materialises O(1) hits instantly;
+     a streaming scan over the binary blobs appends more under the budget. */
+  const bulkProbe = [];
+  if (bulk.on) {
+    for (const t of r.tokens) {
+      for (const m of bulkApnProbe(t, BULK_MAX_SCAN_MATCHES)) if (!bulk.materialized.parcel.has(m.idx)) bulkProbe.push(m.idx);
+    }
+    if (bulkProbe.length) {
+      for (const i of bulkProbe) bulkMaterializeParcel(i);
+      bulkRefresh();
+    }
+  }
+  const bulkProbeRows = bulkProbe.map((i) => {
+    const e = state.entities[bulkAnchor("parcel", i)];
+    if (!e) return "";
+    return bulkSearchRowHtml(e, tokenHitsIn(e, r.tokens, r.phrases));
+  }).join("");
+
   const heading = `<div class="tv-head"><h2>activate “${q}”</h2><span class="crumb">activation view</span></div>`;
   const tokStr = `${r.tokens.length ? `<span class="tok">[${r.tokens.join(" ")}]</span>` : ""}${r.phrases.length ? ` <span class="tok" title="contiguous phrase">“${r.phrases.join(" / ")}”</span>` : ""}`;
   const meta = `<div class="search-meta">
@@ -22961,7 +23553,7 @@ function renderSearch() {
     <b>${r.neighbors.length}</b> of <b>${r.neighborTotal}</b> one-hop activated ·
     <span class="cut">cut at score ${r.cutFloor.toFixed(2)} (window ${SEARCH_DIRECT_MAX}/${SEARCH_NEIGHBOR_MAX}, hop decay ${HOP_DECAY})</span>
   </div>`;
-  if (noResolve) {
+  if (noResolve && !bulkProbeRows && !bulk.on) {
     const voidTok = [...r.tokens, ...r.phrases].map((t) => `<span class="tok">${t}</span>`).join(" ");
     main.innerHTML = `${heading}
       <div class="search-body"><div class="search-meta">tokens ${tokStr} · <span class="void">void — no referent resolved so far, nothing reached</span></div>
@@ -22991,36 +23583,160 @@ function renderSearch() {
 
   main.innerHTML = `${heading}${meta}
     <div class="search-body">
-      <div class="search-group-head">hop 0 — direct matches<span class="gcount">${r.directCut.length}</span></div>
+      <div class="search-group-head">hop 0 — direct matches<span class="gcount">${r.directCut.length + (bulk.on && bulkProbeRows ? bulkProbe.length : 0)}</span></div>
       ${directRows}
+      ${bulkProbeRows ? `<div class="search-group-head">binary APN hits<span class="gcount">${bulkProbe.length}</span></div>${bulkProbeRows}` : ""}
       <div class="search-group-head">hop 1 — one hop from activated<span class="gcount">${nbRows ? r.neighbors.length : 0}</span></div>
       ${nbRows || `<p class="search-hint">no neighbours: the activated referents carry no edges in the record.</p>`}
+      ${bulk.on ? `<div id="bulk-search"></div>` : ""}
     </div>`;
   document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
+  if (bulk.on) wireBulkSearch(r.tokens);
+}
+
+function bulkSearchRowHtml(e, m) {
+  const ev = m && m.hitList ? m.hitList.map((k) => `<span class="em">${k}</span>`).join(" · ") : "";
+  return `<button class="search-row" data-open-anchor="${e._anchor}">
+    <span class="search-score">${m ? m.score.toFixed(2) : "–"}</span>
+    <span class="rel-type-tag">${e._type}</span>
+    <span class="search-label">${entityLabel(e)}</span>
+    <span class="search-evidence">${ev || `<span class="em">binary APN hit</span>`}</span>
+  </button>`;
+}
+
+function wireBulkSearch(tokens) {
+  const box = document.getElementById("bulk-search");
+  if (!box) return;
+  let matchCount = 0;
+  const line = document.createElement("div");
+  line.className = "bulk-scan";
+  box.innerHTML = `<div class="search-group-head">streamed from OPFS binary<span class="gcount" id="bulk-stream-count">…</span></div>`;
+  box.appendChild(line);
+  const set = (t) => { line.textContent = t; };
+  const rowHtml = (e) => `<button class="search-row" data-open-anchor="${e._anchor}">
+    <span class="search-score">–</span><span class="rel-type-tag">${e._type}</span>
+    <span class="search-label">${entityLabel(e)}</span>
+    <span class="search-evidence">streamed from the OPFS binary</span></button>`;
+  const onBatch = async (matches, handle) => {
+    let added = 0;
+    for (const m of matches) {
+      const ok = m._type === "parcel" ? bulkMaterializeParcel(m.idx) : bulkMaterializeOwner(m.idx);
+      if (!ok) { handle.cancel(); set("materialisation budget hit — anything matching stays binary on disk."); break; }
+      added++;
+    }
+    if (!added) return;
+    bulkRefresh();
+    let rows = "";
+    for (const m of matches) {
+      const e = state.entities[bulkAnchor(m._type, m.idx)];
+      if (e) { rows += rowHtml(e); matchCount++; }
+      if (matchCount >= BULK_MAX_SCAN_MATCHES) { handle.cancel(); set("hit " + fmtInt(BULK_MAX_SCAN_MATCHES) + " match cap — rest of file untouched."); break; }
+    }
+    if (rows) {
+      const host = document.createElement("div");
+      host.innerHTML = rows;
+      box.appendChild(host);
+      host.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
+      const g = document.getElementById("bulk-stream-count");
+      if (g) g.textContent = fmtInt(matchCount);
+    }
+  };
+  const prog = (done, total) => { if (done % 131072 === 0) set("streamed " + fmtInt(done) + " / " + fmtInt(total) + " parcels…"); };
+  const finish = (label) => (scanned) => { set(label + " (" + fmtInt(scanned) + " rows) — " + fmtInt(matchCount) + " matched and materialised."); };
+  set("streaming the OPFS binary files…");
+  bulkScanRows("parcel", tokens, onBatch, (scanned) => {
+    if (matchCount < BULK_MAX_SCAN_MATCHES) {
+      set("parcels done — scanning owners…");
+      bulkScanRows("owner", tokens, onBatch, finish("owners scanned"), prog);
+    } else finish("parcels scanned")(scanned);
+  }, prog);
 }
 
 
 /* ── timeline (raw event log) ── */
 const TYPE_TO_OP = { "io.matrix-events.ins": OP.INS, "io.matrix-events.con": OP.CON, "io.matrix-events.def": OP.DEF, "io.matrix-events.eva": OP.EVA, "io.matrix-events.rec": OP.REC, "io.matrix-events.seg": OP.SEG, "io.matrix-events.syn": OP.SYN };
+const esc = escC;
+function tlTime(ts) {
+  const d = new Date(ts ? ts : NaN);
+  return isNaN(d.getTime()) ? String(ts) : d.toLocaleString();
+}
+function tlAnchor(anchor) {
+  const e = state.entities[anchor];
+  const label = e ? truncate(entityLabel(e), 40) : anchor.slice(-12);
+  return `<button class="tl-anchor-link" data-open-anchor="${anchor}">${escC(label)}</button>`;
+}
+function tlFields(obj, indent) {
+  return Object.entries(obj).map(([k, v]) => {
+    const isAnchor = k === "anchor" || k.endsWith("_anchor");
+    if (v == null) return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv dim">null</span></div>`;
+    if (isAnchor) return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv">${tlAnchor(v)}</span></div>`;
+    if (typeof v === "string") {
+      const linked = (k === "code_url" || k.endsWith("_url")) && /^https?:\/\//.test(v);
+      const val = linked ? `<a class="field-link" href="${esc(v)}" target="_blank" rel="noopener">${truncate(esc(v), 90)} ↗</a>` : esc(v);
+      return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv str">${val}</span></div>`;
+    }
+    if (typeof v === "number") return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv num">${v}</span></div>`;
+    if (typeof v === "boolean") return `<div class="tl-f"><span class="tlk">${esc(k)}</span><span class="tlv str">${String(v)}</span></div>`;
+    if (Array.isArray(v)) return `<div class="tl-f"><span class="tlk">${esc(k)}</span><div class="tl-sub">${v.map((x) => `<div class="tl-f"><span class="tlk">[]</span><span class="tlv ${typeof x === "string" && !x.startsWith("$") ? "str" : "json"}">${typeof x === "string" ? esc(x) : esc(JSON.stringify(x, null, 2))}</span></div>`).join("")}</div></div>`;
+    return `<div class="tl-f"><span class="tlk">${esc(k)}</span><div class="tl-sub">${tlFields(v)}</div></div>`;
+  }).join("");
+}
 function renderTimeline() {
   const main = document.getElementById("main");
-  main.innerHTML = `<div class="tv-head"><h2>event log</h2><span class="crumb">${EVENTS.length} events, most recent first, capped at 500 shown</span></div><div class="tv-body"><div class="timeline" id="tl"></div></div>`;
+  main.innerHTML = `<div class="tv-head"><h2>event log</h2><span class="crumb">${EVENTS.length} events, most recent first, capped at 500 shown · click a row to expand the full event data</span></div><div class="tv-body"><div class="timeline" id="tl"></div></div>`;
   const rows = EVENTS.slice().reverse().slice(0, 500);
-  const tlA = (anchor) => `<button class="tl-anchor-link" data-open-anchor="${anchor}">${anchor.slice(-10)}</button>`;
+  const summary = (op, c) => {
+    if (op === OP.INS) return `${tlAnchor(c.anchor)} · <span class="tl-path">${esc(c.entity_type)}</span> <span class="tl-val">${truncate(JSON.stringify(c.payload), 110)}</span>`;
+    if (op === OP.CON) return `${tlAnchor(c.source_anchor)} -[<span class="tl-rel">${esc(c.relation_type)}</span>]→ ${tlAnchor(c.target_anchor)}`;
+    if (op === OP.DEF) return `${c.anchor ? tlAnchor(c.anchor) : `<span class="tl-anchor">_schema</span>`} · <span class="tl-path">${esc(c.path)}</span> = <span class="tl-val">${truncate(JSON.stringify(c.value), 90)}</span>`;
+    if (op === OP.EVA) return `${tlAnchor(c.anchor)} · <span class="tl-path">${esc(c.criterion)}</span> ⇒ <span class="tl-val">${esc(c.result)}</span>${c.note ? ` · <span class="tl-anchor">${truncate(esc(String(c.note)), 70)}</span>` : ""}`;
+    if (op === OP.SEG) return `${tlAnchor(c.anchor)} → <span class="tl-rel">${esc(c.partition)}</span>`;
+    if (op === OP.REC) return `<span class="tl-path">${esc(c.scope)}</span> recontextualized <span class="tl-anchor">(${esc(c.before_frame ? (c.before_frame.as_of || "…") : "?")} → ${esc(c.after_frame ? (c.after_frame.as_of || "…") : "?")})</span>`;
+    if (op === OP.SYN) return `[${(c.input_anchors || []).map(tlAnchor).join(", ")}] → <span class="tl-val">${truncate(JSON.stringify(c.output), 90)}</span>`;
+    return "";
+  };
   document.getElementById("tl").innerHTML = rows.map((e, i) => {
     const op = TYPE_TO_OP[e.type]; if (!op) return "";
     const c = e.content;
-    let body = "";
-    if (op === OP.INS) body = `${tlA(c.anchor)} · <span class="tl-path">${c.entity_type}</span> <span class="tl-val">${JSON.stringify(c.payload).slice(0, 70)}</span>`;
-    else if (op === OP.CON) body = `${tlA(c.source_anchor)} -[<span class="tl-rel">${c.relation_type}</span>]→ ${tlA(c.target_anchor)}`;
-    else if (op === OP.DEF) body = `${c.anchor ? tlA(c.anchor) : `<span class="tl-anchor">_schema</span>`} · <span class="tl-path">${c.path}</span> = <span class="tl-val">${JSON.stringify(c.value)}</span>`;
-    else if (op === OP.EVA) body = `${tlA(c.anchor)} · <span class="tl-path">${c.criterion}</span> ⇒ <span class="tl-val">${c.result}</span>`;
-    else if (op === OP.SEG) body = `${tlA(c.anchor)} → <span class="tl-rel">${c.partition}</span>`;
-    else if (op === OP.REC) body = `<span class="tl-path">${c.scope}</span> recontextualized`;
-    else if (op === OP.SYN) body = `[${(c.input_anchors || []).map(tlA).join(", ")}] → <span class="tl-val">${JSON.stringify(c.output).slice(0, 60)}</span>`;
-    return `<div class="tl-row"><div class="tl-idx">#${String(EVENTS.length - i).padStart(3, "0")}</div><div class="tl-glyph ${op.triad}">${op.glyph}</div><div class="tl-key">${op.key}</div><div class="tl-body">${body}</div><div class="tl-sender">${e.sender}</div></div>`;
+    const idx = EVENTS.length - i;
+    const body = summary(op, c);
+    return `<div class="tl-entry">
+      <div class="tl-row" data-open-tl="${idx}">
+        <button class="tl-exp">▸</button>
+        <div class="tl-idx">#${String(idx).padStart(3, "0")}</div>
+        <div class="tl-glyph ${op.triad}">${op.glyph}</div>
+        <div class="tl-key">${op.key}</div>
+        <div class="tl-body">${body}</div>
+        <div class="tl-sender">${esc(String(e.sender))} · ${tlTime(e.origin_server_ts)}</div>
+      </div>
+      <div class="tl-detail">
+        <div class="tl-meta"><span class="m-type">${esc(e.type)}</span><span class="m-id">${esc(String(e.event_id || ""))}</span>${e.origin_server_ts ? `<span>${tlTime(e.origin_server_ts)}</span>` : ""}</div>
+        <div class="tl-content">${tlFields(c)}</div>
+        <details class="tl-raw"><summary><button class="tl-copy" data-copy-event="${idx}" title="copy raw event JSON">copy</button> raw event JSON</summary><pre class="tl-raw-pre" data-raw-idx="${idx}"></pre></details>
+      </div>
+    </div>`;
   }).join("");
+  const tl = document.getElementById("tl");
+  tl.querySelectorAll("[data-open-tl]").forEach((row) => row.onclick = (ev) => {
+    if (ev.target.closest("[data-open-anchor]") || ev.target.closest("a")) return;
+    const entry = row.closest(".tl-entry");
+    const wasOpen = entry.classList.contains("open");
+    entry.classList.toggle("open");
+    if (!wasOpen) {
+      const pre = entry.querySelector(".tl-raw-pre");
+      if (pre && !pre.textContent) {
+        const e = EVENTS[Number(pre.dataset.rawIdx) - 1];
+        if (e) pre.textContent = JSON.stringify(e, null, 2);
+      }
+    }
+  });
   document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
+  tl.querySelectorAll("[data-copy-event]").forEach((b) => b.onclick = (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const e = EVENTS[Number(b.dataset.copyEvent) - 1];
+    if (e) navigator.clipboard?.writeText(JSON.stringify(e, null, 2));
+  });
 }
 
 /* ── compliance surface — task tracking, two personas ──
@@ -23345,10 +24061,11 @@ async function compOpenTask(obAnchor, parcelAnchor) {
 /* ── chrome ── */
 function renderChrome() {
   document.getElementById("stats").innerHTML = `
-    <span><b>${Object.keys(state.entities).length}</b> entities</span>
-    <span><b>${state.connections.length}</b> edges</span>
+    <span><b>${fmtInt(visibleEntityCount())}</b> entities</span>
+    <span><b>${fmtInt(visibleEdgeCount())}</b> edges</span>
     <span><b>${state.frames.length}</b> frames</span>
-    <span class="${state._violations.length ? "bad" : "ok"}">${state._violations.length === 0 ? "0 violations" : state._violations.length + " violations"}</span>`;
+    <span class="${state._violations.length ? "bad" : "ok"}">${state._violations.length === 0 ? "0 violations" : state._violations.length + " violations"}</span>
+    ${bulk.on ? `<span title="bulk dataset on — OPFS binary working set">bulk <b>${fmtInt(bulk.materialized.parcel.size)}p / ${fmtInt(bulk.materialized.owner.size)}o</b> resident</span>` : ""}`;
   renderSidebar();
   if (currentView.kind === "table") renderTable(currentView.type);
   else if (currentView.kind === "log") renderTimeline();
@@ -23358,7 +24075,8 @@ function renderChrome() {
 }
 
 document.getElementById("reset-btn").addEventListener("click", async () => {
-  if (!confirm("Discard everything added beyond the 5-city seed corpus?")) return;
+  if (!confirm("Discard everything added beyond the 5-city seed corpus? (the bulk dataset on OPFS stays unless purged)")) return;
+  if (bulk.on) disableBulk();
   EVENTS = SEED_EVENTS.slice();
   state = fold(EVENTS);
   await saveEvents();
@@ -23390,7 +24108,61 @@ searchInput.addEventListener("keydown", (ev) => {
 });
 
 loadCustomSchemas();
-loadEvents().then((evs) => { EVENTS = evs; state = fold(EVENTS); renderChrome(); });
+loadEvents().then((evs) => { EVENTS = evs; state = fold(EVENTS); renderChrome(); settleBulkAfterLoad(); });
+
+/* ── bulk wiring ── */
+function settleBulkAfterLoad() {
+  const purgeBtn = document.getElementById("bulk-purge");
+  if (purgeBtn) purgeBtn.style.display = "none";
+  if (localStorage.getItem("_mdb-bulk-on") === "1") bulkRestore();
+}
+function refreshPurgeBtn() {
+  const purgeBtn = document.getElementById("bulk-purge");
+  if (!purgeBtn) return;
+  purgeBtn.style.display = bulk.built ? "" : "none";
+}
+async function bulkRestore() {
+  if (!window.isSecureContext || !opfsAvail()) return;
+  bulk.busy = true;
+  setBulkBtn("working");
+  try {
+    await bulkLoad();
+    bulk.on = true;
+    bulkResetPreview();
+    localStorage.setItem("_mdb-bulk-on", "1");
+    renderChrome();
+    setBulkBtn("");
+    setBulkStatus("on — restored from OPFS (" + fmtInt(BULK_PARCELS) + " parcels / " + fmtInt(BULK_OWNERS) + " owners, binary); " + fmtInt(bulk.materialized.parcel.size) + " parcels resident in the fold.");
+    refreshPurgeBtn();
+    bulkGovernorLoop();
+  } catch (e) {
+    console.warn("bulk restore failed:", e);
+    bulk.busy = false;
+    setBulkBtn("");
+    localStorage.removeItem("_mdb-bulk-on");
+    setBulkStatus("stored bulk files were missing or corrupt — overlay off, seed corpus still live.", true);
+  } finally { bulk.busy = false; }
+}
+
+document.getElementById("bulk-btn").addEventListener("click", async () => {
+  if (bulk.busy) return;
+  if (bulk.on) {
+    disableBulk();
+    setBulkStatus("off — seed corpus restored; binary files kept in OPFS. Toggle again to reuse, or purge below.");
+    refreshPurgeBtn();
+  } else {
+    await bulkActivate();
+    refreshPurgeBtn();
+  }
+});
+
+const bulkPurgeBtn = document.getElementById("bulk-purge");
+if (bulkPurgeBtn) bulkPurgeBtn.addEventListener("click", async () => {
+  if (bulk.on) disableBulk();
+  try { await bulkPurge(); } catch (e) { console.error(e); }
+  refreshPurgeBtn();
+  setBulkStatus("OPFS bulk files purged — " + fmtInt(BULK_PARCELS) + " parcels / " + fmtInt(BULK_OWNERS) + " owners reclaimed. Next toggle regenerates them.");
+});
 </script>
 </body>
 </html>
