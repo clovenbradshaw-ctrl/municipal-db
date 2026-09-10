@@ -70,6 +70,7 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 .tv-tab.meta.active{color:var(--text-bright);font-style:normal;}
 .tv-tab .trows{font-size:10.5px;color:var(--text-dim);padding:1px 6px;border:1px solid var(--border-strong);background:#fff;font-weight:500;}
 
+.table-purpose{font-size:12.5px;line-height:1.65;color:var(--text);max-width:640px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border);}
 .dbtable{background:#fff;border:1px solid var(--border);margin:16px;}
 .dbtable .ddl{padding:8px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);line-height:1.6;white-space:pre;overflow-x:auto;}
 .dbtable .ddl .kw{color:var(--triad-significance);font-weight:600;}
@@ -702,6 +703,19 @@ const FIELD_SPECS = {
 };
 for (const t of Object.keys(FIELD_SPECS)) FIELD_SPECS[t] = [...FIELD_SPECS[t], ...UNIVERSAL_FIELDS];
 
+// Why each table exists — not what its columns are (the DDL says that),
+// but the job it does in the schema and why it's shaped the way it is.
+// Written once, by hand, per table; shown on that table's schema tab.
+const TABLE_PURPOSE = {
+  municipality: "A reading context, not really a city. Its job is to keep one body of law from bleeding into another — so that when the system says \"this obligation holds under Chicago,\" that's not a label, it's a guarantee that everything grouped under it was drafted by the same hand, at the same time, and can be safely compared to itself without being confused with St. Augustine's very different choices about the same question. It also carries the one thing that makes the whole project checkable at all: a real pointer back to where a human could go read the actual ordinance and verify any claim resting on it.",
+  jurisdiction: "Exists to answer a single question — can something bigger than this municipality override what it says — and it's deliberately thin, because most of the time the honest answer is \"no relevant interaction.\" It only earns its keep in the rare case where it actually does work, which in this corpus means exactly one thing: Florida's grandfather clause protecting St. Augustine's ordinance from a preemption statute that would otherwise have erased it. Jurisdiction isn't a place to store facts about states; it's a reachability check that happens to need somewhere to live.",
+  obligation: "The ground everything else stands on, in the literal sense — the verbatim clause, unmodified, addressed back to a real sentence a person could go read. It doesn't compute anything, doesn't judge anything, doesn't compare itself to anything else. Its whole job is to be stable enough that a Kind can say \"these obligations share a shape,\" a standing can say \"this obligation is what's being tested here,\" and a figure can say \"this is who it binds\" — all without any of those claims ever having the power to quietly rewrite what the ordinance actually says. It's the layer where \"is this actually true\" bottoms out in something checkable rather than asserted.",
+  kind: "The system's memory of pattern, held at arm's length on purpose. Its job isn't to record a fact — it's to record a hypothesis under active review, with a stated bar for when it's allowed to stop being one, and an honest tally of how much evidence currently exists against that bar. Where an obligation is certain but narrow — true of exactly one clause, in one city — a Kind is broad but provisional, claimed to be true of many clauses across cities until the evidence either firms up or falls apart. It's the only table designed to be wrong for a while without that being a failure.",
+  parcel: "Where a general rule stops being general. \"Dwelling units shall be registered\" isn't about anything until an actual dwelling unit exists to be the subject of it — parcel is that anchor, the real particular a rule gets tested against. It supplies half of what makes a standing meaningful (the other half comes from obligation), and right now it's doing that job honestly but provisionally: every parcel in this corpus is illustrative, standing in for what a real registration or assessor dataset would eventually populate.",
+  owner: "Plays the same role as parcel but for a person rather than a property — the one who'd actually answer for a violation. It exists mainly to make \"owns\" a checkable claim rather than an assumption quietly built into everything else, and it's honestly the thinnest table in the set: almost nothing in the system currently branches on who the owner is as opposed to which parcel is at issue. It's there because a registration regime needs a responsible party in principle, not because the system does much with the distinction yet.",
+  standing: "The only table whose entire reason for existing is to change. Everything above it describes what's generally true or what a particular thing is; a standing describes a relationship between them — this rule, read against this parcel, opened at a moment, tracked through real states, ending if it ends at all in either quiet compliance or a violation with a citable consequence. It's the one place in the whole schema where \"is this actually being followed, right now\" gets a real answer, held accountably, with its own history rather than a past that gets silently overwritten every time the present changes. Every other table exists, in the end, to make a standing's answer mean something: obligation supplies what's required, parcel supplies of whom, kind supplies whether the requirement is common or strange, and standing is where all of that finally gets tested against something real.",
+};
+
 let currentView = { kind: "table", type: "municipality" };
 let tableSubview = "records";
 
@@ -746,7 +760,7 @@ function renderTable(type) {
 
   const sub = document.getElementById("tv-subview");
   if (tableSubview === "schema") {
-    sub.innerHTML = `<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
+    sub.innerHTML = `${TABLE_PURPOSE[type] ? `<div class="table-purpose">${TABLE_PURPOSE[type]}</div>` : ""}<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
     return;
   }
 
