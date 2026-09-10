@@ -242,6 +242,64 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .form-entity-card .card-meta{font-size:10px;color:var(--text-faint);}
 .form-entity-card .card-check{width:16px;height:16px;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);}
 .form-entity-card .card-check.has{border-color:var(--green);background:#f0fff0;}
+
+/* ── compliance surface — task tracking by persona ── */
+.comp-body{padding:18px;flex:1;overflow-y:auto;max-width:980px;}
+.comp-persona{border:1px solid var(--border-strong);background:#fff;}
+.comp-persona-tabs{display:flex;border-bottom:1px solid var(--border-strong);background:var(--surface-2);}
+.comp-persona-tabs button{flex:1;padding:9px 12px;border-right:1px solid var(--border);background:transparent;font:inherit;font-weight:700;text-transform:uppercase;letter-spacing:.6px;font-size:11px;cursor:pointer;color:var(--text-dim);text-align:left;}
+.comp-persona-tabs button:last-child{border-right:none;}
+.comp-persona-tabs button small{display:block;font-weight:500;text-transform:none;letter-spacing:.2px;color:var(--text-faint);margin-top:2px;font-size:10px;}
+.comp-persona-tabs button.active{background:#fff;color:var(--text-bright);box-shadow:inset 0 -3px 0 #000;}
+.comp-identity{display:flex;align-items:center;gap:10px;padding:10px 12px;flex-wrap:wrap;}
+.comp-identity label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);font-weight:700;}
+.comp-identity select{min-width:280px;}
+.comp-id-link{font-size:11.5px;}
+.comp-chips{display:flex;gap:8px;flex-wrap:wrap;padding:0 12px 12px;}
+.comp-chip{font-size:10.5px;border:1px solid var(--border);background:var(--surface-2);padding:2px 8px;color:var(--text-dim);font-weight:600;font-variant-numeric:tabular-nums;}
+.comp-chip b{color:var(--text-bright);}
+.comp-chip.alert{color:var(--red);border-color:var(--red);background:#fff8f8;}
+.comp-chip.good{color:var(--green);border-color:var(--green);background:#f8fff8;}
+.comp-city{display:flex;align-items:center;gap:10px;margin:22px 0 8px;font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--text-dim);font-weight:700;}
+.comp-city .muni-count{color:var(--text-faint);font-weight:500;letter-spacing:.3px;}
+.comp-city .bar{flex:1;border-top:1px solid var(--border);}
+.comp-parcel{border:1px solid var(--border);background:#fff;margin-bottom:12px;}
+.comp-parcel-head{display:flex;align-items:baseline;gap:12px;padding:9px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.comp-parcel-addr{font-weight:700;font-size:13px;color:var(--text-bright);letter-spacing:.2px;}
+.comp-parcel-meta{font-size:10.5px;color:var(--text-dim);}
+.comp-parcel-meta b{color:var(--text-bright);font-weight:600;}
+.comp-role{font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;color:#fff;padding:1px 5px;font-weight:700;}
+.comp-role.managed{background:var(--triad-structure);}
+.comp-role.held{background:var(--text-dim);}
+.comp-progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--text-dim);font-variant-numeric:tabular-nums;}
+.comp-bar{width:92px;height:6px;background:var(--surface-3);border:1px solid var(--border-strong);}
+.comp-bar > span{display:block;height:100%;background:var(--green);}
+.comp-task{display:flex;align-items:center;gap:9px;padding:7px 12px;border-bottom:1px solid var(--surface-3);font-size:12px;}
+.comp-task:last-child{border-bottom:none;}
+.comp-task:hover{background:var(--surface-2);}
+.comp-task .tick{width:16px;height:16px;border:1.5px solid var(--border-strong);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--text-faint);}
+.comp-task.ok .tick{background:var(--green);border-color:var(--green);color:#fff;}
+.comp-task.bad .tick{background:var(--red);border-color:var(--red);color:#fff;}
+.comp-task.pend .tick{border-style:dashed;border-color:var(--blue);color:var(--blue);}
+.comp-task .t-body{flex:1;min-width:0;}
+.comp-task .t-dist{color:var(--text-bright);font-weight:600;}
+.comp-task .t-ref{font-size:10px;color:var(--text-dim);}
+.comp-status{font-size:9px;text-transform:uppercase;letter-spacing:.6px;font-weight:700;padding:1px 6px;border:1px solid;flex-shrink:0;font-variant-numeric:tabular-nums;}
+.comp-status.open{color:var(--blue);border-color:var(--blue);}
+.comp-status.not-started{color:var(--text-dim);border-color:var(--border);}
+.comp-status.resolved{color:var(--green);border-color:var(--green);}
+.comp-status.violated{color:var(--red);border-color:var(--red);}
+.comp-actions{display:flex;gap:5px;flex-shrink:0;}
+.comp-actions button{border:1px solid var(--border);background:#fff;padding:2px 8px;font-size:10.5px;font-weight:700;cursor:pointer;color:var(--text-dim);}
+.comp-actions button:hover{border-color:#000;color:var(--text-bright);background:var(--surface-2);}
+.comp-actions button.done{border-color:var(--green);color:var(--green);}
+.comp-actions button.done:hover{background:#f8fff8;}
+.comp-actions button.flag{border-color:var(--red);color:var(--red);}
+.comp-actions button.flag:hover{background:#fff8f8;}
+.comp-actions button.open{border-color:var(--blue);color:var(--blue);}
+.comp-actions button.open:hover{background:#f8f8ff;}
+.comp-more{font-size:10.5px;color:var(--text-dim);padding:4px 12px;background:var(--surface-2);border-top:1px solid var(--surface-3);font-style:italic;}
+.comp-empty{padding:40px 18px;color:var(--text-faint);font-style:italic;text-align:center;}
 </style>
 </head>
 <body>
@@ -263,6 +321,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
         <div id="sb-tables"></div>
       </div>
       <div class="sb-section" style="border-bottom:none;">
+        <button class="sb-log-link" id="sb-compliance">✓ compliance (tasks)</button>
         <button class="sb-log-link" id="sb-form">▣ form (required fields)</button>
         <button class="sb-log-link" id="sb-log">≡ event log (raw timeline)</button>
         <button class="sb-reset" id="reset-btn">reset to seed corpus</button>
@@ -22100,10 +22159,13 @@ function renderSidebar() {
   document.getElementById("sb-log").classList.toggle("active", currentView.kind === "log");
   const fmtBtn = document.getElementById("sb-form");
   if (fmtBtn) fmtBtn.classList.toggle("active", currentView.kind === "form");
+  const compBtn = document.getElementById("sb-compliance");
+  if (compBtn) compBtn.classList.toggle("active", currentView.kind === "compliance");
 
   document.querySelectorAll("[data-goto-table]").forEach((b) => b.onclick = () => { currentView = { kind: "table", type: b.dataset.gotoTable }; tableSubview = "records"; tableFilter = ""; renderChrome(); });
   document.getElementById("sb-log").onclick = () => { currentView = { kind: "log" }; renderChrome(); };
   document.getElementById("sb-form").onclick = () => { currentView = { kind: "form" }; renderChrome(); };
+  if (compBtn) compBtn.onclick = () => { currentView = { kind: "compliance" }; renderChrome(); };
 }
 
 /* ── table (grid) view ── */
@@ -22961,6 +23023,325 @@ function renderTimeline() {
   document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
 }
 
+/* ── compliance surface — task tracking, two personas ──
+   Tasks are standings: each standing is opened against a parcel
+   (opened_against) and grounded in an ordinance clause (grounds_in),
+   and its lifecycle is a SEG partition — open → resolved / violated,
+   exactly the fold's own state machine. A "pending" task is an
+   obligation the city already enforces on other parcels but this
+   parcel has no standing against yet; opening one emits a real
+   INS + two CONs + SEG, folds, and persists — indistinguishable from
+   the seed corpus's own standings. Personas: property owner watches
+   the parcels they hold; institutional agent runs the parcels they
+   manage or are the responsible party for. */
+let compPersona = localStorage.getItem("_compPersona") || "owner";
+let compOwnerAnchor = localStorage.getItem("_compOwner") || null;
+let compAgentAnchor = localStorage.getItem("_compAgent") || null;
+let compSequencer = 0;
+
+function escC(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function edgesOf(anchor, rel, dir) {
+  return state.connections.filter((c) => {
+    const hit = dir === "out" ? c.source === anchor : dir === "in" ? c.target === anchor : (c.source === anchor || c.target === anchor);
+    return hit && (!rel || c.type === rel);
+  });
+}
+function muniFor(parcel) {
+  for (const c of edgesOf(parcel._anchor, "opened_against", "in")) {
+    const gi = edgesOf(c.source, "grounds_in", "out")[0];
+    if (gi) { const h = edgesOf(gi.target, "holds", "out")[0]; if (h) return state.entities[h.target]; }
+  }
+  const city = String(parcel.address || "").toLowerCase();
+  for (const m of byType("municipality")) {
+    const nm = String(m.name || "").toLowerCase().replace(/,.*$/, "").trim();
+    if (nm && city.includes(nm)) return m;
+  }
+  return null;
+}
+function obligationOf(st) { const gi = edgesOf(st._anchor, "grounds_in", "out")[0]; return gi ? state.entities[gi.target] : null; }
+function standingsOn(parcel) { return edgesOf(parcel._anchor, "opened_against", "in").map((c) => state.entities[c.source]).filter(Boolean); }
+function enforcedObligations(muni) {
+  if (!muni) return [];
+  const out = new Map();
+  for (const st of byType("standing")) {
+    const ob = obligationOf(st); if (!ob) continue;
+    const h = edgesOf(ob._anchor, "holds", "out")[0];
+    if (h && h.target === muni._anchor) out.set(ob._anchor, ob);
+  }
+  return [...out.values()];
+}
+function tasksFor(parcel) {
+  const muni = muniFor(parcel);
+  const standards = enforcedObligations(muni);
+  const tasks = standingsOn(parcel).map((st) => ({ kind: "standing", anchor: st._anchor, standing: st, state: state.partitions[st._anchor] || "open" }));
+  const grounded = new Set(tasks.filter((t) => obligationOf(t.standing)).map((t) => obligationOf(t.standing)._anchor));
+  for (const ob of standards) {
+    if (grounded.has(ob._anchor)) continue;
+    tasks.push({ kind: "pending", obligation: ob, state: "not started", parcel: parcel._anchor });
+  }
+  const RANK = { open: 0, "not started": 1, violated: 2, resolved: 3 };
+  tasks.sort((a, b) => RANK[a.state] - RANK[b.state]);
+  return { muni, standards, tasks };
+}
+function obligationRef(ob) {
+  let s = "";
+  if (ob.section) s += ob.section + (ob.mark ? `[${ob.mark}]` : "");
+  return s;
+}
+function obligationPhrase(ob) { return truncate(ob.text || ob.section || "compliance obligation", 64); }
+function parcelCityKey(parcel, muni) {
+  if (muni) return muni._anchor;
+  const m = String(parcel.address || "").match(/,\s*([A-Za-z .'()-]+?)\s+[A-Z]{2}$/);
+  return m ? m[1].toLowerCase() : "unmapped";
+}
+function parcelCityLabel(parcel, muni) {
+  if (muni) return String(muni.name);
+  const m = String(parcel.address || "").match(/,\s*([A-Za-z .'()-]+?)\s+[A-Z]{2}$/);
+  return m ? m[1] : "unmapped";
+}
+function compOwnerCounts() {
+  const counts = new Map();
+  for (const st of byType("standing")) {
+    const oa = edgesOf(st._anchor, "opened_against", "out")[0]; if (!oa) continue;
+    for (const o of edgesOf(oa.target, "owns", "in")) counts.set(o.source, (counts.get(o.source) || 0) + 1);
+  }
+  return counts;
+}
+function defaultCompOwner() {
+  const counts = compOwnerCounts();
+  const top = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+  return top ? top[0] : null;
+}
+function compAgents() {
+  const n = new Map();
+  for (const a of byType("owner")) {
+    const k = edgesOf(a._anchor, "manages", "out").length + edgesOf(a._anchor, "is_local_responsible_party_for", "out").length;
+    if (k > 0) n.set(a._anchor, k);
+  }
+  return [...n.keys()].map((a) => ({ owner: state.entities[a], n: n.get(a) }))
+    .filter((x) => x.owner)
+    .sort((x, y) => y.n - x.n || entityLabel(x.owner).localeCompare(entityLabel(y.owner)));
+}
+function agentPortfolio(owner) {
+  const seen = new Set(); const out = [];
+  const add = (rel, role) => { for (const c of edgesOf(owner._anchor, rel, "out")) { const p = state.entities[c.target]; if (p && !seen.has(p._anchor)) { seen.add(p._anchor); out.push({ parcel: p, role }); } } };
+  add("manages", "managed");
+  add("is_local_responsible_party_for", "managed");
+  add("owns", "held");
+  return out;
+}
+function rolesOf(owner, parcel) {
+  const out = [];
+  for (const rel of ["manages", "is_local_responsible_party_for"]) {
+    if (edgesOf(owner._anchor, rel, "out").some((c) => c.target === parcel._anchor)) { out.push(rel === "manages" ? "managed" : "responsible party"); break; }
+  }
+  for (const rel of ["is_local_representative_for", "is_emergency_contact_for", "is_contact_for"]) {
+    if (edgesOf(owner._anchor, rel, "out").some((c) => c.target === parcel._anchor)) out.push(rel.replace("is_", "").replace(/_/g, " "));
+  }
+  if (edgesOf(owner._anchor, "owns", "out").some((c) => c.target === parcel._anchor)) out.push("held");
+  return out;
+}
+function compOwnerOptionsHtml() {
+  const counts = compOwnerCounts();
+  const re = (o) => counts.get(o._anchor) || 0;
+  const all = byType("owner").filter((o) => edgesOf(o._anchor, "owns", "out").length > 0)
+    .sort((a, b) => re(b) - re(a) || entityLabel(a).localeCompare(entityLabel(b)));
+  const opt = (o) => `<option value="${o._anchor}">${escC(entityLabel(o))}${re(o) ? ` · ${re(o)} compliance task${re(o) > 1 ? "s" : ""}` : ""}</option>`;
+  const active = all.filter((o) => re(o) > 0), rest = all.filter((o) => re(o) === 0);
+  return `<optgroup label="active — owns parcels with open or drawn tasks">${active.map(opt).join("")}</optgroup>
+    <optgroup label="other property owners">${rest.slice(0, 2000).map(opt).join("")}${rest.length > 2000 ? `<option disabled>… ${rest.length - 2000} more owners</option>` : ""}</optgroup>`;
+}
+function compAgentOptionsHtml() {
+  return compAgents().map((a) => `<option value="${a.owner._anchor}">${escC(entityLabel(a.owner))} · ${a.n} parcel${a.n > 1 ? "s" : ""} in portfolio</option>`).join("");
+}
+function compTaskRowHtml(task) {
+  const st = task.standing;
+  const ob = st ? obligationOf(st) : task.obligation;
+  const ref = ob ? obligationRef(ob) : "";
+  const dist = st ? (st.distinction || obligationPhrase(ob)) : obligationPhrase(ob);
+  const cls = task.state === "resolved" ? "ok" : task.state === "violated" ? "bad" : task.state === "open" ? "live" : task.kind === "pending" ? "pend" : "";
+  const tick = task.state === "resolved" ? "✓" : task.state === "violated" ? "✗" : task.kind === "pending" ? "◇" : "·";
+  const actions = [];
+  if (task.kind === "standing" && task.state === "open") {
+    actions.push(`<button class="done" data-comp-task="${task.anchor}" data-part="resolved" title="SEG → resolved">✓ complete</button>`);
+    actions.push(`<button class="flag" data-comp-task="${task.anchor}" data-part="violated" title="SEG → violated">✗ flag</button>`);
+  } else if (task.kind === "standing" && task.state === "resolved") {
+    actions.push(`<button class="open" data-comp-task="${task.anchor}" data-part="open" title="SEG → open">↺ reopen</button>`);
+  } else if (task.kind === "standing" && task.state === "violated") {
+    actions.push(`<button class="open" data-comp-task="${task.anchor}" data-part="open" title="SEG → open">↻ retry</button>`);
+    actions.push(`<button class="done" data-comp-task="${task.anchor}" data-part="resolved" title="SEG → resolved">✓ resolve</button>`);
+  } else if (task.kind === "pending" && ob) {
+    actions.push(`<button class="open" data-comp-open="${ob._anchor}" data-comp-parcel="${escC(task.parcel)}" title="open a standing grounded in §${escC(ref)}">＋ open task</button>`);
+  }
+  return `<div class="comp-task ${cls}">
+    <span class="tick">${tick}</span>
+    <span class="t-body"><span class="t-dist">${escC(dist)}</span>${ref ? ` <span class="t-ref">§ ${escC(ref)}${ob && ob.holder ? ` · ${escC(ob.holder)}` : ""}</span>` : ""}</span>
+    <span class="comp-status ${task.state === "not started" ? "not-started" : task.state}">${task.state}</span>
+    <span class="comp-actions">${actions.join("")}</span>
+  </div>`;
+}
+function compParcelBlockHtml(parcel, roles, t) {
+  const total = t.tasks.filter((x) => x.kind === "standing").length;
+  const dones = t.tasks.filter((x) => x.kind === "standing" && x.state === "resolved").length;
+  const pct = total ? Math.round(dones / total * 100) : 0;
+  const p = parcel;
+  return `<div class="comp-parcel">
+    <div class="comp-parcel-head">
+      <span class="comp-parcel-addr">${escC(p.address || "")}</span>
+      <span class="comp-parcel-meta">apn <b>${escC(p.apn || "")}</b>${p.bedrooms != null ? ` · <b>${p.bedrooms}</b> br` : ""}${p.zoning ? ` · ${escC(p.zoning)}` : ""} · <b>${p._anchor.slice(-8)}</b></span>
+      ${roles.map((r) => `<span class="comp-role ${r === "managed" ? "managed" : "held"}">${escC(r)}</span>`).join("")}
+      <span class="comp-progress">${dones}/${total} drawn</span>
+      <span class="comp-bar"><span style="width:${pct}%"></span></span>
+    </div>
+    ${t.tasks.map(compTaskRowHtml).join("")}
+  </div>`;
+}
+function compChipsHtml(parcels, tm) {
+  let drawn = 0, open = 0, violated = 0, done = 0;
+  for (const p of parcels) {
+    const t = tm.get(p.parcel._anchor);
+    for (const x of t.tasks) {
+      if (x.kind !== "standing") continue;
+      drawn += 1;
+      if (x.state === "open") open += 1;
+      else if (x.state === "violated") violated += 1;
+      else if (x.state === "resolved") done += 1;
+    }
+  }
+  const chips = [
+    `<span class="comp-chip">parcels <b>${parcels.length}</b></span>`,
+    `<span class="comp-chip">tasks drawn <b>${drawn}</b></span>`,
+    `<span class="comp-chip">open <b>${open}</b></span>`,
+    violated ? `<span class="comp-chip alert">violated <b>${violated}</b></span>` : "",
+    `<span class="comp-chip good">resolved <b>${done}</b></span>`,
+    drawn && !open && !violated ? `<span class="comp-chip good">portfolio clean — no open or violated tasks</span>` : "",
+  ];
+  return chips.filter(Boolean).join("");
+}
+function renderCompliance() {
+  const main = document.getElementById("main");
+  main.innerHTML = `
+    <div class="form-head"><h2>compliance tasks</h2>
+      <span class="crumb">task tracking · ${compPersona === "owner" ? "property owner" : "institutional agent"} persona · every action is a real SEG on the event log</span></div>
+    <div class="comp-body">
+      <div class="comp-persona">
+        <div class="comp-persona-tabs">
+          <button data-persona="owner" class="${compPersona === "owner" ? "active" : ""}">property owner<small>your own parcels, one checklist at a time</small></button>
+          <button data-persona="agent" class="${compPersona === "agent" ? "active" : ""}">institutional agent<small>managed portfolio across cities</small></button>
+        </div>
+        <div class="comp-identity">
+          <label>who is acting</label>
+          <select id="comp-select">${compPersona === "owner" ? compOwnerOptionsHtml() : compAgentOptionsHtml()}</select>
+          <span class="comp-id-link" id="comp-id-link"></span>
+        </div>
+        <div class="comp-chips" id="comp-chips"></div>
+      </div>
+      <div id="comp-content"></div>
+    </div>`;
+  document.querySelectorAll("[data-persona]").forEach((b) => b.onclick = () => {
+    compPersona = b.dataset.persona;
+    localStorage.setItem("_compPersona", compPersona);
+    renderCompliance();
+  });
+  const sel = document.getElementById("comp-select");
+  sel.onchange = () => {
+    const v = sel.value;
+    if (compPersona === "owner") { compOwnerAnchor = v; localStorage.setItem("_compOwner", v); }
+    else { compAgentAnchor = v; localStorage.setItem("_compAgent", v); }
+    renderComplianceContent();
+  };
+  renderComplianceContent();
+}
+function renderComplianceContent() {
+  const sel = document.getElementById("comp-select");
+  const chips = document.getElementById("comp-chips");
+  const content = document.getElementById("comp-content");
+  if (!sel || !chips || !content) return;
+  const agents = compAgents();
+  let identity = null;
+  if (compPersona === "owner") {
+    const a = compOwnerAnchor && state.entities[compOwnerAnchor] ? compOwnerAnchor : defaultCompOwner();
+    identity = a ? state.entities[a] : null;
+    if (a) { compOwnerAnchor = a; localStorage.setItem("_compOwner", a); }
+  } else {
+    const a = compAgentAnchor && state.entities[compAgentAnchor] ? compAgentAnchor : (agents[0] ? agents[0].owner._anchor : null);
+    identity = a ? state.entities[a] : null;
+    if (a) { compAgentAnchor = a; localStorage.setItem("_compAgent", a); }
+  }
+  if (!identity) {
+    sel.selectedIndex = -1;
+    chips.innerHTML = "";
+    content.innerHTML = `<div class="comp-empty">no ${compPersona === "owner" ? "property owners with owned parcels" : "institutional agents managing parcels"} in the corpus — nothing to project yet.</div>`;
+    return;
+  }
+  sel.value = identity._anchor;
+  document.getElementById("comp-id-link").innerHTML = anchorLink(identity._anchor);
+  const parcels = compPersona === "owner"
+    ? edgesOf(identity._anchor, "owns", "out").map((c) => ({ parcel: state.entities[c.target], role: "held" })).filter((p) => p.parcel)
+    : agentPortfolio(identity);
+
+  const tm = new Map(parcels.map((p) => [p.parcel._anchor, tasksFor(p.parcel)]));
+  chips.innerHTML = compChipsHtml(parcels, tm);
+
+  const groups = new Map();
+  for (const p of parcels) {
+    const muni = muniFor(p.parcel);
+    const key = parcelCityKey(p.parcel, muni);
+    if (!groups.has(key)) groups.set(key, { label: parcelCityLabel(p.parcel, muni), muni, items: [] });
+    groups.get(key).items.push(p);
+  }
+  const sortGroup = (a, b) =>
+    ((tm.get(b.parcel._anchor).tasks.some((t) => t.kind === "standing") ? 1 : 0) - (tm.get(a.parcel._anchor).tasks.some((t) => t.kind === "standing") ? 1 : 0))
+    || String(a.parcel.address || "").localeCompare(String(b.parcel.address || ""));
+  const CAP = 10;
+  let html = "";
+  for (const [, g] of groups) {
+    g.items.sort(sortGroup);
+    const shown = g.items.slice(0, CAP);
+    html += `<div class="comp-city">${escC(g.label)} <span class="muni-count">${g.items.length} parcel${g.items.length > 1 ? "s" : ""} · ${g.muni ? enforcedObligations(g.muni).length + " enforceable obligations" : "no jurisdiction mapped"}</span><span class="bar"></span></div>
+      ${shown.map((p) => compParcelBlockHtml(p.parcel, compPersona === "owner" ? rolesOf(identity, p.parcel) : [p.role], tm.get(p.parcel._anchor))).join("")}
+      ${g.items.length > CAP ? `<div class="comp-more" style="background:#fff;border:1px solid var(--border);margin:-6px 0 12px;padding:6px 12px;">+ ${g.items.length - CAP} more ${escC(g.label)} parcels held by this persona — compliance not shown for them here</div>` : ""}`;
+  }
+  content.innerHTML = html || `<div class="comp-empty">${compPersona === "owner" ? "this owner holds no parcels." : "this agent manages no parcels."}</div>`;
+
+  document.querySelectorAll("[data-comp-task]").forEach((b) => b.onclick = () => compStandingSeg(b.dataset.compTask, b.dataset.part));
+  document.querySelectorAll("[data-comp-open]").forEach((b) => b.onclick = () => compOpenTask(b.dataset.compOpen, b.dataset.compParcel));
+  document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
+}
+async function compStandingSeg(anchor, partition) {
+  const sender = "@michael:hyphae.social";
+  const ts = Date.now();
+  compSequencer += 1;
+  EVENTS.push(buildSeg(anchor, partition, { sender, ts: ts + compSequencer, id: `$seg_${anchor.slice(-8)}_${partition}_${ts}` }));
+  state = fold(EVENTS);
+  await saveEvents();
+  setStorageMsg(`standing ${anchor.slice(-10)} → ${partition}`);
+  renderComplianceContent();
+}
+async function compOpenTask(obAnchor, parcelAnchor) {
+  const sender = "@michael:hyphae.social";
+  const ts = Date.now();
+  const ob = state.entities[obAnchor];
+  const twin = byType("standing").find((s) => { const gi = edgesOf(s._anchor, "grounds_in", "out")[0]; return gi && gi.target === obAnchor && s.distinction; });
+  const distinction = twin ? twin.distinction : (ob.section ? `${ob.section} ${ob.mark ? `[${ob.mark}] ` : ""}` : "") + obligationPhrase(ob);
+  const payload = { distinction: String(distinction).slice(0, 160), consequence: null, openedAt: new Date().toISOString().slice(0, 10) };
+  compSequencer += 1;
+  const ins = buildIns("standing", payload, { sender, ts: ts + compSequencer });
+  compSequencer += 1;
+  const con1 = buildCon(ins.anchor, obAnchor, "grounds_in", { sender, ts: ts + compSequencer, id: `$con_${ins.anchor.slice(-8)}_grounds_in_${ts}` });
+  compSequencer += 1;
+  const con2 = buildCon(ins.anchor, parcelAnchor, "opened_against", { sender, ts: ts + compSequencer, id: `$con_${ins.anchor.slice(-8)}_opened_against_${ts}` });
+  compSequencer += 1;
+  const seg = buildSeg(ins.anchor, "open", { sender, ts: ts + compSequencer, id: `$seg_${ins.anchor.slice(-8)}_open_${ts}` });
+  EVENTS.push(ins, con1, con2, seg);
+  state = fold(EVENTS);
+  await saveEvents();
+  setStorageMsg(`opened task ${ins.anchor.slice(-10)} against ${parcelAnchor.slice(-8)}`);
+  renderComplianceContent();
+}
+
 /* ── chrome ── */
 function renderChrome() {
   document.getElementById("stats").innerHTML = `
@@ -22972,6 +23353,7 @@ function renderChrome() {
   if (currentView.kind === "table") renderTable(currentView.type);
   else if (currentView.kind === "log") renderTimeline();
   else if (currentView.kind === "form") renderForm();
+  else if (currentView.kind === "compliance") renderCompliance();
   else if (currentView.kind === "search") renderSearch();
 }
 
