@@ -131,6 +131,10 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .tl-copy{background:none;border:none;padding:0 2px;font:inherit;color:var(--triad-structure);cursor:pointer;}
 .tl-copy:hover{text-decoration:underline;}
 .tl-hint{color:var(--text-faint);font-size:10.5px;}
+.tv-tlfilters{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;}
+.tl-chip{background:none;border:1px solid var(--surface-3);border-radius:10px;padding:1px 8px;font:inherit;font-size:10.5px;font-family:var(--mono);color:var(--text-dim);cursor:pointer;}
+.tl-chip:hover{color:var(--text-bright);border-color:var(--text-faint);}
+.tl-chip.on{background:var(--triad-structure);border-color:var(--triad-structure);color:#fff;}
 
 /* ── activation → search ── */
 .tv-filter{margin-left:auto;display:flex;align-items:center;gap:6px;}
@@ -22153,6 +22157,7 @@ function setBulkStatus(msg, isErr) {
   el.classList.toggle("err", !!isErr);
   el.innerHTML = msg;
 }
+function escHtml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 function setBulkBtn(mode) {
   const b = document.getElementById("bulk-btn");
   if (!b) return;
@@ -22439,7 +22444,7 @@ async function bulkActivate() {
     state = fold(EVENTS);
     renderChrome();
     setBulkBtn("");
-    setBulkStatus("could not start — " + (e && e.message || e) + ". App is unaffected (seed corpus still live).", true);
+    setBulkStatus("could not start — " + escHtml(e && e.message || e) + ". App is unaffected (seed corpus still live).", true);
   } finally {
     bulk.busy = false;
   }
@@ -23656,6 +23661,8 @@ function wireBulkSearch(tokens) {
 /* ── timeline (raw event log) ── */
 const TYPE_TO_OP = { "io.matrix-events.ins": OP.INS, "io.matrix-events.con": OP.CON, "io.matrix-events.def": OP.DEF, "io.matrix-events.eva": OP.EVA, "io.matrix-events.rec": OP.REC, "io.matrix-events.seg": OP.SEG, "io.matrix-events.syn": OP.SYN };
 const esc = escC;
+const TL_FILTERS = ["all", "ins", "con", "def", "eva", "rec", "seg", "syn"];
+let tlFilter = null;
 function tlTime(ts) {
   const d = new Date(ts ? ts : NaN);
   return isNaN(d.getTime()) ? String(ts) : d.toLocaleString();
@@ -23683,8 +23690,10 @@ function tlFields(obj, indent) {
 }
 function renderTimeline() {
   const main = document.getElementById("main");
-  main.innerHTML = `<div class="tv-head"><h2>event log</h2><span class="crumb">${EVENTS.length} events, most recent first, capped at 500 shown · click a row to expand the full event data</span></div><div class="tv-body"><div class="timeline" id="tl"></div></div>`;
-  const rows = EVENTS.slice().reverse().slice(0, 500);
+  const chips = TL_FILTERS.map((k) => `<button class="tl-chip ${tlFilter === k || (k === "all" && !tlFilter) ? "on" : ""}" data-tl-filter="${k}">${k}</button>`).join("");
+  main.innerHTML = `<div class="tv-head"><h2>event log</h2><span class="crumb">${EVENTS.length} events, most recent first, capped at 500 shown · click a row to expand the full event data</span><div class="tv-tlfilters">${chips}</div></div><div class="tv-body"><div class="timeline" id="tl"></div></div>`;
+  const allReversed = EVENTS.slice().reverse();
+  const rows = (tlFilter ? allReversed.filter((e) => TYPE_TO_OP[e.type] && TYPE_TO_OP[e.type].key === tlFilter) : allReversed).slice(0, 500);
   const summary = (op, c) => {
     if (op === OP.INS) return `${tlAnchor(c.anchor)} · <span class="tl-path">${esc(c.entity_type)}</span> <span class="tl-val">${truncate(JSON.stringify(c.payload), 110)}</span>`;
     if (op === OP.CON) return `${tlAnchor(c.source_anchor)} -[<span class="tl-rel">${esc(c.relation_type)}</span>]→ ${tlAnchor(c.target_anchor)}`;
@@ -23698,21 +23707,21 @@ function renderTimeline() {
   document.getElementById("tl").innerHTML = rows.map((e, i) => {
     const op = TYPE_TO_OP[e.type]; if (!op) return "";
     const c = e.content;
-    const idx = EVENTS.length - i;
+    const oi = EVENTS.indexOf(e);
     const body = summary(op, c);
     return `<div class="tl-entry">
-      <div class="tl-row" data-open-tl="${idx}">
+      <div class="tl-row" data-open-tl="${oi}">
         <button class="tl-exp">▸</button>
-        <div class="tl-idx">#${String(idx).padStart(3, "0")}</div>
+        <div class="tl-idx">#${String(oi + 1).padStart(3, "0")}</div>
         <div class="tl-glyph ${op.triad}">${op.glyph}</div>
         <div class="tl-key">${op.key}</div>
         <div class="tl-body">${body}</div>
-        <div class="tl-sender">${esc(String(e.sender))} · ${tlTime(e.origin_server_ts)}</div>
+        <div class="tl-sender">${escC(String(e.sender))} · ${tlTime(e.origin_server_ts)}</div>
       </div>
       <div class="tl-detail">
-        <div class="tl-meta"><span class="m-type">${esc(e.type)}</span><span class="m-id">${esc(String(e.event_id || ""))}</span>${e.origin_server_ts ? `<span>${tlTime(e.origin_server_ts)}</span>` : ""}</div>
+        <div class="tl-meta"><span class="m-type">${escC(e.type)}</span><span class="m-id">${escC(String(e.event_id || ""))}</span>${e.origin_server_ts ? `<span>${tlTime(e.origin_server_ts)}</span>` : ""}</div>
         <div class="tl-content">${tlFields(c)}</div>
-        <details class="tl-raw"><summary><button class="tl-copy" data-copy-event="${idx}" title="copy raw event JSON">copy</button> raw event JSON</summary><pre class="tl-raw-pre" data-raw-idx="${idx}"></pre></details>
+        <details class="tl-raw"><summary><button class="tl-copy" data-copy-event="${oi}" title="copy raw event JSON">copy</button> raw event JSON</summary><pre class="tl-raw-pre" data-raw-idx="${oi}"></pre></details>
       </div>
     </div>`;
   }).join("");
@@ -23725,7 +23734,7 @@ function renderTimeline() {
     if (!wasOpen) {
       const pre = entry.querySelector(".tl-raw-pre");
       if (pre && !pre.textContent) {
-        const e = EVENTS[Number(pre.dataset.rawIdx) - 1];
+        const e = EVENTS[Number(pre.dataset.rawIdx)];
         if (e) pre.textContent = JSON.stringify(e, null, 2);
       }
     }
@@ -23734,8 +23743,12 @@ function renderTimeline() {
   tl.querySelectorAll("[data-copy-event]").forEach((b) => b.onclick = (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    const e = EVENTS[Number(b.dataset.copyEvent) - 1];
+    const e = EVENTS[Number(b.dataset.copyEvent)];
     if (e) navigator.clipboard?.writeText(JSON.stringify(e, null, 2));
+  });
+  main.querySelectorAll("[data-tl-filter]").forEach((b) => b.onclick = () => {
+    tlFilter = b.dataset.tlFilter === "all" ? null : b.dataset.tlFilter;
+    renderTimeline();
   });
 }
 
