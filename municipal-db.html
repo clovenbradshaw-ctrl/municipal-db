@@ -70,7 +70,13 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 .tv-tab.meta.active{color:var(--text-bright);font-style:normal;}
 .tv-tab .trows{font-size:10.5px;color:var(--text-dim);padding:1px 6px;border:1px solid var(--border-strong);background:#fff;font-weight:500;}
 
-.table-purpose{font-size:12.5px;line-height:1.65;color:var(--text);max-width:640px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.table-purpose{max-width:640px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.table-purpose summary{cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);font-weight:700;list-style:none;}
+.table-purpose summary::-webkit-details-marker{display:none;}
+.table-purpose summary::before{content:"▸ ";}
+.table-purpose[open] summary::before{content:"▾ ";}
+.table-purpose summary:hover{color:var(--text-bright);}
+.table-purpose-body{font-size:12.5px;line-height:1.65;color:var(--text);margin-top:8px;}
 .dbtable{background:#fff;border:1px solid var(--border);margin:16px;}
 .dbtable .ddl{padding:8px 12px;background:var(--surface-2);border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);line-height:1.6;white-space:pre;overflow-x:auto;}
 .dbtable .ddl .kw{color:var(--triad-significance);font-weight:600;}
@@ -760,7 +766,7 @@ function renderTable(type) {
 
   const sub = document.getElementById("tv-subview");
   if (tableSubview === "schema") {
-    sub.innerHTML = `${TABLE_PURPOSE[type] ? `<div class="table-purpose">${TABLE_PURPOSE[type]}</div>` : ""}<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
+    sub.innerHTML = `${TABLE_PURPOSE[type] ? `<details class="table-purpose"><summary>why this table exists</summary><div class="table-purpose-body">${TABLE_PURPOSE[type]}</div></details>` : ""}<div class="ddl"><span class="kw">table</span> <span class="id">${type}</span> {\n${ddlFields}\n}</div>`;
     return;
   }
 
