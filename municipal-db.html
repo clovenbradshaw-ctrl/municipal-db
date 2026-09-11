@@ -169,6 +169,71 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .anchor-link:hover{color:var(--triad-structure);text-decoration-color:var(--triad-structure);}
 .profile-undo-btn{margin-top:6px;font-size:10.5px;padding:3px 9px;border:1px solid var(--border-strong);background:#fff;color:var(--text-dim);}
 .profile-undo-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ── compliance workbench ── */
+.cmp-head{padding:12px 18px;border-bottom:1px solid var(--border-strong);display:flex;align-items:center;gap:12px;background:#fff;flex-shrink:0;flex-wrap:wrap;}
+.cmp-head h2{font-size:16px;font-weight:700;color:var(--text-bright);letter-spacing:.2px;text-transform:lowercase;}
+.cmp-badge{font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;padding:2px 8px;border:1px solid var(--border-strong);background:var(--surface-2);}
+.cmp-badge.gov{border-color:var(--triad-structure);color:var(--triad-structure);background:#f1f0fb;}
+.cmp-badge.law{border-color:var(--triad-significance);color:var(--triad-significance);background:#fbf1f0;}
+.cmp-tabs{display:flex;gap:0;border-bottom:1px solid var(--border-strong);background:var(--surface-2);flex-shrink:0;}
+.cmp-tab{padding:7px 12px;background:transparent;border:none;border-bottom:3px solid transparent;color:var(--text);font-family:var(--mono);font-size:12px;font-weight:500;text-transform:lowercase;cursor:pointer;}
+.cmp-tab:hover{color:var(--text-bright);}
+.cmp-tab.active{border-bottom-color:#000;color:var(--text-bright);font-weight:700;background:var(--surface);}
+.cmp-tab .ct-n{font-size:10px;color:var(--text-dim);padding:1px 5px;border:1px solid var(--border-strong);background:#fff;margin-left:4px;}
+.cmp-body{flex:1;overflow:auto;padding:0;}
+.cmp-body.pad{padding:16px 18px;}
+.cmp-body.scroll{overflow:auto;}
+.cmp-city-tabs{display:flex;gap:4px;padding:8px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.cmp-city{padding:4px 9px;font-size:11px;font-family:var(--mono);border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;font-weight:600;}
+.cmp-city.active{background:var(--text-bright);color:#fff;border-color:var(--text-bright);}
+.cmp-select{font-size:11px;padding:3px 6px;}
+.cmp-card{border:1px solid var(--border);margin:10px 16px;padding:10px 12px;background:#fff;}
+.cmp-card-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+.cmp-card-title{font-weight:700;font-size:12.5px;flex:1;}
+.cmp-card-body{font-size:12px;line-height:1.55;color:var(--text);}
+.cmp-card-row{display:flex;gap:10px;align-items:baseline;padding:3px 0;border-top:1px solid var(--surface-3);}
+.cmp-chip{display:inline-block;font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;padding:1px 6px;border:1px solid var(--border);background:var(--surface-2);}
+.cmp-chip.ok{color:var(--triad-existence);border-color:var(--triad-existence);background:#eef7f2;}
+.cmp-chip.warn{color:var(--signal);border-color:var(--signal);background:#fdf6e3;}
+.cmp-chip.bad{color:var(--triad-significance);border-color:var(--triad-significance);background:#fbf1f0;}
+.cmp-chip.info{color:var(--triad-structure);border-color:var(--triad-structure);background:#f1f0fb;}
+.cmp-chip.muted{color:var(--text-faint);background:var(--surface-2);}
+.cmp-field-row{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--surface-3);font-size:12px;}
+.cmp-field-row:last-child{border-bottom:none;}
+.cmp-field-row label{width:120px;color:var(--text-dim);font-weight:600;font-size:11px;flex-shrink:0;}
+.cmp-field-row input[type="number"],.cmp-field-row input[type="text"]{width:120px;font-size:11px;padding:3px 5px;border:1px solid var(--border);background:#fff;}
+.cmp-field-row .cmp-val{flex:1;}
+.cmp-btn{font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--border-strong);background:#fff;color:var(--text);cursor:pointer;font-weight:600;}
+.cmp-btn:hover{background:var(--surface-2);border-color:#000;}
+.cmp-btn.danger{border-color:var(--red);color:var(--red);}
+.cmp-btn.danger:hover{background:#fbf1f0;}
+.cmp-btn.primary{border-color:var(--text-bright);background:var(--text-bright);color:#fff;}
+.cmp-btn.primary:hover{opacity:.85;}
+.cmp-grid{background:#fff;border:1px solid var(--border);margin:0 16px 10px;overflow-x:auto;}
+.cmp-grid table{border-collapse:collapse;width:100%;font-size:11.5px;}
+.cmp-grid th{text-align:left;padding:6px 8px;background:var(--surface-2);border-bottom:1.5px solid var(--border-strong);border-right:1px solid var(--border);color:var(--text-dim);font-weight:700;white-space:nowrap;}
+.cmp-grid td{padding:5px 8px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);vertical-align:top;}
+.cmp-grid tr:hover{background:var(--surface-2);cursor:pointer;}
+.cmp-compact{font-size:11px;color:var(--text-dim);}
+.cmp-note{font-size:11px;color:var(--text-faint);font-style:italic;margin-top:4px;}
+.cmp-divider{border:none;border-top:1px solid var(--border);margin:8px 0;}
+.cmp-section-head{font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);font-weight:700;margin:10px 16px 6px;padding-top:8px;border-top:1px solid var(--border);}
+.cmp-empty{padding:16px 18px;color:var(--text-faint);font-style:italic;font-size:12px;}
+.cmp-bar{display:flex;align-items:center;gap:6px;padding:4px 0;}
+.cmp-bar .progress{flex:1;height:6px;background:var(--surface-3);border:1px solid var(--border);position:relative;}
+.cmp-bar .progress-fill{height:100%;position:absolute;left:0;top:0;}
+.cmp-evidence-date{font-weight:700;color:var(--text-bright);font-size:12px;}
+.cmp-flex{display:flex;gap:8px;align-items:center;}
+.cmp-gap{margin-top:6px;}
+.cmp-notice-row{padding:5px 8px;border-bottom:1px solid var(--surface-3);font-size:12px;}
+.cmp-notice-row:last-child{border-bottom:none;}
+.cmp-notice-row b{color:var(--text-bright);}
+.cmp-schema-type{margin:12px 16px 0;padding:10px;border:1px solid var(--border);background:#fff;}
+.cmp-schema-type h4{font-size:12px;margin:0 0 6px;}
+.cmp-schema-type p{font-size:11px;color:var(--text-dim);margin:0 0 6px;line-height:1.5;}
+.cmp-schema-rel{font-size:11px;padding:3px 0;border-bottom:1px solid var(--surface-3);}
+.cmp-framing-note{padding:10px;border:1px solid var(--border);margin:12px 16px;background:var(--surface-2);font-size:11px;line-height:1.55;color:var(--text-dim);}
 </style>
 </head>
 <body>
@@ -191,6 +256,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
       <div class="sb-section" style="border-bottom:none;">
         <button class="sb-log-link" id="sb-log">≡ event log (raw timeline)</button>
         <button class="sb-log-link" id="sb-trash">🗑 recycle bin</button>
+        <button class="sb-log-link" id="sb-cmp" style="font-weight:700;color:var(--triad-structure);">⚖ compliance workbench</button>
         <button class="sb-reset" id="reset-btn">reset to seed corpus</button>
         <div class="sb-storage" id="storage-status">loading…</div>
       </div>
@@ -655,7 +721,7 @@ if (!window.storage) {
     },
   };
 }
-const STORAGE_KEY = "municipal-db-events-v3"; // bumped for the recycle-bin/_deleted-flag shape change
+const STORAGE_KEY = "municipal-db-events-v4"; // bumped for the recycle-bin/_deleted-flag shape change
 let EVENTS = [];
 let state = null;
 
@@ -684,7 +750,11 @@ function allEntities() { return Object.values(state.entities); }
 function byType(t) { return allEntities().filter((e) => e._type === t); }
 function entityLabel(e) { return e.name || e.text || e.distinction || e.party || e.apn || e.section || (e._type + " " + e._anchor.slice(-6)); }
 
-const ENTITY_TYPES = ["municipality", "jurisdiction", "obligation", "kind", "parcel", "owner", "standing"];
+const ENTITY_TYPES = ["municipality", "jurisdiction", "obligation", "parcel", "owner", "standing"];
+// kind removed — pattern-matching hypotheses don't earn their keep as a separate
+// discriminator; the same work is done more honestly by obligation→obligation
+// edges (corrects_reading) and standing→obligation (grounds_in) without the
+// intermediate "this might be a pattern" layer.
 // sub-zone removed entirely — 0 real rows, already agreed this collapses
 // into Ground rather than needing its own table.
 // figure removed from the browsable list — not deleted, still real data,
@@ -698,14 +768,13 @@ const ENTITY_TYPES = ["municipality", "jurisdiction", "obligation", "kind", "par
 // fact that actually matters: they're the same two fields on all of them.
 const UNIVERSAL_FIELDS = [["source_type", "text"], ["source_ref", "text"]];
 const FIELD_SPECS = {
-  standing: [["distinction", "textarea"], ["consequence", "textarea"], ["openedAt", "date"]],
+  standing: [["distinction", "textarea"], ["consequence", "textarea"], ["openedAt", "date"], ["partition", "select", ["open", "resolved", "violated"]]],
   figure: [["party", "text"], ["modality", "text"], ["extraction_method", "text"]],
-  municipality: [["name", "text"], ["state", "text"], ["county", "text"], ["code_url", "text"], ["chapter", "text"]],
-  jurisdiction: [["name", "text"]],
-  obligation: [["holder", "text"], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enacted_at", "date"], ["effective_at", "date"]],
-  kind: [["name", "text"], ["description", "textarea"], ["standing_criterion", "textarea"]],
-  parcel: [["apn", "text"], ["address", "text"], ["bedrooms", "number"], ["zoning", "text"]],
-  owner: [["name", "text"], ["phone", "text"], ["mailing_address", "text"]],
+  municipality: [["name", "text"], ["state", "select", ["Rhode Island", "Illinois", "Florida", "Oregon", "Texas"]], ["county", "text"], ["code_url", "text"], ["chapter", "text"]],
+  jurisdiction: [["name", "text"], ["level", "select", ["state", "county", "city"]]],
+  obligation: [["holder", "select", ["middletown", "chicago", "staugustine", "talent", "ftworth"]], ["section", "text"], ["mark", "text"], ["text", "textarea"], ["enacted_at", "date"], ["effective_at", "date"]],
+  parcel: [["apn", "text"], ["address", "text"], ["bedrooms", "number"], ["bathrooms", "number"], ["units", "number"], ["zoning", "select", ["R-1", "R-2", "RS-2", "RM-5", "MU-1", "MU-2", "C-1", "C-2", "I-1", "I-2", "AG", "OS"]], ["property_type", "select", ["residential", "commercial", "mixed-use", "industrial", "agricultural"]], ["state", "select", ["Rhode Island", "Illinois", "Florida", "Oregon", "Texas"]], ["partition", "select", ["open", "resolved", "violated", "deleted"]]],
+  owner: [["name", "text"], ["phone", "text"], ["mailing_address", "text"], ["owner_type", "select", ["individual", "llc", "corporation", "trust", "partnership"]]],
 };
 for (const t of Object.keys(FIELD_SPECS)) FIELD_SPECS[t] = [...FIELD_SPECS[t], ...UNIVERSAL_FIELDS];
 
@@ -715,15 +784,21 @@ for (const t of Object.keys(FIELD_SPECS)) FIELD_SPECS[t] = [...FIELD_SPECS[t], .
 const TABLE_PURPOSE = {
   municipality: "A reading context, not really a city. Its job is to keep one body of law from bleeding into another — so that when the system says \"this obligation holds under Chicago,\" that's not a label, it's a guarantee that everything grouped under it was drafted by the same hand, at the same time, and can be safely compared to itself without being confused with St. Augustine's very different choices about the same question. It also carries the one thing that makes the whole project checkable at all: a real pointer back to where a human could go read the actual ordinance and verify any claim resting on it.",
   jurisdiction: "Exists to answer a single question — can something bigger than this municipality override what it says — and it's deliberately thin, because most of the time the honest answer is \"no relevant interaction.\" It only earns its keep in the rare case where it actually does work, which in this corpus means exactly one thing: Florida's grandfather clause protecting St. Augustine's ordinance from a preemption statute that would otherwise have erased it. Jurisdiction isn't a place to store facts about states; it's a reachability check that happens to need somewhere to live.",
-  obligation: "The ground everything else stands on, in the literal sense — the verbatim clause, unmodified, addressed back to a real sentence a person could go read. It doesn't compute anything, doesn't judge anything, doesn't compare itself to anything else. Its whole job is to be stable enough that a Kind can say \"these obligations share a shape,\" a standing can say \"this obligation is what's being tested here,\" and a figure can say \"this is who it binds\" — all without any of those claims ever having the power to quietly rewrite what the ordinance actually says. It's the layer where \"is this actually true\" bottoms out in something checkable rather than asserted.",
-  kind: "The system's memory of pattern, held at arm's length on purpose. Its job isn't to record a fact — it's to record a hypothesis under active review, with a stated bar for when it's allowed to stop being one, and an honest tally of how much evidence currently exists against that bar. Where an obligation is certain but narrow — true of exactly one clause, in one city — a Kind is broad but provisional, claimed to be true of many clauses across cities until the evidence either firms up or falls apart. It's the only table designed to be wrong for a while without that being a failure.",
-  parcel: "Where a general rule stops being general. \"Dwelling units shall be registered\" isn't about anything until an actual dwelling unit exists to be the subject of it — parcel is that anchor, the real particular a rule gets tested against. It supplies half of what makes a standing meaningful (the other half comes from obligation), and right now it's doing that job honestly but provisionally: every parcel in this corpus is illustrative, standing in for what a real registration or assessor dataset would eventually populate.",
+  obligation: "The ground everything else stands on, in the literal sense — the verbatim clause, unmodified, addressed back to a real sentence a person could go read. It doesn't compute anything, doesn't judge anything, doesn't compare itself to anything else. Its whole job is to be stable enough that a standing can say \"this obligation is what's being tested here,\" and a figure can say \"this is who it binds\" — all without any of those claims ever having the power to quietly rewrite what the ordinance actually says. It's the layer where \"is this actually true\" bottoms out in something checkable rather than asserted.",
+  parcel: "Where a general rule stops being general. \"Dwelling units shall be registered\" isn't about anything until an actual dwelling unit exists to be the subject of it — parcel is that anchor, the real particular a rule gets tested against. It supplies half of what makes a standing meaningful (the other half comes from obligation), and right now it's doing that job honestly but provisionally: every parcel in this corpus is illustrative, standing in for what a real registration or assessor dataset would eventually populate. State, zoning, property_type, and partition are pulled through from the fold so the compliance surface can branch on them.",
   owner: "Plays the same role as parcel but for a person rather than a property — the one who'd actually answer for a violation. It exists mainly to make \"owns\" a checkable claim rather than an assumption quietly built into everything else, and it's honestly the thinnest table in the set: almost nothing in the system currently branches on who the owner is as opposed to which parcel is at issue. It's there because a registration regime needs a responsible party in principle, not because the system does much with the distinction yet.",
-  standing: "The only table whose entire reason for existing is to change. Everything above it describes what's generally true or what a particular thing is; a standing describes a relationship between them — this rule, read against this parcel, opened at a moment, tracked through real states, ending if it ends at all in either quiet compliance or a violation with a citable consequence. It's the one place in the whole schema where \"is this actually being followed, right now\" gets a real answer, held accountably, with its own history rather than a past that gets silently overwritten every time the present changes. Every other table exists, in the end, to make a standing's answer mean something: obligation supplies what's required, parcel supplies of whom, kind supplies whether the requirement is common or strange, and standing is where all of that finally gets tested against something real.",
+  standing: "The only table whose entire reason for existing is to change. Everything above it describes what's generally true or what a particular thing is; a standing describes a relationship between them — this rule, read against this parcel, opened at a moment, tracked through real states, ending if it ends at all in either quiet compliance or a violation with a citable consequence. It's the one place in the whole schema where \"is this actually being followed, right now\" gets a real answer, held accountably, with its own history rather than a past that gets silently overwritten every time the present changes. Every other table exists, in the end, to make a standing's answer mean something: obligation supplies what's required, parcel supplies of whom, and standing is where all of that finally gets tested against something real.",
 };
 
 let currentView = { kind: "table", type: "municipality" };
 let tableSubview = "records";
+let compPersona = localStorage.getItem("muni-cmp-persona") || "landlord";
+let compTab = "portfolio";
+let compGovTab = "unregistered";
+let compCity = "all";
+let compSelParcel = null;
+let compTaxRev = 2400; // monthly default booking revenue
+let compTaxPeriod = "monthly";
 
 /* ── sidebar ── */
 function renderSidebar() {
@@ -739,10 +814,12 @@ function renderSidebar() {
 
   document.getElementById("sb-log").classList.toggle("active", currentView.kind === "log");
   document.getElementById("sb-trash").classList.toggle("active", currentView.kind === "trash");
+  document.getElementById("sb-cmp").classList.toggle("active", currentView.kind === "compliance");
 
   document.querySelectorAll("[data-goto-table]").forEach((b) => b.onclick = () => { currentView = { kind: "table", type: b.dataset.gotoTable }; tableSubview = "records"; renderChrome(); });
   document.getElementById("sb-log").onclick = () => { currentView = { kind: "log" }; renderChrome(); };
   document.getElementById("sb-trash").onclick = () => { currentView = { kind: "trash" }; renderChrome(); };
+  document.getElementById("sb-cmp").onclick = () => { currentView = { kind: "compliance" }; renderChrome(); };
 }
 
 /* ── table (grid) view ── */
@@ -751,7 +828,11 @@ function renderTable(type) {
   const fieldSet = new Set();
   items.forEach((e) => Object.keys(e).forEach((k) => { if (!k.startsWith("_")) fieldSet.add(k); }));
   const cols = [...fieldSet];
-  const ddlFields = (FIELD_SPECS[type] || cols.map((c) => [c, "text"])).map(([k, ty]) => `  <span class="id">${k}</span> <span class="ty">${ty}</span>`).join("\n");
+  const spec = FIELD_SPECS[type] || cols.map((c) => [c, "text"]);
+  const ddlFields = spec.map(([k, ty, opts]) => {
+    const tyStr = ty === "select" ? `select(${(opts || []).join("|")})` : ty;
+    return `  <span class="id">${k}</span> <span class="ty">${tyStr}</span>`;
+  }).join("\n");
 
   const main = document.getElementById("main");
   main.innerHTML = `
@@ -783,10 +864,19 @@ function renderTable(type) {
   const tbody = document.getElementById("grid-body");
   tbody.innerHTML = items.map((e, i) => {
     const cons = state.connections.filter((c) => c.source === e._anchor || c.target === e._anchor);
-    const partition = state.partitions[e._anchor];
+    const partition = state.partitions[e._anchor] || e.partition;
     return `<tr class="row" data-idx="${i}">
       <td>▸</td>
-      ${cols.map((c) => `<td>${e[c] !== undefined ? String(e[c]) : ""}</td>`).join("")}
+      ${cols.map((c) => {
+        const val = e[c];
+        if (val === undefined) return `<td></td>`;
+        // Check if this field is a select type and render with chip styling
+        const fieldSpec = spec.find(([k]) => k === c);
+        if (fieldSpec && fieldSpec[1] === "select") {
+          return `<td><span class="cmp-chip info">${val}</span></td>`;
+        }
+        return `<td>${String(val)}</td>`;
+      }).join("")}
       <td>${cons.length}</td>
       <td>${partition ? `<span style="color:var(--triad-structure);font-weight:700;">${partition}</span>` : (e._evaluations || []).length ? e._evaluations[e._evaluations.length - 1].result : ""}</td>
     </tr>`;
@@ -868,9 +958,29 @@ function renderProfile() {
   }).join(" <span class='crumb-sep'>›</span> ");
   document.getElementById("profile-crumbs").innerHTML = crumbs;
 
-  const fields = Object.entries(e).filter(([k]) => !k.startsWith("_"));
-  const outgoing = state.connections.filter((c) => c.source === anchor && c.type !== "figured-as"); // figured-as renders inline below, not as a generic related-record chip
+  const spec = FIELD_SPECS[e._type] || [];
+  const specMap = new Map(spec.map(([k, ty, opts]) => [k, { type: ty, options: opts || [] }]));
+
+  // Find linked fields: fields that match connection types
+  const outgoing = state.connections.filter((c) => c.source === anchor && c.type !== "figured-as");
   const incoming = state.connections.filter((c) => c.target === anchor);
+  const linkedFields = new Map();
+  outgoing.forEach((c) => {
+    const target = state.entities[c.target];
+    if (target) {
+      if (!linkedFields.has(c.type)) linkedFields.set(c.type, []);
+      linkedFields.get(c.type).push({ anchor: c.target, entity: target, direction: "out" });
+    }
+  });
+  incoming.forEach((c) => {
+    const source = state.entities[c.source];
+    if (source) {
+      if (!linkedFields.has(c.type)) linkedFields.set(c.type, []);
+      linkedFields.get(c.type).push({ anchor: c.source, entity: source, direction: "in" });
+    }
+  });
+
+  const fields = Object.entries(e).filter(([k]) => !k.startsWith("_"));
   const groupBy = (list, keyFn) => list.reduce((acc, item) => { const k = keyFn(item); (acc[k] = acc[k] || []).push(item); return acc; }, {});
   const outGroups = groupBy(outgoing, (c) => c.type);
   const inGroups = groupBy(incoming, (c) => c.type);
@@ -878,14 +988,30 @@ function renderProfile() {
   const figureEdge = state.connections.find((c) => c.source === anchor && c.type === "figured-as");
   const figure = figureEdge ? state.entities[figureEdge.target] : null;
 
+  const partition = state.partitions[anchor] || e.partition;
+
   document.getElementById("profile-body").innerHTML = `
     <div class="profile-title"><span class="profile-type">${e._type}</span>${entityLabel(e)}</div>
     <div class="profile-anchor">${e._anchor}</div>
-    ${state.partitions[anchor] ? `<div class="partition">stage: ${state.partitions[anchor]}</div>` : ""}
+    ${partition ? `<div class="partition">stage: ${partition}</div>` : ""}
     ${e._eventId ? `<button class="profile-undo-btn" data-undo-event="${e._eventId}">↺ undo this record's creation</button>` : ""}
 
     <div class="profile-section-head">fields</div>
-    <table class="profile-fields">${fields.map(([k, v]) => `<tr><td class="pf-key">${k}</td><td class="pf-val">${renderFieldValue(k, v)}</td></tr>`).join("") || `<tr><td class="pf-key" colspan="2" style="font-style:italic;color:var(--text-faint);">none</td></tr>`}</table>
+    <table class="profile-fields">${fields.map(([k, v]) => {
+      const fieldSpec = specMap.get(k);
+      let valHtml;
+      if (fieldSpec && fieldSpec.type === "select") {
+        valHtml = `<span class="cmp-chip info">${v}</span>`;
+      } else {
+        valHtml = renderFieldValue(k, v);
+      }
+      return `<tr><td class="pf-key">${k}</td><td class="pf-val">${valHtml}</td></tr>`;
+    }).join("") || `<tr><td class="pf-key" colspan="2" style="font-style:italic;color:var(--text-faint);">none</td></tr>`}</table>
+
+    ${linkedFields.size ? `<div class="profile-section-head">linked fields (${linkedFields.size} connections)</div>
+      <table class="profile-fields">${[...linkedFields.entries()].map(([rel, items]) => `
+        <tr><td class="pf-key">${rel}</td><td class="pf-val">${items.map((item) => anchorLink(item.anchor, { max: 40 })).join(", ")}</td></tr>
+      `).join("")}</table>` : ""}
 
     ${figure ? `<div class="profile-section-head">figure — parameter reading on this clause, not its own record</div>
       <table class="profile-fields">
@@ -991,6 +1117,785 @@ function renderTimeline() {
   document.querySelectorAll("[data-undo-event]").forEach((b) => b.onclick = () => undoEvent(b.dataset.undoEvent));
 }
 
+/* ── compliance workbench ── */
+const MUNI_FOR_KEY = {
+  middletown: "municipality_1b09307071e888",
+  chicago: "municipality_a8035cf65308a",
+  staugustine: "municipality_348f9b351b965",
+  talent: "municipality_12ffea31677787",
+  ftworth: "municipality_c79c856993a8f",
+};
+function muniOf(parcel) {
+  const a = (parcel?.address || "").toLowerCase();
+  if (/middletown/i.test(a)) return "middletown";
+  if (/chicago/i.test(a)) return "chicago";
+  if (/augustine/i.test(a)) return "staugustine";
+  if (/talent/i.test(a)) return "talent";
+  if (/fort worth/i.test(a)) return "ftworth";
+  return "middletown";
+}
+function registrationOf(parcelAnchor) {
+  const con = state.connections.find((c) => c.type === "registers" && c.target === parcelAnchor);
+  return con ? state.entities[con.source] : null;
+}
+function feeScheduleOf(muniKey) {
+  const muniAnchor = MUNI_FOR_KEY[muniKey];
+  const con = state.connections.find((c) => c.type === "levied_by" && c.target === muniAnchor);
+  if (!con) return null;
+  const ent = state.entities[con.source];
+  return ent?._type === "fee-schedule" ? ent : null;
+}
+function taxScheduleOf(muniKey) {
+  const muniAnchor = MUNI_FOR_KEY[muniKey];
+  const con = state.connections.find((c) => c.type === "levied_by" && c.target === muniAnchor);
+  if (!con) return null;
+  const ent = state.entities[con.source];
+  return ent?._type === "tax-schedule" ? ent : null;
+}
+function computeFee(parcel, isPrincipalRes) {
+  const muni = muniOf(parcel);
+  const sched = feeScheduleOf(muni);
+  if (!sched) return { status: "unknown", text: "no fee schedule on file", amount: null };
+  if (sched.shape === "delegated") {
+    return { status: "delegated", amount: null, text: `delegated: ${sched.instrument} (${sched.citation})` };
+  }
+  if (sched.shape === "per-bedroom-with-floor") {
+    const bdr = parcel.bedrooms || 1;
+    if (isPrincipalRes && sched.principal_residence_flat) {
+      return { status: "computed", amount: sched.principal_residence_flat, text: `$${sched.principal_residence_flat}.00 flat (principal residence exemption, ${sched.citation})` };
+    }
+    const amt = Math.max(sched.floor || 55, bdr * (sched.amount || 55));
+    return { status: "computed", amount: amt, text: `$${sched.amount}.00 × ${bdr} bedroom(s) (min $${sched.floor}, ${sched.citation})` };
+  }
+  if (sched.shape === "two-tier") {
+    return { status: "computed", amount: sched.initial, text: `$${sched.initial}.00 initial registration ($${sched.renewal}/yr renewal, ${sched.citation})` };
+  }
+  if (sched.shape === "per-unit-plus-per-bedroom") {
+    const bdr = parcel.bedrooms || 1;
+    const amt = (sched.unit_amount || 303.03) + (bdr * (sched.per_room || 79.3));
+    return { status: "computed", amount: Math.round(amt * 100) / 100, text: `$${sched.unit_amount} base + ($${sched.per_room} × ${bdr} br) = $${amt.toFixed(2)} (${sched.citation})` };
+  }
+  return { status: "unknown", text: "custom schedule", amount: null };
+}
+function computeTaxEstimate(muniKey, revenue, period) {
+  const sched = taxScheduleOf(muniKey);
+  if (!sched || !sched.components) return { totalRate: 0, amount: 0, components: [] };
+  const mult = period === "annual" ? 12 : period === "quarterly" ? 3 : 1;
+  const rev = revenue * mult;
+  const comps = sched.components.map((c) => ({ ...c, calc: rev * (c.rate || 0) }));
+  const totalRate = sched.total || comps.reduce((s, c) => s + (c.rate || 0), 0);
+  return { totalRate, amount: rev * totalRate, components: comps, rev };
+}
+function getListingsWithDetails() {
+  const listings = byType("listing");
+  return listings.map((l) => {
+    const parcelCon = state.connections.find((c) => c.type === "hosted_at" && c.source === l._anchor);
+    const ownerCon = state.connections.find((c) => c.type === "listed_by" && c.source === l._anchor);
+    const parcel = parcelCon ? state.entities[parcelCon.target] : null;
+    const owner = ownerCon ? state.entities[ownerCon.target] : null;
+    const reg = parcel ? registrationOf(parcel._anchor) : null;
+    const muni = parcel ? muniOf(parcel) : "middletown";
+    return { listing: l, parcel, owner, reg, muni };
+  });
+}
+function runDetections() {
+  const items = getListingsWithDetails();
+  const unregistered = items.filter((x) => !x.reg || x.reg.status !== "active");
+  const nonOwnerRes = items.filter((x) => {
+    if (!x.parcel || !x.owner) return false;
+    const zoning = (x.parcel.zoning || "").toUpperCase();
+    const isRes = zoning.startsWith("R") || zoning.includes("RES");
+    const mail = (x.owner.mailing_address || "").toLowerCase();
+    const addr = (x.parcel.address || "").toLowerCase();
+    const isDifferent = mail.includes("po box") || !addr.split(",")[0].trim().split(" ").every((w) => mail.includes(w));
+    return isRes && isDifferent;
+  });
+  const byStreet = new Map();
+  items.forEach((x) => {
+    if (!x.parcel) return;
+    const st = (x.parcel.address || "").replace(/^[\d\-]+ /, "").replace(/ Unit.*| #[0-9]+.*/, "").trim();
+    if (!byStreet.has(st)) byStreet.set(st, []);
+    byStreet.get(st).push(x);
+  });
+  const proximityPairs = [];
+  for (const [st, list] of byStreet.entries()) {
+    if (list.length >= 2) {
+      for (let i = 0; i < list.length; i++) {
+        for (let j = i + 1; j < list.length; j++) {
+          proximityPairs.push({ st, a: list[i], b: list[j] });
+        }
+      }
+    }
+  }
+  const streetDensity = [...byStreet.entries()].filter(([st, list]) => list.length >= 3);
+  const byOwner = new Map();
+  items.forEach((x) => {
+    if (!x.owner) return;
+    const name = x.owner.name;
+    if (!byOwner.has(name)) byOwner.set(name, []);
+    byOwner.get(name).push(x);
+  });
+  const ownerConcentration = [...byOwner.entries()].filter(([name, list]) => list.length >= 2);
+  const today = "2026-09-11";
+  const evidenceWindows = [];
+  items.forEach((x) => {
+    const bookings = x.listing.bookings || [];
+    bookings.forEach((b) => {
+      if (b.to >= today) {
+        evidenceWindows.push({ ...x, booking: b });
+      }
+    });
+  });
+  evidenceWindows.sort((a, b) => a.booking.from.localeCompare(b.booking.from));
+  return { unregistered, nonOwnerRes, proximityPairs, streetDensity, ownerConcentration, evidenceWindows, allItems: items };
+}
+function emitComplianceEvent(type, payload, conPairs) {
+  const ev = buildIns(type, payload, { sender: SENDER, ts: Date.now() });
+  EVENTS.push(ev);
+  conPairs.forEach(([src, tgt, rel]) => {
+    EVENTS.push(buildCon(src, tgt, rel, { sender: SENDER, ts: Date.now() + 1, id: `$con_${Math.random().toString(16).slice(2)}` }));
+  });
+  state = fold(EVENTS);
+  saveEvents();
+  renderCompliance();
+}
+function deleteEntity(anchor) {
+  if (!confirm("Delete this entity? (Emits a SEG to 'deleted' partition — fully reversible)")) return;
+  EVENTS.push(buildSeg(anchor, "deleted", { sender: SENDER, ts: Date.now(), id: `$seg_del_${anchor.slice(-8)}` }));
+  state = fold(EVENTS);
+  saveEvents();
+  renderCompliance();
+}
+function restoreEntity(anchor) {
+  EVENTS.push(buildSeg(anchor, "open", { sender: SENDER, ts: Date.now(), id: `$seg_rest_${anchor.slice(-8)}` }));
+  state = fold(EVENTS);
+  saveEvents();
+  renderCompliance();
+}
+function emitFieldDef(anchor, path, value) {
+  EVENTS.push(buildDef(anchor, path, value, { sender: SENDER, ts: Date.now(), id: `$def_edit_${anchor.slice(-8)}_${path.replace(/[^A-Za-z0-9]/g, "_")}` }));
+  state = fold(EVENTS);
+  saveEvents();
+  renderCompliance();
+}
+function getDefHistory(anchor) {
+  return EVENTS.filter((e) => e.type === "io.matrix-events.def" && !e._deleted && e.content?.anchor === anchor)
+    .sort((a, b) => (a.origin_server_ts || 0) - (b.origin_server_ts || 0));
+}
+function getNestedValue(obj, path) {
+  return path.split(".").reduce((o, k) => o?.[k], obj);
+}
+function isDeleted(entity) {
+  return entity?._partition === "deleted";
+}
+function renderDefHistory(anchor, entity) {
+  const defs = getDefHistory(anchor);
+  if (!defs.length) return `<div class="cmp-empty">No field changes recorded.</div>`;
+  return defs.map((d) => {
+    const prevVal = entity ? JSON.stringify(getNestedValue(entity, d.content.path)) : "—";
+    const newVal = JSON.stringify(d.content.value);
+    return `<div class="cmp-notice-row">
+      <span class="cmp-compact">${new Date(d.origin_server_ts).toLocaleString()}</span> · <b>${d.content.path}</b><br>
+      <span class="cmp-compact">${prevVal} → ${newVal}</span>
+      <button class="cmp-btn" style="margin-left:8px;font-size:10px;" data-undo-event="${d.event_id}">↺ undo</button>
+    </div>`;
+  }).join("");
+}
+function renderCompliance() {
+  const main = document.getElementById("main");
+  const dets = runDetections();
+  const owners = [...new Set(dets.allItems.map((x) => x.owner).filter(Boolean))];
+  if (!compOwner && owners.length) compOwner = owners[0]._anchor;
+  const currentOwner = state.entities[compOwner] || owners[0];
+  const ownerListings = dets.allItems.filter((x) => x.owner?._anchor === currentOwner?._anchor);
+
+  main.innerHTML = `
+    <div class="cmp-head">
+      <h2>compliance & enforcement workbench</h2>
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+        <span class="cmp-badge ${compPersona === "landlord" ? "law" : "gov"}">persona: ${compPersona}</span>
+        <button class="cmp-btn ${compPersona === "landlord" ? "primary" : ""}" data-cmp-persona="landlord">landlord (registrant)</button>
+        <button class="cmp-btn ${compPersona === "government" ? "primary" : ""}" data-cmp-persona="government">government (compliance)</button>
+      </div>
+    </div>
+    <div class="cmp-tabs">
+      ${compPersona === "landlord" ? `
+        <button class="cmp-tab ${compTab === "portfolio" ? "active" : ""}" data-cmp-tab="portfolio">portfolio & parcels <span class="ct-n">${ownerListings.length}</span></button>
+        <button class="cmp-tab ${compTab === "notices" ? "active" : ""}" data-cmp-tab="notices">notices & outreach</button>
+      ` : `
+        <button class="cmp-tab ${compGovTab === "unregistered" ? "active" : ""}" data-cmp-tab="unregistered">unregistered str's <span class="ct-n">${dets.unregistered.length}</span></button>
+        <button class="cmp-tab ${compGovTab === "evidence" ? "active" : ""}" data-cmp-tab="evidence">evidence windows <span class="ct-n">${dets.evidenceWindows.length}</span></button>
+        <button class="cmp-tab ${compGovTab === "illegal" ? "active" : ""}" data-cmp-tab="illegal">illegal & zoning <span class="ct-n">${dets.nonOwnerRes.length + dets.proximityPairs.length}</span></button>
+        <button class="cmp-tab ${compGovTab === "verify" ? "active" : ""}" data-cmp-tab="verify">listing verification</button>
+      `}
+      <button class="cmp-tab ${compTab === "schema" || compGovTab === "schema" ? "active" : ""}" data-cmp-tab="schema">schema & rec events</button>
+      <button class="cmp-tab ${compTab === "structure" || compGovTab === "structure" ? "active" : ""}" data-cmp-tab="structure">structure & graph</button>
+    </div>
+    <div class="cmp-body" id="cmp-body"></div>
+  `;
+
+  document.querySelectorAll("[data-cmp-persona]").forEach((b) => b.onclick = () => {
+    compPersona = b.dataset.cmpPersona;
+    localStorage.setItem("muni-cmp-persona", compPersona);
+    renderCompliance();
+  });
+  document.querySelectorAll("[data-cmp-tab]").forEach((b) => b.onclick = () => {
+    const t = b.dataset.cmpTab;
+    if (t === "schema") { compTab = "schema"; compGovTab = "schema"; }
+    else if (t === "structure") { compTab = "structure"; compGovTab = "structure"; }
+    else if (compPersona === "landlord") compTab = t;
+    else compGovTab = t;
+    renderCompliance();
+  });
+
+  const bdy = document.getElementById("cmp-body");
+  if (compTab === "schema" || compGovTab === "schema") {
+    renderCmpSchema(bdy);
+  } else if (compTab === "structure" || compGovTab === "structure") {
+    renderCmpStructure(bdy);
+  } else if (compPersona === "landlord") {
+    renderCmpLandlord(bdy, owners, currentOwner, ownerListings, dets);
+  } else {
+    renderCmpGovernment(bdy, dets);
+  }
+}
+function renderCmpSchema(bdy) {
+  const frames = state.frames;
+  const types = state.schema?.types || {};
+  const relations = Object.entries(state.schema || {}).filter(([k]) => k.startsWith("relations."));
+  bdy.className = "cmp-body pad";
+  bdy.innerHTML = `
+    <div class="cmp-framing-note">
+      <b>Schema change as a first-class event (REC + _schema.* DEFs).</b><br>
+      The compliance workbench is built on zero hard-coded tables. The 7-table baseline evolved into the compliance workbench through explicit <b>REC</b> (restructuring) events in the timeline, accompanied by <b>DEF</b> events on <code>_schema.*</code> holding the data dictionaries. The fold reads these rules dynamically.
+    </div>
+    <div class="cmp-section-head">restructuring frames (REC events)</div>
+    ${frames.map((f, i) => `
+      <div class="cmp-card">
+        <div class="cmp-card-head"><span class="cmp-chip info">REC #${i + 1}</span><span class="cmp-card-title">scope: ${f.scope || (f.content && f.content.scope)}</span><span class="cmp-compact">${f._ts ? new Date(f._ts).toISOString().slice(0, 10) : ""}</span></div>
+        <div class="cmp-card-body">
+          <b>before:</b> ${(f.before_frame || (f.content && f.content.before_frame))?.frame || "baseline"}<br>
+          <b>after:</b> ${(f.after_frame || (f.content && f.content.after_frame))?.frame || "evolved"}<br>
+          <div class="cmp-note">${(f.after_frame || (f.content && f.content.after_frame))?.note || (f.content && f.content.note) || ""}</div>
+        </div>
+      </div>
+    `).join("")}
+    <div class="cmp-section-head">data dictionary (_schema.types)</div>
+    ${Object.keys(types).length ? Object.entries(types).map(([t, spec]) => `
+      <div class="cmp-schema-type">
+        <h4>type: <span style="font-family:var(--mono);">${t}</span></h4>
+        <p>${spec.purpose || ""}</p>
+        <div class="cmp-compact"><b>fields:</b> ${(spec.fields || []).map(([k, ty]) => `${k} (${ty})`).join(", ")}</div>
+      </div>
+    `).join("") : `<div class="cmp-empty">No schema types declared.</div>`}
+    <div class="cmp-section-head">relation vocabulary (_schema.relations)</div>
+    <div class="cmp-card"><div class="cmp-card-body">
+      ${relations.map(([k, v]) => `<div class="cmp-schema-rel"><b>${k.slice("relations.".length)}</b> (${v.source} → ${v.target}): ${v.description}</div>`).join("")}
+    </div></div>
+  `;
+}
+function renderCmpStructure(bdy) {
+  bdy.className = "cmp-body pad";
+  // Entity types and counts
+  const typeCounts = {};
+  const typeEvents = {};
+  Object.values(state.entities).forEach((e) => {
+    if (e._type) {
+      typeCounts[e._type] = (typeCounts[e._type] || 0) + 1;
+      if (!typeEvents[e._type]) typeEvents[e._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+    }
+  });
+  // Count events per type
+  EVENTS.filter((e) => !e._deleted).forEach((e) => {
+    const c = e.content;
+    if (e.type === "io.matrix-events.ins" && c.entity_type) {
+      if (!typeEvents[c.entity_type]) typeEvents[c.entity_type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+      typeEvents[c.entity_type].ins++;
+    }
+    if (e.type === "io.matrix-events.def" && c.anchor) {
+      const ent = state.entities[c.anchor];
+      if (ent && ent._type) {
+        if (!typeEvents[ent._type]) typeEvents[ent._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+        typeEvents[ent._type].def++;
+      }
+    }
+    if (e.type === "io.matrix-events.con") {
+      const src = state.entities[c.source_anchor];
+      const tgt = state.entities[c.target_anchor];
+      if (src && src._type) {
+        if (!typeEvents[src._type]) typeEvents[src._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+        typeEvents[src._type].con++;
+      }
+      if (tgt && tgt._type) {
+        if (!typeEvents[tgt._type]) typeEvents[tgt._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+        typeEvents[tgt._type].con++;
+      }
+    }
+    if (e.type === "io.matrix-events.seg" && c.anchor) {
+      const ent = state.entities[c.anchor];
+      if (ent && ent._type) {
+        if (!typeEvents[ent._type]) typeEvents[ent._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+        typeEvents[ent._type].seg++;
+      }
+    }
+    if (e.type === "io.matrix-events.eva" && c.anchor) {
+      const ent = state.entities[c.anchor];
+      if (ent && ent._type) {
+        if (!typeEvents[ent._type]) typeEvents[ent._type] = { ins: 0, def: 0, con: 0, seg: 0, eva: 0, rec: 0 };
+        typeEvents[ent._type].eva++;
+      }
+    }
+  });
+
+  // Connection types matrix
+  const connMatrix = {};
+  state.connections.forEach((c) => {
+    const src = state.entities[c.source];
+    const tgt = state.entities[c.target];
+    if (src && tgt) {
+      const key = `${src._type}→${tgt._type}`;
+      if (!connMatrix[key]) connMatrix[key] = {};
+      connMatrix[key][c.type] = (connMatrix[key][c.type] || 0) + 1;
+    }
+  });
+
+  // Schema types (declared via _schema.types)
+  const schemaTypes = state.schema?.types || {};
+
+  bdy.innerHTML = `
+    <div class="cmp-framing-note">
+      <b>Underlying event-sourced structure.</b><br>
+      Every entity, relationship, field change, and schema evolution is an immutable event. The graph below is derived by folding the event stream. Click any type to see its entities in the main table view.
+    </div>
+
+    <div class="cmp-section-head">entity types & lifecycle (${Object.keys(typeCounts).length} types, ${Object.values(typeCounts).reduce((a, b) => a + b, 0)} entities)</div>
+    <div class="cmp-grid"><table>
+      <thead><tr><th>type</th><th>entities</th><th>INS</th><th>DEF</th><th>CON</th><th>SEG</th><th>EVA</th><th>schema-declared</th><th>actions</th></tr></thead>
+      <tbody>
+        ${Object.entries(typeCounts).sort((a, b) => b[1] - a[1]).map(([t, count]) => {
+          const ev = typeEvents[t] || { ins: 0, def: 0, con: 0, seg: 0, eva: 0 };
+          const isDeclared = schemaTypes[t] ? `<span class="cmp-chip ok">yes</span>` : `<span class="cmp-chip muted">no</span>`;
+          return `<tr>
+            <td><b style="cursor:pointer;" data-goto-type="${t}">${t}</b></td>
+            <td>${count}</td>
+            <td>${ev.ins}</td><td>${ev.def}</td><td>${ev.con}</td><td>${ev.seg}</td><td>${ev.eva}</td>
+            <td>${isDeclared}</td>
+            <td><button class="cmp-btn" style="font-size:10px;" data-browse-type="${t}">browse</button></td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table></div>
+
+    <div class="cmp-section-head">connection matrix (${state.connections.length} edges)</div>
+    <div class="cmp-grid"><table>
+      <thead><tr><th>source → target</th><th>relations</th><th>count</th></tr></thead>
+      <tbody>
+        ${Object.entries(connMatrix).sort((a, b) => {
+          const ca = Object.values(a[1]).reduce((s, v) => s + v, 0);
+          const cb = Object.values(b[1]).reduce((s, v) => s + v, 0);
+          return cb - ca;
+        }).map(([pair, rels]) => {
+          const total = Object.values(rels).reduce((s, v) => s + v, 0);
+          const relStr = Object.entries(rels).map(([r, n]) => `<span class="cmp-chip info">${r} (${n})</span>`).join(" ");
+          return `<tr><td><b>${pair}</b></td><td>${relStr}</td><td>${total}</td></tr>`;
+        }).join("")}
+      </tbody>
+    </table></div>
+
+    <div class="cmp-section-head">schema evolution (REC frames)</div>
+    ${state.frames.map((f, i) => `
+      <div class="cmp-card">
+        <div class="cmp-card-head"><span class="cmp-chip info">REC #${i + 1}</span><span class="cmp-card-title">${f.scope || (f.content && f.content.scope)}</span></div>
+        <div class="cmp-card-body">
+          <b>before:</b> ${(f.before_frame || (f.content && f.content.before_frame))?.frame || "—"}<br>
+          <b>after:</b> ${(f.after_frame || (f.content && f.content.after_frame))?.frame || "—"}<br>
+          <div class="cmp-note">${(f.after_frame || (f.content && f.content.after_frame))?.note || ""}</div>
+        </div>
+      </div>
+    `).join("")}
+
+    <div class="cmp-section-head">data dictionary (_schema.types)</div>
+    ${Object.keys(schemaTypes).length ? Object.entries(schemaTypes).map(([t, spec]) => {
+      const localSpec = FIELD_SPECS[t] || [];
+      return `
+      <div class="cmp-schema-type">
+        <h4>type: <span style="font-family:var(--mono);">${t}</span> <span class="cmp-chip">${typeCounts[t] || 0} entities</span></h4>
+        <p>${spec.purpose || ""}</p>
+        <div class="cmp-compact"><b>fields:</b> ${(spec.fields || []).map(([k, ty]) => {
+          const localDef = localSpec.find(([lk]) => lk === k);
+          const tyStr = localDef && localDef[1] === "select" ? `select(${(localDef[2] || []).join("|")})` : ty;
+          return `${k} (${tyStr})`;
+        }).join(", ")}</div>
+        ${spec.required_on_listing ? `<div class="cmp-compact" style="margin-top:4px;"><b>required on listing:</b> ${spec.required_on_listing.join(", ")}</div>` : ""}
+      </div>
+    `}).join("") : `<div class="cmp-empty">No schema types declared.</div>`}
+
+    <div class="cmp-section-head">relation vocabulary</div>
+    <div class="cmp-card"><div class="cmp-card-body">
+      ${Object.entries(state.schema || {}).filter(([k]) => k.startsWith("relations.")).map(([k, v]) => `<div class="cmp-schema-rel"><b>${k.slice("relations.".length)}</b> (${v.source} → ${v.target}): ${v.description}</div>`).join("")}
+    </div></div>
+  `;
+
+  document.querySelectorAll("[data-goto-type]").forEach((el) => el.onclick = () => {
+    currentView = { kind: "table", type: el.dataset.gotoType };
+    tableSubview = "records";
+    renderChrome();
+  });
+  document.querySelectorAll("[data-browse-type]").forEach((el) => el.onclick = () => {
+    currentView = { kind: "table", type: el.dataset.browseType };
+    tableSubview = "records";
+    renderChrome();
+  });
+}
+function renderCmpLandlord(bdy, owners, currentOwner, ownerListings, dets) {
+  bdy.className = "cmp-body scroll";
+  if (compTab === "notices") {
+    const notices = byType("notice").filter((n) => !isDeleted(n));
+    bdy.className = "cmp-body pad";
+    bdy.innerHTML = `
+      <div class="cmp-section-head" style="margin-top:0;">auditable notices & outreach (emitted as real events)</div>
+      <div class="cmp-card">
+        <div class="cmp-card-head"><span class="cmp-card-title">record new notice to registrant</span></div>
+        <div class="cmp-card-body">
+          <div class="cmp-field-row"><label>channel</label><div class="cmp-val"><select id="not-chan" class="cmp-select"><option value="portal">portal</option><option value="email">email</option><option value="postcard">postcard</option></select></div></div>
+          <div class="cmp-field-row"><label>kind</label><div class="cmp-val"><select id="not-kind" class="cmp-select"><option value="registration-obligation">registration obligation</option><option value="amounts-owed">amounts owed</option><option value="compliance-issue">compliance issue</option></select></div></div>
+          <div class="cmp-field-row"><label>subject</label><div class="cmp-val"><input type="text" id="not-subj" style="width:100%;" value="Compliance notice regarding your STR property"></div></div>
+          <div class="cmp-field-row"><label>message</label><div class="cmp-val"><textarea id="not-body" style="width:100%;height:60px;">Please review your outstanding registration obligations and fees.</textarea></div></div>
+          <div class="cmp-gap"><button class="cmp-btn primary" id="not-send-btn">emit notice event</button></div>
+        </div>
+      </div>
+      <div class="cmp-section-head">notice history log (${notices.length})</div>
+      <div class="cmp-card"><div class="cmp-card-body">
+        ${notices.length ? notices.map((n) => `
+          <div class="cmp-notice-row">
+            <b>[${n.channel || (n.content && n.content.channel)}] ${n.subject || (n.content && n.content.subject)}</b><br>
+            <span class="cmp-compact">${n.body || (n.content && n.content.body)}</span>
+            <button class="cmp-btn" style="margin-left:8px;font-size:10px;" data-undo-event="${n._eventId}">↺ undo</button>
+          </div>
+        `).join("") : `<div class="cmp-empty">No notices sent yet.</div>`}
+      </div></div>
+    `;
+    document.getElementById("not-send-btn").onclick = () => {
+      const chan = document.getElementById("not-chan").value;
+      const kind = document.getElementById("not-kind").value;
+      const subj = document.getElementById("not-subj").value;
+      const bstr = document.getElementById("not-body").value;
+      const targetParcel = ownerListings[0]?.parcel?._anchor;
+      emitComplianceEvent("notice", {
+        kind, channel: chan, to: [currentOwner._anchor], about: targetParcel ? [targetParcel] : [],
+        subject: subj, body: bstr, sent_at: new Date().toISOString().slice(0, 10),
+      }, targetParcel ? [[targetParcel, targetParcel, "notifies_about"]] : []);
+    };
+    return;
+  }
+
+  const activeListings = ownerListings.filter((x) => !isDeleted(x.listing) && !isDeleted(x.parcel));
+  const deletedListings = ownerListings.filter((x) => isDeleted(x.listing) || isDeleted(x.parcel));
+  const selListing = activeListings.find((x) => x.listing._anchor === compSelParcel) || activeListings[0];
+  const parcel = selListing?.parcel;
+  const muni = parcel ? muniOf(parcel) : "middletown";
+  const feeCalc = parcel ? computeFee(parcel, parcel.address === (currentOwner?.mailing_address || "")) : null;
+  const taxEst = computeTaxEstimate(muni, compTaxRev, compTaxPeriod);
+
+  bdy.innerHTML = `
+    <div class="cmp-city-tabs" style="background:#fff;">
+      <span style="font-size:11px;font-weight:700;color:var(--text-dim);margin-right:6px;">portfolio owner:</span>
+      <select id="cmp-owner-sel" class="cmp-select">
+        ${owners.map((o) => `<option value="${o._anchor}" ${o._anchor === currentOwner?._anchor ? "selected" : ""}>${o.name} (${o.mailing_address})</option>`).join("")}
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:300px 1fr;min-height:0;height:calc(100% - 43px);">
+      <div style="border-right:1px solid var(--border);background:var(--surface-2);overflow-y:auto;">
+        <div class="cmp-section-head" style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
+          <span>active properties (${activeListings.length})</span>
+          ${deletedListings.length ? `<span class="cmp-chip warn">${deletedListings.length} deleted</span>` : ""}
+        </div>
+        ${activeListings.map((x) => `
+          <div style="padding:8px 14px;border-bottom:1px solid var(--border);cursor:pointer;background:${x.listing._anchor === selListing?.listing._anchor ? "#fff" : "transparent"};" data-sel-listing="${x.listing._anchor}">
+            <div style="font-weight:700;font-size:12px;">${x.parcel?.address || "—"}</div>
+            <div class="cmp-compact">${x.listing.title}</div>
+            <div style="margin-top:4px;display:flex;gap:4px;align-items:center;">
+              ${x.reg && x.reg.status === "active" ? `<span class="cmp-chip ok">registered</span>` : `<span class="cmp-chip bad">unregistered</span>`}
+              <span class="cmp-compact" style="margin-left:6px;">${x.listing.platform}</span>
+              <button class="cmp-btn danger" style="margin-left:auto;font-size:9px;padding:1px 4px;" data-del-listing="${x.listing._anchor}" title="delete listing">✕</button>
+            </div>
+          </div>
+        `).join("")}
+        ${deletedListings.length ? `
+          <div class="cmp-section-head">deleted (restorable)</div>
+          ${deletedListings.map((x) => `
+            <div style="padding:6px 14px;border-bottom:1px solid var(--border);opacity:.5;">
+              <div style="font-size:11px;text-decoration:line-through;">${x.parcel?.address || "—"}</div>
+              <button class="cmp-btn" style="font-size:9px;padding:1px 4px;" data-rest-listing="${x.listing._anchor}">↺ restore</button>
+            </div>
+          `).join("")}
+        ` : ""}
+      </div>
+      <div style="overflow-y:auto;padding:16px;">
+        ${selListing ? `
+          <div class="cmp-card">
+            <div class="cmp-card-head">
+              <span class="cmp-chip info">${selListing.listing.platform}</span>
+              <span class="cmp-card-title">${selListing.parcel?.address}</span>
+              <a href="${selListing.listing.url}" target="_blank" class="cmp-btn">view listing ↗</a>
+            </div>
+            <div class="cmp-card-body">
+              <b>title:</b> <span data-edit-field="title" data-edit-entity="${selListing.listing._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;">${selListing.listing.title}</span> ✎<br>
+              <b>zoning:</b> <span class="cmp-chip info">${selListing.parcel?.zoning || "—"}</span> <span data-edit-field="zoning" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;font-size:10px;">✎</span><br>
+              <b>property type:</b> <span class="cmp-chip info">${selListing.parcel?.property_type || "—"}</span> <span data-edit-field="property_type" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;font-size:10px;">✎</span><br>
+              <b>state:</b> ${selListing.parcel?.state || "—"} <span data-edit-field="state" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;font-size:10px;">✎</span><br>
+              <b>bedrooms:</b> <span data-edit-field="bedrooms" data-edit-entity="${selListing.parcel._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;">${selListing.parcel?.bedrooms}</span> ✎ · 
+              <b>bathrooms:</b> <span data-edit-field="bathrooms" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;">${selListing.parcel?.bathrooms || "—"}</span> ✎ · 
+              <b>units:</b> <span data-edit-field="units" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;">${selListing.parcel?.units || "—"}</span> ✎<br>
+              <b>partition:</b> <span class="cmp-chip ${selListing.parcel?._partition === "resolved" ? "ok" : selListing.parcel?._partition === "violated" ? "bad" : selListing.parcel?._partition === "deleted" ? "muted" : "warn"}">${selListing.parcel?._partition || "open"}</span> <span data-edit-field="partition" data-edit-entity="${selListing.parcel?._anchor}" style="border-bottom:1px dashed var(--border);cursor:pointer;font-size:10px;">✎</span><br>
+              <b>registration status:</b> ${selListing.reg ? `<span style="color:var(--triad-existence);font-weight:700;">active (${selListing.reg.license_number})</span>` : `<span style="color:var(--triad-significance);font-weight:700;">none on file</span>`}
+            </div>
+          </div>
+          <div class="cmp-section-head" style="margin-top:0;">registration fee calculator & amounts owed</div>
+          <div class="cmp-card"><div class="cmp-card-body">
+            <b>computed fee:</b> ${feeCalc?.text}<br>
+            <b>fee amount:</b> ${feeCalc?.amount !== null ? `<span style="font-size:15px;font-weight:700;color:var(--text-bright);">$${feeCalc.amount.toFixed(2)}</span>` : "<i>delegated / not numeric in corpus</i>"}<br>
+            <div class="cmp-note">Rule read from fee-schedule entity for ${muni}. Principal residence exemption automatically checked against owner mailing address.</div>
+          </div></div>
+          <div class="cmp-section-head">hotel & occupancy tax estimator (${muni})</div>
+          <div class="cmp-card"><div class="cmp-card-body">
+            <div class="cmp-field-row"><label>booking revenue</label><div class="cmp-val"><input type="number" id="tax-rev-input" value="${compTaxRev}"></div></div>
+            <div class="cmp-field-row"><label>period</label><div class="cmp-val">
+              <select id="tax-per-sel" class="cmp-select">
+                <option value="monthly" ${compTaxPeriod === "monthly" ? "selected" : ""}>monthly</option>
+                <option value="quarterly" ${compTaxPeriod === "quarterly" ? "selected" : ""}>quarterly</option>
+                <option value="annual" ${compTaxPeriod === "annual" ? "selected" : ""}>annual</option>
+              </select>
+            </div></div>
+            <div class="cmp-divider"></div>
+            <b>estimated tax (${(taxEst.totalRate * 100).toFixed(1)}% total rate):</b> <span style="font-size:15px;font-weight:700;color:var(--triad-structure);">$${taxEst.amount.toFixed(2)}</span> (${compTaxPeriod})<br>
+            <div class="cmp-compact" style="margin-top:6px;">
+              <b>components:</b><br>
+              ${taxEst.components.map((c) => `&nbsp;• ${c.label}: ${(c.rate * 100).toFixed(1)}% ($${c.calc.toFixed(2)}) — <span style="color:var(--text-faint);">${c.citation}</span>`).join("<br>")}
+            </div>
+          </div></div>
+          <div class="cmp-section-head">obligations & standing history for this parcel</div>
+          <div class="cmp-card"><div class="cmp-card-body">
+            ${state.connections.filter((c) => c.type === "opened_against" && c.target === parcel?._anchor).map((c) => {
+              const st = state.entities[c.source];
+              const part = state.partitions[c.source] || "open";
+              const grounds = state.connections.find((x) => x.type === "grounds_in" && x.source === c.source);
+              const ob = grounds ? state.entities[grounds.target] : null;
+              return `<div style="padding:4px 0;border-bottom:1px solid var(--surface-3);">
+                <b>${st?.distinction}</b><br>
+                <span class="cmp-compact">obligation: ${ob?.holder} ${ob?.section} · partition: <span style="font-weight:700;color:${part === "resolved" ? "var(--triad-existence)" : part === "violated" ? "var(--triad-significance)" : "var(--signal)"};">${part}</span></span>
+              </div>`;
+            }).join("") || `<div class="cmp-empty">No standings opened against this parcel.</div>`}
+          </div></div>
+          <div class="cmp-section-head">revision history (all field changes)</div>
+          <div class="cmp-card"><div class="cmp-card-body">
+            ${renderDefHistory(selListing.listing._anchor, selListing.listing)}
+          </div></div>
+        ` : `<div class="cmp-empty">Select a property on the left.</div>`}
+      </div>
+    </div>
+  `;
+
+  document.getElementById("cmp-owner-sel").onchange = (ev) => { compOwner = ev.target.value; renderCompliance(); };
+  document.querySelectorAll("[data-sel-listing]").forEach((el) => el.onclick = () => { compSelParcel = el.dataset.selListing; renderCompliance(); });
+  document.querySelectorAll("[data-del-listing]").forEach((el) => el.onclick = (ev) => { ev.stopPropagation(); deleteEntity(el.dataset.delListing); });
+  document.querySelectorAll("[data-rest-listing]").forEach((el) => el.onclick = (ev) => { ev.stopPropagation(); restoreEntity(el.dataset.restListing); });
+  document.querySelectorAll("[data-edit-field]").forEach((el) => el.onclick = (ev) => {
+    ev.stopPropagation();
+    const entityAnchor = el.dataset.editEntity;
+    const field = el.dataset.editField;
+    const entity = state.entities[entityAnchor];
+    if (!entity) return;
+    const currentVal = entity[field] ?? "";
+    // Check if this is a select field
+    const parcelSpec = FIELD_SPECS.parcel || [];
+    const fieldDef = parcelSpec.find(([k]) => k === field);
+    if (fieldDef && fieldDef[1] === "select") {
+      // Create a select dropdown for editing
+      const options = fieldDef[2] || [];
+      const selectHtml = `<select id="edit-select-${field}" style="position:absolute;z-index:1000;background:#fff;border:1px solid #000;padding:4px;">
+        ${options.map((opt) => `<option value="${opt}" ${opt === currentVal ? "selected" : ""}>${opt}</option>`).join("")}
+      </select>`;
+      el.innerHTML = selectHtml;
+      const sel = document.getElementById(`edit-select-${field}`);
+      sel.focus();
+      sel.onchange = () => {
+        emitFieldDef(entityAnchor, field, sel.value);
+      };
+      sel.onblur = () => {
+        setTimeout(() => { if (document.getElementById(`edit-select-${field}`)) renderCompliance(); }, 200);
+      };
+    } else {
+      const newVal = prompt(`Edit "${field}" for ${entityAnchor.slice(0, 20)}...`, currentVal);
+      if (newVal !== null && newVal !== currentVal) {
+        emitFieldDef(entityAnchor, field, isNaN(newVal) ? newVal : Number(newVal));
+      }
+    }
+  });
+  const revIn = document.getElementById("tax-rev-input");
+  if (revIn) revIn.onchange = (ev) => { compTaxRev = Number(ev.target.value) || 0; };
+  const perSel = document.getElementById("tax-per-sel");
+  if (perSel) perSel.onchange = (ev) => { compTaxPeriod = ev.target.value; renderCompliance(); };
+}
+function renderCmpGovernment(bdy, dets) {
+  bdy.className = "cmp-body scroll";
+  const activeItems = dets.allItems.filter((x) => !isDeleted(x.listing) && !isDeleted(x.parcel));
+  const deletedItems = dets.allItems.filter((x) => isDeleted(x.listing) || isDeleted(x.parcel));
+  const activeUnregistered = activeItems.filter((x) => !x.reg || x.reg.status !== "active");
+  const activeEvidence = activeItems.reduce((acc, x) => {
+    const bookings = x.listing.bookings || [];
+    bookings.forEach((b) => { if (b.to >= "2026-09-11") acc.push({ ...x, booking: b }); });
+    return acc;
+  }, []).sort((a, b) => a.booking.from.localeCompare(b.booking.from));
+  const activeNonOwnerRes = activeItems.filter((x) => {
+    if (!x.parcel || !x.owner) return false;
+    const zoning = (x.parcel.zoning || "").toUpperCase();
+    const isRes = zoning.startsWith("R") || zoning.includes("RES");
+    const mail = (x.owner.mailing_address || "").toLowerCase();
+    const addr = (x.parcel.address || "").toLowerCase();
+    const isDifferent = mail.includes("po box") || !addr.split(",")[0].trim().split(" ").every((w) => mail.includes(w));
+    return isRes && isDifferent;
+  });
+  const byStreet = new Map();
+  activeItems.forEach((x) => {
+    if (!x.parcel) return;
+    const st = (x.parcel.address || "").replace(/^[\d\-]+ /, "").replace(/ Unit.*| #[0-9]+.*/, "").trim();
+    if (!byStreet.has(st)) byStreet.set(st, []);
+    byStreet.get(st).push(x);
+  });
+  const activeStreetDensity = [...byStreet.entries()].filter(([st, list]) => list.length >= 3);
+  const byOwner = new Map();
+  activeItems.forEach((x) => {
+    if (!x.owner) return;
+    const name = x.owner.name;
+    if (!byOwner.has(name)) byOwner.set(name, []);
+    byOwner.get(name).push(x);
+  });
+  const activeOwnerConcentration = [...byOwner.entries()].filter(([name, list]) => list.length >= 2);
+
+  bdy.innerHTML = `
+    <div class="cmp-city-tabs">
+      <span style="font-size:11px;font-weight:700;color:var(--text-dim);margin-right:4px;">city scope:</span>
+      ${["all", "middletown", "chicago", "staugustine", "talent", "ftworth"].map((c) => `<button class="cmp-city ${compCity === c ? "active" : ""}" data-gov-city="${c}">${c}</button>`).join("")}
+    </div>
+    ${compGovTab === "unregistered" ? `
+      <div class="cmp-section-head">unregistered str's requiring a license & registration (${activeUnregistered.length})</div>
+      <div class="cmp-card"><div class="cmp-card-body">
+        ${activeUnregistered.length ? activeUnregistered.map((x) => `
+          <div style="padding:6px 0;border-bottom:1px solid var(--surface-3);display:flex;align-items:center;gap:10px;">
+            <div style="flex:1;">
+              <b>${x.parcel?.address || "—"}</b><br>
+              <span class="cmp-compact">${x.listing.platform} · title: "${x.listing.title}" · owner: ${x.owner?.name}</span>
+            </div>
+            <button class="cmp-btn" style="font-size:10px;" data-edit-listing="${x.listing._anchor}">edit</button>
+            <button class="cmp-btn danger" style="font-size:10px;" data-del-listing="${x.listing._anchor}">delete</button>
+            <button class="cmp-btn danger" data-insp-btn="${x.parcel?._anchor}" data-list-anchor="${x.listing._anchor}">create inspection task</button>
+          </div>
+        `).join("") : `<div class="cmp-empty">No unregistered STRs found in scope.</div>`}
+      </div></div>
+    ` : compGovTab === "evidence" ? `
+      <div class="cmp-section-head">upcoming dates with bookings (inspector evidence gathering)</div>
+      <div class="cmp-card"><div class="cmp-card-body">
+        ${activeEvidence.length ? activeEvidence.map((x) => `
+          <div style="padding:6px 0;border-bottom:1px solid var(--surface-3);display:flex;align-items:center;gap:10px;">
+            <div style="width:140px;">
+              <span class="cmp-evidence-date">${x.booking.from}</span> → <span class="cmp-evidence-date">${x.booking.to}</span>
+            </div>
+            <div style="flex:1;">
+              <b>${x.parcel?.address}</b><br>
+              <span class="cmp-compact">${x.listing.platform} · ${x.listing.title}</span>
+            </div>
+            <button class="cmp-btn primary" data-insp-btn="${x.parcel?._anchor}" data-list-anchor="${x.listing._anchor}">schedule inspection</button>
+          </div>
+        `).join("") : `<div class="cmp-empty">No upcoming bookings found.</div>`}
+      </div></div>
+    ` : compGovTab === "illegal" ? `
+      <div class="cmp-section-head">non-owner occupied str's in residential zones (${activeNonOwnerRes.length})</div>
+      <div class="cmp-grid"><table>
+        <thead><tr><th>address</th><th>zoning</th><th>owner mailing address</th><th>actions</th><th>note</th></tr></thead>
+        <tbody>
+          ${activeNonOwnerRes.map((x) => `<tr>
+            <td><b>${x.parcel?.address}</b></td>
+            <td><span class="cmp-chip warn">${x.parcel?.zoning}</span></td>
+            <td>${x.owner?.mailing_address}</td>
+            <td><button class="cmp-btn" style="font-size:10px;" data-edit-listing="${x.listing._anchor}">edit</button> <button class="cmp-btn danger" style="font-size:10px;" data-del-listing="${x.listing._anchor}">delete</button></td>
+            <td class="cmp-compact">Owner mailing differs from property; residential zone.</td>
+          </tr>`).join("")}
+        </tbody>
+      </table></div>
+      <div class="cmp-section-head">proximity & density clusters</div>
+      <div class="cmp-card"><div class="cmp-card-body">
+        <b>street density clusters (>3 listings per street):</b><br>
+        ${activeStreetDensity.map(([st, list]) => `&nbsp;• <b>${st}</b>: ${list.length} listings (${list.map((x) => x.parcel?.address.split(",")[0]).join(", ")})`).join("<br>") || "<i>None</i>"}<br><br>
+        <b>owner concentration (>2 listings per owner):</b><br>
+        ${activeOwnerConcentration.map(([name, list]) => `&nbsp;• <b>${name}</b>: ${list.length} properties (${list.map((x) => x.parcel?.address.split(",")[0]).join(", ")})`).join("<br>") || "<i>None</i>"}
+      </div></div>
+    ` : `
+      <div class="cmp-section-head">listing completeness verification (required information)</div>
+      <div class="cmp-grid"><table>
+        <thead><tr><th>listing & platform</th><th>license displayed</th><th>parking plan</th><th>units / bedrooms</th><th>status</th><th>actions</th></tr></thead>
+        <tbody>
+          ${activeItems.map((x) => {
+            const hasLic = Boolean(x.listing.property && x.listing.property.license_number);
+            const hasPark = Boolean(x.listing.property && x.listing.property.parking_plan);
+            const ok = hasLic && hasPark;
+            return `<tr>
+              <td><b>${x.parcel?.address.split(",")[0]}</b><br><span class="cmp-compact">${x.listing.platform} · ${x.listing.title}</span></td>
+              <td>${hasLic ? `<span class="cmp-chip ok">${x.listing.property.license_number}</span>` : `<span class="cmp-chip bad">missing</span>`}</td>
+              <td>${hasPark ? x.listing.property.parking_plan : `<span class="cmp-chip bad">missing</span>`}</td>
+              <td>${x.listing.property.units} unit / ${x.listing.property.bedrooms} br</td>
+              <td>${ok ? `<span class="cmp-chip ok">pass</span>` : `<span class="cmp-chip bad">review</span>`}</td>
+              <td><button class="cmp-btn" style="font-size:10px;" data-edit-listing="${x.listing._anchor}">edit</button> <button class="cmp-btn danger" style="font-size:10px;" data-del-listing="${x.listing._anchor}">delete</button></td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table></div>
+    `}
+    ${deletedItems.length ? `
+      <div class="cmp-section-head">deleted listings (restorable)</div>
+      <div class="cmp-card"><div class="cmp-card-body">
+        ${deletedItems.map((x) => `
+          <div style="padding:4px 0;border-bottom:1px solid var(--surface-3);opacity:.5;display:flex;align-items:center;gap:10px;">
+            <span style="text-decoration:line-through;font-size:11px;">${x.parcel?.address || "—"}</span>
+            <button class="cmp-btn" style="font-size:10px;" data-rest-listing="${x.listing._anchor}">↺ restore</button>
+          </div>
+        `).join("")}
+      </div></div>
+    ` : ""}
+  `;
+
+  document.querySelectorAll("[data-gov-city]").forEach((b) => b.onclick = () => { compCity = b.dataset.govCity; renderCompliance(); });
+  document.querySelectorAll("[data-insp-btn]").forEach((b) => b.onclick = () => {
+    const parcelAnchor = b.dataset.inspBtn;
+    const listAnchor = b.dataset.listAnchor;
+    emitComplianceEvent("inspection", {
+      planned_for: "2026-09-20", focus: "evidence verifying unlicensed / illegal operation",
+      note: "Inspector dispatched following compliance workbench trigger.",
+      listing: [listAnchor], parcel: [parcelAnchor], created_at: new Date().toISOString().slice(0, 10),
+    }, [[parcelAnchor, parcelAnchor, "targets"], [listAnchor, parcelAnchor, "scheduled_for"]]);
+  });
+  document.querySelectorAll("[data-edit-listing]").forEach((el) => el.onclick = () => {
+    const anchor = el.dataset.editListing;
+    const entity = state.entities[anchor];
+    if (!entity) return;
+    const fields = Object.keys(entity).filter((k) => !k.startsWith("_"));
+    const field = prompt(`Edit field for listing ${anchor.slice(0, 20)}...\nAvailable: ${fields.join(", ")}`, "title");
+    if (!field || !fields.includes(field)) return;
+    const currentVal = entity[field] ?? "";
+    const newVal = prompt(`Edit "${field}"`, typeof currentVal === "object" ? JSON.stringify(currentVal) : currentVal);
+    if (newVal !== null && newVal !== currentVal) {
+      try {
+        const parsed = JSON.parse(newVal);
+        emitFieldDef(anchor, field, parsed);
+      } catch {
+        emitFieldDef(anchor, field, isNaN(newVal) ? newVal : Number(newVal));
+      }
+    }
+  });
+  document.querySelectorAll("[data-del-listing]").forEach((el) => el.onclick = () => { deleteEntity(el.dataset.delListing); });
+  document.querySelectorAll("[data-rest-listing]").forEach((el) => el.onclick = () => { restoreEntity(el.dataset.restListing); });
+}
+
 /* ── chrome ── */
 function renderChrome() {
   const violations = timeOrderViolations(EVENTS);
@@ -1005,6 +1910,7 @@ function renderChrome() {
   if (currentView.kind === "table") renderTable(currentView.type);
   else if (currentView.kind === "log") renderTimeline();
   else if (currentView.kind === "trash") renderTrash();
+  else if (currentView.kind === "compliance") renderCompliance();
 }
 
 document.getElementById("reset-btn").addEventListener("click", async () => {
