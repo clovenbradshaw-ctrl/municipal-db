@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STR Registration &amp; Oversight — Metro Nashville-Davidson County</title>
 <script>try{document.documentElement.dataset.theme=localStorage.getItem("str-theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");}catch(e){document.documentElement.dataset.theme="dark";}</script>
 <style>
@@ -46,13 +47,14 @@
     header nav { order: 3; flex-basis: 100%; }
   }
   main { padding: 24px 32px 60px; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 600px) { main { padding: 16px 16px 40px; } }
   .crumb { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
   h1 { font-size: 22px; margin: 0 0 4px; }
   h2 { font-size: 15px; margin: 22px 0 8px; }
   .lede { color: var(--dim); max-width: 800px; margin: 0 0 16px; }
   .row { display: flex; gap: 14px; flex-wrap: wrap; }
   .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
-  .card.click { display: block; color: var(--ink); width: 300px; }
+  .card.click { display: block; color: var(--ink); width: 300px; max-width: 100%; }
   .card.click:hover { border-color: var(--gold); text-decoration: none; }
   .card h3 { font-size: 14px; margin: 0 0 2px; }
   .card .route { font-family: ui-monospace, monospace; font-size: 11px; color: var(--faint); margin-bottom: 6px; }
@@ -102,8 +104,9 @@
   .cal-record { border: 1px solid var(--line); border-radius: 6px; background: var(--panel2); padding: 7px 9px; margin-bottom: 8px; font-size: 11.5px; }
   .cal-record-kind { font-weight: 700; text-transform: capitalize; }
   .cal-record-note { color: var(--dim); margin: 4px 0; line-height: 1.4; }
-  table.grid { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 8px 0; }
-  table.grid th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--faint); border-bottom: 1px solid var(--line); padding: 6px 8px; }
+  .grid-scroll { overflow-x: auto; margin: 8px 0; }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 0; }
+  table.grid th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--faint); border-bottom: 1px solid var(--line); padding: 6px 8px; white-space: nowrap; }
   table.grid td { border-bottom: 1px solid var(--line); padding: 7px 8px; }
   table.grid tr:last-child td { border-bottom: none; }
   table.grid tr.hl td { background: rgba(232,185,62,.08); }
@@ -318,8 +321,8 @@ function toast(msg) {
 }
 function crumb(trail) { return '<div class="crumb">' + trail.map((t, i) => i < trail.length - 1 ? link(t[0], t[1]) + " / " : t[1]).join("") + "</div>"; }
 function grid(cols, rows) {
-  return '<table class="grid"><thead><tr>' + cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" +
-    rows.map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+  return '<div class="grid-scroll"><table class="grid"><thead><tr>' + cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" +
+    rows.map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table></div>";
 }
 function pager(prev, next) {
   return '<div style="margin-top:16px;">' +
@@ -539,7 +542,7 @@ function drawPaged(id) {
   st.page = Math.max(0, Math.min(st.page, pages - 1));
   const a = st.page * st.per;
   if (st.view === "cards" && st.cards) view.innerHTML = st.cards.slice(a, a + st.per).join("");
-  else view.innerHTML = '<table class="grid"><thead><tr>' + st.cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" + st.rows.slice(a, a + st.per).map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+  else view.innerHTML = '<div class="grid-scroll"><table class="grid"><thead><tr>' + st.cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" + st.rows.slice(a, a + st.per).map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table></div>";
   if (ctrl) {
     ctrl.innerHTML = '<button class="btn" data-pg="-1"' + (st.page === 0 ? " disabled" : "") + ">← Prev</button>" +
       "<span style='font-size:12px;color:var(--dim);margin:0 8px;'>Page " + (st.page + 1) + " of " + pages + " · " + st.rows.length + " items</span>" +
@@ -758,7 +761,7 @@ function pDetection() {
     '<button class="btn sm" data-cmd-filter="unreg">Unregistered</button> ' +
     '<button class="btn sm" data-cmd-filter="marginal">Held-back MARGINAL</button> ' +
     '<button class="btn sm" data-cmd-filter="illegal">Illegal-type</button></div>' +
-    '<div class="card"><table class="grid"><thead><tr><th>Resolved address ' + X("Swarm event → TransformerAssetMapper → Asset") + "</th><th>Match " + X("Azora · reliability unmeasured") + "</th><th>Registered " + X("BB · Asset.licenses.status") + "</th><th>Flags " + X("rule cites · Code") + "</th><th>Action</th></tr></thead><tbody>" + rows + "</tbody></table>" +
+    '<div class="card"><div class="grid-scroll"><table class="grid"><thead><tr><th>Resolved address ' + X("Swarm event → TransformerAssetMapper → Asset") + "</th><th>Match " + X("Azora · reliability unmeasured") + "</th><th>Registered " + X("BB · Asset.licenses.status") + "</th><th>Flags " + X("rule cites · Code") + "</th><th>Action</th></tr></thead><tbody>" + rows + "</tbody></table></div>" +
     '<p>MARGINAL addresses stay visible but are held out of notices until they clear. UNLOCATED rows carry no parcel link.</p></div>' +
     '<a class="btn primary" href="#/oversee/map-table">Open in map + table</a>' +
     '<a class="btn" href="#/workbench/staff">Compliance queue</a>' +
