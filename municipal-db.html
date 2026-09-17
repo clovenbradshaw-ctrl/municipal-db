@@ -18,6 +18,7 @@
   --mono: ui-monospace,'SF Mono','Menlo','Monaco','Consolas','Liberation Mono',monospace;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
+select,input,textarea{max-width:100%;}
 html,body{height:100%;}
 body{font-family:var(--mono);background:var(--bg);color:var(--text);font-size:13.5px;line-height:1.6;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
@@ -26,17 +27,32 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 ::-webkit-scrollbar{width:9px;height:9px;} ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:#ddd;border:2px solid #fff;} ::-webkit-scrollbar-thumb:hover{background:#888;}
 
-.shell{display:grid;grid-template-rows:auto 1fr;height:100vh;background:var(--bg);}
-.topbar{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--border-strong);background:#fff;flex-shrink:0;}
-.topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;}
-.topbar-link{font-size:11px;color:var(--triad-structure);border:1px solid var(--triad-structure);padding:3px 9px;text-decoration:none;font-weight:600;}
+.shell{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;height:100vh;min-width:0;background:var(--bg);}
+body{min-width:0;}
+.topbar{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;padding:10px 16px;border-bottom:1px solid var(--border-strong);background:#fff;flex-shrink:0;}
+.topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;flex-shrink:0;}
+.topbar-link{font-size:11px;color:var(--triad-structure);border:1px solid var(--triad-structure);padding:3px 9px;text-decoration:none;font-weight:600;flex-shrink:0;white-space:nowrap;}
 .topbar-link:hover{background:#f1f0fb;}
-.topbar .stats{margin-left:auto;display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);}
+.topbar .stats{margin-left:auto;display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--text-dim);min-width:0;}
 .topbar .stats b{color:var(--text-bright);}
 .topbar .stats .bad{color:var(--red);font-weight:700;}
 .topbar .stats .ok{color:var(--green);font-weight:700;}
+.sb-toggle{display:none;flex-shrink:0;background:transparent;border:1px solid var(--border-strong);border-radius:6px;width:30px;height:30px;font-size:15px;cursor:pointer;color:var(--text);}
+.sb-backdrop{display:none;}
 
-.shell-body{display:grid;grid-template-columns:236px 1fr;min-height:0;overflow:hidden;}
+.shell-body{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:0;overflow:hidden;position:relative;}
+
+@media (max-width:860px){
+  .topbar{padding:8px 12px;gap:10px;}
+  .topbar .brand{display:none;}
+  .topbar-link{white-space:nowrap;}
+  .topbar .stats{gap:8px;font-size:10.5px;}
+  .sb-toggle{display:inline-flex;align-items:center;justify-content:center;}
+  .shell-body{grid-template-columns:minmax(0,1fr);}
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:250px;max-width:84vw;z-index:41;transform:translateX(-100%);transition:transform .2s ease;box-shadow:12px 0 28px -6px rgba(0,0,0,.35);}
+  .sidebar.open{transform:translateX(0);}
+  .sb-backdrop.open{display:block;position:fixed;inset:0;background:rgba(10,12,18,.4);z-index:40;}
+}
 
 .sidebar{display:flex;flex-direction:column;background:var(--surface-2);border-right:1px solid var(--border-strong);overflow-y:auto;font-size:12.5px;}
 .sb-room-head{padding:13px 14px;border-bottom:1px solid var(--border-strong);background:#fff;}
@@ -189,7 +205,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .cmp-city-tabs{display:flex;gap:4px;padding:8px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
 .cmp-city{padding:4px 9px;font-size:11px;font-family:var(--mono);border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;font-weight:600;}
 .cmp-city.active{background:var(--text-bright);color:#fff;border-color:var(--text-bright);}
-.cmp-select{font-size:11px;padding:3px 6px;}
+.cmp-select{font-size:11px;padding:3px 6px;max-width:100%;}
 .cmp-card{border:1px solid var(--border);margin:10px 16px;padding:10px 12px;background:#fff;}
 .cmp-card-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
 .cmp-card-title{font-weight:700;font-size:12.5px;flex:1;}
@@ -201,11 +217,11 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .cmp-chip.bad{color:var(--triad-significance);border-color:var(--triad-significance);background:#fbf1f0;}
 .cmp-chip.info{color:var(--triad-structure);border-color:var(--triad-structure);background:#f1f0fb;}
 .cmp-chip.muted{color:var(--text-faint);background:var(--surface-2);}
-.cmp-field-row{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--surface-3);font-size:12px;}
+.cmp-field-row{display:flex;gap:8px;align-items:center;padding:4px 0;border-bottom:1px solid var(--surface-3);font-size:12px;flex-wrap:wrap;}
 .cmp-field-row:last-child{border-bottom:none;}
 .cmp-field-row label{width:120px;color:var(--text-dim);font-weight:600;font-size:11px;flex-shrink:0;}
-.cmp-field-row input[type="number"],.cmp-field-row input[type="text"]{width:120px;font-size:11px;padding:3px 5px;border:1px solid var(--border);background:#fff;}
-.cmp-field-row .cmp-val{flex:1;}
+.cmp-field-row input[type="number"],.cmp-field-row input[type="text"]{width:120px;max-width:100%;font-size:11px;padding:3px 5px;border:1px solid var(--border);background:#fff;}
+.cmp-field-row .cmp-val{flex:1;min-width:0;}
 .cmp-btn{font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--border-strong);background:#fff;color:var(--text);cursor:pointer;font-weight:600;}
 .cmp-btn:hover{background:var(--surface-2);border-color:#000;}
 .cmp-btn.danger{border-color:var(--red);color:var(--red);}
@@ -249,7 +265,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .cal-filter-chip.active{background:var(--text-bright);color:#fff;border-color:var(--text-bright);}
 .cal-scope-chip{padding:3px 9px;font-size:10.5px;border:1px solid var(--triad-structure);color:var(--triad-structure);background:#f1f0fb;font-weight:600;}
 .cal-scope-chip button{border:none;background:transparent;color:inherit;cursor:pointer;font-weight:700;margin-left:4px;}
-.cal-body{display:grid;grid-template-columns:1fr 280px;min-height:0;height:calc(100% - 49px);}
+.cal-body{display:grid;grid-template-columns:minmax(0,1fr) 280px;min-height:0;height:calc(100% - 49px);}
 .cal-grid-wrap{overflow-y:auto;padding:12px 16px;}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
 .cal-dow{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;text-align:center;padding-bottom:4px;}
@@ -349,7 +365,14 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .jb-tab:hover{color:var(--text-bright);}
 .jb-tab.active{border-bottom-color:#000;color:var(--text-bright);font-weight:700;background:var(--surface);}
 .jb-body{flex:1;overflow:auto;padding:16px 18px;}
-.jb-cols{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;max-width:1180px;}
+.jb-cols{display:grid;grid-template-columns:1.5fr minmax(0,1fr);gap:16px;align-items:start;max-width:1180px;}
+.cmp-portfolio-split{display:grid;grid-template-columns:300px minmax(0,1fr);}
+@media (max-width:860px){
+  .cal-body{grid-template-columns:minmax(0,1fr);}
+  .jb-cols{grid-template-columns:minmax(0,1fr);max-width:100%;}
+  .cmp-portfolio-split{grid-template-columns:minmax(0,1fr);height:auto;}
+  .cmp-portfolio-split>div{overflow-y:visible;max-height:none;}
+}
 .jobwin{background:#fff;border:1px solid var(--border-strong);}
 .jobwin-head{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid var(--border-strong);background:var(--surface-2);font-size:11.5px;font-weight:700;color:var(--text-dim);}
 .jobwin-sample{margin-left:auto;font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-faint);border:1px solid var(--border);padding:1px 6px;background:#fff;}
@@ -375,12 +398,14 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 
 <div class="shell">
   <div class="topbar">
+    <button class="sb-toggle" id="sb-toggle" title="Menu" aria-label="Toggle sidebar">☰</button>
     <span class="brand">nashville · 3-layer demo</span>
     <a class="topbar-link" href="str-demo.html">↗ STR oversight demo</a>
     <span class="stats" id="stats"></span>
   </div>
   <div class="shell-body">
-    <div class="sidebar">
+    <div class="sb-backdrop" id="sb-backdrop"></div>
+    <div class="sidebar" id="sidebar">
       <div class="sb-room-head">
         <div class="sb-room-name">nashville · 3-layer demo</div>
         <div class="sb-room-sub">read-only geo-json ⊕ workflows ⇒ the bridge</div>
@@ -2016,7 +2041,7 @@ function renderCmpLandlord(bdy, owners, currentOwner, ownerListings, dets) {
         ${owners.map((o) => `<option value="${o._anchor}" ${o._anchor === currentOwner?._anchor ? "selected" : ""}>${o.name} (${o.mailing_address})</option>`).join("")}
       </select>
     </div>
-    <div style="display:grid;grid-template-columns:300px 1fr;min-height:0;height:calc(100% - 43px);">
+    <div class="cmp-portfolio-split" style="min-height:0;height:calc(100% - 43px);">
       <div style="border-right:1px solid var(--border);background:var(--surface-2);overflow-y:auto;">
         <div class="cmp-section-head" style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;">
           <span>active properties (${activeListings.length})</span>
@@ -3254,6 +3279,18 @@ document.getElementById("profile-close").addEventListener("click", closeProfile)
 document.getElementById("profile-backdrop").addEventListener("click", closeProfile);
 document.getElementById("profile-back").addEventListener("click", goBackProfile);
 document.addEventListener("keydown", (ev) => { if (ev.key === "Escape" && profileStack.length) closeProfile(); });
+
+/* ── mobile off-canvas sidebar — desktop grid-columns the sidebar in;
+   below 860px it becomes a fixed drawer toggled by the hamburger button,
+   closing on backdrop tap, Escape, or picking any nav item. ── */
+function setSidebarOpen(open) {
+  document.getElementById("sidebar").classList.toggle("open", open);
+  document.getElementById("sb-backdrop").classList.toggle("open", open);
+}
+document.getElementById("sb-toggle").addEventListener("click", () => setSidebarOpen(!document.getElementById("sidebar").classList.contains("open")));
+document.getElementById("sb-backdrop").addEventListener("click", () => setSidebarOpen(false));
+document.getElementById("sidebar").addEventListener("click", (ev) => { if (ev.target.closest("button")) setSidebarOpen(false); });
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") setSidebarOpen(false); });
 
 // Demo-first boot: real parcel slice + dummy STR. No storage writes, no
 // multi-MB fetches beyond the one sliced bridge file — nothing that can

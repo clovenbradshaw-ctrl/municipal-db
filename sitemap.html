@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>STR Registration &amp; Oversight — visual site map</title>
 <style>
   :root {
@@ -12,6 +13,7 @@
   }
   * { box-sizing: border-box; }
   body { background: var(--bg); color: var(--ink); font: 13px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 28px 32px 60px; }
+  @media (max-width: 600px) { body { padding: 18px 16px 40px; } }
   h1 { font-size: 22px; margin: 0 0 4px; }
   .sub { color: var(--dim); margin: 0 0 18px; max-width: 900px; }
   .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; font-size: 12px; color: var(--dim); }
@@ -21,7 +23,7 @@
   .section > h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin: 26px 0 10px; display: flex; align-items: center; gap: 10px; }
   .section > h2 .n { background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; font-size: 11px; }
   .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: stretch; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; width: 250px; position: relative; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; width: 250px; max-width: 100%; position: relative; }
   .card.wide { width: 380px; }
   .card h3 { font-size: 13px; margin: 0 0 2px; }
   .card .route { font-family: ui-monospace, monospace; font-size: 11px; color: var(--faint); margin-bottom: 8px; }
