@@ -979,7 +979,7 @@ const ROUTES = {
 
 function buildNav() {
   document.getElementById("topnav").innerHTML = TOPS[persona].map((t) => '<a href="#/' + t[0] + '"' + (t[0].startsWith("workbench") ? ' id="top-wb"' : "") + ' data-top="' + t[0] + '">' + t[1] + "</a>").join("") +
-    (persona === "staff" ? '<a href="btora/paths-overview.html" data-top="paths">Delivery × folds</a>' : "");
+    (persona === "staff" ? '<a href="btora/paths-overview.html" data-top="paths">Delivery × folds</a><a href="municipal-db.html" data-top="municipal-db">Municipal DB ↗</a>' : "");
 }
 
 function render() {

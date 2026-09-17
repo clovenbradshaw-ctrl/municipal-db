@@ -29,6 +29,8 @@ input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:inset 0 0 0
 .shell{display:grid;grid-template-rows:auto 1fr;height:100vh;background:var(--bg);}
 .topbar{display:flex;align-items:center;gap:16px;padding:10px 16px;border-bottom:1px solid var(--border-strong);background:#fff;flex-shrink:0;}
 .topbar .brand{font-weight:700;font-size:13px;letter-spacing:.2px;}
+.topbar-link{font-size:11px;color:var(--triad-structure);border:1px solid var(--triad-structure);padding:3px 9px;text-decoration:none;font-weight:600;}
+.topbar-link:hover{background:#f1f0fb;}
 .topbar .stats{margin-left:auto;display:flex;gap:14px;font-size:11.5px;color:var(--text-dim);}
 .topbar .stats b{color:var(--text-bright);}
 .topbar .stats .bad{color:var(--red);font-weight:700;}
@@ -235,6 +237,41 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .cmp-schema-rel{font-size:11px;padding:3px 0;border-bottom:1px solid var(--surface-3);}
 .cmp-framing-note{padding:10px;border:1px solid var(--border);margin:12px 16px;background:var(--surface-2);font-size:11px;line-height:1.55;color:var(--text-dim);}
 
+/* ── compliance calendar ── */
+.cal-widget{border:1px solid var(--border);margin:10px 16px;padding:10px 12px;background:#fff;}
+.cal-widget-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+.cal-widget-head b{font-size:12.5px;color:var(--text-bright);}
+.cal-widget-row{display:flex;gap:8px;align-items:center;padding:3px 0;font-size:11.5px;border-top:1px solid var(--surface-3);}
+.cal-widget-row .cw-date{width:78px;flex-shrink:0;color:var(--text-dim);font-variant-numeric:tabular-nums;}
+.cal-toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--surface-2);}
+.cal-toolbar .cal-month-label{font-weight:700;font-size:13px;min-width:150px;text-align:center;}
+.cal-filter-chip{padding:3px 9px;font-size:10.5px;text-transform:lowercase;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:var(--mono);}
+.cal-filter-chip.active{background:var(--text-bright);color:#fff;border-color:var(--text-bright);}
+.cal-scope-chip{padding:3px 9px;font-size:10.5px;border:1px solid var(--triad-structure);color:var(--triad-structure);background:#f1f0fb;font-weight:600;}
+.cal-scope-chip button{border:none;background:transparent;color:inherit;cursor:pointer;font-weight:700;margin-left:4px;}
+.cal-body{display:grid;grid-template-columns:1fr 280px;min-height:0;height:calc(100% - 49px);}
+.cal-grid-wrap{overflow-y:auto;padding:12px 16px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-dow{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;text-align:center;padding-bottom:4px;}
+.cal-cell{border:1px solid var(--border);min-height:78px;padding:4px;font-size:10px;cursor:pointer;background:#fff;}
+.cal-cell.empty{border-color:transparent;cursor:default;background:transparent;}
+.cal-cell.today{border-color:var(--triad-structure);border-width:2px;}
+.cal-cell.selected{background:var(--surface-2);}
+.cal-cell:hover:not(.empty){background:var(--surface-2);}
+.cal-daynum{font-weight:700;color:var(--text-dim);margin-bottom:3px;font-variant-numeric:tabular-nums;}
+.cal-cell.today .cal-daynum{color:var(--triad-structure);}
+.cal-chip{padding:1px 4px;margin-bottom:2px;border-radius:2px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
+.cal-chip.cal-scheduled{background:var(--triad-structure);}
+.cal-chip.cal-completed{background:var(--triad-existence);}
+.cal-chip.cal-overdue{background:var(--triad-significance);}
+.cal-chip.cal-flagged{background:var(--signal);}
+.cal-more{font-size:9px;color:var(--text-faint);}
+.cal-agenda{border-left:1px solid var(--border);overflow-y:auto;padding:12px 14px;background:var(--surface-2);}
+.cal-agenda h4{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);margin:0 0 8px;}
+.cal-record{border:1px solid var(--border);background:#fff;padding:8px 9px;margin-bottom:8px;font-size:11.5px;}
+.cal-record-kind{font-weight:700;text-transform:capitalize;}
+.cal-record-note{color:var(--text-dim);margin:4px 0;line-height:1.4;}
+
 /* ── three-layer demo ── */
 .layer-note{max-width:820px;padding:10px 12px;border:1px solid var(--border);margin:12px 16px;background:var(--surface-2);font-size:12px;line-height:1.6;color:var(--text);border-left:4px solid var(--border-strong);}
 .layer-note.ro{border-left-color:var(--signal);}
@@ -339,6 +376,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 <div class="shell">
   <div class="topbar">
     <span class="brand">nashville · 3-layer demo</span>
+    <a class="topbar-link" href="str-demo.html">↗ STR oversight demo</a>
     <span class="stats" id="stats"></span>
   </div>
   <div class="shell-body">
@@ -371,6 +409,10 @@ table.grid tr.row.expanded{background:var(--surface-2);}
         <div class="sb-section-head">layer 3 · the bridge (the real thing)</div>
         <button class="sb-log-link" id="sb-bridge" style="font-weight:700;color:var(--triad-structure);">⛁ the bridge</button>
         <div id="sb-tables"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-section-head">compliance calendar</div>
+        <button class="sb-log-link" id="sb-calendar">📅 calendar</button>
       </div>
       <div class="sb-section" style="border-bottom:none;">
         <button class="sb-log-link" id="sb-log">≡ event log (raw timeline)</button>
@@ -864,6 +906,220 @@ async function ensureCompLoaded() {
 function allCompEntities() { return cmpState ? Object.values(cmpState.entities) : []; }
 function byTypeComp(t) { return allCompEntities().filter((e) => e._type === t); }
 
+/* ── compliance calendar records — 10,000+ dummy inspection/notice/renewal/
+   audit records, generated deterministically over the bridge's real parcels
+   and stored as a packed binary blob in OPFS (not JSON — a fixed-width row
+   format + a UTF-8 string heap, matching the earlier 1M-parcel bulk-overlay
+   pattern). Regenerated once per origin and then just read back off disk;
+   never touches EVENTS/COMP_EVENTS or localStorage. ── */
+const CAL_FILE = "compliance-records.bin";
+const CAL_MAGIC = [0x43, 0x4d, 0x50, 0x31]; // "CMP1"
+const CAL_HEADER = 16, CAL_PARCEL_ENTRY = 6, CAL_ROW = 18;
+const CAL_TARGET_COUNT = 10000;
+const CAL_KINDS = ["inspection", "notice", "license-renewal", "tax-audit", "contact-verify", "occupancy-check"];
+const CAL_STATUSES = ["scheduled", "completed", "overdue", "flagged"];
+const CAL_NOTES = {
+  "inspection": ["Routine STR inspection — verify guest capacity and posted permit.", "Follow-up inspection after a 311 complaint.", "Annual life-safety inspection (egress, smoke detectors)."],
+  "notice": ["Registration-obligation notice mailed to owner.", "Compliance notice re: expired license.", "Courtesy notice — renewal due within 30 days."],
+  "license-renewal": ["STR license renewal window opens.", "License renewal — payment and inspection both required.", "Late renewal — grace period ends."],
+  "tax-audit": ["Hotel/occupancy tax reconciliation against platform-reported revenue.", "Spot audit — booking count vs. remitted tax.", "Quarterly occupancy tax review."],
+  "contact-verify": ["Emergency contact distance re-verification (10 mi rule).", "Confirm emergency contact is still reachable.", "Contact address changed — re-check distance rule."],
+  "occupancy-check": ["Max-guest count field visit.", "Occupancy check triggered by a neighbor complaint.", "Routine occupancy spot-check."],
+};
+
+function todayEpochDay() { return Math.floor(Date.now() / 86400000); }
+function epochDayUTC(y, m, d) { return Math.floor(Date.UTC(y, m, d) / 86400000); }
+function epochDayToDate(ed) { return new Date(ed * 86400000); }
+
+function generateComplianceRecords(parcels, targetCount) {
+  const rand = mulberry32(0xC0FFEE);
+  const today = todayEpochDay();
+  const records = [];
+  let id = 1;
+  const perParcel = Math.max(1, Math.ceil(targetCount / parcels.length));
+  outer: for (const p of parcels) {
+    for (let k = 0; k < perParcel; k++) {
+      if (records.length >= targetCount) break outer;
+      const kind = CAL_KINDS[Math.floor(rand() * CAL_KINDS.length)];
+      const dayOffset = Math.floor(rand() * 240) - 150; // ~5 months back .. ~3 months ahead
+      const dateEpochDay = today + dayOffset;
+      let status = dayOffset < 0 ? (rand() < 0.82 ? "completed" : "overdue") : "scheduled";
+      if (rand() < 0.05) status = "flagged";
+      const pool = CAL_NOTES[kind];
+      const note = pool[Math.floor(rand() * pool.length)];
+      records.push({ id: id++, parcelAnchor: p._anchor, kind, status, dateEpochDay, note });
+    }
+  }
+  return records;
+}
+
+function packComplianceRecords(records) {
+  const parcelAnchors = [...new Set(records.map((r) => r.parcelAnchor))];
+  const parcelIndex = new Map(parcelAnchors.map((a, i) => [a, i]));
+  const enc = new TextEncoder();
+  const parcelBytes = parcelAnchors.map((a) => enc.encode(a));
+  const noteBytes = records.map((r) => enc.encode(r.note || ""));
+
+  const parcelTableBytes = parcelAnchors.length * CAL_PARCEL_ENTRY;
+  const rowsBytes = records.length * CAL_ROW;
+  const heapStart = CAL_HEADER + parcelTableBytes + rowsBytes;
+
+  let heapSize = 0;
+  const parcelHeapOffsets = parcelBytes.map((b) => { const off = heapSize; heapSize += b.length; return off; });
+  const noteHeapOffsets = noteBytes.map((b) => { const off = heapSize; heapSize += b.length; return off; });
+
+  const buf = new ArrayBuffer(heapStart + heapSize);
+  const dv = new DataView(buf);
+  const u8 = new Uint8Array(buf);
+
+  CAL_MAGIC.forEach((b, i) => u8[i] = b);
+  dv.setUint32(4, records.length, true);
+  dv.setUint32(8, parcelAnchors.length, true);
+  dv.setUint32(12, heapStart, true);
+
+  let po = CAL_HEADER;
+  parcelAnchors.forEach((a, i) => {
+    dv.setUint32(po, heapStart + parcelHeapOffsets[i], true);
+    dv.setUint16(po + 4, parcelBytes[i].length, true);
+    po += CAL_PARCEL_ENTRY;
+  });
+
+  let ro = CAL_HEADER + parcelTableBytes;
+  records.forEach((r, i) => {
+    dv.setUint32(ro, r.id, true);
+    dv.setUint16(ro + 4, parcelIndex.get(r.parcelAnchor), true);
+    dv.setUint8(ro + 6, CAL_KINDS.indexOf(r.kind));
+    dv.setUint8(ro + 7, CAL_STATUSES.indexOf(r.status));
+    dv.setUint32(ro + 8, r.dateEpochDay, true);
+    dv.setUint32(ro + 12, heapStart + noteHeapOffsets[i], true);
+    dv.setUint16(ro + 16, noteBytes[i].length, true);
+    ro += CAL_ROW;
+  });
+
+  parcelBytes.forEach((b, i) => u8.set(b, heapStart + parcelHeapOffsets[i]));
+  noteBytes.forEach((b, i) => u8.set(b, heapStart + noteHeapOffsets[i]));
+  return buf;
+}
+
+function unpackComplianceRecords(buf) {
+  const dv = new DataView(buf);
+  const u8 = new Uint8Array(buf);
+  const dec = new TextDecoder();
+  if (!CAL_MAGIC.every((b, i) => u8[i] === b)) throw new Error("compliance-records.bin: bad magic");
+  const count = dv.getUint32(4, true);
+  const parcelCount = dv.getUint32(8, true);
+
+  const parcelAnchors = [];
+  let po = CAL_HEADER;
+  for (let i = 0; i < parcelCount; i++) {
+    const off = dv.getUint32(po, true), len = dv.getUint16(po + 4, true);
+    parcelAnchors.push(dec.decode(u8.subarray(off, off + len)));
+    po += CAL_PARCEL_ENTRY;
+  }
+
+  const records = [];
+  let ro = CAL_HEADER + parcelCount * CAL_PARCEL_ENTRY;
+  for (let i = 0; i < count; i++) {
+    const id = dv.getUint32(ro, true);
+    const parcelAnchor = parcelAnchors[dv.getUint16(ro + 4, true)];
+    const kind = CAL_KINDS[dv.getUint8(ro + 6)];
+    const status = CAL_STATUSES[dv.getUint8(ro + 7)];
+    const dateEpochDay = dv.getUint32(ro + 8, true);
+    const noteOff = dv.getUint32(ro + 12, true), noteLen = dv.getUint16(ro + 16, true);
+    records.push({ id, parcelAnchor, kind, status, dateEpochDay, note: dec.decode(u8.subarray(noteOff, noteOff + noteLen)) });
+    ro += CAL_ROW;
+  }
+  return records;
+}
+
+/* ── OPFS primitives — write-tmp / verify / copy-into-final, so a crash or
+   quota failure mid-write never corrupts the previously published file. */
+async function opfsRoot() {
+  if (!("storage" in navigator) || !navigator.storage.getDirectory) return null;
+  try { return await navigator.storage.getDirectory(); } catch (e) { return null; }
+}
+async function opfsWriteBinary(name, buffer) {
+  const root = await opfsRoot();
+  if (!root) return false;
+  try {
+    const tmpHandle = await root.getFileHandle(name + ".tmp", { create: true });
+    const writable = await tmpHandle.createWritable();
+    await writable.write(buffer);
+    await writable.close();
+    const tmpFile = await tmpHandle.getFile();
+    if (tmpFile.size !== buffer.byteLength) throw new Error("size mismatch after staged write");
+    const finalHandle = await root.getFileHandle(name, { create: true });
+    const finalWritable = await finalHandle.createWritable();
+    await finalWritable.write(await tmpFile.arrayBuffer());
+    await finalWritable.close();
+    await root.removeEntry(name + ".tmp").catch(() => {});
+    return true;
+  } catch (e) {
+    console.warn("[compliance calendar] OPFS write failed:", e);
+    return false;
+  }
+}
+async function opfsReadBinary(name) {
+  const root = await opfsRoot();
+  if (!root) return null;
+  try {
+    const handle = await root.getFileHandle(name);
+    return await (await handle.getFile()).arrayBuffer();
+  } catch (e) {
+    return null;
+  }
+}
+async function opfsPurgeBinary(name) {
+  const root = await opfsRoot();
+  if (!root) return;
+  await root.removeEntry(name).catch(() => {});
+  await root.removeEntry(name + ".tmp").catch(() => {});
+}
+
+function waitForBridgeState(timeoutMs) {
+  return new Promise((resolve, reject) => {
+    const start = Date.now();
+    (function poll() {
+      if (state) return resolve(state);
+      if (Date.now() - start > (timeoutMs || 15000)) return reject(new Error("bridge data did not load in time"));
+      setTimeout(poll, 150);
+    })();
+  });
+}
+
+async function regenerateComplianceRecords() {
+  await waitForBridgeState();
+  const parcels = byType("parcel");
+  COMP_RECORDS = parcels.length ? generateComplianceRecords(parcels, CAL_TARGET_COUNT) : [];
+  const buf = packComplianceRecords(COMP_RECORDS);
+  const wrote = await opfsWriteBinary(CAL_FILE, buf);
+  setStorageMsg(wrote
+    ? `compliance calendar: ${fmtNum(COMP_RECORDS.length)} dummy records (${fmtNum(buf.byteLength)}B) written to OPFS.`
+    : `compliance calendar: ${fmtNum(COMP_RECORDS.length)} dummy records generated (OPFS unavailable here — memory only).`);
+  return COMP_RECORDS;
+}
+
+async function ensureCalendarRecords() {
+  if (calRecordsLoaded) return COMP_RECORDS;
+  if (calRecordsLoading) return calRecordsLoading;
+  calRecordsLoading = (async () => {
+    const buf = await opfsReadBinary(CAL_FILE);
+    if (buf) {
+      try {
+        COMP_RECORDS = unpackComplianceRecords(buf);
+        calRecordsLoaded = true;
+        return COMP_RECORDS;
+      } catch (e) {
+        console.warn("[compliance calendar] stored blob unreadable, regenerating:", e);
+      }
+    }
+    await regenerateComplianceRecords();
+    calRecordsLoaded = true;
+    return COMP_RECORDS;
+  })();
+  try { return await calRecordsLoading; } finally { calRecordsLoading = null; }
+}
+
 /* ── storage ──
    Quota-safe by design: the full bridge corpus (~5MB JSON) exceeds most
    browsers' localStorage quota, so persistence is best-effort. A failed
@@ -1085,6 +1341,14 @@ let compTaxRev = 2400; // monthly default booking revenue
 let compTaxPeriod = "monthly";
 let jobsTab = "1";
 
+/* ── compliance calendar state ── */
+let calMonth = null;          // { y, m } — currently displayed month, set on first render
+let calSelectedDay = null;    // epoch-day currently selected in the agenda pane
+let calKindFilter = "all";
+let calRecordsLoaded = false;
+let calRecordsLoading = null; // in-flight promise, so double-clicks don't double-generate
+let COMP_RECORDS = [];        // unpacked in-memory view of the OPFS-backed compliance records
+
 /* ── sidebar ── */
 function renderSidebar() {
   document.getElementById("sb-tables").innerHTML = ENTITY_TYPES.map((t) => {
@@ -1104,6 +1368,7 @@ function renderSidebar() {
   document.getElementById("sb-bridge").classList.toggle("active", currentView.kind === "bridge" || currentView.kind === "table" || currentView.kind === "log" || currentView.kind === "trash");
   document.getElementById("sb-compliance").classList.toggle("active", currentView.kind === "compliance");
   document.getElementById("sb-jobs").classList.toggle("active", currentView.kind === "jobs");
+  document.getElementById("sb-calendar").classList.toggle("active", currentView.kind === "calendar");
 
   const modeBlock = document.getElementById("sb-mode-block");
   if (modeBlock) {
@@ -1122,11 +1387,16 @@ function renderSidebar() {
   document.querySelectorAll("[data-goto-table]").forEach((b) => b.onclick = () => { currentView = { kind: "table", type: b.dataset.gotoTable }; tableSubview = "records"; renderChrome(); });
   document.getElementById("sb-geo").onclick = () => { currentView = { kind: "geo" }; renderChrome(); };
   document.getElementById("sb-workflows").onclick = () => { currentView = { kind: "workflows" }; renderChrome(); };
-  document.getElementById("sb-compliance").onclick = () => { currentView = { kind: "compliance" }; renderChrome(); ensureCompLoaded().then(() => { if (currentView.kind === "compliance") renderChrome(); }); };
+  document.getElementById("sb-compliance").onclick = () => {
+    currentView = { kind: "compliance" }; renderChrome();
+    ensureCompLoaded().then(() => { if (currentView.kind === "compliance") renderChrome(); });
+    ensureCalendarRecords().then(() => { if (currentView.kind === "compliance") renderChrome(); });
+  };
   document.getElementById("sb-bridge").onclick = () => { currentView = { kind: "bridge" }; renderChrome(); };
   document.getElementById("sb-log").onclick = () => { currentView = { kind: "log" }; renderChrome(); };
   document.getElementById("sb-trash").onclick = () => { currentView = { kind: "trash" }; renderChrome(); };
   document.getElementById("sb-jobs").onclick = () => { currentView = { kind: "jobs" }; renderChrome(); };
+  document.getElementById("sb-calendar").onclick = () => gotoCalendar(null);
 }
 
 /* ── table (grid) view ── */
@@ -1301,6 +1571,7 @@ function renderProfile() {
     <div class="profile-title"><span class="profile-type">${e._type}</span>${entityLabel(e)}</div>
     <div class="profile-anchor">${e._anchor}</div>
     ${partition ? `<div class="partition">stage: ${partition}</div>` : ""}
+    ${e._type === "parcel" ? `<button class="cmp-btn" style="margin:8px 0;" data-cal-goto-parcel="${anchor}">📅 view this property's compliance calendar</button>` : ""}
     ${e._eventId ? `<button class="profile-undo-btn" data-undo-event="${e._eventId}">↺ undo this record's creation</button>` : ""}
 
     <div class="profile-section-head">fields</div>
@@ -1344,6 +1615,8 @@ function renderProfile() {
   document.querySelectorAll("[data-open-anchor]").forEach((b) => b.onclick = () => openProfile(b.dataset.openAnchor));
   document.querySelectorAll("[data-crumb-idx]").forEach((b) => b.onclick = () => { profileStack = profileStack.slice(0, Number(b.dataset.crumbIdx) + 1); renderProfile(); });
   document.querySelectorAll("[data-undo-event]").forEach((b) => b.onclick = () => undoEvent(b.dataset.undoEvent));
+  const calGoto = document.querySelector("[data-cal-goto-parcel]");
+  if (calGoto) calGoto.onclick = () => { closeProfile(); gotoCalendar(calGoto.dataset.calGotoParcel); };
 }
 
 /* ── recycle bin / undo ──
@@ -1612,6 +1885,25 @@ function renderDefHistory(anchor, entity) {
     </div>`;
   }).join("");
 }
+function renderCalWidgetHtml() {
+  if (!calRecordsLoaded) return `<div class="cal-widget"><div class="cmp-empty" style="padding:0;">loading compliance calendar…</div></div>`;
+  const today = todayEpochDay();
+  const upcoming = COMP_RECORDS.filter((r) => r.status === "scheduled" && r.dateEpochDay >= today).sort((a, b) => a.dateEpochDay - b.dateEpochDay).slice(0, 5);
+  const overdue = COMP_RECORDS.filter((r) => r.status === "overdue").length;
+  const flagged = COMP_RECORDS.filter((r) => r.status === "flagged").length;
+  return `<div class="cal-widget">
+    <div class="cal-widget-head">
+      <b>📅 compliance calendar</b>
+      <span class="cmp-compact">${fmtNum(COMP_RECORDS.length)} dummy records · ${fmtNum(overdue)} overdue · ${fmtNum(flagged)} flagged</span>
+      <button class="cmp-btn" style="margin-left:auto;" id="cal-widget-open">open full calendar →</button>
+    </div>
+    ${upcoming.length ? upcoming.map((r) => {
+      const p = state.entities[r.parcelAnchor];
+      return `<div class="cal-widget-row"><span class="cw-date">${epochDayToDate(r.dateEpochDay).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })}</span> <b>${r.kind}</b> — ${p ? entityLabel(p) : "unknown property"}</div>`;
+    }).join("") : `<div class="cmp-empty" style="padding:4px 0;">Nothing scheduled.</div>`}
+  </div>`;
+}
+
 function renderCompliance() {
   const main = document.getElementById("main");
   const dets = runDetections();
@@ -1629,6 +1921,7 @@ function renderCompliance() {
         <button class="cmp-btn ${compPersona === "government" ? "primary" : ""}" data-cmp-persona="government">government (compliance)</button>
       </div>
     </div>
+    ${renderCalWidgetHtml()}
     <div class="cmp-tabs">
       ${compPersona === "landlord" ? `
         <button class="cmp-tab ${compTab === "portfolio" ? "active" : ""}" data-cmp-tab="portfolio">portfolio & parcels <span class="ct-n">${ownerListings.length}</span></button>
@@ -1642,6 +1935,9 @@ function renderCompliance() {
     </div>
     <div class="cmp-body" id="cmp-body"></div>
   `;
+
+  const calWidgetBtn = document.getElementById("cal-widget-open");
+  if (calWidgetBtn) calWidgetBtn.onclick = () => gotoCalendar(null);
 
   document.querySelectorAll("[data-cmp-persona]").forEach((b) => b.onclick = () => {
     compPersona = b.dataset.cmpPersona;
@@ -2367,6 +2663,8 @@ function renderBridge() {
       </div>
       <div class="cmp-compact" style="margin:0 16px;">The portal (layer 1) holds all ${fmtNum(22988)} properties read-only; the bridge materializes the flagged subset (${fmtNum(nP)} repeat-eviction parcels) because that is what anything can act on. The portal is unchanged — the bridge did not replace it.</div>
 
+      ${renderCalWidgetHtml()}
+
       <div class="cmp-section-head">the same workflows, now materializing</div>
       <div class="br-actions">
         <div class="wf-card">
@@ -2409,6 +2707,8 @@ function renderBridge() {
     </div>`;
 
   bridgeFlash = null;
+  const brCalBtn = document.getElementById("cal-widget-open");
+  if (brCalBtn) brCalBtn.onclick = () => gotoCalendar(null);
   document.querySelectorAll("[data-br-action]").forEach((b) => b.onclick = () => {
     const act = b.dataset.brAction;
     const id = act === "case" ? "br-case-parcel" : act === "inspection" ? "br-insp-parcel" : "br-notice-parcel";
@@ -2801,6 +3101,10 @@ function renderChrome() {
     document.getElementById("stats").innerHTML = `<span>persona workbench — a separate demo dataset, forms only</span>`;
   } else if (currentView.kind === "jobs") {
     document.getElementById("stats").innerHTML = `<span>nine jobs · ux prototype — sample data, provenance per screen</span>`;
+  } else if (currentView.kind === "calendar") {
+    document.getElementById("stats").innerHTML = calRecordsLoaded
+      ? `<span><b>${fmtNum(COMP_RECORDS.length)}</b> dummy compliance records</span><span>packed binary in OPFS — ${CAL_FILE}</span>`
+      : `<span>compliance calendar — loading dummy records…</span>`;
   } else {
     const violations = timeOrderViolations(EVENTS);
     document.getElementById("stats").innerHTML = `
@@ -2823,6 +3127,107 @@ function renderChrome() {
     else renderCompliance();
   }
   else if (currentView.kind === "jobs") renderJobs();
+  else if (currentView.kind === "calendar") renderCalendar();
+}
+
+function gotoCalendar(parcelAnchor) {
+  currentView = { kind: "calendar", parcelFilter: parcelAnchor || null };
+  calSelectedDay = null;
+  renderChrome();
+  ensureCalendarRecords().then(() => { if (currentView.kind === "calendar") renderChrome(); });
+}
+
+/* ── compliance calendar view ──
+   10,000+ dummy records (inspections, notices, license renewals, tax
+   audits, contact re-verifications, occupancy checks) generated over the
+   bridge's real parcels and read back from the packed OPFS blob. Every
+   record links to the same parcel profile the rest of the app already
+   uses — this is the one calendar in the demo, and every entry point
+   (sidebar, the bridge's landing page, the compliance workbench, and each
+   parcel's own profile) opens the same view. */
+function renderCalendar() {
+  const main = document.getElementById("main");
+  if (!calRecordsLoaded) {
+    main.innerHTML = `<div class="cmp-empty" style="padding:24px;">loading compliance calendar — generating dummy records over the bridge's parcels…</div>`;
+    return;
+  }
+  if (!calMonth) {
+    const t = epochDayToDate(todayEpochDay());
+    calMonth = { y: t.getUTCFullYear(), m: t.getUTCMonth() };
+  }
+
+  const filterAnchor = currentView.parcelFilter || null;
+  const filterEntity = filterAnchor ? state.entities[filterAnchor] : null;
+  const records = COMP_RECORDS.filter((r) =>
+    (!filterAnchor || r.parcelAnchor === filterAnchor) &&
+    (calKindFilter === "all" || r.kind === calKindFilter));
+
+  const first = epochDayUTC(calMonth.y, calMonth.m, 1);
+  const startDow = epochDayToDate(first).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(calMonth.y, calMonth.m + 1, 0)).getUTCDate();
+  const today = todayEpochDay();
+
+  const byDay = new Map();
+  records.forEach((r) => { if (!byDay.has(r.dateEpochDay)) byDay.set(r.dateEpochDay, []); byDay.get(r.dateEpochDay).push(r); });
+
+  const monthLabel = epochDayToDate(first).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+  const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  let cells = "";
+  for (let i = 0; i < startDow; i++) cells += `<div class="cal-cell empty"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ed = first + (d - 1);
+    const dayRecords = byDay.get(ed) || [];
+    const shown = dayRecords.slice(0, 3);
+    cells += `<div class="cal-cell ${ed === today ? "today" : ""} ${ed === calSelectedDay ? "selected" : ""}" data-cal-day="${ed}">
+      <div class="cal-daynum">${d}</div>
+      ${shown.map((r) => `<div class="cal-chip cal-${r.status}">${r.kind}</div>`).join("")}
+      ${dayRecords.length > shown.length ? `<div class="cal-more">+${dayRecords.length - shown.length} more</div>` : ""}
+    </div>`;
+  }
+
+  if (calSelectedDay === null || !byDay.has(calSelectedDay)) {
+    const upcoming = records.filter((r) => r.dateEpochDay >= today).sort((a, b) => a.dateEpochDay - b.dateEpochDay);
+    calSelectedDay = upcoming.length ? upcoming[0].dateEpochDay : (records[0] ? records[0].dateEpochDay : null);
+  }
+  const agendaRecords = (byDay.get(calSelectedDay) || []).slice().sort((a, b) => a.id - b.id);
+
+  main.innerHTML = `
+    <div class="tv-head"><h2>compliance calendar</h2><span class="crumb">${fmtNum(records.length)} record${records.length === 1 ? "" : "s"}${filterAnchor ? " · filtered to one property" : ""}</span></div>
+    <div class="cal-toolbar">
+      <button class="cmp-btn" id="cal-prev">‹ prev</button>
+      <span class="cal-month-label">${monthLabel}</span>
+      <button class="cmp-btn" id="cal-next">next ›</button>
+      <button class="cmp-btn" id="cal-today">today</button>
+      <span style="flex:1;"></span>
+      ${["all", ...CAL_KINDS].map((k) => `<button class="cal-filter-chip ${calKindFilter === k ? "active" : ""}" data-cal-kind="${k}">${k}</button>`).join("")}
+      ${filterAnchor ? `<span class="cal-scope-chip">${filterEntity ? entityLabel(filterEntity) : "unknown property"}<button data-cal-clear-filter title="show all properties">✕</button></span>` : ""}
+    </div>
+    <div class="cal-body">
+      <div class="cal-grid-wrap">
+        <div class="cal-grid">${DOW.map((d) => `<div class="cal-dow">${d}</div>`).join("")}${cells}</div>
+      </div>
+      <div class="cal-agenda">
+        <h4>${calSelectedDay !== null ? epochDayToDate(calSelectedDay).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "UTC" }) : "no records"}</h4>
+        ${agendaRecords.length ? agendaRecords.map((r) => {
+          const p = state.entities[r.parcelAnchor];
+          return `<div class="cal-record">
+            <div class="cal-record-kind">${r.kind} <span class="cmp-chip ${r.status === "completed" ? "ok" : r.status === "overdue" ? "bad" : r.status === "flagged" ? "warn" : "info"}">${r.status}</span></div>
+            <div class="cal-record-note">${r.note}</div>
+            <button class="cmp-btn" data-cal-open-parcel="${r.parcelAnchor}">${p ? entityLabel(p) : "view property"} →</button>
+          </div>`;
+        }).join("") : `<div class="cmp-empty">Nothing scheduled this day.</div>`}
+      </div>
+    </div>`;
+
+  document.getElementById("cal-prev").onclick = () => { const m = calMonth.m - 1; calMonth = m < 0 ? { y: calMonth.y - 1, m: 11 } : { y: calMonth.y, m }; calSelectedDay = null; renderCalendar(); };
+  document.getElementById("cal-next").onclick = () => { const m = calMonth.m + 1; calMonth = m > 11 ? { y: calMonth.y + 1, m: 0 } : { y: calMonth.y, m }; calSelectedDay = null; renderCalendar(); };
+  document.getElementById("cal-today").onclick = () => { const t = epochDayToDate(todayEpochDay()); calMonth = { y: t.getUTCFullYear(), m: t.getUTCMonth() }; calSelectedDay = todayEpochDay(); renderCalendar(); };
+  document.querySelectorAll("[data-cal-kind]").forEach((b) => b.onclick = () => { calKindFilter = b.dataset.calKind; calSelectedDay = null; renderCalendar(); });
+  document.querySelectorAll("[data-cal-day]").forEach((c) => c.onclick = () => { calSelectedDay = Number(c.dataset.calDay); renderCalendar(); });
+  const clearBtn = document.querySelector("[data-cal-clear-filter]");
+  if (clearBtn) clearBtn.onclick = (ev) => { ev.stopPropagation(); currentView = { kind: "calendar" }; calSelectedDay = null; renderChrome(); };
+  document.querySelectorAll("[data-cal-open-parcel]").forEach((b) => b.onclick = () => openProfile(b.dataset.calOpenParcel));
 }
 
 document.getElementById("reset-btn").addEventListener("click", async () => {
@@ -2862,6 +3267,7 @@ buildDemoCorpus()
     EVENTS = evs; state = fold(EVENTS);
     setStorageMsg(`demo mode — ${fmtNum(EVENTS.length)} events: real nashville parcels + dummy STR. Connect the data backend for the full dataset.`);
     renderChrome();
+    ensureCalendarRecords().then(() => { if (currentView.kind === "bridge" || currentView.kind === "compliance" || currentView.kind === "calendar") renderChrome(); });
   })
   .catch((e) => { setStorageMsg("demo boot failed: " + e.message, true); });
 </script>
