@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>STR Registration &amp; Oversight — visual site map</title>
+<style>
+  :root {
+    --bg: #14171c; --panel: #1d2129; --panel2: #232936; --line: #333b4a;
+    --ink: #e8eaf0; --dim: #9aa3b5; --faint: #6b7484;
+    --gold: #e8b93e; --live: #4cc38a; --dummy: #e8863e; --mode: #6aa8ff;
+    --triad: #c86ad9;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 13px/1.45 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; padding: 28px 32px 60px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--dim); margin: 0 0 18px; max-width: 900px; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; font-size: 12px; color: var(--dim); }
+  .legend b { font-weight: 700; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: baseline; }
+  .section { margin-bottom: 8px; }
+  .section > h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--dim); margin: 26px 0 10px; display: flex; align-items: center; gap: 10px; }
+  .section > h2 .n { background: var(--panel2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 8px; font-size: 11px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; align-items: stretch; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px; width: 250px; position: relative; }
+  .card.wide { width: 380px; }
+  .card h3 { font-size: 13px; margin: 0 0 2px; }
+  .card .route { font-family: ui-monospace, monospace; font-size: 11px; color: var(--faint); margin-bottom: 8px; }
+  .card p { font-size: 11.5px; color: var(--dim); margin: 6px 0 0; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; margin: 0 4px 4px 0; }
+  .tag.live { background: rgba(76,195,138,.15); color: var(--live); border: 1px solid var(--live); }
+  .tag.dummy { background: rgba(232,134,62,.13); color: var(--dummy); border: 1px solid var(--dummy); }
+  .tag.real { background: rgba(106,168,255,.13); color: var(--mode); border: 1px solid var(--mode); }
+  .tag.prop { background: transparent; color: var(--faint); border: 1px dashed var(--faint); }
+  .tag.exists { background: rgba(232,185,62,.1); color: var(--gold); border: 1px solid var(--gold); }
+  /* golden path */
+  .gold { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+  .step { position: absolute; top: -11px; left: 10px; background: var(--gold); color: #14171c; font-weight: 800; font-size: 11px; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; }
+  .flow { text-align: center; color: var(--gold); font-size: 22px; line-height: 1; margin: 6px 0; }
+  .flow small { display: block; font-size: 10.5px; color: var(--dim); letter-spacing: 1px; text-transform: uppercase; }
+  /* mini wireframe mocks */
+  .mock { background: #101319; border: 1px solid var(--line); border-radius: 6px; padding: 8px; margin-bottom: 4px; height: 96px; overflow: hidden; }
+  .bar { height: 7px; border-radius: 3px; background: #39424f; margin: 5px 0; }
+  .bar.a { background: #4a5a75; } .bar.g { background: var(--live); opacity: .7; } .bar.o { background: var(--dummy); opacity: .7; }
+  .tgrid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; margin-top: 6px; }
+  .tgrid div { height: 9px; border-radius: 2px; background: #39424f; }
+  .tgrid.head div { background: #4a5a75; height: 7px; }
+  .mapmock { position: relative; height: 100%; border-radius: 4px;
+    background:
+      linear-gradient(#101319 0 0),
+      repeating-linear-gradient(0deg, transparent 0 14px, #232b3a 14px 16px),
+      repeating-linear-gradient(90deg, transparent 0 22px, #232b3a 22px 24px);
+    background-color: #161b26; }
+  .pin { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--dummy); box-shadow: 0 0 6px var(--dummy); }
+  .pin.g { background: var(--live); box-shadow: 0 0 6px var(--live); }
+  .pin.b { background: var(--mode); box-shadow: 0 0 6px var(--mode); }
+  .field { border: 1px solid var(--line); border-radius: 4px; height: 14px; margin: 4px 0; background: #1a1f29; }
+  .field.fill { background: #2a3348; }
+  .stat { display: flex; gap: 6px; margin-bottom: 6px; }
+  .stat div { flex: 1; background: #232b3a; border-radius: 4px; text-align: center; padding: 5px 0 3px; font-size: 13px; font-weight: 800; }
+  .stat div small { display: block; font-size: 8px; font-weight: 400; color: var(--dim); }
+  .split { display: flex; gap: 6px; height: 100%; }
+  .split > div { flex: 1; }
+  /* persona lanes */
+  .lane { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; background: var(--panel); }
+  .lane h3 { margin: 0 0 2px; font-size: 14px; }
+  .lane .who { color: var(--dim); font-size: 12px; margin-bottom: 10px; }
+  .lane .row .card { width: 230px; }
+  .note { font-size: 11px; color: var(--faint); margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>STR Registration &amp; Oversight — visual site map</h1>
+<p class="sub">The point of the demo: show how a city <b>could do STR registration and oversight</b> — an applicant registers, staff oversee, and every claim drills down to the same evidence. Boots in demo mode (real Nashville parcel slice + dummy STR). Numbered gold cards = the 5-minute golden path.</p>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--gold)"></span><b>gold border</b> = golden-path stop</span>
+  <span><span class="dot" style="background:var(--live)"></span><b>LIVE</b> = computed from folded state</span>
+  <span><span class="dot" style="background:var(--dummy)"></span><b>DUMMY</b> = generated demo data</span>
+  <span><span class="dot" style="background:var(--mode)"></span><b>REAL</b> = real Nashville data</span>
+  <span><b>dashed</b> = proposed, not built yet</span>
+</div>
+
+<!-- 0 · FIRST PAGE -->
+<div class="section">
+  <h2><span class="n">0</span> First page — demo entry</h2>
+  <div class="row">
+    <div class="card wide gold">
+      <div class="step">1</div>
+      <h3>Home / demo entry</h3>
+      <div class="route">/ &nbsp;·&nbsp; boots here, demo mode</div>
+      <div class="mock">
+        <div class="bar a" style="width:55%"></div>
+        <div style="display:flex;gap:6px;margin:6px 0;">
+          <div class="field fill" style="flex:1"></div>
+          <div class="field" style="flex:1;border-color:var(--mode)"></div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <div class="bar g" style="flex:1"></div><div class="bar o" style="flex:1"></div><div class="bar a" style="flex:1"></div>
+        </div>
+        <div class="bar" style="width:80%"></div>
+      </div>
+      <span class="tag real">REAL parcel slice</span><span class="tag dummy">DUMMY licenses/listings</span>
+      <p>Status bar (“demo mode — N events”), mode switch (demo ↔ <b>connect data backend</b>), three doors: Register · Oversee · Evidence, persona picker. Bridge view by default so the evidence is visible immediately.</p>
+    </div>
+  </div>
+</div>
+
+<div class="flow">↓<small>applicant walks in…</small></div>
+
+<!-- 1 · REGISTER -->
+<div class="section">
+  <h2><span class="n">1</span> Register — the applicant path (Jobs 1–6)</h2>
+  <div class="row">
+    <div class="card gold"><div class="step">2</div>
+      <h3>Registration statement</h3><div class="route">/register · Job 1</div>
+      <div class="mock"><div class="bar a" style="width:60%"></div><div class="field fill"></div><div class="field"></div><div class="field" style="width:70%"></div></div>
+      <p>Who / where / what type. Writes parcel + owner + license entities.</p>
+    </div>
+    <div class="card"><h3>Fee estimator</h3><div class="route">/register/fee · Job 2</div>
+      <div class="mock"><div class="bar" style="width:40%"></div><div class="field fill"></div><div class="bar g" style="width:65%"></div></div>
+      <p>Fee from guestrooms / max guests on the license.</p>
+    </div>
+    <div class="card"><h3>Occupancy tax</h3><div class="route">/register/tax · Job 3</div>
+      <div class="mock"><div class="bar" style="width:50%"></div><div class="field"></div><div class="bar g" style="width:45%"></div></div>
+      <p>Nightly rate (listing) × occupancy → tax due.</p>
+    </div>
+    <div class="card"><h3>Listing completeness</h3><div class="route">/register/listing · Job 4</div>
+      <div class="mock"><div class="bar o" style="width:70%"></div><div class="bar" style="width:90%"></div><div class="bar" style="width:55%"></div></div>
+      <span class="tag dummy">DUMMY</span><p>Declared bedrooms vs Azora-observed; flags gaps.</p>
+    </div>
+    <div class="card"><h3>Emergency contact</h3><div class="route">/register/contact · Job 5</div>
+      <div class="mock"><div class="mapmock" style="height:80px;"><div class="pin g" style="left:30%;top:35%"></div><div class="pin" style="left:60%;top:55%"></div></div></div>
+      <p>Contact-distance rule checked on the map.</p>
+    </div>
+    <div class="card"><h3>Registrant match</h3><div class="route">/register/match · Job 6</div>
+      <div class="mock"><div class="bar a" style="width:75%"></div><div class="bar g" style="width:50%"></div><div class="bar" style="width:60%"></div></div>
+      <p>Applicant vs assessor owner — CLEAR / MARGINAL.</p>
+    </div>
+  </div>
+</div>
+
+<div class="flow">↓<small>…staff take over</small></div>
+
+<!-- 2 · OVERSEE -->
+<div class="section">
+  <h2><span class="n">2</span> Oversee — the staff path (Jobs 7–9)</h2>
+  <div class="row">
+    <div class="card wide gold"><div class="step">3</div>
+      <h3>Detection dashboard</h3><div class="route">/oversee/detection · Jobs 7&amp;8</div>
+      <div class="mock"><div class="stat"><div>42<small>detected</small></div><div>36<small>located</small></div><div style="color:var(--gold)">9<small>unregistered</small></div><div style="color:var(--dummy)">3<small>unlocated</small></div></div>
+        <div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag live">LIVE</span><span class="tag dummy">DUMMY listings</span><span class="tag real">REAL parcels</span>
+      <p>The application just filed now shows up here: located vs unlocated, CLEAR/MARGINAL match, registered vs NONE, per-owner concentration. UNLOCATED rows are held out of notices.</p>
+    </div>
+    <div class="card"><h3>Inspection queue</h3><div class="route">/oversee/inspect · Job 9</div>
+      <div class="mock"><div class="bar" style="width:85%"></div><div class="bar o" style="width:70%"></div><div class="bar" style="width:75%"></div></div>
+      <span class="tag prop">PROPOSED: feed from bookings</span>
+      <p>Today's stops from flagged addresses; log observations pinned to place + time.</p>
+    </div>
+  </div>
+</div>
+
+<div class="flow">↓<small>…every claim drills down to</small></div>
+
+<!-- 3 · EVIDENCE -->
+<div class="section">
+  <h2><span class="n">3</span> Evidence — data backend visualizer</h2>
+  <div class="row">
+    <div class="card wide gold"><div class="step">4</div>
+      <h3>Bridge</h3><div class="route">/data/bridge</div>
+      <div class="mock"><div class="bar a" style="width:45%"></div><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag live">LIVE</span>
+      <p>Entities · edges · frames. parcel → <b>licenses</b> → license, listing → <b>detected_at</b> → parcel, owner → <b>owns</b> → parcel. The drill-down target for everything above.</p>
+    </div>
+    <div class="card"><h3>Tables</h3><div class="route">/data/tables/:type</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <p>8 tables below — detail in §4.</p>
+    </div>
+    <div class="card"><h3>Timeline</h3><div class="route">/data/timeline</div>
+      <div class="mock"><div class="bar" style="width:90%"></div><div class="bar a" style="width:70%"></div><div class="bar" style="width:80%"></div></div>
+      <p>Event log: every ins / con / seg / def in time order.</p>
+    </div>
+    <div class="card"><h3>Geo layer</h3><div class="route">/data/geo</div>
+      <div class="mock"><div class="mapmock"><div class="pin b" style="left:20%;top:30%"></div><div class="pin b" style="left:55%;top:60%"></div><div class="pin b" style="left:75%;top:25%"></div></div></div>
+      <span class="tag real">REAL · read-only</span>
+      <p>Nashville geo-json. Empty state in demo until backend connects.</p>
+    </div>
+    <div class="card"><h3>Workflows + trash</h3><div class="route">/data/workflows · /data/trash</div>
+      <div class="mock"><div class="bar a" style="width:60%"></div><div class="bar" style="width:80%"></div></div>
+      <p>Runs that materialized inspections/notices; soft-deleted bin.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 4 · TABLE VIEWS -->
+<div class="section">
+  <h2><span class="n">4</span> Table views — one per entity</h2>
+  <div class="row">
+    <div class="card"><h3>parcel</h3><div class="route">/data/tables/parcel</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag real">REAL</span><p>Address · evictions · filing dates · lat/lng. zoning null (not guessed).</p></div>
+    <div class="card"><h3>owner</h3><div class="route">/data/tables/owner</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag real">REAL</span><p>Name · property count (landlordmapper inference).</p></div>
+    <div class="card"><h3>license ★</h3><div class="route">/data/tables/license</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div style="background:#5a4a35"></div><div style="background:#5a4a35"></div><div style="background:#5a4a35"></div></div></div>
+      <span class="tag dummy">DUMMY</span><p>Number · status (active/pending/expired) · guestrooms · max guests.</p></div>
+    <div class="card"><h3>listing ★</h3><div class="route">/data/tables/listing</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div style="background:#5a4a35"></div><div style="background:#5a4a35"></div><div style="background:#5a4a35"></div></div></div>
+      <span class="tag dummy">DUMMY</span><p>Platform · observed bedrooms · nightly rate · match (CLEAR/MARGINAL/UNLOCATED).</p></div>
+    <div class="card"><h3>standing</h3><div class="route">/data/tables/standing</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag real">REAL</span><p>311 code-violation cases, partitioned open/resolved.</p></div>
+    <div class="card"><h3>inspection · notice</h3><div class="route">/data/tables/inspection · /notice</div>
+      <div class="mock"><div class="bar" style="width:70%"></div><div class="bar a" style="width:55%"></div></div>
+      <p>Workflow artifacts that materialized.</p></div>
+    <div class="card"><h3>municipality</h3><div class="route">/data/tables/municipality</div>
+      <div class="mock"><div class="bar a" style="width:80%"></div></div>
+      <span class="tag real">REAL</span><p>One row: Metro Nashville-Davidson County + source pointer.</p></div>
+  </div>
+  <div class="note">★ license + listing are the dummy STR layer — every row carries source: “DUMMY — generated for demo”.</div>
+</div>
+
+<!-- 5 · MAP + TABLE -->
+<div class="section">
+  <h2><span class="n">5</span> Map + table — geography meets records</h2>
+  <div class="row">
+    <div class="card"><h3>Map view (exists)</h3><div class="route">/data/geo</div>
+      <div class="mock"><div class="mapmock"><div class="pin b" style="left:25%;top:40%"></div><div class="pin b" style="left:60%;top:30%"></div><div class="pin g" style="left:45%;top:65%"></div><div class="pin" style="left:75%;top:55%"></div></div></div>
+      <span class="tag exists">EXISTS</span><span class="tag real">REAL</span>
+      <p>Pins for properties + violations; read-only, backend only.</p></div>
+    <div class="card"><h3>Table view (exists)</h3><div class="route">/data/tables/:type</div>
+      <div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div>
+      <span class="tag exists">EXISTS</span>
+      <p>Records + purposes; click a row → profile card.</p></div>
+    <div class="card wide"><h3>Map + table split (proposed)</h3><div class="route">/data/map-table · /oversee/detection+map</div>
+      <div class="mock"><div class="split"><div class="mapmock"><div class="pin g" style="left:30%;top:40%"></div><div class="pin" style="left:60%;top:60%"></div></div><div><div class="tgrid head"><div></div><div></div></div><div class="tgrid"><div></div><div></div></div><div class="tgrid"><div></div><div></div></div></div></div></div>
+      <span class="tag prop">PROPOSED</span>
+      <p>Map left, records right, selection synced both ways. Where contact-distance (Job 5) and the detection dashboard (Jobs 7&amp;8) want to live: click a flagged row → pin pulses; click a pin → row highlights. Works in demo with parcel lat/lng + dummy flags.</p></div>
+  </div>
+</div>
+
+<!-- 6 · PERSONAS -->
+<div class="section">
+  <h2><span class="n">6</span> Persona experiences — same evidence, different doors</h2>
+
+  <div class="lane gold"><div class="step" style="position:static;display:inline-flex;margin-right:8px;">2</div>
+    <h3 style="display:inline;">Applicant — “let me register”</h3>
+    <div class="who">First-time host · path: Home → Register (Jobs 1→6) → done. Never sees Evidence unless curious.</div>
+    <div class="row">
+      <div class="card"><h3>statement → fee → tax</h3><div class="mock"><div class="field fill"></div><div class="bar g" style="width:60%"></div></div><p>One guided form; fee + tax computed from what they declare.</p></div>
+      <div class="card"><h3>listing + contact + match</h3><div class="mock"><div class="bar o" style="width:65%"></div><div class="bar g" style="width:50%"></div></div><p>Completeness check, distance rule, owner match — all green → license pending.</p></div>
+    </div>
+  </div>
+
+  <div class="lane">
+    <h3>Landlord / registrant — “my portfolio”</h3>
+    <div class="who">Existing workbench persona · path: Workbench → portfolio &amp; parcels → notices &amp; outreach. Sees only their own owner anchor.</div>
+    <div class="row">
+      <div class="card"><h3>portfolio &amp; parcels</h3><div class="route">/workbench/landlord · tab: portfolio</div><div class="mock"><div class="tgrid head"><div></div><div></div><div></div></div><div class="tgrid"><div></div><div></div><div></div></div></div><span class="tag exists">EXISTS</span><p>Their parcels, each license status, each listing match.</p></div>
+      <div class="card"><h3>notices &amp; outreach</h3><div class="route">/workbench/landlord · tab: notices</div><div class="mock"><div class="bar" style="width:80%"></div><div class="bar a" style="width:60%"></div></div><span class="tag exists">EXISTS</span><p>Code notices sent, channel + subject + date.</p></div>
+    </div>
+  </div>
+
+  <div class="lane gold"><div class="step" style="position:static;display:inline-flex;margin-right:8px;">3</div>
+    <h3 style="display:inline;">Government / compliance — “find the unregistered”</h3>
+    <div class="who">Existing workbench persona · path: Oversee/detection → Workbench tabs. Sees everything; acts on flags.</div>
+    <div class="row">
+      <div class="card"><h3>unregistered STRs</h3><div class="route">/workbench/staff · tab: unregistered</div><div class="mock"><div class="stat"><div style="color:var(--gold)">9<small>unreg</small></div><div>36<small>located</small></div></div></div><span class="tag exists">EXISTS</span><span class="tag live">LIVE</span><p>Detected listings with no active license.</p></div>
+      <div class="card"><h3>evidence windows</h3><div class="route">/workbench/staff · tab: evidence</div><div class="mock"><div class="bar" style="width:75%"></div><div class="bar a" style="width:60%"></div></div><span class="tag exists">EXISTS</span><p>Booking/availability windows usable as evidence.</p></div>
+      <div class="card"><h3>illegal &amp; zoning</h3><div class="route">/workbench/staff · tab: illegal</div><div class="mock"><div class="bar o" style="width:70%"></div><div class="bar" style="width:55%"></div></div><span class="tag exists">EXISTS</span><p>Non-owner-occupied, proximity, density, per-owner concentration.</p></div>
+      <div class="card"><h3>listing verification</h3><div class="route">/workbench/staff · tab: verify</div><div class="mock"><div class="bar g" style="width:60%"></div><div class="bar" style="width:70%"></div></div><span class="tag exists">EXISTS</span><p>Confirm CLEAR vs MARGINAL matches — releases held-back notices.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="flow">↓<small>…and when the slice isn't enough</small></div>
+
+<div class="section">
+  <h2><span class="n">7</span> Backend connect — same story, full corpus</h2>
+  <div class="row">
+    <div class="card wide gold"><div class="step">5</div>
+      <h3>Connect data backend</h3><div class="route">sidebar button · explicit action only</div>
+      <div class="mock"><div class="bar a" style="width:40%"></div><div class="bar" style="width:95%"></div><div class="bar" style="width:90%"></div></div>
+      <span class="tag real">REAL · 15,693 events + geo-json</span>
+      <p>Fetches the full bridge corpus + geo layer, re-runs the same dummy-STR generator over all 2,489 parcels, flips the mode chip to backend. Every screen above re-renders unchanged — that sameness <i>is</i> the demo's argument. “Back to demo” returns to the slice.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
