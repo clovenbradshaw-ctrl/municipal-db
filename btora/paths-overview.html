@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor delivery × system folds — STR bookings</title>
+<link rel="stylesheet" href="../vendor/phosphor/regular.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("str-theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");}catch(e){document.documentElement.dataset.theme="dark";}</script>
+<style>
+  :root {
+    --bg: #14171c; --panel: #1d2129; --panel2: #232936; --line: #333b4a;
+    --ink: #e8eaf0; --dim: #a8b1c3; --faint: #8f99ab;
+    --gold: #e8b93e; --live: #4cc38a; --dummy: #e8863e; --mode: #6aa8ff; --bad: #f07575;
+    --brand: #1D4ED8; --link: #8fabff; --teal: #2bc5cb;
+    --mock: #101319;
+  }
+  html[data-theme="light"] {
+    --bg: #f2f4f7; --panel: #ffffff; --panel2: #e9edf3; --line: #d8dee8;
+    --ink: #1b2029; --dim: #5b6474; --faint: #606a7c;
+    --gold: #7c600a; --live: #1d8a56; --dummy: #b25a18; --mode: #2b5fc7; --bad: #b52f2f;
+    --brand: #1D4ED8; --link: #1D4ED8; --teal: #06777b;
+    --mock: #edf1f6;
+  }
+  :focus-visible { outline: 2px solid var(--mode); outline-offset: 2px; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header { display: flex; align-items: center; gap: 14px; padding: 12px 24px; border-bottom: 1px solid #10131a; background: #23262e; color: #e8eaf0; position: sticky; top: 0; z-index: 20; }
+  header .brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: .4px; }
+  header .brand small { display: block; font-weight: 400; font-size: 11px; color: #a8b1c3; letter-spacing: 0; }
+  header nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  header nav a { color: #c3c9d4; font-size: 12.5px; padding: 6px 10px; border-radius: 6px; }
+  header nav a:hover { background: #2e333d; color: #fff; text-decoration: none; }
+  header nav a.active { background: var(--brand); color: #fff; font-weight: 700; }
+  .iconbtn { background: transparent; border: 1px solid #4a505c; color: #c3c9d4; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px; line-height: 1; margin-left: auto; }
+  .iconbtn:hover { border-color: var(--link); color: #fff; }
+  .modepill { font-size: 11.5px; border: 1px solid #8fabff; color: #8fabff; border-radius: 24px; padding: 3px 12px; white-space: nowrap; }
+  main { padding: 24px 32px 60px; max-width: 1100px; margin: 0 auto; }
+  .crumb { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
+  h1 { font-size: 22px; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; }
+  h1 .ph { color: var(--gold); }
+  .lede { color: var(--dim); max-width: 800px; margin: 0 0 16px; }
+  .cols3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 900px) { .cols3 { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+  .card > h2 { font-size: 14px; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+  .card > h2 .ph { font-size: 17px; }
+  .card > p.to { color: var(--dim); font-size: 11.5px; margin: 0 0 10px; }
+  .card > p.to a { font-size: 11.5px; }
+  .fold { border-top: 1px dashed var(--line); padding: 9px 0 10px; }
+  .fold h3 { font-size: 11px; text-transform: uppercase; letter-spacing: .7px; color: var(--faint); margin: 0 0 6px; display: flex; align-items: center; gap: 6px; }
+  .fold h3 .ph { font-size: 14px; }
+  .fold h3 a { text-transform: none; letter-spacing: 0; }
+  .chain { display: flex; align-items: center; gap: 5px; }
+  .s { flex: 1; border: 1px solid var(--line); background: var(--mock); border-radius: 6px; padding: 4px 7px; font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; gap: 5px; }
+  .s .ph { font-size: 13px; flex-shrink: 0; }
+  .s.t { border-color: var(--dummy); color: var(--dummy); }
+  .s.e { border-color: var(--mode); color: var(--mode); }
+  .s.d { border-color: var(--live); color: var(--live); }
+  .a { color: var(--faint); font-size: 12px; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; margin: 0 4px 4px 0; }
+  .tag.live { background: rgba(76,195,138,.15); color: var(--live); border: 1px solid var(--live); }
+  .tag.dummy { background: rgba(232,134,62,.13); color: var(--dummy); border: 1px solid var(--dummy); }
+  footer { margin-top: 34px; font-size: 11px; color: var(--faint); border-top: 1px solid var(--line); padding-top: 12px; }
+  .review-banner { border: 1px solid var(--gold); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px; background: rgba(232,185,62,.06); font-size: 12.5px; }
+  .review-banner b { color: var(--gold); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">NASHVILLE<small>STR oversight · Davidson County</small></div>
+  <nav>
+    <a href="../#/">Home</a>
+    <a href="../#/oversee/detection">Oversee</a>
+    <a href="../#/data/bridge">Evidence</a>
+    <a href="paths-overview.html" class="active">Delivery × folds</a>
+  </nav>
+  <button class="iconbtn" id="theme-btn" title="Toggle light / dark">☾</button>
+  <div class="modepill">● Metro Nashville-Davidson County</div>
+</header>
+<main>
+  <div class="crumb"><a href="../#/oversee/map-table">Map + table</a> / Delivery × folds</div>
+  <div class="review-banner"><b>FOR REVIEW</b> — vendor delivery options under evaluation. Nothing on this page is connected; each path declares its degradation instead of faking it.</div>
+  <h1><i class="ph ph-arrows-split"></i> How bookings get in: vendor delivery × system folds</h1>
+  <p class="lede">The vendor can deliver STR data three ways — <b>live stream</b>, <b>file export</b>, or <b>static API</b> (columns). Each delivery lands in three places — <b>Swarm</b>, <b>Slate</b>, and <b>Building Blocks</b> (rows). Every arrow is a checked step: steps that can't name their inputs refuse instead of guessing.</p>
+  <div class="cols3">
+    <div class="card">
+      <h2><i class="ph ph-lightning" style="color:var(--dummy)"></i> Stream</h2>
+      <p class="to">Push per booking change — each event is its own assertion. <span class="tag dummy">LIVE</span></p>
+      <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm</h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>push</span><span class="a">→</span><span class="s e"><i class="ph ph-funnel"></i>diff</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>row</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pin</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>live map</span></div></div>
+    </div>
+    <div class="card">
+      <h2><i class="ph ph-file-arrow-down" style="color:var(--dummy)"></i> Export</h2>
+      <p class="to">Full file per pull — history rebuilt by diffing snapshots. <span class="tag dummy">BATCH</span></p>
+      <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm · <a href="swarm/swarm_ingest.graphql">ingest script</a></h3><div class="chain"><span class="s t"><i class="ph ph-file-arrow-down"></i>snapshot</span><span class="a">→</span><span class="s e"><i class="ph ph-git-diff"></i>diff N−1</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-git-diff"></i>diff</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-file-arrow-down"></i>snapshot</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
+    </div>
+    <div class="card">
+      <h2><i class="ph ph-arrows-clockwise" style="color:var(--dummy)"></i> Static API</h2>
+      <p class="to">Current state only — the poller is the memory. <span class="tag dummy">POLL</span></p>
+      <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm</h3><div class="chain"><span class="s t"><i class="ph ph-arrows-clockwise"></i>poll</span><span class="a">→</span><span class="s e"><i class="ph ph-hash"></i>hash</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>state</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license now</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>table*</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>listings</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins*</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>presence</span></div></div>
+    </div>
+  </div>
+  <footer>* Static API carries no stay dates — Slate gets license status without evidence windows, the map shows presence without pins' windows. Degradation is declared, never faked.</footer>
+</main>
+<script>
+(function(){var t=document.documentElement.dataset.theme||"dark";function s(){var b=document.getElementById("theme-btn");if(b)b.textContent=t==="light"?"☀":"☾";}s();document.getElementById("theme-btn").onclick=function(){t=t==="light"?"dark":"light";document.documentElement.dataset.theme=t;try{localStorage.setItem("str-theme",t);}catch(e){}s();};})();
+</script>
+</body>
+</html>
