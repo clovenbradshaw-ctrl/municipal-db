@@ -4,7 +4,7 @@
     {
       "name": "municipal-db",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8934", "--directory", "/Users/mlacy/municpal db"],
+      "runtimeArgs": ["-m", "http.server", "8934", "--directory", "/Users/mlacy/Documents/3.0/municipal-db"],
       "port": 8934
     }
   ]

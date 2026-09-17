@@ -1,0 +1,1459 @@
+[
+ {
+  "id": "EVP-0001",
+  "addr": "4212 DYSANT ALLEY 37135.2",
+  "lat": 35.98662,
+  "lng": -86.66188,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 236,
+   "url_hash": "lst_75891"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0002",
+  "addr": "1529 WINDING CREEK DR 37135.2",
+  "lat": 35.98406,
+  "lng": -86.62001,
+  "kind": "listing_observation",
+  "captured": "2026-09-08",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 203,
+   "url_hash": "lst_55737"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0003",
+  "addr": "7009 MEADOW RIDGE CIRCLE NASHVILLE, TN  37221",
+  "lat": 36.03358,
+  "lng": -86.96229,
+  "kind": "listing_observation",
+  "captured": "2026-09-04",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 104,
+   "url_hash": "lst_71795"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0004",
+  "addr": "300 SEVEN SPRINGS WAY APT 01-444 37027.2",
+  "lat": 36.04033,
+  "lng": -86.76829,
+  "kind": "listing_observation",
+  "captured": "2026-09-03",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 3,
+   "rate_seen": 191,
+   "url_hash": "lst_92983"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0005",
+  "addr": "300 SEVEN SPRINGS WAY APT 01-444 37027.2",
+  "lat": 36.04033,
+  "lng": -86.76829,
+  "kind": "booking_window",
+  "captured": "2026-09-14",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/18 \u2192 09/25",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0006",
+  "addr": "300 SEVEN SPRINGS WAY APT 01-444 37027.2",
+  "lat": 36.04033,
+  "lng": -86.76829,
+  "kind": "field_sighting",
+  "captured": "2026-09-07",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-104"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0007",
+  "addr": "1000 ENCLAVE CIRCLE UNIT 1907 NASHVILLE, TN  37211",
+  "lat": null,
+  "lng": null,
+  "kind": "listing_observation",
+  "captured": "2026-09-14",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 111,
+   "url_hash": "lst_57260"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0008",
+  "addr": "1004 BRENTRIDGE DRIVE UNIT 1004 ANTIOCH, TN  37013",
+  "lat": 36.04792,
+  "lng": -86.68398,
+  "kind": "listing_observation",
+  "captured": "2026-09-09",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 251,
+   "url_hash": "lst_70250"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0009",
+  "addr": "117 ROCK GLEN COURT ANTIOCH, TN  37013",
+  "lat": 36.04808,
+  "lng": -86.61667,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 84,
+   "url_hash": "lst_54827"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0010",
+  "addr": "1856 LAKEWOOD VILLAGE DRIVE ANTIOCH, TN  37013",
+  "lat": 36.04911,
+  "lng": -86.58469,
+  "kind": "listing_observation",
+  "captured": "2026-09-06",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 252,
+   "url_hash": "lst_72576"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0011",
+  "addr": "1856 LAKEWOOD VILLAGE DRIVE ANTIOCH, TN  37013",
+  "lat": 36.04911,
+  "lng": -86.58469,
+  "kind": "booking_window",
+  "captured": "2026-09-14",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/20 \u2192 09/27",
+   "nights": 3,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0012",
+  "addr": "1856 LAKEWOOD VILLAGE DRIVE ANTIOCH, TN  37013",
+  "lat": 36.04911,
+  "lng": -86.58469,
+  "kind": "field_sighting",
+  "captured": "2026-09-03",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-106"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0013",
+  "addr": "7705 DANIEL TRACE NASHVILLE, TN  37221",
+  "lat": 36.0845,
+  "lng": -87.01448,
+  "kind": "listing_observation",
+  "captured": "2026-09-12",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 143,
+   "url_hash": "lst_44322"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0014",
+  "addr": "1332 GENERAL GEORGE PATTON RD NASHVILLE, TN  37221",
+  "lat": 36.06969,
+  "lng": -86.95236,
+  "kind": "listing_observation",
+  "captured": "2026-09-09",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 157,
+   "url_hash": "lst_28219"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0015",
+  "addr": "110 BELLEVUE ROAD UNIT 29 NASHVILLE, TN  37221",
+  "lat": null,
+  "lng": null,
+  "kind": "listing_observation",
+  "captured": "2026-09-15",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 113,
+   "url_hash": "lst_18386"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0016",
+  "addr": "2828 OLD HICKORY BLVD APT. 1212 NASHVILLE, TN  37221",
+  "lat": 36.05202,
+  "lng": -86.89026,
+  "kind": "listing_observation",
+  "captured": "2026-09-13",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 248,
+   "url_hash": "lst_23115"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0017",
+  "addr": "1401 EDMONSON CIRCLE UNIT 1401 NASHVILLE, TN  37211",
+  "lat": 36.05985,
+  "lng": -86.74042,
+  "kind": "listing_observation",
+  "captured": "2026-09-10",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 3,
+   "rate_seen": 250,
+   "url_hash": "lst_27846"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0018",
+  "addr": "1401 EDMONSON CIRCLE UNIT 1401 NASHVILLE, TN  37211",
+  "lat": 36.05985,
+  "lng": -86.74042,
+  "kind": "booking_window",
+  "captured": "2026-09-12",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/22 \u2192 09/26",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0019",
+  "addr": "1401 EDMONSON CIRCLE UNIT 1401 NASHVILLE, TN  37211",
+  "lat": 36.05985,
+  "lng": -86.74042,
+  "kind": "field_sighting",
+  "captured": "2026-09-08",
+  "source": "staff visit",
+  "detail": {
+   "seen": "guests with luggage",
+   "officer": "INSP-111"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0020",
+  "addr": "1009 BLUE MOUNTAIN LANE ANTIOCH, TN  37013",
+  "lat": 36.08599,
+  "lng": -86.65876,
+  "kind": "listing_observation",
+  "captured": "2026-09-03",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 3,
+   "rate_seen": 277,
+   "url_hash": "lst_44220"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0021",
+  "addr": "1009 BLUE MOUNTAIN LANE ANTIOCH, TN  37013",
+  "lat": 36.08599,
+  "lng": -86.65876,
+  "kind": "booking_window",
+  "captured": "2026-09-08",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/24 \u2192 09/25",
+   "nights": 5,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0022",
+  "addr": "1009 BLUE MOUNTAIN LANE ANTIOCH, TN  37013",
+  "lat": 36.08599,
+  "lng": -86.65876,
+  "kind": "owner_record",
+  "captured": "2026-09-06",
+  "source": "assessor record",
+  "detail": {
+   "owner": "AMERICAN HOMES 4 RENT",
+   "note": "record on file"
+  },
+  "cites": [
+   "OB-OWNER-CAP-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0023",
+  "addr": "1008 RAMBLING ROAD UNIT 1008 NASHVILLE, TN  37217",
+  "lat": 36.09074,
+  "lng": -86.64855,
+  "kind": "listing_observation",
+  "captured": "2026-09-07",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 328,
+   "url_hash": "lst_88697"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0024",
+  "addr": "1008 RAMBLING ROAD UNIT 1008 NASHVILLE, TN  37217",
+  "lat": 36.09074,
+  "lng": -86.64855,
+  "kind": "booking_window",
+  "captured": "2026-09-09",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/23 \u2192 09/30",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0025",
+  "addr": "1008 RAMBLING ROAD UNIT 1008 NASHVILLE, TN  37217",
+  "lat": 36.09074,
+  "lng": -86.64855,
+  "kind": "field_sighting",
+  "captured": "2026-09-06",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-109"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0026",
+  "addr": "1069 LAKEWALK DRIVE ANTIOCH, TN  37013",
+  "lat": 36.05311,
+  "lng": -86.59537,
+  "kind": "listing_observation",
+  "captured": "2026-09-09",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 212,
+   "url_hash": "lst_19502"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0027",
+  "addr": "1245 HILLWOOD PRIVATE COVE NASHVILLE, TN  37209",
+  "lat": 36.13332,
+  "lng": -86.88874,
+  "kind": "listing_observation",
+  "captured": "2026-09-08",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 1,
+   "rate_seen": 208,
+   "url_hash": "lst_13654"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0028",
+  "addr": "208 SUSANNAH DRIVE NASHVILLE, TN  37209",
+  "lat": 36.14786,
+  "lng": -86.83138,
+  "kind": "listing_observation",
+  "captured": "2026-09-02",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 154,
+   "url_hash": "lst_76205"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0029",
+  "addr": "208 SUSANNAH DRIVE NASHVILLE, TN  37209",
+  "lat": 36.14786,
+  "lng": -86.83138,
+  "kind": "booking_window",
+  "captured": "2026-09-08",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/24 \u2192 09/25",
+   "nights": 4,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0030",
+  "addr": "208 SUSANNAH DRIVE NASHVILLE, TN  37209",
+  "lat": 36.14786,
+  "lng": -86.83138,
+  "kind": "field_sighting",
+  "captured": "2026-09-07",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lights + music 11pm",
+   "officer": "INSP-105"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0031",
+  "addr": "100 ANTIOCH PIKE #LL1113 NASHVILLE, TN  37211",
+  "lat": 36.10132,
+  "lng": -86.72187,
+  "kind": "listing_observation",
+  "captured": "2026-09-11",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 3,
+   "rate_seen": 253,
+   "url_hash": "lst_40690"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0032",
+  "addr": "1022 KIRBY AVENUE NASHVILLE, TN  37217",
+  "lat": 36.12749,
+  "lng": -86.69704,
+  "kind": "listing_observation",
+  "captured": "2026-09-16",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 246,
+   "url_hash": "lst_67547"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0033",
+  "addr": "1002 LINCOYA BAY DRIVE UNIT 1002 NASHVILLE, TN  37214",
+  "lat": null,
+  "lng": null,
+  "kind": "listing_observation",
+  "captured": "2026-09-15",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 281,
+   "url_hash": "lst_40641"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0034",
+  "addr": "1002 LINCOYA BAY DRIVE UNIT 1002 NASHVILLE, TN  37214",
+  "lat": null,
+  "lng": null,
+  "kind": "booking_window",
+  "captured": "2026-09-05",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/20 \u2192 09/26",
+   "nights": 3,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0035",
+  "addr": "1002 LINCOYA BAY DRIVE UNIT 1002 NASHVILLE, TN  37214",
+  "lat": null,
+  "lng": null,
+  "kind": "owner_record",
+  "captured": "2026-09-13",
+  "source": "assessor record",
+  "detail": {
+   "owner": "NASHVILLE PORTFOLIO PRIEST LAKE LLC",
+   "note": "record on file"
+  },
+  "cites": [
+   "OB-OWNER-CAP-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0036",
+  "addr": "104 BREAKWATER BAY HERMITAGE, TN  37076",
+  "lat": 36.14984,
+  "lng": -86.58529,
+  "kind": "listing_observation",
+  "captured": "2026-09-05",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 320,
+   "url_hash": "lst_69066"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0037",
+  "addr": "104 BREAKWATER BAY HERMITAGE, TN  37076",
+  "lat": 36.14984,
+  "lng": -86.58529,
+  "kind": "booking_window",
+  "captured": "2026-09-16",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/18 \u2192 09/25",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0038",
+  "addr": "104 BREAKWATER BAY HERMITAGE, TN  37076",
+  "lat": 36.14984,
+  "lng": -86.58529,
+  "kind": "field_sighting",
+  "captured": "2026-09-14",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-111"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0039",
+  "addr": "120 CROLEY COURT UNIT 306 NASHVILLE, TN  37209",
+  "lat": 36.15547,
+  "lng": -86.87475,
+  "kind": "listing_observation",
+  "captured": "2026-09-13",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 84,
+   "url_hash": "lst_53578"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0040",
+  "addr": "110 MURPHY COURT APT 1112 NASHVILLE, TN  37203",
+  "lat": 36.15319,
+  "lng": -86.81135,
+  "kind": "listing_observation",
+  "captured": "2026-09-15",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 81,
+   "url_hash": "lst_52606"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0041",
+  "addr": "100 MADISON STREET UNIT 109 NASHVILLE, TN  37208",
+  "lat": 36.17732,
+  "lng": -86.78341,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 73,
+   "url_hash": "lst_95083"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0042",
+  "addr": "1041 W EASTLAND AVE APT 503 NASHVILLE, TN  37206",
+  "lat": 36.18381,
+  "lng": -86.74993,
+  "kind": "listing_observation",
+  "captured": "2026-09-04",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 176,
+   "url_hash": "lst_17784"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0043",
+  "addr": "1041 W EASTLAND AVE APT 503 NASHVILLE, TN  37206",
+  "lat": 36.18381,
+  "lng": -86.74993,
+  "kind": "booking_window",
+  "captured": "2026-09-09",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/24 \u2192 09/30",
+   "nights": 4,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0044",
+  "addr": "1041 W EASTLAND AVE APT 503 NASHVILLE, TN  37206",
+  "lat": 36.18381,
+  "lng": -86.74993,
+  "kind": "field_sighting",
+  "captured": "2026-09-14",
+  "source": "staff visit",
+  "detail": {
+   "seen": "guests with luggage",
+   "officer": "INSP-105"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0045",
+  "addr": "135 DONELSON PIKE UNIT 125 NASHVILLE, TN  37214",
+  "lat": 36.16451,
+  "lng": -86.6638,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 214,
+   "url_hash": "lst_54513"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0046",
+  "addr": "1011 HERMITAGE PARK DRIVE HERMITAGE, TN  37076",
+  "lat": 36.16601,
+  "lng": -86.59678,
+  "kind": "listing_observation",
+  "captured": "2026-09-09",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 234,
+   "url_hash": "lst_11008"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0047",
+  "addr": "1011 HERMITAGE PARK DRIVE HERMITAGE, TN  37076",
+  "lat": 36.16601,
+  "lng": -86.59678,
+  "kind": "booking_window",
+  "captured": "2026-09-06",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/22 \u2192 09/25",
+   "nights": 4,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0048",
+  "addr": "1011 HERMITAGE PARK DRIVE HERMITAGE, TN  37076",
+  "lat": 36.16601,
+  "lng": -86.59678,
+  "kind": "field_sighting",
+  "captured": "2026-09-12",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-103"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0049",
+  "addr": "2640 JORDAN RIDGE DRIVE NASHVILLE, TN  37218",
+  "lat": 36.22372,
+  "lng": -86.87136,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 3,
+   "rate_seen": 378,
+   "url_hash": "lst_26505"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0050",
+  "addr": "2412 ALPINE AVE NASHVILLE, TN  37218",
+  "lat": 36.20251,
+  "lng": -86.82894,
+  "kind": "listing_observation",
+  "captured": "2026-09-16",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 118,
+   "url_hash": "lst_59350"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0051",
+  "addr": "2412 ALPINE AVE NASHVILLE, TN  37218",
+  "lat": 36.20251,
+  "lng": -86.82894,
+  "kind": "booking_window",
+  "captured": "2026-09-01",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/18 \u2192 09/27",
+   "nights": 4,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0052",
+  "addr": "2412 ALPINE AVE NASHVILLE, TN  37218",
+  "lat": 36.20251,
+  "lng": -86.82894,
+  "kind": "field_sighting",
+  "captured": "2026-09-08",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-101"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0053",
+  "addr": "101 GATEWOOD AVE UNIT 224 NASHVILLE, TN  37207",
+  "lat": 36.20024,
+  "lng": -86.76981,
+  "kind": "listing_observation",
+  "captured": "2026-09-03",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 136,
+   "url_hash": "lst_79092"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0054",
+  "addr": "101 GATEWOOD AVE UNIT 224 NASHVILLE, TN  37207",
+  "lat": 36.20024,
+  "lng": -86.76981,
+  "kind": "booking_window",
+  "captured": "2026-09-03",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/23 \u2192 09/28",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0055",
+  "addr": "101 GATEWOOD AVE UNIT 224 NASHVILLE, TN  37207",
+  "lat": 36.20024,
+  "lng": -86.76981,
+  "kind": "field_sighting",
+  "captured": "2026-09-16",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-103"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0056",
+  "addr": "1114 MCGAVOCK PIKE UNIT B NASHVILLE, TN  37216",
+  "lat": 36.2049,
+  "lng": -86.73721,
+  "kind": "listing_observation",
+  "captured": "2026-09-06",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 326,
+   "url_hash": "lst_90009"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0057",
+  "addr": "1114 MCGAVOCK PIKE UNIT B NASHVILLE, TN  37216",
+  "lat": 36.2049,
+  "lng": -86.73721,
+  "kind": "booking_window",
+  "captured": "2026-09-09",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/22 \u2192 09/29",
+   "nights": 5,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0058",
+  "addr": "1114 MCGAVOCK PIKE UNIT B NASHVILLE, TN  37216",
+  "lat": 36.2049,
+  "lng": -86.73721,
+  "kind": "field_sighting",
+  "captured": "2026-09-07",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-109"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0059",
+  "addr": "1532 MEADOW BEND DR MADISON, TN  37115",
+  "lat": 36.24848,
+  "lng": -86.6786,
+  "kind": "listing_observation",
+  "captured": "2026-09-13",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 74,
+   "url_hash": "lst_52744"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0060",
+  "addr": "1532 MEADOW BEND DR MADISON, TN  37115",
+  "lat": 36.24848,
+  "lng": -86.6786,
+  "kind": "booking_window",
+  "captured": "2026-09-12",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/21 \u2192 09/29",
+   "nights": 5,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0061",
+  "addr": "1532 MEADOW BEND DR MADISON, TN  37115",
+  "lat": 36.24848,
+  "lng": -86.6786,
+  "kind": "field_sighting",
+  "captured": "2026-09-08",
+  "source": "staff visit",
+  "detail": {
+   "seen": "guests with luggage",
+   "officer": "INSP-104"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0062",
+  "addr": "111 OLD HICKORY BLVD UNIT 11-53 NASHVILLE, TN  37221",
+  "lat": 36.24421,
+  "lng": -86.63691,
+  "kind": "listing_observation",
+  "captured": "2026-09-01",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 371,
+   "url_hash": "lst_53150"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0063",
+  "addr": "127 BROOKE CASTLE DR HERMITAGE, TN  37076",
+  "lat": 36.20637,
+  "lng": -86.59081,
+  "kind": "listing_observation",
+  "captured": "2026-09-08",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 181,
+   "url_hash": "lst_93900"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0064",
+  "addr": "127 BROOKE CASTLE DR HERMITAGE, TN  37076",
+  "lat": 36.20637,
+  "lng": -86.59081,
+  "kind": "booking_window",
+  "captured": "2026-09-08",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/18 \u2192 09/25",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0065",
+  "addr": "127 BROOKE CASTLE DR HERMITAGE, TN  37076",
+  "lat": 36.20637,
+  "lng": -86.59081,
+  "kind": "field_sighting",
+  "captured": "2026-09-11",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lockbox on door",
+   "officer": "INSP-102"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0066",
+  "addr": "110 POSTER PLACE UNIT A-110 NASHVILLE, TN  37207",
+  "lat": 36.25557,
+  "lng": -86.75731,
+  "kind": "listing_observation",
+  "captured": "2026-09-08",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 264,
+   "url_hash": "lst_34660"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0067",
+  "addr": "1001 RIVERGATE MEADOW DRIVE GOODLETTSVILLE, TN  37072",
+  "lat": 36.29837,
+  "lng": -86.70006,
+  "kind": "listing_observation",
+  "captured": "2026-09-16",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 320,
+   "url_hash": "lst_29179"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0068",
+  "addr": "1001 RIVERGATE MEADOW DRIVE GOODLETTSVILLE, TN  37072",
+  "lat": 36.29837,
+  "lng": -86.70006,
+  "kind": "booking_window",
+  "captured": "2026-09-07",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/22 \u2192 09/26",
+   "nights": 6,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0069",
+  "addr": "1001 RIVERGATE MEADOW DRIVE GOODLETTSVILLE, TN  37072",
+  "lat": 36.29837,
+  "lng": -86.70006,
+  "kind": "field_sighting",
+  "captured": "2026-09-16",
+  "source": "staff visit",
+  "detail": {
+   "seen": "lights + music 11pm",
+   "officer": "INSP-104"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "held"
+ },
+ {
+  "id": "EVP-0070",
+  "addr": "1013 SHAWNEE TRACE MADISON, TN  37115",
+  "lat": 36.25194,
+  "lng": -86.67194,
+  "kind": "listing_observation",
+  "captured": "2026-09-07",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 305,
+   "url_hash": "lst_98575"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0071",
+  "addr": "1013 SHAWNEE TRACE MADISON, TN  37115",
+  "lat": 36.25194,
+  "lng": -86.67194,
+  "kind": "booking_window",
+  "captured": "2026-09-04",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/18 \u2192 09/30",
+   "nights": 5,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0072",
+  "addr": "1013 SHAWNEE TRACE MADISON, TN  37115",
+  "lat": 36.25194,
+  "lng": -86.67194,
+  "kind": "owner_record",
+  "captured": "2026-09-15",
+  "source": "assessor record",
+  "detail": {
+   "owner": "AMERICAN HOMES 4 RENT",
+   "note": "record on file"
+  },
+  "cites": [
+   "OB-OWNER-CAP-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0073",
+  "addr": "902 ELLISTON ST OLD HICKORY, TN  37138",
+  "lat": 36.26183,
+  "lng": -86.64972,
+  "kind": "listing_observation",
+  "captured": "2026-09-02",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 2,
+   "rate_seen": 321,
+   "url_hash": "lst_51926"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0074",
+  "addr": "4832 BRICK CHURCH PIKE GOODLETTSVILLE, TN  37072",
+  "lat": null,
+  "lng": null,
+  "kind": "listing_observation",
+  "captured": "2026-09-04",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 296,
+   "url_hash": "lst_72876"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0075",
+  "addr": "108 HARRIS STREET UNIT 7B GOODLETTSVILLE, TN  37072",
+  "lat": 36.31559,
+  "lng": -86.71379,
+  "kind": "listing_observation",
+  "captured": "2026-09-11",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 323,
+   "url_hash": "lst_74572"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0076",
+  "addr": "1010 RIVERCHASE BLVD UNIT 1010 MADISON, TN  37115",
+  "lat": 36.30766,
+  "lng": -86.68119,
+  "kind": "listing_observation",
+  "captured": "2026-09-04",
+  "source": "vrbo scrape",
+  "detail": {
+   "beds_seen": 4,
+   "rate_seen": 177,
+   "url_hash": "lst_19182"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0077",
+  "addr": "1010 RIVERCHASE BLVD UNIT 1010 MADISON, TN  37115",
+  "lat": 36.30766,
+  "lng": -86.68119,
+  "kind": "booking_window",
+  "captured": "2026-09-08",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/19 \u2192 09/26",
+   "nights": 6,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0078",
+  "addr": "1010 RIVERCHASE BLVD UNIT 1010 MADISON, TN  37115",
+  "lat": 36.30766,
+  "lng": -86.68119,
+  "kind": "owner_record",
+  "captured": "2026-09-06",
+  "source": "assessor record",
+  "detail": {
+   "owner": "BRISTOL PARK AT RIVERCHASE APARTMENTS",
+   "note": "record on file"
+  },
+  "cites": [
+   "OB-OWNER-CAP-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0079",
+  "addr": "302 SEVEN SPRINGS WAY APT 2-412 37027.2",
+  "lat": 36.04059,
+  "lng": -86.76825,
+  "kind": "listing_observation",
+  "captured": "2026-09-08",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 272,
+   "url_hash": "lst_31699"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0080",
+  "addr": "1009 HICKORY BARK COURT NASHVILLE, TN  37211",
+  "lat": 36.01767,
+  "lng": -86.73828,
+  "kind": "listing_observation",
+  "captured": "2026-09-03",
+  "source": "airbnb scrape",
+  "detail": {
+   "beds_seen": 5,
+   "rate_seen": 329,
+   "url_hash": "lst_23026"
+  },
+  "cites": [
+   "OB-OCCUPANCY-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0081",
+  "addr": "1009 HICKORY BARK COURT NASHVILLE, TN  37211",
+  "lat": 36.01767,
+  "lng": -86.73828,
+  "kind": "booking_window",
+  "captured": "2026-09-15",
+  "source": "availability signal",
+  "detail": {
+   "window": "09/24 \u2192 09/29",
+   "nights": 2,
+   "note": "availability signal \u2014 not a confirmed stay"
+  },
+  "cites": [
+   "OB-TAX-001"
+  ],
+  "status": "attached"
+ },
+ {
+  "id": "EVP-0082",
+  "addr": "1009 HICKORY BARK COURT NASHVILLE, TN  37211",
+  "lat": 36.01767,
+  "lng": -86.73828,
+  "kind": "field_sighting",
+  "captured": "2026-09-03",
+  "source": "staff visit",
+  "detail": {
+   "seen": "guests with luggage",
+   "officer": "INSP-111"
+  },
+  "cites": [
+   "OB-ZONING-001"
+  ],
+  "status": "attached"
+ }
+]

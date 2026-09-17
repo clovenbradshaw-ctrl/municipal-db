@@ -36,6 +36,9 @@
   .pseg button.on { background: var(--brand); color: #fff; font-weight: 700; }
   .iconbtn { background: transparent; border: 1px solid #4a505c; color: #c3c9d4; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px; line-height: 1; }
   .iconbtn:hover { border-color: var(--link); color: #fff; }
+  .iconbtn.on { border-color: var(--brand); background: var(--brand); color: #fff; }
+  .xsrc { display: none; }
+  body.xray .xsrc { display: inline-block; font-size: 10px; font-weight: 400; color: var(--teal); border: 1px dashed var(--teal); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
   .modepill { font-size: 11.5px; border: 1px solid #8fabff; color: #8fabff; border-radius: 24px; padding: 3px 12px; white-space: nowrap; }
   main { padding: 24px 32px 60px; max-width: 1100px; margin: 0 auto; }
   .crumb { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
@@ -69,6 +72,8 @@
   .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 700; }
   .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; font-weight: 700; }
   .btn:disabled { opacity: .45; cursor: default; }
+  .btn.sm { padding: 4px 10px; font-size: 11.5px; }
+  [data-cmd-filter] { cursor: pointer; }
   label.f { display: block; font-size: 11.5px; color: var(--dim); margin: 10px 0 3px; }
   input.f, select.f, textarea.f { width: 100%; max-width: 460px; background: var(--mock); border: 1px solid var(--line); color: var(--ink); border-radius: 6px; padding: 8px 10px; font-size: 13px; }
   .cols { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -109,6 +114,7 @@
   <nav id="topnav"></nav>
   <div class="pseg" id="pseg"><button data-p="host">Host</button><button data-p="staff">Compliance</button></div>
   <button class="iconbtn" id="theme-btn" title="Toggle light / dark">☾</button>
+  <button class="iconbtn" id="xray-btn" title="X-ray: show field sources" style="width:auto;border-radius:15px;padding:0 10px;font-size:11px;">X-ray</button>
   <div class="modepill">● Metro Nashville-Davidson County</div>
 </header>
 <main id="app"></main>
@@ -163,15 +169,15 @@ const TIMELINE = [
 
 /* ── nav config ── */
 const TOPS = {
-  host: [["", "Home"], ["register", "Register"], ["code", "Code"], ["oversee/map-table", "Map"], ["workbench/landlord", "Workbench"]],
+  host: [["", "Home"], ["register", "Register"], ["code", "Code"], ["properties", "My properties"]],
   staff: [["", "Home"], ["oversee/detection", "Oversee"], ["data/bridge", "Evidence"], ["code", "Code"], ["workbench/staff", "Workbench"]],
 };
 /* surfaces each persona may open — everything else renders a gate card.
    code (extracted obligations) is shared: hosts read the reasons, compliance reads the versions. */
-const SURFACES = { host: ["", "register", "code", "oversee/map-table", "workbench/landlord"], staff: ["", "oversee", "data", "code", "workbench/staff"] };
+const SURFACES = { host: ["", "register", "code", "properties"], staff: ["", "oversee", "data", "code", "parcel", "workbench/staff"] };
 function allowed(route) { return SURFACES[persona].some((p) => route === p || (p && route.startsWith(p + "/"))); }
 function ownerOf(route) {
-  if (route === "" || route.startsWith("register") || route.startsWith("workbench/landlord")) return "host";
+  if (route === "" || route.startsWith("register") || route.startsWith("properties")) return "host";
   return "staff";
 }
 function personaLanding() { return persona === "staff" ? "oversee/detection" : ""; }
@@ -183,16 +189,16 @@ function pGate(route) {
     '<div class="card"><button class="btn primary" id="gate-switch" data-p="' + need + '">Switch to ' + other + "</button> " +
     '<a class="btn" href="#/' + personaLanding() + '">Back to my home</a></div>';
 }
-let persona = localStorage.getItem("str-persona") || "host";
+let persona = "host"; // always land as host; compliance is a sign-in away
 function setPersona(p) {
   persona = p;
-  try { localStorage.setItem("str-persona", p); } catch (e) {}
   const r = location.hash.replace(/^#\/?/, "");
   if (allowed(r)) render();
   else location.hash = "#/" + personaLanding();
 }
-function workbenchHome() { return persona === "staff" ? "workbench/staff" : "workbench/landlord"; }
+function workbenchHome() { return "workbench/staff"; }
 let theme = document.documentElement.dataset.theme || "dark";
+let xray = false;
 function setTheme(t) { theme = t; document.documentElement.dataset.theme = t; try { localStorage.setItem("str-theme", t); } catch (e) {} syncThemeBtn(); (window.__maps || []).forEach((h) => { try { h.swap(); } catch (e) {} }); }
 function syncThemeBtn() { const b = document.getElementById("theme-btn"); if (b) b.textContent = theme === "light" ? "☀" : "☾"; }
 
@@ -202,6 +208,7 @@ function chip(txt, cls) { return '<span class="chip ' + cls + '">' + txt + "</sp
 function matchChip(m) { return chip(m, m === "CLEAR" ? "ok" : m === "MARGINAL" ? "warn" : "bad"); }
 function regChip(r) { return chip(r, r === "ACTIVE" ? "ok" : r === "NONE" ? "bad" : r === "EXPIRED" ? "mut" : "warn"); }
 function licChip(s) { return chip(s.toUpperCase(), s === "active" ? "ok" : s === "pending" ? "warn" : "mut"); }
+function X(t) { return '<span class="xsrc">' + t + "</span>"; }
 function toast(msg) {
   const t = document.getElementById("toast");
   t.textContent = msg; t.classList.add("show");
@@ -236,10 +243,20 @@ function bindActions() {
   document.querySelectorAll(".rerun").forEach((b) => { b.onclick = () => { b.disabled = true; const t = b.textContent; b.textContent = "Running…"; setTimeout(() => { b.textContent = t; b.disabled = false; toast("Run completed — no new items."); }, 1200); }; });
   document.querySelectorAll(".restore").forEach((b) => { b.onclick = () => { b.closest("tr").remove(); toast("Item restored."); }; });
   document.querySelectorAll(".opencase").forEach((b) => { b.onclick = () => { const addr = b.closest("tr").firstChild.textContent; b.disabled = true; b.textContent = "Case opened"; toast("Case opened for " + addr + "."); }; });
+  document.querySelectorAll("[data-cmd-filter]").forEach((b) => { b.onclick = () => {
+    const f = b.dataset.cmdFilter;
+    document.querySelectorAll("button[data-cmd-filter]").forEach((x) => x.classList.toggle("primary", x === b));
+    const tb = b.closest("#app").querySelector("tbody");
+    if (tb) tb.querySelectorAll("tr").forEach((tr) => {
+      tr.style.display = (f === "all" || (tr.dataset.cats || "").split(" ").includes(f)) ? "" : "none";
+    });
+    toast(f === "all" ? "Showing all flags." : "Filtered: " + b.textContent.trim() + ".");
+  }; });
   const vc = document.getElementById("verify-clear");
   if (vc) vc.onclick = () => { const tr = vc.closest("tr"); tr.children[1].innerHTML = matchChip("CLEAR"); tr.children[2].innerHTML = chip("RELEASED", "ok"); toast("Match verified — held-back notice released."); };
   const cu = document.getElementById("confirm-unloc");
   if (cu) cu.onclick = () => { const tr = cu.closest("tr"); tr.children[1].innerHTML = matchChip("UNLOCATED"); tr.children[2].innerHTML = chip("CLOSED", "mut"); toast("Marked unlocated — held out of notices."); };
+  document.querySelectorAll(".respond").forEach((b) => { b.onclick = () => { b.disabled = true; b.textContent = "Response sent"; toast("Response sent — the notice stays attached for the record."); }; });
   const gs = document.getElementById("gate-switch");
   if (gs) gs.onclick = () => setPersona(gs.dataset.p);
 }
@@ -271,6 +288,34 @@ function loadLeaflet() {
 }
 function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function fmtNum(n) { return Number(n).toLocaleString("en-US"); }
+async function fetchCell(k) {
+  if (window.__GEOCELLS && window.__GEOCELLS[k]) return window.__GEOCELLS[k];
+  const r = await fetch("geo-cells/cell_" + k + ".json");
+  return r.ok ? await r.json() : { p: [], v: [] };
+}
+async function fetchFlags() {
+  if (window.__FLAGS) return window.__FLAGS;
+  const r = await fetch("geo-cells/str-flags.json");
+  return await r.json();
+}
+async function fetchPackets() {
+  if (window.__PKTS) return window.__PKTS;
+  const r = await fetch("geo-cells/evidence-packets.json");
+  return await r.json();
+}
+function pktDetail(p) {
+  const d = p.detail || {};
+  if (p.kind === "listing_observation") return d.beds_seen + " br · $" + d.rate_seen + " · " + d.url_hash;
+  if (p.kind === "booking_window") return d.window + " · " + d.nights + " nights · " + d.note;
+  if (p.kind === "field_sighting") return d.seen + " · " + d.officer;
+  if (p.kind === "owner_record") return d.owner;
+  return "";
+}
+function pktCite(p) {
+  if (!p.cites || !p.cites.length) return "";
+  const code = p.cites[0].toLowerCase().replace(/-\d+$/, "");
+  return ' · cites <a href="#/code/' + code + '">' + p.cites[0] + "</a>";
+}
 function tileUrl() {
   return theme === "light"
     ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
@@ -330,8 +375,7 @@ function initParcelMap(elId, opts) {
           let d = cache[k];
           if (!d) {
             try {
-              const r = await fetch("geo-cells/cell_" + k + ".json");
-              d = r.ok ? await r.json() : { p: [], v: [] };
+              d = await fetchCell(k);
               cache[k] = d;
             } catch (e) { if (my === seq) say("parcel layer unreachable — showing STR flags"); return; }
           }
@@ -347,13 +391,13 @@ function initParcelMap(elId, opts) {
         if (my === seq) tally();
       })();
     }
-    fetch("geo-cells/str-flags.json").then((r) => r.json()).then((flags) => {
+  fetchFlags().then((flags) => fetchPackets().then((pkts) => ({ flags, pkts }))).then(({ flags, pkts }) => {
       nf = flags.filter((f) => f.lat != null).length;
       const flagByIdx = [];
       flags.forEach((f, i) => {
         if (f.lat == null) return;
         flagByIdx[i] = L.marker([f.lat, f.lng], { icon: flagIcon(L, flagColor(f)) })
-          .bindPopup("<b>" + esc(f.addr) + "</b><br>" + esc(f.platform) + " · " + f.beds + " br · $" + f.rate + "<br>match " + f.match + " · license " + f.lic + "<br>" + esc(f.flag))
+          .bindPopup("<b>" + esc(f.addr) + "</b><br>" + esc(f.platform) + " · " + f.beds + " br · $" + f.rate + "<br>match " + f.match + " · license " + f.lic + "<br>" + esc(f.flag) + "<br><a href='#/parcel/" + i + "'>Open profile →</a>")
           .addTo(flagLayer);
       });
       tally();
@@ -367,27 +411,87 @@ function initParcelMap(elId, opts) {
   }).catch(() => say("map failed to load (leaflet unreachable)"));
 }
 
-function buildFlagRows(L, map, flagByIdx, flags, bodyId) {
-  const tb = document.getElementById(bodyId);
-  if (!tb) return;
-  tb.innerHTML = flags.map((f, i) => '<tr data-i="' + i + '"><td>' + esc(f.addr) + "</td><td>" + matchChip(f.match) + "</td><td>" + regChip(licReg(f.lic)) + "</td></tr>").join("");
-  const rows = tb.querySelectorAll("tr");
-  rows.forEach((r) => {
-    r.style.cursor = "pointer";
-    r.onclick = () => {
-      const i = parseInt(r.dataset.i, 10), f = flags[i];
-      rows.forEach((x) => x.classList.remove("hl"));
-      if (f.lat == null) { toast("Unlocated listing — no parcel to show."); return; }
-      r.classList.add("hl");
-      map.flyTo([f.lat, f.lng], Math.max(map.getZoom(), 14), { duration: 0.6 });
-      const m = flagByIdx[i];
-      if (m) setTimeout(() => m.openPopup(), 650);
+/* ── paged lists: one component for queues everywhere ──
+   mountPaged(id, {cols, rows, cards, per, view, bind}) renders a table
+   (or cards) with prev/next + a cards/table toggle into #id / #id-ctrl.
+   bind(view, offset) re-attaches row behavior after every redraw. */
+const PAGERS = {};
+function mountPaged(id, cfg) {
+  PAGERS[id] = Object.assign({ page: 0, per: 5, view: "table" }, cfg);
+  drawPaged(id);
+}
+function drawPaged(id) {
+  const st = PAGERS[id];
+  const view = document.getElementById(id);
+  const ctrl = document.getElementById(id + "-ctrl");
+  if (!st || !view) return;
+  const pages = Math.max(1, Math.ceil(st.rows.length / st.per));
+  st.page = Math.max(0, Math.min(st.page, pages - 1));
+  const a = st.page * st.per;
+  if (st.view === "cards" && st.cards) view.innerHTML = st.cards.slice(a, a + st.per).join("");
+  else view.innerHTML = '<table class="grid"><thead><tr>' + st.cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" + st.rows.slice(a, a + st.per).map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+  if (ctrl) {
+    ctrl.innerHTML = '<button class="btn" data-pg="-1"' + (st.page === 0 ? " disabled" : "") + ">← Prev</button>" +
+      "<span style='font-size:12px;color:var(--dim);margin:0 8px;'>Page " + (st.page + 1) + " of " + pages + " · " + st.rows.length + " items</span>" +
+      '<button class="btn" data-pg="1"' + (st.page >= pages - 1 ? " disabled" : "") + ">Next →</button>" +
+      (st.cards ? ' <button class="btn" data-vw="1">' + (st.view === "table" ? "Cards view" : "Table view") + "</button>" : "");
+    ctrl.querySelectorAll("[data-pg]").forEach((b) => { b.onclick = () => { st.page += parseInt(b.dataset.pg, 10); drawPaged(id); }; });
+    const vw = ctrl.querySelector("[data-vw]");
+    if (vw) vw.onclick = () => { st.view = st.view === "table" ? "cards" : "table"; drawPaged(id); };
+  }
+  if (st.bind) st.bind(view, a);
+}
+/* staff-home queue, hydrated live from the flag feed: unregistered +
+   lapsed + marginal — the actionable subset, newest risk first. */
+function hydrateLanes() {
+  const here = location.hash;
+  fetchFlags().then((flags) => {
+    if (location.hash !== here || !document.getElementById("lane-act")) return;
+    const act = [], ver = [], wat = [];
+    flags.forEach((f, i) => {
+      if (f.match === "MARGINAL") ver.push({ f, i });
+      else if (f.lic === "none" || f.lic === "expired") act.push({ f, i });
+      else if (f.lic === "pending") wat.push({ f, i });
+    });
+    const item = (r, btn) => '<div style="padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;"><b>' + esc(r.f.addr) + "</b><br><span style='font-size:11.5px;color:var(--dim);'>" + matchChip(r.f.match) + " " + regChip(licReg(r.f.lic)) + " · " + esc(r.f.platform) + " · $" + r.f.rate + "</span> " + btn + "</div>";
+    const fill = (id, list, btn, all) => {
+      const el = document.getElementById(id);
+      const n = document.getElementById(id + "-n");
+      if (n) n.innerHTML = ' <span class="chip warn">' + list.length + "</span>";
+      if (el) el.innerHTML = (list.length ? list.slice(0, 3).map((r) => item(r, btn(r))).join("") : "<p>Nothing here.</p>") + (list.length > 3 ? "<p style='font-size:11.5px;color:var(--dim);margin:6px 0 0;'>+" + (list.length - 3) + " more — " + all + "</p>" : "");
     };
+    fill("lane-act", act, (r) => '<a href="#/parcel/' + r.i + '">Open →</a>', '<a href="#/oversee/detection">view all</a>');
+    fill("lane-verify", ver, (r) => '<a href="#/workbench/staff/verify">Verify →</a>', '<a href="#/workbench/staff/verify">verify queue</a>');
+    fill("lane-watch", wat, (r) => '<a href="#/parcel/' + r.i + '">Open →</a>', '<a href="#/oversee/map-table">monitor</a>');
+  }).catch(() => {
+    ["lane-act", "lane-verify", "lane-watch"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = "<p>Queue failed to load.</p>";
+    });
+  });
+}
+
+function buildFlagRows(L, map, flagByIdx, flags, bodyId) {
+  const host = document.getElementById(bodyId);
+  if (!host) return;
+  const rows = flags.map((f) => [esc(f.addr), matchChip(f.match), regChip(licReg(f.lic))]);
+  mountPaged(bodyId, {
+    cols: ["Address " + X("TransformerAssetMapper → Asset"), "Match " + X("Azora · unmeasured"), "Reg " + X("BB · Asset.licenses.status")], rows, per: 8, view: "table",
+    bind(view, a) {
+      view.querySelectorAll("tbody tr").forEach((tr, j) => {
+        const i = a + j;
+        tr.dataset.gi = i;
+        tr.style.cursor = "pointer";
+        tr.onclick = () => { location.hash = "#/parcel/" + i; };
+      });
+    }
   });
   Object.keys(flagByIdx).forEach((k) => {
     flagByIdx[k].on("click", () => {
-      rows.forEach((x) => x.classList.remove("hl"));
-      const tr = tb.querySelector('tr[data-i="' + k + '"]');
+      const st = PAGERS[bodyId];
+      if (st) { st.page = Math.floor(Number(k) / st.per); drawPaged(bodyId); }
+      const h = document.getElementById(bodyId);
+      const tr = h && h.querySelector('tr[data-gi="' + k + '"]');
       if (tr) { tr.classList.add("hl"); tr.scrollIntoView({ block: "nearest" }); }
     });
   });
@@ -407,11 +511,10 @@ function pHomeHost() {
       [["Contact address<br><span style='font-size:11.5px;color:var(--dim)'>The 10-mile rule can't run until you name a contact. Missing info means “can't decide yet” — never a fail.</span>", chip("NONE", "bad"), '<a class="btn primary" href="#/register/contact">Name a contact</a>'],
        ["Zoning for 301 Demo Rd<br><span style='font-size:11.5px;color:var(--dim)'>The R-zone check is waiting on parcel data — not your fault. We'll re-check automatically; nothing you need to do.</span>", chip("UNKNOWN", "warn"), ""]]) + "</div>" +
     '<div class="card"><h3>Your properties</h3>' + grid(["Property", "License", "Listing", ""],
-       [["412 Oak St", licChip("active"), matchChip("CLEAR"), '<a class="btn" href="#/workbench/landlord">Open</a>'],
-        ["301 Demo Rd", licChip("expired"), matchChip("CLEAR"), '<a class="btn" href="#/workbench/landlord">Open</a>']]) +
-    '<a class="btn" href="#/oversee/map-table">View on map</a></div>' +
+       [["412 Oak St", licChip("active"), matchChip("CLEAR"), '<a class="btn" href="#/properties/412-oak-st">Open</a>'],
+        ["301 Demo Rd", licChip("expired"), matchChip("CLEAR"), '<a class="btn" href="#/properties/301-demo-rd">Open</a>']]) + "</div>" +
     '<div class="card"><h3>Notices (1 unread)</h3>' + grid(["Date", "Subject", ""],
-      [["09/18", "Unsafe structure — 301 Demo Rd", '<a class="btn" href="#/workbench/landlord/notices">Respond</a>']]) + "</div>";
+      [["09/18", "Unsafe structure — 301 Demo Rd", '<a class="btn" href="#/properties/301-demo-rd">Respond</a>']]) + "</div>";
 }
 
 function pHomeStaff() {
@@ -419,10 +522,11 @@ function pHomeStaff() {
     "<h1>STR compliance — today</h1>" +
     '<p class="lede">The queue-first view: what broke, where, and what unblocks it. Last vendor pull 02:00 · ok.</p>' +
     '<div class="stat"><div><b style="color:var(--gold)">38</b><small>unregistered</small></div><div><b style="color:var(--dummy)">6</b><small>unlocated</small></div><div><b>11</b><small>illegal-type flags</small></div><div><b>3</b><small>stops today</small></div><div><b>1</b><small>awaiting verification</small></div></div>' +
-    '<div class="card"><h3>Needs you</h3>' + grid(["Item · evidence", "Confidence", ""],
-      [["301 Demo Rd — license lapsed<br><span style='font-size:11.5px;color:var(--dim)'>listing live (vrbo, $248) · STR-3117 expired 09/30 · because: " + link("code/ob-fee", "fee schedule v3") + " + " + link("code/ob-occupancy", "owner-occupancy") + "</span>", "registrant MATCHED<br><span style='font-size:11.5px;color:var(--dim)'>assessor = Demo Holdings LLC</span>", '<a class="btn primary" href="#/oversee/detection">Open case</a>'],
-       ["77 Sample Ave — MARGINAL address<br><span style='font-size:11.5px;color:var(--dim)'>declared 3br vs observed 4br · held OUT of notices until verified</span>", "registrant UNCONFIRMED<br><span style='font-size:11.5px;color:var(--dim)'>field empty — check first, no notice before match</span>", '<a class="btn" href="#/workbench/staff/verify">Verify → releases</a>'],
-       ["9 Demo Pl — R-zone flag<br><span style='font-size:11.5px;color:var(--dim)'>non-owner-occupied where prohibited · zoning joined · because: " + link("code/ob-zoning", "R-zone restriction") + "</span>", "registrant MATCHED", '<a class="btn" href="#/oversee/map-table">Locate</a>']]) + "</div>" +
+    '<div class="cols">' +
+    '<div class="card"><h3>Act now <span id="lane-act-n"></span></h3><div id="lane-act"><p>loading…</p></div><p><a href="#/oversee/detection">View all →</a></p></div>' +
+    '<div class="card"><h3>Verify to release <span id="lane-verify-n"></span></h3><div id="lane-verify"><p>loading…</p></div><p><a href="#/workbench/staff/verify">Verify queue →</a></p></div>' +
+    '<div class="card"><h3>Watch <span id="lane-watch-n"></span></h3><div id="lane-watch"><p>loading…</p></div><p><a href="#/oversee/map-table">Monitor →</a></p></div>' +
+    "</div>" +
     '<div class="card"><h3>Today&apos;s stops (3)</h3>' + grid(["Stop", "Window", ""],
       [["301 Demo Rd", "occupied until 11am", ""],
        ["88 Example Ave", "check-in likely after 3pm", ""],
@@ -472,9 +576,9 @@ function pFee() {
   return crumb([["", "Home"], ["register", "Register"], ["register/fee", "2 · Fee"]]) +
     "<h1>2 · Registration fee calculation</h1>" + regSteps("register/fee") +
     '<div class="cols"><div class="card"><h3>Estimate</h3>' +
-    '<label class="f">Guestrooms (from license)</label><input class="f" value="3">' +
+    '<label class="f">Guestrooms (from license)' + X("Slate · FLOW_STAGE_TASK attr — declared") + '</label><input class="f" value="3">' +
     '<label class="f">Max guests</label><input class="f" value="6">' +
-    grid(["Line", "Amount"], [["Base registration", "$250"], ["Per guestroom × 3", "$150"], ["<b>Total due</b>", "<b>$400</b>"]]) +
+    grid(["Line", "Amount"], [["Base registration", "$250"], ["Per guestroom × 3", "$150"], ["<b>Total due</b> " + X("Slate · WorkflowStageTask payment (unconfigured for Rental Registry)"), "<b>$400</b>"]]) +
     actBtn("Accept & continue", 1, "Fee accepted.", "register/tax") + "</div>" +
     '<div><div class="card"><h3>Why is this line here?</h3><p>Fee derives from license fields — change guestrooms on the license and the fee recomputes. Nothing re-typed, nothing drifted.</p><p>Schedule: ' + link("code/ob-fee", "OB-FEE-001 · fee schedule v3") + ".</p></div></div></div>" +
     pager(["register/statement", "Back: statement"], ["register/tax", "Next: tax"]);
@@ -484,9 +588,9 @@ function pTax() {
   return crumb([["", "Home"], ["register", "Register"], ["register/tax", "3 · Tax"]]) +
     "<h1>3 · Occupancy tax</h1>" + regSteps("register/tax") +
     '<div class="cols"><div class="card"><h3>Monthly estimate</h3>' +
-    '<label class="f">Nightly rate (from listing)</label><input class="f" value="$189">' +
-    '<label class="f">Nights booked / month</label><input class="f" value="14">' +
-    grid(["Line", "Amount"], [["Gross bookings", "$2,646"], ["Occupancy tax (6%)", "$158.76"]]) +
+    '<label class="f">Nightly rate (from listing)' + X("observed: Azora feed") + '</label><input class="f" value="$189">' +
+    '<label class="f">Nights booked / month' + X("self-reported — nights feed absent") + '</label><input class="f" value="14">' +
+    grid(["Line", "Amount"], [["Gross bookings " + X("Azora observed rate × nights"), "$2,646"], ["Occupancy tax (6%) " + X("rate: Metro Code 6.28.120"), "$158.76"]]) +
     actBtn("Accept & continue", 1, "Tax schedule accepted.", "register/listing") + "</div>" +
     '<div><div class="card"><h3>Why is this line here?</h3><p>Rate comes from the listing detection, not self-reported revenue — the city taxes what the market shows.</p><p>Rule: ' + link("code/ob-tax", "OB-TAX-001 · 6% occupancy tax") + ".</p></div></div></div>" +
     pager(["register/fee", "Back: fee"], ["register/listing", "Next: listing"]);
@@ -525,12 +629,26 @@ function pMatch() {
 }
 
 function pDetection() {
+  const rows = DETECTION.map((d) => {
+    const cats = ["all"];
+    if (d.reg === "NONE" || d.reg === "EXPIRED") cats.push("unreg");
+    if (d.match === "MARGINAL") cats.push("marginal");
+    if (/per-owner|same owner|r-zone/i.test(d.flag)) cats.push("illegal");
+    const act = (d.match === "MARGINAL")
+      ? '<a class="btn sm" href="#/workbench/staff/verify">Verify</a>'
+      : ((d.reg === "NONE" || d.reg === "EXPIRED") ? '<button class="btn primary sm opencase">Open case</button>' : "");
+    return '<tr data-cats="' + cats.join(" ") + '"><td>' + d.addr + "</td><td>" + matchChip(d.match) + "</td><td>" + regChip(d.reg) + "</td><td>" + d.flag + '</td><td style="white-space:nowrap;">' + act + ' <a class="btn sm" href="#/oversee/map-table">Locate</a></td></tr>';
+  }).join("");
   return crumb([["", "Home"], ["oversee/detection", "Detection"]]) +
     "<h1>Enforcement Console — Detection Dashboard</h1>" +
-    '<p class="lede">Unregistered and illegal STRs across all platforms, matched to addresses and licenses. Refreshed on the last vendor pull.</p>' +
-    '<div class="stat"><div><b>142</b><small>listings detected</small></div><div><b>136</b><small>resolved to address</small></div><div><b style="color:var(--gold)">38</b><small>unregistered</small></div><div><b style="color:var(--dummy)">6</b><small>unlocated</small></div><div><b>11</b><small>illegal-type flags</small></div></div>' +
-    '<div class="card">' + grid(["Resolved address", "Match", "Registered", "Flags"],
-      DETECTION.map((d) => [d.addr, matchChip(d.match), regChip(d.reg), d.flag])) +
+    '<p class="lede">Unregistered and illegal STRs across all platforms, matched to addresses and licenses. Refreshed on the last vendor pull. Click a number to filter the queue.</p>' +
+    '<div class="stat"><div data-cmd-filter="all"><b>142</b><small>listings detected</small>' + X("Azora feed · monthly pull") + '</div><div data-cmd-filter="all"><b>136</b><small>resolved to address</small>' + X("Azora match · reliability unmeasured") + '</div><div data-cmd-filter="unreg"><b style="color:var(--gold)">38</b><small>unregistered</small>' + X("BB · Asset.licenses.status × detections") + '</div><div><b style="color:var(--dummy)">6</b><small>unlocated</small>' + X("no parcel link — held out") + '</div><div data-cmd-filter="illegal"><b>11</b><small>illegal-type flags</small>' + X("BB · Owner Property Count (populated) + zoning (pending)") + "</div></div>" +
+    '<div style="margin:10px 0;">' +
+    '<button class="btn primary sm" data-cmd-filter="all">All</button> ' +
+    '<button class="btn sm" data-cmd-filter="unreg">Unregistered</button> ' +
+    '<button class="btn sm" data-cmd-filter="marginal">Held-back MARGINAL</button> ' +
+    '<button class="btn sm" data-cmd-filter="illegal">Illegal-type</button></div>' +
+    '<div class="card"><table class="grid"><thead><tr><th>Resolved address ' + X("Swarm event → TransformerAssetMapper → Asset") + "</th><th>Match " + X("Azora · reliability unmeasured") + "</th><th>Registered " + X("BB · Asset.licenses.status") + "</th><th>Flags " + X("rule cites · Code") + "</th><th>Action</th></tr></thead><tbody>" + rows + "</tbody></table>" +
     '<p>MARGINAL addresses stay visible but are held out of notices until they clear. UNLOCATED rows carry no parcel link.</p></div>' +
     '<a class="btn primary" href="#/oversee/map-table">Open in map + table</a>' +
     '<a class="btn" href="#/workbench/staff">Compliance queue</a>' +
@@ -542,7 +660,7 @@ function pMapTable() {
     "<h1>Map + table — synced selection</h1>" +
     '<p class="lede">Live flags from the parcel layer — rows and pins stay in sync. Unlocated rows have no pin.</p>' +
     '<div class="cols"><div class="card"><h3>Map · real parcels + dummy STR flags</h3><div class="mapbig" id="mt-map" style="min-height:420px;"></div><p class="src-link" id="mt-map-status">loading map…</p></div>' +
-    '<div class="card"><h3>Flagged addresses</h3><table class="grid"><thead><tr><th>Address</th><th>Match</th><th>Reg</th></tr></thead><tbody id="mt-rows"><tr><td colspan="3">loading flags…</td></tr></tbody></table>' +
+    '<div class="card"><h3>Flagged addresses</h3><div id="mt-rows"><p>loading flags…</p></div><div id="mt-rows-ctrl" style="margin-top:8px;"></div>' +
     '<p class="src-link">How is this map fed? <a href="btora/paths-overview.html">3 folds × 3 paths</a> (Btora → Swarm / Slate / Blocks).</p></div></div>' +
     pager(["oversee/detection", "Back: detection"], ["oversee/inspect", "Next: inspections"]);
 }
@@ -581,8 +699,8 @@ function pTable(type) {
   let body = "";
   if (type === "parcel") body = grid(["Address", "Evictions", "First filed", "Last filed"], PARCELS.map((p) => [p.addr, p.ev, p.first, p.last]));
   else if (type === "owner") body = grid(["Name", "Properties"], [["DEMO HOLDINGS LLC", 2], ["SAMPLE PROPERTIES INC", 1]]);
-  else if (type === "license") body = grid(["Number", "Status", "Guestrooms", "Max guests", "Parcel"], LICENSES.map((l) => [l.n, licChip(l.st), l.rooms, l.max, l.parcel]));
-  else if (type === "listing") body = grid(["Platform", "Beds obs.", "Rate", "Match", "Address"], LISTINGS.map((l) => [l.pf, l.beds, "$" + l.rate, matchChip(l.match), l.addr]));
+  else if (type === "license") body = grid(["Number " + X("Slate license record"), "Status " + X("BB · Asset.licenses.status"), "Guestrooms " + X("Slate · FLOW_STAGE_TASK attr"), "Max guests " + X("Slate · declared attr"), "Parcel " + X("License.asset → Asset")], LICENSES.map((l) => [l.n, licChip(l.st), l.rooms, l.max, l.parcel]));
+  else if (type === "listing") body = grid(["Platform " + X("Swarm event · host_platform"), "Beds obs. " + X("Swarm event · guest_rooms (unpromoted)"), "Rate " + X("Azora feed · observed"), "Match " + X("Azora · unmeasured"), "Address " + X("TransformerAssetMapper")], LISTINGS.map((l) => [l.pf, l.beds, "$" + l.rate, matchChip(l.match), l.addr]));
   else if (type === "standing") body = grid(["Address", "Request", "Status"], [["412 Oak St", "tall grass / debris", chip("OPEN", "warn")], ["301 Demo Rd", "unsafe structure", chip("OPEN", "warn")], ["418 Oak St", "trash cart", chip("RESOLVED", "mut")]]);
   else if (type === "inspection") body = grid(["Kind", "Target", "Date"], [["inspection", "301 Demo Rd", "09/24/2026"], ["notice · portal", "Demo Holdings LLC", "09/18/2026"]]);
   else body = grid(["Name", "Source"], [["Metro Nashville-Davidson County", "Eviction-Overwatch / landlordmapper.org"]]);
@@ -620,26 +738,61 @@ function pTrash() {
   return crumb([["", "Home"], ["data/trash", "Trash"]]) +
     "<h1>Trash — soft-deleted bin</h1>" +
     '<div class="card">' + grid(["Item", "Deleted", ""], [["listing_x71a (duplicate pull)", "09/14", '<button class="btn restore">Restore</button>']]) + "</div>" +
-    pager(["data/workflows", "Back: workflows"], ["workbench/landlord", "Next: workbench"]);
+    pager(["data/workflows", "Back: workflows"], ["workbench/staff", "Next: workbench"]);
 }
 
-function pLandlord() {
-  return crumb([["", "Home"], ["workbench/landlord", "Landlord"]]) +
-    "<h1>Landlord workbench — portfolio &amp; parcels</h1>" +
-    '<p class="lede">Persona: registrant. Sees only their own owner anchor: <b>Demo Holdings LLC</b>.</p>' +
-    '<div class="card">' + grid(["Parcel", "License", "Listing match"],
-      [["412 Oak St", licChip("active"), matchChip("CLEAR")], ["301 Demo Rd", licChip("expired"), matchChip("CLEAR")]]) +
-    '<a class="btn" href="#/register/fee">Renew STR-3117 (expired)</a>' +
-    '<a class="btn" href="#/workbench/landlord/notices">Notices &amp; outreach</a></div>' +
-    pager(["data/trash", "Back: evidence"], ["workbench/staff", "Switch: staff view"]);
+/* ── my properties: the host's own parcels + one profile per parcel ── */
+const PROPS = {
+  "412-oak-st": { addr: "412 Oak St", lic: { n: "STR-1042", st: "active", rooms: 3, max: 6 },
+    list: { pf: "airbnb", beds: 3, rate: 189, match: "CLEAR" },
+    contact: "on file — passes the 10-mile rule", notices: [] },
+  "301-demo-rd": { addr: "301 Demo Rd", lic: { n: "STR-3117", st: "expired", rooms: 4, max: 8 },
+    list: { pf: "vrbo", beds: 5, rate: 310, match: "CLEAR" },
+    contact: "none named yet", notices: [["09/18", "code-compliance", "Unsafe structure — 301 Demo Rd", "portal"], ["09/02", "renewal reminder", "STR-3117 expires 09/30", "email"]] },
+};
+
+function pProperties() {
+  return crumb([["", "Home"], ["properties", "My properties"]]) +
+    "<h1>My properties</h1>" +
+    '<p class="lede">Everything under Demo Holdings LLC — license, listing, balance and notices per parcel.</p>' +
+    '<div class="card">' + grid(["Property", "License", "Listing", "Balance", "Action needed", ""],
+      Object.entries(PROPS).map(([slug, p]) => {
+        const owed = p.lic.st === "expired" ? "<b>$400.00</b>" : "—";
+        const acts = [];
+        if (p.lic.st === "expired") acts.push('<a class="btn primary" href="#/register/fee">Renew license</a>');
+        if (p.notices.length) acts.push('<a class="btn" href="#/properties/' + slug + '">Respond (' + p.notices.length + ")</a>");
+        if (p.contact === "none named yet") acts.push('<a class="btn" href="#/register/contact">Name contact</a>');
+        return [p.addr, licChip(p.lic.st), matchChip(p.list.match), owed,
+          acts.length ? acts.join(" ") : chip("NONE — ALL CLEAR", "mut"),
+          '<a class="btn" href="#/properties/' + slug + '">Open profile</a>'];
+      })) + "</div>" +
+    pager(["", "Back: home"], ["register", "Register a new property"]);
 }
 
-function pLandlordNotices() {
-  return crumb([["", "Home"], ["workbench/landlord", "Landlord"], ["workbench/landlord/notices", "Notices"]]) +
-    "<h1>Notices &amp; outreach</h1>" +
-    '<div class="card">' + grid(["Date", "Kind", "Subject", "Channel"],
-      [["09/18", "code-compliance", "Unsafe structure — 301 Demo Rd", "portal"], ["09/02", "renewal reminder", "STR-3117 expires 09/30", "email"]]) + "</div>" +
-    pager(["workbench/landlord", "Back: portfolio"], ["workbench/staff", "Switch: staff view"]);
+function pProperty(slug) {
+  const p = PROPS[slug];
+  if (!p) return p404("properties/" + slug);
+  const l = p.lic, s = p.list;
+  const money = l.st === "expired"
+    ? grid(["Item", "Amount", ""], [["Renewal " + l.n + "<br><span style='font-size:11.5px;color:var(--dim)'>because: fee schedule v3 — $250 + $50 × " + l.rooms + " guestrooms · cites " + link("code/ob-fee", "Metro Code 6.28.040") + "</span>", "<b>$400.00</b>", '<a class="btn primary" href="#/register/fee">Renew</a>']])
+    : "<p>Nothing owed on this license.</p>";
+  const contact = p.contact === "none named yet"
+    ? "<p>No contact named — the 10-mile rule can't run until you name one.</p>" + '<a class="btn primary" href="#/register/contact">Name a contact</a>'
+    : "<p>" + p.contact + " · " + link("code/ob-contact", "10-mile rule") + ".</p>";
+  const notices = p.notices.length
+    ? grid(["Date", "Kind", "Subject", "Channel", ""], p.notices.map((n) => [n[0], n[1], n[2], n[3], '<button class="btn respond">Respond</button>']))
+    : "<p>No notices on this property.</p>";
+  return crumb([["", "Home"], ["properties", "My properties"], ["properties/" + slug, p.addr]]) +
+    "<h1>" + p.addr + "</h1>" +
+    '<p class="lede">License ' + l.n + " · " + licChip(l.st) + " · listing " + matchChip(s.match) + "</p>" +
+    '<div class="card"><h3>License</h3>' + grid(["Number " + X("Slate license record"), "Status " + X("BB · Asset.licenses.status — queryable"), "Guestrooms " + X("Slate · FLOW_STAGE_TASK attr (declared)"), "Max guests " + X("Slate · declared attr")], [[l.n, licChip(l.st), l.rooms, l.max]]) + "</div>" +
+    '<div class="card"><h3>Listing — declared vs observed</h3>' + grid(["", "Declared", "Observed", ""],
+      [["Bedrooms " + X("declared: Slate FLOW_STAGE_TASK · observed: event.guest_rooms"), l.rooms, s.beds, s.beds === l.rooms ? chip("MATCH", "ok") : chip("GAP", "warn")],
+       ["Platform / rate " + X("observed: Azora feed"), "—", s.pf + " · $" + s.rate + "/night", matchChip(s.match)]]) + "</div>" +
+    '<div class="card"><h3>Balance</h3>' + money + "</div>" +
+    '<div class="card"><h3>Emergency contact</h3>' + contact + "</div>" +
+    '<div class="card"><h3>Notices (' + p.notices.length + ")</h3>" + notices + "</div>" +
+    pager(["properties", "All properties"], null);
 }
 
 function pStaff() {
@@ -651,7 +804,7 @@ function pStaff() {
     '<a class="btn" href="#/workbench/staff/verify">Listing verification</a>' +
     '<a class="btn" href="#/workbench/staff/evidence">Evidence windows</a>' +
     '<a class="btn" href="#/workbench/staff/illegal">Illegal &amp; zoning</a></div>' +
-    pager(["workbench/landlord", "Back: landlord"], ["oversee/detection", "Detection dashboard"]);
+    pager(["", "Back: home"], ["oversee/detection", "Detection dashboard"]);
 }
 
 function pStaffEvidence() {
@@ -697,7 +850,7 @@ const OBS = {
     quote: "The applicant shall designate a local contact person whose principal residence or place of business is located within ten (10) vehicular miles of the Davidson County boundary, which contact shall be available by telephone at all hours." },
   "ob-fee": { title: "Registration fee schedule", ver: "v3", status: "in force", juris: "Metro Nashville-Davidson County", from: "2026-01-01", to: "2026-12-31", cites: "Metro Code §6.28.040", supersedes: "v2 · $200 base · 2025", giver: "Metro Council", value: "$250 + $50 per guestroom",
     plain: ["Registration costs $250 plus $50 for each guestroom.", "We take the room count straight from the license — you never type it twice.", "Change the license and the fee updates itself."],
-    usedBy: [["register/fee", "Fee estimator"], ["workbench/landlord", "Renewal amounts"]],
+    usedBy: [["register/fee", "Fee estimator"], ["properties/301-demo-rd", "Renewal amounts"]],
     applied: "STR-1042 lists 3 guestrooms, so the amount owed is $400.",
     quote: "The annual registration fee shall be two hundred fifty dollars ($250.00), plus fifty dollars ($50.00) for each guestroom listed on the license." },
   "ob-tax": { title: "Occupancy tax rate", ver: "v1", status: "in force", juris: "Metro Nashville-Davidson County", from: "2025-01-01", to: "—", cites: "Metro Code §6.28.120", supersedes: "none", giver: "Metro Council", value: "6% of gross bookings",
@@ -746,6 +899,42 @@ function pCodeDetail(id) {
     pager(["code", "All obligations"], null);
 }
 
+/* ── parcel profile: one flagged parcel, fully evidenced ── */
+function pParcel(idx) {
+  return crumb([["", "Home"], ["oversee/map-table", "Map + table"], ["parcel/" + idx, "Parcel"]]) +
+    '<div id="parcel-body"><p class="lede">loading parcel…</p></div>' +
+    pager(["oversee/map-table", "Back: map + table"], null);
+}
+function hydrateParcel(idx) {
+  const want = "#/parcel/" + idx;
+  fetchFlags().then((flags) => {
+    if (location.hash.replace(/^#\/?/, "") !== "parcel/" + idx) return;
+    const el = document.getElementById("parcel-body");
+    if (!el) return;
+    const f = flags[Number(idx)];
+    if (!f) { el.innerHTML = "<h1>Not found</h1>" + '<p class="lede">No flag at index ' + esc(idx) + ".</p>"; return; }
+    const where = f.lat != null
+      ? f.lat.toFixed(5) + ", " + f.lng.toFixed(5)
+      : "no parcel link — unlocated, held out of notices";
+    const action = (f.lic === "none" || f.lic === "expired")
+      ? '<a class="btn primary" href="#/workbench/staff">Open case</a>'
+      : (f.match === "MARGINAL" ? '<a class="btn" href="#/workbench/staff/verify">Verify</a>' : "");
+    const mine = (pkts || []).filter((p) => p.addr === f.addr);
+    const evCard = mine.length ? '<div class="card"><h3>Evidence packets (' + mine.length + ")</h3>" + grid(["Packet", "Kind", "Captured", "Detail", "Status"],
+      mine.map((p) => [p.id, p.kind.replace(/_/g, " "), esc(p.captured) + "<br>" + esc(p.source), "<span style='font-size:11.5px'>" + esc(pktDetail(p)) + pktCite(p) + "</span>", p.status === "held" ? chip("HELD", "warn") : chip("ATTACHED", "ok")])) + "<p>Held packets stay out of notices until their match clears.</p></div>" : "";
+    el.innerHTML = "<h1>" + esc(f.addr) + "</h1>" +
+      '<p class="lede">' + matchChip(f.match) + " · license " + regChip(licReg(f.lic)) + " · " + esc(f.flag) + "</p>" +
+      '<div class="card"><h3>Listing (observed)</h3>' + grid(["Platform", "Bedrooms", "Nightly rate", "Match"],
+        [[esc(f.platform), f.beds, "$" + f.rate, matchChip(f.match)]]) + "</div>" +
+      '<div class="card"><h3>Parcel (record)</h3>' + grid(["Owner", "Eviction filings", "First filed", "Last filed", "Location"],
+        [[esc(f.landlord || "unknown"), f.evictions != null ? f.evictions : "—", esc(f.first_file || "—"), esc(f.last_file || "—"), esc(where)]]) + "</div>" + evCard +
+      (action ? '<div class="card"><h3>Next action</h3>' + action + "</div>" : "");
+  }).catch(() => {
+    const el = document.getElementById("parcel-body");
+    if (el) el.innerHTML = "<p>Flag data failed to load.</p>";
+  });
+}
+
 /* ── router ── */
 const ROUTES = {
   "": pHome,
@@ -772,8 +961,9 @@ const ROUTES = {
   "data/geo": pGeo,
   "data/workflows": pWorkflows,
   "data/trash": pTrash,
-  "workbench/landlord": pLandlord,
-  "workbench/landlord/notices": pLandlordNotices,
+  "properties": pProperties,
+  "properties/412-oak-st": () => pProperty("412-oak-st"),
+  "properties/301-demo-rd": () => pProperty("301-demo-rd"),
   "workbench/staff": pStaff,
   "workbench/staff/evidence": pStaffEvidence,
   "workbench/staff/illegal": pStaffIllegal,
@@ -799,18 +989,26 @@ function render() {
   syncThemeBtn();
   const themeBtn = document.getElementById("theme-btn");
   if (themeBtn) themeBtn.onclick = () => setTheme(theme === "light" ? "dark" : "light");
+  const xb = document.getElementById("xray-btn");
+  if (xb) { xb.classList.toggle("on", xray); xb.onclick = () => { xray = !xray; document.body.classList.toggle("xray", xray); xb.classList.toggle("on", xray); toast(xray ? "X-ray on — field sources shown." : "X-ray off."); }; }
   const route = location.hash.replace(/^#\/?/, "");
-  const fn = !allowed(route) ? () => pGate(route) : (ROUTES[route] || (() => p404(route)));
+  const pm = route.match(/^parcel\/(\d+)$/);
+  let fn = ROUTES[route] || (pm ? () => pParcel(pm[1]) : null);
+  if (!allowed(route)) fn = () => pGate(route);
+  fn = fn || (() => p404(route));
   document.getElementById("app").innerHTML = fn() + '<footer>Metro Nashville-Davidson County · STR compliance</footer>';
   const topFor = route === "" ? "" : TOPS[persona].map((t) => t[0]).filter((t) => t && (route === t || route.startsWith(t.split("/")[0] + "/"))).sort((a, b) => b.length - a.length)[0] || "";
   document.querySelectorAll("#topnav a").forEach((a) => a.classList.toggle("active", a.dataset.top === (route === "" ? "" : topFor)));
-  document.querySelectorAll("#pseg button").forEach((b) => { b.classList.toggle("on", b.dataset.p === persona); b.onclick = () => setPersona(b.dataset.p); });
   const wb = document.getElementById("top-wb");
   if (wb) { wb.href = "#/" + workbenchHome(); wb.classList.toggle("active", route.startsWith("workbench/")); }
+  document.querySelectorAll("#pseg button").forEach((b) => { b.classList.toggle("on", b.dataset.p === persona); b.onclick = () => setPersona(b.dataset.p); });
   bindActions();
   if (document.getElementById("home-map")) { try { initParcelMap("home-map"); } catch (e) { console.warn("[demo] home map failed:", e); } }
   if (document.getElementById("geo-map")) { try { initParcelMap("geo-map"); } catch (e) { console.warn("[demo] geo map failed:", e); } }
-  if (document.getElementById("mt-map")) { try { initParcelMap("mt-map", { tableBody: "mt-rows" }); } catch (e) { console.warn("[demo] map-table failed:", e); } }
+  if (document.getElementById("lane-act")) { try { hydrateLanes(); } catch (e) { console.warn("[demo] lanes failed:", e); } }
+  if (document.getElementById("mt-map")) { try { initParcelMap("mt-map", { tableBody: "mt-rows", zoom: 12 }); } catch (e) { console.warn("[demo] map-table failed:", e); } }
+  const pmm = route.match(/^parcel\/(\d+)$/);
+  if (pmm && document.getElementById("parcel-body")) { try { hydrateParcel(pmm[1]); } catch (e) { console.warn("[demo] parcel failed:", e); } }
   window.scrollTo(0, 0);
 }
 

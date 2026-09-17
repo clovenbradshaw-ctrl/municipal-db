@@ -63,45 +63,48 @@
   .tag.live { background: rgba(76,195,138,.15); color: var(--live); border: 1px solid var(--live); }
   .tag.dummy { background: rgba(232,134,62,.13); color: var(--dummy); border: 1px solid var(--dummy); }
   footer { margin-top: 34px; font-size: 11px; color: var(--faint); border-top: 1px solid var(--line); padding-top: 12px; }
+  .review-banner { border: 1px solid var(--gold); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px; background: rgba(232,185,62,.06); font-size: 12.5px; }
+  .review-banner b { color: var(--gold); }
 </style>
 </head>
 <body>
 <header>
   <div class="brand">NASHVILLE<small>STR oversight · Davidson County</small></div>
   <nav>
-    <a href="/str-demo.html#/">Home</a>
-    <a href="/str-demo.html#/oversee/detection">Oversee</a>
-    <a href="/str-demo.html#/data/bridge">Evidence</a>
+    <a href="../str-demo.html#/">Home</a>
+    <a href="../str-demo.html#/oversee/detection">Oversee</a>
+    <a href="../str-demo.html#/data/bridge">Evidence</a>
     <a href="paths-overview.html" class="active">Delivery × folds</a>
   </nav>
   <button class="iconbtn" id="theme-btn" title="Toggle light / dark">☾</button>
   <div class="modepill">● Metro Nashville-Davidson County</div>
 </header>
 <main>
-  <div class="crumb"><a href="/str-demo.html#/oversee/map-table">Map + table</a> / Delivery × folds</div>
+  <div class="crumb"><a href="../str-demo.html#/oversee/map-table">Map + table</a> / Delivery × folds</div>
+  <div class="review-banner"><b>FOR REVIEW</b> — vendor delivery options under evaluation. Nothing on this page is connected; each path declares its degradation instead of faking it.</div>
   <h1><i class="ph ph-arrows-split"></i> How bookings get in: vendor delivery × system folds</h1>
-  <p class="lede">The vendor can deliver STR data three ways — <b>live stream</b>, <b>file export</b>, or <b>static API</b> (columns). Each delivery lands in three places — <b>Swarm</b>, <b>Slate</b>, and <b>Building Blocks</b> (rows). Every arrow is a genuine EO transformation: steps that can't name inputs + rule refuse instead of guessing.</p>
+  <p class="lede">The vendor can deliver STR data three ways — <b>live stream</b>, <b>file export</b>, or <b>static API</b> (columns). Each delivery lands in three places — <b>Swarm</b>, <b>Slate</b>, and <b>Building Blocks</b> (rows). Every arrow is a checked step: steps that can't name their inputs refuse instead of guessing.</p>
   <div class="cols3">
     <div class="card">
       <h2><i class="ph ph-lightning" style="color:var(--dummy)"></i> Stream</h2>
       <p class="to">Push per booking change — each event is its own assertion. <span class="tag dummy">LIVE</span></p>
       <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm</h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>push</span><span class="a">→</span><span class="s e"><i class="ph ph-funnel"></i>diff</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
-      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="/str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>row</span></div></div>
-      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="/str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pin</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>live map</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>row</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-lightning"></i>assertion</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pin</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>live map</span></div></div>
     </div>
     <div class="card">
       <h2><i class="ph ph-file-arrow-down" style="color:var(--dummy)"></i> Export</h2>
       <p class="to">Full file per pull — history rebuilt by diffing snapshots. <span class="tag dummy">BATCH</span></p>
       <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm · <a href="swarm/swarm_ingest.graphql">ingest script</a></h3><div class="chain"><span class="s t"><i class="ph ph-file-arrow-down"></i>snapshot</span><span class="a">→</span><span class="s e"><i class="ph ph-git-diff"></i>diff N−1</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
-      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="/str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-git-diff"></i>diff</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
-      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="/str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-file-arrow-down"></i>snapshot</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-git-diff"></i>diff</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license join</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-file-arrow-down"></i>snapshot</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins</span><span class="a">→</span><span class="s d"><i class="ph ph-arrows-clockwise"></i>refresh</span></div></div>
     </div>
     <div class="card">
       <h2><i class="ph ph-arrows-clockwise" style="color:var(--dummy)"></i> Static API</h2>
       <p class="to">Current state only — the poller is the memory. <span class="tag dummy">POLL</span></p>
       <div class="fold"><h3><i class="ph ph-stack" style="color:var(--mode)"></i> Swarm</h3><div class="chain"><span class="s t"><i class="ph ph-arrows-clockwise"></i>poll</span><span class="a">→</span><span class="s e"><i class="ph ph-hash"></i>hash</span><span class="a">→</span><span class="s d"><i class="ph ph-seal-check"></i>assert</span></div></div>
-      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="/str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>state</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license now</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>table*</span></div></div>
-      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="/str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>listings</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins*</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>presence</span></div></div>
+      <div class="fold"><h3><i class="ph ph-identification-card" style="color:var(--link)"></i> Slate · <a href="../str-demo.html#/oversee/inspect">queue</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>state</span><span class="a">→</span><span class="s e"><i class="ph ph-link"></i>license now</span><span class="a">→</span><span class="s d"><i class="ph ph-table"></i>table*</span></div></div>
+      <div class="fold"><h3><i class="ph ph-buildings" style="color:var(--live)"></i> Blocks · <a href="../str-demo.html#/oversee/map-table">map</a></h3><div class="chain"><span class="s t"><i class="ph ph-globe-hemisphere-west"></i>listings</span><span class="a">→</span><span class="s e"><i class="ph ph-map-pin"></i>pins*</span><span class="a">→</span><span class="s d"><i class="ph ph-map-trifold"></i>presence</span></div></div>
     </div>
   </div>
   <footer>* Static API carries no stay dates — Slate gets license status without evidence windows, the map shows presence without pins' windows. Degradation is declared, never faked.</footer>
