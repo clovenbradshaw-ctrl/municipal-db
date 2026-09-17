@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>STR Registration &amp; Oversight — Metro Nashville-Davidson County</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("str-theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");}catch(e){document.documentElement.dataset.theme="dark";}</script>
+<style>
+  :root {
+    --bg: #14171c; --panel: #1d2129; --panel2: #232936; --line: #333b4a;
+    --ink: #e8eaf0; --dim: #a8b1c3; --faint: #8f99ab;
+    --gold: #e8b93e; --live: #4cc38a; --dummy: #e8863e; --mode: #6aa8ff; --bad: #f07575;
+    --brand: #1D4ED8; --link: #8fabff; --teal: #2bc5cb; --danger: #A8071A;
+    --mock: #101319; --mbar: #39424f; --mbar2: #4a5a75; --mapbg: #161b26; --mapline: #232b3a;
+  }
+  html[data-theme="light"] {
+    --bg: #f2f4f7; --panel: #ffffff; --panel2: #e9edf3; --line: #d8dee8;
+    --ink: #1b2029; --dim: #5b6474; --faint: #606a7c;
+    --gold: #7c600a; --live: #1d8a56; --dummy: #b25a18; --mode: #2b5fc7; --bad: #b52f2f;
+    --brand: #1D4ED8; --link: #1D4ED8; --teal: #06777b; --danger: #A8071A;
+    --mock: #edf1f6; --mbar: #c7d1df; --mbar2: #a9b6cb; --mapbg: #e4eaf2; --mapline: #c3cede;
+  }
+  :focus-visible { outline: 2px solid var(--mode); outline-offset: 2px; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header { display: flex; align-items: center; gap: 14px; padding: 12px 24px; border-bottom: 1px solid #10131a; background: #23262e; color: #e8eaf0; position: sticky; top: 0; z-index: 20; }
+  header .brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: .4px; }
+  header .brand small { display: block; font-weight: 400; font-size: 11px; color: #a8b1c3; letter-spacing: 0; }
+  header nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  header nav a { color: #c3c9d4; font-size: 12.5px; padding: 6px 10px; border-radius: 6px; }
+  header nav a:hover { background: #2e333d; color: #fff; text-decoration: none; }
+  header nav a.active { background: var(--brand); color: #fff; font-weight: 700; }
+  .pseg { display: flex; border: 1px solid #4a505c; border-radius: 24px; overflow: hidden; margin-left: auto; }
+  .pseg button { background: transparent; border: none; color: #c3c9d4; font-size: 12px; padding: 5px 14px; cursor: pointer; font-family: inherit; }
+  .pseg button.on { background: var(--brand); color: #fff; font-weight: 700; }
+  .iconbtn { background: transparent; border: 1px solid #4a505c; color: #c3c9d4; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px; line-height: 1; }
+  .iconbtn:hover { border-color: var(--link); color: #fff; }
+  .modepill { font-size: 11.5px; border: 1px solid #8fabff; color: #8fabff; border-radius: 24px; padding: 3px 12px; white-space: nowrap; }
+  main { padding: 24px 32px 60px; max-width: 1100px; margin: 0 auto; }
+  .crumb { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 15px; margin: 22px 0 8px; }
+  .lede { color: var(--dim); max-width: 800px; margin: 0 0 16px; }
+  .row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 14px; }
+  .card.click { display: block; color: var(--ink); width: 300px; }
+  .card.click:hover { border-color: var(--gold); text-decoration: none; }
+  .card h3 { font-size: 14px; margin: 0 0 2px; }
+  .card .route { font-family: ui-monospace, monospace; font-size: 11px; color: var(--faint); margin-bottom: 6px; }
+  .card p { font-size: 12px; color: var(--dim); margin: 6px 0 0; }
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 6px; margin: 0 4px 4px 0; }
+  .tag.live { background: rgba(76,195,138,.15); color: var(--live); border: 1px solid var(--live); }
+  .tag.dummy { background: rgba(232,134,62,.13); color: var(--dummy); border: 1px solid var(--dummy); }
+  .tag.real { background: rgba(106,168,255,.13); color: var(--mode); border: 1px solid var(--mode); }
+  .tag.prop { background: transparent; color: var(--faint); border: 1px dashed var(--faint); }
+  .chip { display: inline-block; font-size: 10.5px; font-weight: 700; border-radius: 4px; padding: 1px 7px; }
+  .chip.ok { background: rgba(76,195,138,.15); color: var(--live); }
+  .chip.warn { background: rgba(232,185,62,.15); color: var(--gold); }
+  .chip.bad { background: rgba(220,70,70,.14); color: var(--bad); }
+  .chip.mut { background: var(--panel2); color: var(--dim); }
+  table.grid { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 8px 0; }
+  table.grid th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--faint); border-bottom: 1px solid var(--line); padding: 6px 8px; }
+  table.grid td { border-bottom: 1px solid var(--line); padding: 7px 8px; }
+  table.grid tr:last-child td { border-bottom: none; }
+  table.grid tr.hl td { background: rgba(232,185,62,.08); }
+  .btn { display: inline-block; background: var(--panel2); color: var(--ink); border: 1px solid var(--line); border-radius: 5px; padding: 7px 14px; font-size: 12.5px; cursor: pointer; margin: 4px 6px 4px 0; }
+  .btn:hover { border-color: var(--brand); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 700; }
+  .btn.danger { background: var(--danger); border-color: var(--danger); color: #fff; font-weight: 700; }
+  .btn:disabled { opacity: .45; cursor: default; }
+  label.f { display: block; font-size: 11.5px; color: var(--dim); margin: 10px 0 3px; }
+  input.f, select.f, textarea.f { width: 100%; max-width: 460px; background: var(--mock); border: 1px solid var(--line); color: var(--ink); border-radius: 6px; padding: 8px 10px; font-size: 13px; }
+  .cols { display: flex; gap: 16px; flex-wrap: wrap; }
+  .cols > div { flex: 1; min-width: 280px; }
+  .stat { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+  .stat div { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 16px; text-align: center; min-width: 110px; }
+  .stat b { font-size: 22px; display: block; }
+  .stat small { color: var(--dim); font-size: 11px; }
+  .mapbig { position: relative; border: 1px solid var(--line); border-radius: 8px; min-height: 340px;
+    background-color: var(--mapbg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 26px, var(--mapline) 26px 28px),
+      repeating-linear-gradient(90deg, transparent 0 40px, var(--mapline) 40px 42px); }
+  .pin { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--dummy); box-shadow: 0 0 8px var(--dummy); cursor: pointer; transform: translate(-50%,-50%); }
+  .pin.g { background: var(--live); box-shadow: 0 0 8px var(--live); }
+  .pin.b { background: var(--mode); box-shadow: 0 0 8px var(--mode); }
+  .pin.sel { outline: 2px solid var(--ink); width: 16px; height: 16px; }
+  .pinlbl { position: absolute; transform: translate(10px,-50%); font-size: 10.5px; background: var(--mock); border: 1px solid var(--line); padding: 1px 6px; border-radius: 4px; white-space: nowrap; display: none; }
+  .pin.sel + .pinlbl { display: block; }
+  .steps { display: flex; gap: 0; margin: 14px 0; flex-wrap: wrap; }
+  .steps a { flex: 1; min-width: 120px; background: var(--panel); border: 1px solid var(--line); border-left: none; padding: 8px 10px; font-size: 12px; color: var(--dim); }
+  .steps a:first-child { border-left: 1px solid var(--line); border-radius: 8px 0 0 8px; }
+  .steps a:last-child { border-radius: 0 8px 8px 0; }
+  .steps a:hover { text-decoration: none; color: var(--ink); }
+  .steps a.done { color: var(--live); }
+  .steps a.cur { color: var(--link); font-weight: 700; background: var(--panel2); }
+  #toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--panel); border: 1px solid var(--gold); color: var(--ink); border-radius: 8px; padding: 10px 18px; font-size: 12.5px; opacity: 0; transition: all .25s; z-index: 99; pointer-events: none; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .quote { border-left: 3px solid var(--brand); margin: 8px 0 4px; padding: 10px 14px; font-style: italic; color: var(--ink); background: var(--mock); border-radius: 0 6px 6px 0; font-size: 13px; }
+  .src-link { font-size: 11.5px; }
+  .src-link a { color: var(--teal); }
+  footer { margin-top: 34px; font-size: 11px; color: var(--faint); border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">NASHVILLE<small>STR oversight · Davidson County</small></div>
+  <nav id="topnav"></nav>
+  <div class="pseg" id="pseg"><button data-p="host">Host</button><button data-p="staff">Compliance</button></div>
+  <button class="iconbtn" id="theme-btn" title="Toggle light / dark">☾</button>
+  <div class="modepill">● Metro Nashville-Davidson County</div>
+</header>
+<main id="app"></main>
+<div id="toast"></div>
+<script>
+/* ── records ── */
+const PARCELS = [
+  { addr: "412 Oak St", ev: 3, first: "04/16/2026", last: "07/23/2026" },
+  { addr: "418 Oak St", ev: 2, first: "06/05/2026", last: "07/01/2026" },
+  { addr: "77 Sample Ave", ev: 4, first: "03/02/2026", last: "08/11/2026" },
+  { addr: "9 Demo Pl", ev: 2, first: "05/19/2026", last: "07/30/2026" },
+  { addr: "301 Demo Rd", ev: 5, first: "02/11/2026", last: "08/02/2026" },
+];
+const LICENSES = [
+  { n: "STR-1042", st: "active", rooms: 3, max: 6, parcel: "412 Oak St" },
+  { n: "STR-2088", st: "pending", rooms: 2, max: 4, parcel: "418 Oak St" },
+  { n: "STR-3117", st: "expired", rooms: 4, max: 8, parcel: "301 Demo Rd" },
+  { n: "STR-4220", st: "active", rooms: 1, max: 2, parcel: "9 Demo Pl" },
+];
+const LISTINGS = [
+  { pf: "airbnb", beds: 3, rate: 189, match: "CLEAR", addr: "412 Oak St" },
+  { pf: "airbnb", beds: 2, rate: 145, match: "CLEAR", addr: "418 Oak St" },
+  { pf: "vrbo", beds: 4, rate: 260, match: "MARGINAL", addr: "77 Sample Ave" },
+  { pf: "airbnb", beds: 2, rate: 120, match: "CLEAR", addr: "9 Demo Pl" },
+  { pf: "vrbo", beds: 5, rate: 310, match: "CLEAR", addr: "301 Demo Rd" },
+  { pf: "airbnb", beds: 3, rate: 175, match: "UNLOCATED", addr: "—" },
+];
+const DETECTION = [
+  { addr: "412 Oak St", match: "CLEAR", reg: "NONE", flag: "Per-owner: 3 listings, 1 owner" },
+  { addr: "418 Oak St", match: "CLEAR", reg: "NONE", flag: "Per-owner: same owner" },
+  { addr: "77 Sample Ave", match: "MARGINAL", reg: "NONE", flag: "Held back: address not certain" },
+  { addr: "301 Demo Rd", match: "CLEAR", reg: "EXPIRED", flag: "Unregistered — license lapsed" },
+  { addr: "9 Demo Pl", match: "CLEAR", reg: "ACTIVE", flag: "Non-owner-occupied in R-zone" },
+];
+const QUEUE = [
+  { n: 1, stop: "301 Demo Rd — occupied until 11am", m: "CLEAR" },
+  { n: 2, stop: "88 Example Ave — check-in likely after 3pm", m: "MARGINAL" },
+  { n: 3, stop: "14 Sample St — block starts Sat", m: "MARGINAL" },
+];
+const TIMELINE = [
+  ["08:12:04", "ins", "listing_9f2c — airbnb detection observed (3 br, $189)"],
+  ["08:12:05", "con", "listing_9f2c detected_at parcel_412-oak (CLEAR)"],
+  ["08:12:06", "ins", "license_str1042 — STR-1042 active, 3 guestrooms"],
+  ["08:12:07", "con", "license_str1042 licenses parcel_412-oak"],
+  ["08:13:31", "def", "standing_77-sample responsible_agent = owner_demo1"],
+  ["08:13:32", "seg", "standing_77-sample → open"],
+  ["08:14:02", "ins", "notice_n44 — code-compliance notice via portal"],
+  ["08:15:44", "con", "listing_x71a detected_at parcel_301-demo (CLEAR)"],
+  ["08:15:45", "eva", "parcel_301-demo vs license_str3117 → EXPIRED"],
+  ["08:16:10", "seg", "standing_301-demo → open"],
+];
+
+/* ── nav config ── */
+const TOPS = {
+  host: [["", "Home"], ["register", "Register"], ["code", "Code"], ["oversee/map-table", "Map"], ["workbench/landlord", "Workbench"]],
+  staff: [["", "Home"], ["oversee/detection", "Oversee"], ["data/bridge", "Evidence"], ["code", "Code"], ["workbench/staff", "Workbench"]],
+};
+/* surfaces each persona may open — everything else renders a gate card.
+   code (extracted obligations) is shared: hosts read the reasons, compliance reads the versions. */
+const SURFACES = { host: ["", "register", "code", "oversee/map-table", "workbench/landlord"], staff: ["", "oversee", "data", "code", "workbench/staff"] };
+function allowed(route) { return SURFACES[persona].some((p) => route === p || (p && route.startsWith(p + "/"))); }
+function ownerOf(route) {
+  if (route === "" || route.startsWith("register") || route.startsWith("workbench/landlord")) return "host";
+  return "staff";
+}
+function personaLanding() { return persona === "staff" ? "oversee/detection" : ""; }
+function pGate(route) {
+  const need = ownerOf(route);
+  const other = need === "host" ? "Host" : "Compliance";
+  return '<div class="crumb">Restricted</div><h1>' + other + "-only surface</h1>" +
+    '<p class="lede">This area belongs to ' + (need === "host" ? "hosts" : "compliance") + ". Switch to open it — everything else stays where it was.</p>" +
+    '<div class="card"><button class="btn primary" id="gate-switch" data-p="' + need + '">Switch to ' + other + "</button> " +
+    '<a class="btn" href="#/' + personaLanding() + '">Back to my home</a></div>';
+}
+let persona = localStorage.getItem("str-persona") || "host";
+function setPersona(p) {
+  persona = p;
+  try { localStorage.setItem("str-persona", p); } catch (e) {}
+  const r = location.hash.replace(/^#\/?/, "");
+  if (allowed(r)) render();
+  else location.hash = "#/" + personaLanding();
+}
+function workbenchHome() { return persona === "staff" ? "workbench/staff" : "workbench/landlord"; }
+let theme = document.documentElement.dataset.theme || "dark";
+function setTheme(t) { theme = t; document.documentElement.dataset.theme = t; try { localStorage.setItem("str-theme", t); } catch (e) {} syncThemeBtn(); (window.__maps || []).forEach((h) => { try { h.swap(); } catch (e) {} }); }
+function syncThemeBtn() { const b = document.getElementById("theme-btn"); if (b) b.textContent = theme === "light" ? "☀" : "☾"; }
+
+/* ── helpers ── */
+function link(route, label) { return '<a href="#/' + route + '">' + label + "</a>"; }
+function chip(txt, cls) { return '<span class="chip ' + cls + '">' + txt + "</span>"; }
+function matchChip(m) { return chip(m, m === "CLEAR" ? "ok" : m === "MARGINAL" ? "warn" : "bad"); }
+function regChip(r) { return chip(r, r === "ACTIVE" ? "ok" : r === "NONE" ? "bad" : r === "EXPIRED" ? "mut" : "warn"); }
+function licChip(s) { return chip(s.toUpperCase(), s === "active" ? "ok" : s === "pending" ? "warn" : "mut"); }
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("show"), 2200);
+}
+function crumb(trail) { return '<div class="crumb">' + trail.map((t, i) => i < trail.length - 1 ? link(t[0], t[1]) + " / " : t[1]).join("") + "</div>"; }
+function grid(cols, rows) {
+  return '<table class="grid"><thead><tr>' + cols.map((c) => "<th>" + c + "</th>").join("") + "</tr></thead><tbody>" +
+    rows.map((r) => "<tr>" + r.map((c) => "<td>" + c + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+}
+function pager(prev, next) {
+  return '<div style="margin-top:16px;">' +
+    (prev ? '<a class="btn" href="#/' + prev[0] + '">← ' + prev[1] + "</a>" : "") +
+    (next ? '<a class="btn primary" href="#/' + next[0] + '">' + next[1] + " →</a>" : "") + "</div>";
+}
+function regSteps(cur) {
+  const steps = [["register/statement", "1 · Statement"], ["register/fee", "2 · Fee"], ["register/tax", "3 · Tax"], ["register/listing", "4 · Listing"], ["register/contact", "5 · Contact"], ["register/match", "6 · Match"]];
+  const idx = steps.findIndex((s) => s[0] === cur);
+  return '<div class="steps">' + steps.map((s, i) => '<a href="#/' + s[0] + '" class="' + (i === idx ? "cur" : i < idx ? "done" : "") + '">' + s[1] + "</a>").join("") + "</div>";
+}
+function actBtn(label, primary, msg, go) { return '<button class="btn' + (primary ? " primary" : "") + '" data-msg="' + msg + '" data-go="' + (go || "") + '">' + label + "</button>"; }
+function bindActions() {
+  document.querySelectorAll("[data-msg]").forEach((b) => { b.onclick = () => { toast(b.dataset.msg); if (b.dataset.go) setTimeout(() => { location.hash = "#/" + b.dataset.go; }, 650); }; });
+  const lo = document.getElementById("log-obs");
+  if (lo) lo.onclick = () => {
+    const tb = lo.closest(".card").querySelector("tbody");
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td>4</td><td>412 Oak St — observation logged just now</td><td>" + matchChip("CLEAR") + "</td>";
+    tb.appendChild(tr); lo.disabled = true;
+    toast("Observation logged, pinned to place and time.");
+  };
+  document.querySelectorAll(".rerun").forEach((b) => { b.onclick = () => { b.disabled = true; const t = b.textContent; b.textContent = "Running…"; setTimeout(() => { b.textContent = t; b.disabled = false; toast("Run completed — no new items."); }, 1200); }; });
+  document.querySelectorAll(".restore").forEach((b) => { b.onclick = () => { b.closest("tr").remove(); toast("Item restored."); }; });
+  document.querySelectorAll(".opencase").forEach((b) => { b.onclick = () => { const addr = b.closest("tr").firstChild.textContent; b.disabled = true; b.textContent = "Case opened"; toast("Case opened for " + addr + "."); }; });
+  const vc = document.getElementById("verify-clear");
+  if (vc) vc.onclick = () => { const tr = vc.closest("tr"); tr.children[1].innerHTML = matchChip("CLEAR"); tr.children[2].innerHTML = chip("RELEASED", "ok"); toast("Match verified — held-back notice released."); };
+  const cu = document.getElementById("confirm-unloc");
+  if (cu) cu.onclick = () => { const tr = cu.closest("tr"); tr.children[1].innerHTML = matchChip("UNLOCATED"); tr.children[2].innerHTML = chip("CLOSED", "mut"); toast("Marked unlocated — held out of notices."); };
+  const gs = document.getElementById("gate-switch");
+  if (gs) gs.onclick = () => setPersona(gs.dataset.p);
+}
+function pins(list) {
+  return list.map((p, i) => '<div class="pin ' + (p[3] || "") + '" data-pin="' + i + '" style="left:' + p[0] + "%;top:" + p[1] + '%"></div><div class="pinlbl">' + p[2] + "</div>").join("");
+}
+/* ── maps: Leaflet (vendored locally, no API key) + lazy parcel cells ──
+   Parcels/violations load per viewport from geo-cells/ as you pan; cells
+   that leave the view (+margin) unload. Tiles: CARTO basemaps (keyless),
+   dark_all / light_all following the theme. */
+const GEO_CELL = 0.05;
+let _leafletP = null;
+function loadLeaflet() {
+  if (window.L) return Promise.resolve(window.L);
+  if (!_leafletP) {
+    _leafletP = new Promise((resolve, reject) => {
+      const css = document.createElement("link");
+      css.rel = "stylesheet"; css.href = "vendor/leaflet.css";
+      css.onerror = () => reject(new Error("leaflet css failed"));
+      document.head.appendChild(css);
+      const s = document.createElement("script");
+      s.src = "vendor/leaflet.js";
+      s.onload = () => resolve(window.L);
+      s.onerror = () => reject(new Error("leaflet js failed"));
+      document.head.appendChild(s);
+    });
+  }
+  return _leafletP;
+}
+function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function fmtNum(n) { return Number(n).toLocaleString("en-US"); }
+function tileUrl() {
+  return theme === "light"
+    ? "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}"
+    : "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}";
+}
+function flagColor(f) {
+  if (f.lic === "none" || f.lic === "expired") return "#e06565";
+  if (f.match === "MARGINAL") return "#e8b93e";
+  return "#43c465";
+}
+function flagIcon(L, color) {
+  return L.divIcon({ className: "", html: '<div style="width:13px;height:13px;border-radius:50%;background:' + color + ";box-shadow:0 0 7px " + color + ';border:2px solid rgba(255,255,255,.9);"></div>', iconSize: [13, 13] });
+}
+function licReg(l) { return l === "active" ? "ACTIVE" : l === "pending" ? "PENDING" : l === "expired" ? "EXPIRED" : "NONE"; }
+
+function initParcelMap(elId, opts) {
+  opts = opts || {};
+  const statusEl = document.getElementById(elId + "-status");
+  const say = (m) => { if (statusEl) statusEl.textContent = m; };
+  say("loading map…");
+  return loadLeaflet().then((L) => {
+    const map = L.map(elId, { scrollWheelZoom: true }).setView(opts.center || [36.1627, -86.7816], opts.zoom || 11);
+    const tiles = L.tileLayer(tileUrl(), { maxZoom: 19, attribution: "© OpenStreetMap contributors · Tiles © Esri" }).addTo(map);
+    const parcels = L.layerGroup().addTo(map);
+    const viols = L.layerGroup().addTo(map);
+    const flagLayer = L.layerGroup().addTo(map);
+    L.control.layers(null, { Parcels: parcels, Violations: viols, "STR flags": flagLayer }, { collapsed: false }).addTo(map);
+    const cache = {}, live = {}, counts = {};
+    let np = 0, nv = 0, nf = 0, seq = 0;
+    const tally = () => say(fmtNum(np) + " parcels · " + fmtNum(nv) + " violations · " + nf + " STR flags — parcels load per viewport");
+    function unloadFar(b) {
+      Object.keys(live).forEach((k) => {
+        const parts = k.split("_");
+        const cLat = (parseFloat(parts[0]) + 0.5) * GEO_CELL, cLng = (parseFloat(parts[1]) + 0.5) * GEO_CELL;
+        if (cLat < b.getSouth() - 0.08 || cLat > b.getNorth() + 0.08 || cLng < b.getWest() - 0.08 || cLng > b.getEast() + 0.08) {
+          parcels.removeLayer(live[k].p); viols.removeLayer(live[k].v);
+          np -= counts[k][0]; nv -= counts[k][1];
+          delete live[k]; delete counts[k];
+        }
+      });
+    }
+    function update() {
+      const my = ++seq;
+      const b = map.getBounds(), z = map.getZoom();
+      unloadFar(b);
+      if (z < 12) { say("zoom in to load parcels · " + nf + " STR flags shown"); return; }
+      const keys = [];
+      for (let la = Math.floor(b.getSouth() / GEO_CELL); la <= Math.floor(b.getNorth() / GEO_CELL); la++)
+        for (let ln = Math.floor(b.getWest() / GEO_CELL); ln <= Math.floor(b.getEast() / GEO_CELL); ln++)
+          keys.push(la + "_" + ln);
+      if (keys.length > 24) { say("zoom in to load parcels · " + nf + " STR flags shown"); return; }
+      say("loading parcels…");
+      (async () => {
+        for (const k of keys) {
+          if (my !== seq) return;
+          if (live[k]) continue;
+          let d = cache[k];
+          if (!d) {
+            try {
+              const r = await fetch("geo-cells/cell_" + k + ".json");
+              d = r.ok ? await r.json() : { p: [], v: [] };
+              cache[k] = d;
+            } catch (e) { if (my === seq) say("parcel layer unreachable — showing STR flags"); return; }
+          }
+          if (my !== seq || live[k]) continue;
+          const gp = L.layerGroup(), gv = L.layerGroup();
+          let cp = 0, cv = 0;
+          d.p.forEach((p) => { cp++; gp.addLayer(L.circleMarker([p[1], p[0]], { radius: p[2] >= 3 ? 5 : 3.5, color: "#e5a83b", weight: 1, opacity: 0.85, fillOpacity: p[2] >= 3 ? 0.75 : 0.5 }).bindPopup("<b>" + esc(p[3]) + "</b><br>" + p[2] + " eviction filings<br><span style='color:#888'>" + esc(p[4] || "owner unknown") + "</span>")); });
+          d.v.forEach((v) => { cv++; gv.addLayer(L.circleMarker([v[1], v[0]], { radius: 3, color: v[2] === "OPEN" ? "#e8863e" : "#8f99ab", weight: 1, opacity: 0.85, fillOpacity: 0.65 }).bindPopup("<b>" + esc(v[4]) + "</b><br>" + esc(v[3]) + "<br>" + esc(v[2]))); });
+          np += cp; nv += cv; counts[k] = [cp, cv];
+          gp.addTo(parcels); gv.addTo(viols);
+          live[k] = { p: gp, v: gv };
+        }
+        if (my === seq) tally();
+      })();
+    }
+    fetch("geo-cells/str-flags.json").then((r) => r.json()).then((flags) => {
+      nf = flags.filter((f) => f.lat != null).length;
+      const flagByIdx = [];
+      flags.forEach((f, i) => {
+        if (f.lat == null) return;
+        flagByIdx[i] = L.marker([f.lat, f.lng], { icon: flagIcon(L, flagColor(f)) })
+          .bindPopup("<b>" + esc(f.addr) + "</b><br>" + esc(f.platform) + " · " + f.beds + " br · $" + f.rate + "<br>match " + f.match + " · license " + f.lic + "<br>" + esc(f.flag))
+          .addTo(flagLayer);
+      });
+      tally();
+      if (opts.tableBody) buildFlagRows(L, map, flagByIdx, flags, opts.tableBody);
+    }).catch(() => say("flag layer failed to load"));
+    map.on("moveend zoomend", update);
+    setTimeout(() => { try { map.invalidateSize(); } catch (e) {} update(); }, 60);
+    const handle = { map, swap() { try { tiles.setUrl(tileUrl()); } catch (e) {} } };
+    (window.__maps = window.__maps || []).push(handle);
+    return handle;
+  }).catch(() => say("map failed to load (leaflet unreachable)"));
+}
+
+function buildFlagRows(L, map, flagByIdx, flags, bodyId) {
+  const tb = document.getElementById(bodyId);
+  if (!tb) return;
+  tb.innerHTML = flags.map((f, i) => '<tr data-i="' + i + '"><td>' + esc(f.addr) + "</td><td>" + matchChip(f.match) + "</td><td>" + regChip(licReg(f.lic)) + "</td></tr>").join("");
+  const rows = tb.querySelectorAll("tr");
+  rows.forEach((r) => {
+    r.style.cursor = "pointer";
+    r.onclick = () => {
+      const i = parseInt(r.dataset.i, 10), f = flags[i];
+      rows.forEach((x) => x.classList.remove("hl"));
+      if (f.lat == null) { toast("Unlocated listing — no parcel to show."); return; }
+      r.classList.add("hl");
+      map.flyTo([f.lat, f.lng], Math.max(map.getZoom(), 14), { duration: 0.6 });
+      const m = flagByIdx[i];
+      if (m) setTimeout(() => m.openPopup(), 650);
+    };
+  });
+  Object.keys(flagByIdx).forEach((k) => {
+    flagByIdx[k].on("click", () => {
+      rows.forEach((x) => x.classList.remove("hl"));
+      const tr = tb.querySelector('tr[data-i="' + k + '"]');
+      if (tr) { tr.classList.add("hl"); tr.scrollIntoView({ block: "nearest" }); }
+    });
+  });
+}
+
+/* ── pages ── */
+function pHome() { return persona === "staff" ? pHomeStaff() : pHomeHost(); }
+
+function pHomeHost() {
+  return crumb([["", "Home"]]) +
+    "<h1>Welcome back, Demo Holdings LLC</h1>" +
+    '<p class="lede">2 properties · 1 license active · 1 expired — with the reason behind every line.</p>' +
+    '<div class="card"><h3>What you owe</h3>' + grid(["", "", ""],
+      [["Renewal STR-3117 · 301 Demo Rd<br><span style='font-size:11.5px;color:var(--dim)'>because: fee schedule v3 — $250 + $50 × 3 guestrooms · cites " + link("code/ob-fee", "Metro Code 6.28.040") + "</span>", "<b>$400.00</b>", '<a class="btn primary" href="#/register/fee">Renew</a>'],
+       ["September occupancy tax<br><span style='font-size:11.5px;color:var(--dim)'>because: 6% × $2,646 observed bookings · cites " + link("code/ob-tax", "Metro Code 6.28.120") + "</span>", "<b>$158.76</b>", '<a class="btn" href="#/register/tax">Report &amp; pay</a>']]) + "</div>" +
+    '<div class="card"><h3>What&apos;s missing — these block your own checks</h3>' + grid(["", "", ""],
+      [["Contact address<br><span style='font-size:11.5px;color:var(--dim)'>The 10-mile rule can't run until you name a contact. Missing info means “can't decide yet” — never a fail.</span>", chip("NONE", "bad"), '<a class="btn primary" href="#/register/contact">Name a contact</a>'],
+       ["Zoning for 301 Demo Rd<br><span style='font-size:11.5px;color:var(--dim)'>The R-zone check is waiting on parcel data — not your fault. We'll re-check automatically; nothing you need to do.</span>", chip("UNKNOWN", "warn"), ""]]) + "</div>" +
+    '<div class="card"><h3>Your properties</h3>' + grid(["Property", "License", "Listing", ""],
+       [["412 Oak St", licChip("active"), matchChip("CLEAR"), '<a class="btn" href="#/workbench/landlord">Open</a>'],
+        ["301 Demo Rd", licChip("expired"), matchChip("CLEAR"), '<a class="btn" href="#/workbench/landlord">Open</a>']]) +
+    '<a class="btn" href="#/oversee/map-table">View on map</a></div>' +
+    '<div class="card"><h3>Notices (1 unread)</h3>' + grid(["Date", "Subject", ""],
+      [["09/18", "Unsafe structure — 301 Demo Rd", '<a class="btn" href="#/workbench/landlord/notices">Respond</a>']]) + "</div>";
+}
+
+function pHomeStaff() {
+  return crumb([["", "Home"]]) +
+    "<h1>STR compliance — today</h1>" +
+    '<p class="lede">The queue-first view: what broke, where, and what unblocks it. Last vendor pull 02:00 · ok.</p>' +
+    '<div class="stat"><div><b style="color:var(--gold)">38</b><small>unregistered</small></div><div><b style="color:var(--dummy)">6</b><small>unlocated</small></div><div><b>11</b><small>illegal-type flags</small></div><div><b>3</b><small>stops today</small></div><div><b>1</b><small>awaiting verification</small></div></div>' +
+    '<div class="card"><h3>Needs you</h3>' + grid(["Item · evidence", "Confidence", ""],
+      [["301 Demo Rd — license lapsed<br><span style='font-size:11.5px;color:var(--dim)'>listing live (vrbo, $248) · STR-3117 expired 09/30 · because: " + link("code/ob-fee", "fee schedule v3") + " + " + link("code/ob-occupancy", "owner-occupancy") + "</span>", "registrant MATCHED<br><span style='font-size:11.5px;color:var(--dim)'>assessor = Demo Holdings LLC</span>", '<a class="btn primary" href="#/oversee/detection">Open case</a>'],
+       ["77 Sample Ave — MARGINAL address<br><span style='font-size:11.5px;color:var(--dim)'>declared 3br vs observed 4br · held OUT of notices until verified</span>", "registrant UNCONFIRMED<br><span style='font-size:11.5px;color:var(--dim)'>field empty — check first, no notice before match</span>", '<a class="btn" href="#/workbench/staff/verify">Verify → releases</a>'],
+       ["9 Demo Pl — R-zone flag<br><span style='font-size:11.5px;color:var(--dim)'>non-owner-occupied where prohibited · zoning joined · because: " + link("code/ob-zoning", "R-zone restriction") + "</span>", "registrant MATCHED", '<a class="btn" href="#/oversee/map-table">Locate</a>']]) + "</div>" +
+    '<div class="card"><h3>Today&apos;s stops (3)</h3>' + grid(["Stop", "Window", ""],
+      [["301 Demo Rd", "occupied until 11am", ""],
+       ["88 Example Ave", "check-in likely after 3pm", ""],
+       ["14 Sample St", "block starts Sat", ""]]) +
+    "<p>Booking dates are permit-expiry only — likelihood is a guess until the nights feed lands. " + '<a class="btn" href="#/oversee/inspect">Inspection queue</a></p></div>' +
+    '<div class="card"><h3>Data health</h3>' + grid(["Source", "Status", "Note"],
+      [["STR Listings feed", chip("HEALTHY", "ok"), "daily pull"],
+       ["Azora match quality", chip("UNMEASURED", "warn"), "Dan's 95–99% is an estimate — MARGINAL rows stay held back"],
+       ["Zoning join", chip("PENDING", "warn"), "zoning subtypes read “unknown,” never assumed residential"]]) + "</div>" +
+    '<div class="row">' +
+      '<a class="card click" href="#/oversee/detection"><h3>Oversee</h3><div class="route">/oversee</div><p>Detection dashboard, map+table, inspection queue.</p></a>' +
+      '<a class="card click" href="#/data/bridge"><h3>Evidence</h3><div class="route">/data</div><p>Bridge, tables, timeline, geo — what every flag rests on.</p></a>' +
+        '<a class="card click" href="#/code"><h3>Municipal code</h3><div class="route">/code</div><p>Fee schedule v3 in force; contact rule v2 replaced the 25-mile rule.</p></a>' +
+        "</div>" +
+    '<div class="card"><h3>Live parcel map</h3><div class="mapbig" id="home-map" style="min-height:300px;"></div><p class="src-link" id="home-map-status">loading map…</p></div>';
+}
+
+function pRegisterHub() {
+  const steps = [["register/statement", "1 · Registration statement", "Who / where / what type."],
+    ["register/fee", "2 · Fee estimator", "Fee from guestrooms."],
+    ["register/tax", "3 · Occupancy tax", "Rate × occupancy."],
+    ["register/listing", "4 · Listing completeness", "Declared vs observed."],
+    ["register/contact", "5 · Emergency contact", "Distance rule on the map."],
+    ["register/match", "6 · Registrant match", "Applicant vs assessor owner."]];
+  return crumb([["", "Home"], ["register", "Register"]]) +
+    "<h1>Register — file an STR application</h1>" +
+    '<p class="lede">Six steps, one application. Your answers carry through to review and oversight.</p>' +
+    '<div class="row">' + steps.map((s) => '<a class="card click" href="#/' + s[0] + '"><h3>' + s[1] + "</h3><p>" + s[2] + "</p></a>").join("") + "</div>" +
+    pager(["", "Home"], ["register/statement", "Start: statement"]);
+}
+
+function pStatement() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/statement", "1 · Statement"]]) +
+    "<h1>1 · Registration statement</h1>" + regSteps("register/statement") +
+    '<div class="cols"><div class="card"><h3>Application</h3>' +
+    '<label class="f">Property address</label><input class="f" value="412 Oak St">' +
+    '<label class="f">Owner / applicant</label><input class="f" value="Demo Holdings LLC">' +
+    '<label class="f">STR type</label><select class="f"><option>Non-owner-occupied</option><option>Owner-occupied</option></select>' +
+    '<label class="f">Guestrooms</label><input class="f" value="3">' +
+    '<div style="margin-top:12px;">' + actBtn("Submit application", 1, "Application submitted.", "register/fee") + "</div></div>" +
+    '<div><div class="card"><h3>Why is this line here?</h3><p>Address → parcel entity. Owner → registrant-match (Job 6). Type → zoning flags (Job 8). Guestrooms → fee (Job 2) + bedroom cross-check (Job 4).</p></div>' +
+    '<div class="card"><h3>Sources</h3><p>Assessor ownership · zoning per parcel · Slate-style license record.</p></div></div></div>' +
+    pager(["register", "Register hub"], ["register/fee", "Next: fee"]);
+}
+
+function pFee() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/fee", "2 · Fee"]]) +
+    "<h1>2 · Registration fee calculation</h1>" + regSteps("register/fee") +
+    '<div class="cols"><div class="card"><h3>Estimate</h3>' +
+    '<label class="f">Guestrooms (from license)</label><input class="f" value="3">' +
+    '<label class="f">Max guests</label><input class="f" value="6">' +
+    grid(["Line", "Amount"], [["Base registration", "$250"], ["Per guestroom × 3", "$150"], ["<b>Total due</b>", "<b>$400</b>"]]) +
+    actBtn("Accept & continue", 1, "Fee accepted.", "register/tax") + "</div>" +
+    '<div><div class="card"><h3>Why is this line here?</h3><p>Fee derives from license fields — change guestrooms on the license and the fee recomputes. Nothing re-typed, nothing drifted.</p><p>Schedule: ' + link("code/ob-fee", "OB-FEE-001 · fee schedule v3") + ".</p></div></div></div>" +
+    pager(["register/statement", "Back: statement"], ["register/tax", "Next: tax"]);
+}
+
+function pTax() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/tax", "3 · Tax"]]) +
+    "<h1>3 · Occupancy tax</h1>" + regSteps("register/tax") +
+    '<div class="cols"><div class="card"><h3>Monthly estimate</h3>' +
+    '<label class="f">Nightly rate (from listing)</label><input class="f" value="$189">' +
+    '<label class="f">Nights booked / month</label><input class="f" value="14">' +
+    grid(["Line", "Amount"], [["Gross bookings", "$2,646"], ["Occupancy tax (6%)", "$158.76"]]) +
+    actBtn("Accept & continue", 1, "Tax schedule accepted.", "register/listing") + "</div>" +
+    '<div><div class="card"><h3>Why is this line here?</h3><p>Rate comes from the listing detection, not self-reported revenue — the city taxes what the market shows.</p><p>Rule: ' + link("code/ob-tax", "OB-TAX-001 · 6% occupancy tax") + ".</p></div></div></div>" +
+    pager(["register/fee", "Back: fee"], ["register/listing", "Next: listing"]);
+}
+
+function pListing() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/listing", "4 · Listing"]]) +
+    "<h1>4 · Listing completeness</h1>" + regSteps("register/listing") +
+    '<div class="card">' + grid(["Check", "Declared", "Observed", "Result"],
+      [["Bedrooms", "3", "3", chip("MATCH", "ok")], ["Sleeps", "6", "8", chip("GAP", "warn")], ["Address shown", "Yes", "Partial", matchChip("MARGINAL")]]) +
+    "<p>Declared (application) vs observed (listing feed). Gaps block submission until resolved or attested.</p>" +
+    actBtn("Attest & continue", 1, "Listing attested.", "register/contact") + "</div>" +
+    pager(["register/tax", "Back: tax"], ["register/contact", "Next: contact"]);
+}
+
+function pContact() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/contact", "5 · Contact"]]) +
+    "<h1>5 · Emergency contact distance</h1>" + regSteps("register/contact") +
+    '<div class="cols"><div class="card"><h3>Rule check</h3>' +
+    '<label class="f">Local contact address</label><input class="f" value="418 Oak St (0.2 mi)">' +
+    grid(["Rule", "Result"], [["Contact within 10 mi", chip("PASS", "ok")], ["Phone verified", chip("PASS", "ok")]]) +
+    "<p>Rule: " + link("code/ob-contact", "OB-CONTACT-002 · contact max distance") + " (v2 — supersedes the old 25-mile rule).</p>" +
+    actBtn("Accept & continue", 1, "Contact verified.", "register/match") + "</div>" +
+    '<div><div class="card"><h3>On the map</h3><div class="mapbig" style="min-height:180px;">' + pins([[30, 40, "412 Oak St · property", "g"], [62, 55, "418 Oak St · contact (0.2 mi)", "b"]]) + "</div></div></div></div>" +
+    pager(["register/listing", "Back: listing"], ["register/match", "Next: match"]);
+}
+
+function pMatch() {
+  return crumb([["", "Home"], ["register", "Register"], ["register/match", "6 · Match"]]) +
+    "<h1>6 · Registrant match</h1>" + regSteps("register/match") +
+    '<div class="card">' + grid(["Side", "Name", "Result"],
+      [["Applicant", "Demo Holdings LLC", matchChip("CLEAR")], ["Assessor record", "DEMO HOLDINGS LLC", matchChip("CLEAR")]]) +
+    "<p>Name match is CLEAR — application complete. License moves to <b>pending</b>; the listing is now watched by Oversee.</p>" +
+    '<a class="btn primary" href="#/oversee/detection">Finish → see it flagged in Oversee</a></div>' +
+    pager(["register/contact", "Back: contact"], null);
+}
+
+function pDetection() {
+  return crumb([["", "Home"], ["oversee/detection", "Detection"]]) +
+    "<h1>Enforcement Console — Detection Dashboard</h1>" +
+    '<p class="lede">Unregistered and illegal STRs across all platforms, matched to addresses and licenses. Refreshed on the last vendor pull.</p>' +
+    '<div class="stat"><div><b>142</b><small>listings detected</small></div><div><b>136</b><small>resolved to address</small></div><div><b style="color:var(--gold)">38</b><small>unregistered</small></div><div><b style="color:var(--dummy)">6</b><small>unlocated</small></div><div><b>11</b><small>illegal-type flags</small></div></div>' +
+    '<div class="card">' + grid(["Resolved address", "Match", "Registered", "Flags"],
+      DETECTION.map((d) => [d.addr, matchChip(d.match), regChip(d.reg), d.flag])) +
+    '<p>MARGINAL addresses stay visible but are held out of notices until they clear. UNLOCATED rows carry no parcel link.</p></div>' +
+    '<a class="btn primary" href="#/oversee/map-table">Open in map + table</a>' +
+    '<a class="btn" href="#/workbench/staff">Compliance queue</a>' +
+    pager(["register/match", "Back: register"], ["oversee/inspect", "Next: inspections"]);
+}
+
+function pMapTable() {
+  return crumb([["", "Home"], ["oversee/detection", "Detection"], ["oversee/map-table", "Map + table"]]) +
+    "<h1>Map + table — synced selection</h1>" +
+    '<p class="lede">Live flags from the parcel layer — rows and pins stay in sync. Unlocated rows have no pin.</p>' +
+    '<div class="cols"><div class="card"><h3>Map · real parcels + dummy STR flags</h3><div class="mapbig" id="mt-map" style="min-height:420px;"></div><p class="src-link" id="mt-map-status">loading map…</p></div>' +
+    '<div class="card"><h3>Flagged addresses</h3><table class="grid"><thead><tr><th>Address</th><th>Match</th><th>Reg</th></tr></thead><tbody id="mt-rows"><tr><td colspan="3">loading flags…</td></tr></tbody></table>' +
+    '<p class="src-link">How is this map fed? <a href="btora/paths-overview.html">3 folds × 3 paths</a> (Btora → Swarm / Slate / Blocks).</p></div></div>' +
+    pager(["oversee/detection", "Back: detection"], ["oversee/inspect", "Next: inspections"]);
+}
+
+function pInspect() {
+  return crumb([["", "Home"], ["oversee/inspect", "Inspections"]]) +
+    "<h1>Field Console — Inspection Queue</h1>" +
+    '<p class="lede">Job 9: upcoming dates with bookings so inspectors can gather evidence.</p>' +
+    '<div class="card"><h3>Today · 3 stops</h3>' + grid(["#", "Stop", "Match"],
+      QUEUE.map((q) => [q.n, q.stop, matchChip(q.m)])) +
+    '<button class="btn" id="log-obs">+ Log observation (photo · plates · guests)</button>' + "</div>" +
+    '<div class="card"><h3>Next 7 days — likely use</h3><p>88 Example Ave, 14 Sample St, 301 Demo Rd, 52 Mock Ln — each cell refreshes on the next vendor pull.</p></div>' +
+    pager(["oversee/detection", "Back: detection"], ["data/bridge", "Next: evidence"]);
+}
+
+function pBridge() {
+  return crumb([["", "Home"], ["data/bridge", "Bridge"]]) +
+    "<h1>Bridge — entities · edges · frames</h1>" +
+    '<p class="lede">The evidence everything above rests on: entities, edges and the event log.</p>' +
+    '<div class="stat"><div><b>24</b><small>entities</small></div><div><b>19</b><small>edges</small></div><div><b>0</b><small>frames</small></div><div><b style="color:var(--live)">0</b><small>violations</small></div></div>' +
+    '<div class="card"><h3>Sample edges</h3>' + grid(["From", "Relation", "To"],
+      [["license STR-1042", "licenses", "412 Oak St"], ["listing (airbnb)", "detected_at · CLEAR", "412 Oak St"], ["Demo Holdings LLC", "owns", "412 Oak St"], ["listing (vrbo)", "detected_at · MARGINAL", "77 Sample Ave"], ["notice N-44", "opened_against", "301 Demo Rd"]]) + "</div>" +
+    pager(["oversee/inspect", "Back: oversee"], ["data/tables", "Next: tables"]);
+}
+
+function pTablesIndex() {
+  const ts = [["parcel", "Where action attaches."], ["owner", "Who answers for it."], ["license", "STR license on file."], ["listing", "Platform detection."], ["standing", "311 cases, open / resolved."], ["inspection", "Materialized inspections + notices."], ["municipality", "The one holder."]];
+  return crumb([["", "Home"], ["data/tables", "Tables"]]) +
+    "<h1>Tables</h1>" + '<p class="lede">One table per entity. License and listing rows arrive with the monthly vendor pull.</p>' +
+    '<div class="row">' + ts.map((t) => '<a class="card click" href="#/data/tables/' + t[0] + '"><h3>' + t[0] + "</h3><p>" + t[1] + "</p></a>").join("") + "</div>" +
+    pager(["data/bridge", "Back: bridge"], ["data/timeline", "Next: timeline"]);
+}
+
+function pTable(type) {
+  const titles = { parcel: "parcel — properties", owner: "owner — landlords", license: "license — STR licenses", listing: "listing — platform detections", standing: "standing — 311 cases", inspection: "inspection + notice — workflow artifacts", municipality: "municipality — the holder" };
+  let body = "";
+  if (type === "parcel") body = grid(["Address", "Evictions", "First filed", "Last filed"], PARCELS.map((p) => [p.addr, p.ev, p.first, p.last]));
+  else if (type === "owner") body = grid(["Name", "Properties"], [["DEMO HOLDINGS LLC", 2], ["SAMPLE PROPERTIES INC", 1]]);
+  else if (type === "license") body = grid(["Number", "Status", "Guestrooms", "Max guests", "Parcel"], LICENSES.map((l) => [l.n, licChip(l.st), l.rooms, l.max, l.parcel]));
+  else if (type === "listing") body = grid(["Platform", "Beds obs.", "Rate", "Match", "Address"], LISTINGS.map((l) => [l.pf, l.beds, "$" + l.rate, matchChip(l.match), l.addr]));
+  else if (type === "standing") body = grid(["Address", "Request", "Status"], [["412 Oak St", "tall grass / debris", chip("OPEN", "warn")], ["301 Demo Rd", "unsafe structure", chip("OPEN", "warn")], ["418 Oak St", "trash cart", chip("RESOLVED", "mut")]]);
+  else if (type === "inspection") body = grid(["Kind", "Target", "Date"], [["inspection", "301 Demo Rd", "09/24/2026"], ["notice · portal", "Demo Holdings LLC", "09/18/2026"]]);
+  else body = grid(["Name", "Source"], [["Metro Nashville-Davidson County", "Eviction-Overwatch / landlordmapper.org"]]);
+  return crumb([["", "Home"], ["data/tables", "Tables"], ["data/tables/" + type, type]]) +
+    "<h1>" + (titles[type] || type) + "</h1>" +
+    '<div class="card">' + body + "</div>" +
+    pager(["data/tables", "All tables"], ["data/timeline", "Next: timeline"]);
+}
+
+function pTimeline() {
+  return crumb([["", "Home"], ["data/timeline", "Timeline"]]) +
+    "<h1>Timeline — event log</h1>" + '<p class="lede">Every ins / con / seg / def in time order. Sample slice.</p>' +
+    '<div class="card">' + grid(["ts", "op", "event"], TIMELINE.map((t) => ["<span style='font-family:monospace'>" + t[0] + "</span>", "<b>" + t[1] + "</b>", t[2]])) + "</div>" +
+    pager(["data/tables", "Back: tables"], ["data/geo", "Next: geo"]);
+}
+
+function pGeo() {
+  return crumb([["", "Home"], ["data/geo", "Geo"]]) +
+    "<h1>Public data · read-only parcel layer</h1>" +
+    '<p class="lede">22,988 Nashville properties and 4,932 code violations. Parcels load per viewport as you pan — nothing loads until you look. Amber dots are properties (larger = 3+ eviction filings); orange dots are open violations; glowing pins are dummy STR flags on real parcels.</p>' +
+    '<div class="card"><div class="mapbig" id="geo-map" style="min-height:480px;"></div><p class="src-link" id="geo-map-status">loading map…</p>' +
+    "<p>Toggle layers (top right of the map) · " + link("oversee/map-table", "open the synced map + table") + ".</p></div>" +
+    pager(["data/timeline", "Back: timeline"], ["data/workflows", "Next: workflows"]);
+}
+
+function pWorkflows() {
+  return crumb([["", "Home"], ["data/workflows", "Workflows"]]) +
+    "<h1>Workflows — runs that left something behind</h1>" +
+    '<div class="card"><h3>nightly-detection · 09/16 02:00</h3><p>Pulled 6 listings, matched 5 to parcels, held back 1 MARGINAL. Materialized 0 inspections, 1 notice.</p>' + '<button class="btn rerun">Re-run</button>' + "</div>" +
+    '<div class="card"><h3>notice-batch · 09/15 09:30</h3><p>Sent 1 portal notice to Demo Holdings LLC (301 Demo Rd). Materialized as notice entity.</p>' + '<button class="btn rerun">Re-run</button>' + "</div>" +
+    pager(["data/geo", "Back: geo"], ["data/trash", "Next: trash"]);
+}
+
+function pTrash() {
+  return crumb([["", "Home"], ["data/trash", "Trash"]]) +
+    "<h1>Trash — soft-deleted bin</h1>" +
+    '<div class="card">' + grid(["Item", "Deleted", ""], [["listing_x71a (duplicate pull)", "09/14", '<button class="btn restore">Restore</button>']]) + "</div>" +
+    pager(["data/workflows", "Back: workflows"], ["workbench/landlord", "Next: workbench"]);
+}
+
+function pLandlord() {
+  return crumb([["", "Home"], ["workbench/landlord", "Landlord"]]) +
+    "<h1>Landlord workbench — portfolio &amp; parcels</h1>" +
+    '<p class="lede">Persona: registrant. Sees only their own owner anchor: <b>Demo Holdings LLC</b>.</p>' +
+    '<div class="card">' + grid(["Parcel", "License", "Listing match"],
+      [["412 Oak St", licChip("active"), matchChip("CLEAR")], ["301 Demo Rd", licChip("expired"), matchChip("CLEAR")]]) +
+    '<a class="btn" href="#/register/fee">Renew STR-3117 (expired)</a>' +
+    '<a class="btn" href="#/workbench/landlord/notices">Notices &amp; outreach</a></div>' +
+    pager(["data/trash", "Back: evidence"], ["workbench/staff", "Switch: staff view"]);
+}
+
+function pLandlordNotices() {
+  return crumb([["", "Home"], ["workbench/landlord", "Landlord"], ["workbench/landlord/notices", "Notices"]]) +
+    "<h1>Notices &amp; outreach</h1>" +
+    '<div class="card">' + grid(["Date", "Kind", "Subject", "Channel"],
+      [["09/18", "code-compliance", "Unsafe structure — 301 Demo Rd", "portal"], ["09/02", "renewal reminder", "STR-3117 expires 09/30", "email"]]) + "</div>" +
+    pager(["workbench/landlord", "Back: portfolio"], ["workbench/staff", "Switch: staff view"]);
+}
+
+function pStaff() {
+  return crumb([["", "Home"], ["workbench/staff", "Compliance"]]) +
+    "<h1>Compliance workbench — unregistered STRs</h1>" +
+    '<p class="lede">Persona: government / compliance. Sees everything; acts on flags.</p>' +
+    '<div class="card">' + grid(["Address", "Match", "Registered", "Action"],
+      DETECTION.filter((d) => d.reg !== "ACTIVE").map((d) => [d.addr, matchChip(d.match), regChip(d.reg), '<button class="btn opencase">Open case</button>'])) +
+    '<a class="btn" href="#/workbench/staff/verify">Listing verification</a>' +
+    '<a class="btn" href="#/workbench/staff/evidence">Evidence windows</a>' +
+    '<a class="btn" href="#/workbench/staff/illegal">Illegal &amp; zoning</a></div>' +
+    pager(["workbench/landlord", "Back: landlord"], ["oversee/detection", "Detection dashboard"]);
+}
+
+function pStaffEvidence() {
+  return crumb([["", "Home"], ["workbench/staff", "Compliance"], ["workbench/staff/evidence", "Evidence"]]) +
+    "<h1>Evidence windows</h1>" +
+    '<div class="card">' + grid(["Parcel", "Window", "Use"],
+      [["301 Demo Rd", "09/20 → 09/27 · booked (vrbo)", "inspection timing"], ["412 Oak St", "09/22 → 09/25 · booked (airbnb)", "occupancy proof"]]) + "</div>" +
+    pager(["workbench/staff", "Back: unregistered"], ["workbench/staff/illegal", "Next: illegal"]);
+}
+
+function pStaffIllegal() {
+  return crumb([["", "Home"], ["workbench/staff", "Compliance"], ["workbench/staff/illegal", "Illegal"]]) +
+    "<h1>Illegal &amp; zoning</h1>" +
+    '<div class="card">' + grid(["Flag", "Where", "Basis"],
+      [["Non-owner-occupied in R-zone", "9 Demo Pl", "license type × zoning · " + link("code/ob-zoning", "OB-ZONING-001")],
+       ["Per-owner concentration", "412 + 418 Oak St · 1 owner", "3 listings, 1 owner · " + link("code/ob-owner-cap", "OB-OWNER-CAP-001")],
+       ["Proximity pair", "412 / 418 Oak St", "adjacent STRs · " + link("code/ob-occupancy", "OB-OCCUPANCY-001")]]) + "</div>" +
+    pager(["workbench/staff/evidence", "Back: evidence"], ["workbench/staff/verify", "Next: verify"]);
+}
+
+function pStaffVerify() {
+  return crumb([["", "Home"], ["workbench/staff", "Compliance"], ["workbench/staff/verify", "Verify"]]) +
+    "<h1>Listing verification</h1>" +
+    '<p class="lede">Confirm CLEAR vs MARGINAL — verifying releases held-back notices.</p>' +
+    '<div class="card">' + grid(["Listing", "Match", "Action"],
+      [["77 Sample Ave · vrbo", matchChip("MARGINAL"), '<button class="btn primary" id="verify-clear">Verify CLEAR</button> <button class="btn danger" id="confirm-unloc">Confirm UNLOCATED</button>']]) + "</div>" +
+    pager(["workbench/staff/illegal", "Back: illegal"], ["", "Home"]);
+}
+
+function p404(route) {
+  return "<h1>Not found</h1>" + '<p class="lede">No page at <b>#/' + route + "</b> in this build.</p>" + '<a class="btn primary" href="#/">Back home</a>';
+}
+
+/* ── municipal code: extracted obligations ──
+   Each obligation is bounded by place and time, versioned, and written as
+   checkable rules. Decisions point back to these, never to raw text. */
+const CODE_LIBRARY = "https://library.municode.com/tn/nashville_-_davidson_county/codes/code_of_ordinances";
+const OBS = {
+  "ob-contact": { title: "Emergency contact max distance", ver: "v2", status: "in force", juris: "Metro Nashville-Davidson County", from: "2026-06-01", to: "—", cites: "Metro Code §6.28.060(A)", supersedes: "v1 · 25 mi · 2024-01-01 → 2026-05-31", giver: "Metro Council", value: "10 driving miles",
+    plain: ["Your emergency contact must live within 10 driving miles of the county.", "We measure driving distance from the address you give us.", "If we don't have a contact address yet, we say so — we never fail you over missing information."],
+    usedBy: [["register/contact", "Contact check"], ["oversee/inspect", "Queue eligibility"]],
+    applied: "For 412 Oak St we couldn't decide yet: the contact address is on file, but the driving-distance check hasn't run — so the result is “unknown,” not a fail.",
+    quote: "The applicant shall designate a local contact person whose principal residence or place of business is located within ten (10) vehicular miles of the Davidson County boundary, which contact shall be available by telephone at all hours." },
+  "ob-fee": { title: "Registration fee schedule", ver: "v3", status: "in force", juris: "Metro Nashville-Davidson County", from: "2026-01-01", to: "2026-12-31", cites: "Metro Code §6.28.040", supersedes: "v2 · $200 base · 2025", giver: "Metro Council", value: "$250 + $50 per guestroom",
+    plain: ["Registration costs $250 plus $50 for each guestroom.", "We take the room count straight from the license — you never type it twice.", "Change the license and the fee updates itself."],
+    usedBy: [["register/fee", "Fee estimator"], ["workbench/landlord", "Renewal amounts"]],
+    applied: "STR-1042 lists 3 guestrooms, so the amount owed is $400.",
+    quote: "The annual registration fee shall be two hundred fifty dollars ($250.00), plus fifty dollars ($50.00) for each guestroom listed on the license." },
+  "ob-tax": { title: "Occupancy tax rate", ver: "v1", status: "in force", juris: "Metro Nashville-Davidson County", from: "2025-01-01", to: "—", cites: "Metro Code §6.28.120", supersedes: "none", giver: "Metro Council", value: "6% of gross bookings",
+    plain: ["You owe 6% of your gross bookings.", "We estimate the total from the nightly rate on your listing × nights booked — not from numbers you type in.", "You report; the city checks whether the figure looks plausible."],
+    usedBy: [["register/tax", "Tax estimate"]],
+    applied: "412 Oak St at $189 a night for 14 nights comes to $158.76.",
+    quote: "There is levied a privilege tax of six percent (6%) of the gross receipts derived from the rental of any short-term rental property within the metropolitan government." },
+  "ob-occupancy": { title: "Owner-occupancy definition", ver: "v1", status: "in force", juris: "Metro Nashville-Davidson County", from: "2024-01-01", to: "—", cites: "Metro Code §6.28.020 (definitions)", supersedes: "none", giver: "Metro Council", value: "owner-occupied means the host lives there",
+    plain: ["“Owner-occupied” means the host's primary home is the rental property.", "A rental that isn't owner-occupied, in a residential (R) zone, breaks the zoning rule.", "We check this against the registration and the assessor's owner record."],
+    usedBy: [["register/statement", "STR type"], ["workbench/staff/illegal", "Illegal subtypes"]],
+    applied: "9 Demo Pl is registered as non-owner-occupied and sits in an R zone — that's a violation of the zoning rule.",
+    quote: "“Owner-occupied” means the dwelling unit is the primary residence of the owner-operator, as evidenced by voter registration, motor vehicle registration, or state-issued identification showing that address." },
+  "ob-owner-cap": { title: "Per-owner concentration cap", ver: "v1", status: "in force", juris: "Metro Nashville-Davidson County", from: "2026-01-01", to: "—", cites: "Metro Code §6.28.090", supersedes: "none", giver: "Metro Council", value: "more than 2 listings per owner",
+    plain: ["One owner with more than 2 active listings gets flagged.", "We count listings from ownership records, not from what anyone tells us.", "Every flag links to the listings behind it."],
+    usedBy: [["oversee/detection", "Per-owner flags"], ["workbench/staff/illegal", "Illegal subtypes"]],
+    applied: "Demo Holdings LLC has 3 listings under one owner — flagged, with all three rows attached.",
+    quote: "No person shall operate more than two (2) non-owner-occupied short-term rental properties within the metropolitan government under separate licenses held in a single name." },
+  "ob-zoning": { title: "R-zone STR restriction", ver: "v1", status: "in force", juris: "Metro Nashville-Davidson County", from: "2024-01-01", to: "—", cites: "Zoning Ord. §17.04 (R districts)", supersedes: "none", giver: "Planning Commission", value: "only owner-occupied rentals allowed in R zones",
+    plain: ["In residential (R) districts, only owner-occupied rentals are allowed.", "If we don't know a parcel's zoning, we say “unknown” — we never assume.", "Zoning data is still being connected, so this rule can't fire on new rows yet."],
+    usedBy: [["workbench/staff/illegal", "Illegal subtypes"], ["register/fee", "Zoning fee variants"]],
+    applied: "412 Oak St: no zoning on record, so the result is “unknown” rather than a guess.",
+    quote: "Short-term rental, non-owner-occupied, is prohibited in all R (residential) districts. Owner-occupied short-term rental is a permitted accessory use subject to registration." },
+};
+
+function pCode() {
+  const rows = Object.entries(OBS).map(([id, o]) => ["<b>" + id.toUpperCase() + "</b><br>" + link("code/" + id, o.title), o.juris.replace("Metro ", ""), o.from + " → " + o.to, o.ver, chip(o.status.toUpperCase(), "ok"), o.usedBy.length + " surfaces"]);
+  return crumb([["", "Home"], ["code", "Municipal code"]]) +
+    "<h1>Municipal code — every rule, cited</h1>" +
+    '<p class="lede">Every rule below shows where it applies, how long it is valid, which law it comes from, and what changed since the last version. Every decision in the product points back to one of these — never to raw legal text.</p>' +
+    '<div class="card">' + grid(["Rule", "Applies in", "Valid", "Version", "Status", "Used in"], rows) + "</div>" +
+    pager(["", "Home"], null);
+}
+
+function pCodeDetail(id) {
+  const o = OBS[id];
+  if (!o) return p404("code/" + id);
+  return crumb([["", "Home"], ["code", "Municipal code"], ["code/" + id, id.toUpperCase()]]) +
+    "<h1>" + id.toUpperCase() + " — " + o.title + "</h1>" +
+    '<p class="lede">Set by the ' + o.giver + " · currently " + o.status + " · " + o.ver + (o.supersedes !== "none" ? ", replaces " + o.supersedes : "") + ".</p>" +
+    '<div class="card"><h3>The rule</h3>' + grid(["", ""],
+      [["Applies in", o.juris], ["Valid", o.from + " → " + o.to], ["Comes from", o.cites], ["Says", "<b>" + o.value + "</b>"], ["Replaces", o.supersedes]]) + "</div>" +
+    '<div class="card"><h3>From the law — verbatim</h3><div class="quote">“' + o.quote + '”</div><p class="src-link">' + o.cites + ' · excerpt · <a href="' + CODE_LIBRARY + '" target="_blank" rel="noopener">view source ↗</a></p></div>' +
+    '<div class="card"><h3>What it means</h3><ul style="margin:6px 0;padding-left:20px;font-size:12.5px;color:var(--dim);">' + o.plain.map((t) => "<li>" + t + "</li>").join("") + "</ul></div>" +
+    '<div class="card"><h3>How it was applied</h3><p>' + o.applied + "</p></div>" +
+    '<div class="card"><h3>Used by</h3><p>' + o.usedBy.map((u) => link(u[0], u[1])).join(" · ") + "</p></div>" +
+    pager(["code", "All obligations"], null);
+}
+
+/* ── router ── */
+const ROUTES = {
+  "": pHome,
+  "register": pRegisterHub,
+  "register/statement": pStatement,
+  "register/fee": pFee,
+  "register/tax": pTax,
+  "register/listing": pListing,
+  "register/contact": pContact,
+  "register/match": pMatch,
+  "oversee/detection": pDetection,
+  "oversee/map-table": pMapTable,
+  "oversee/inspect": pInspect,
+  "data/bridge": pBridge,
+  "data/tables": pTablesIndex,
+  "data/tables/parcel": () => pTable("parcel"),
+  "data/tables/owner": () => pTable("owner"),
+  "data/tables/license": () => pTable("license"),
+  "data/tables/listing": () => pTable("listing"),
+  "data/tables/standing": () => pTable("standing"),
+  "data/tables/inspection": () => pTable("inspection"),
+  "data/tables/municipality": () => pTable("municipality"),
+  "data/timeline": pTimeline,
+  "data/geo": pGeo,
+  "data/workflows": pWorkflows,
+  "data/trash": pTrash,
+  "workbench/landlord": pLandlord,
+  "workbench/landlord/notices": pLandlordNotices,
+  "workbench/staff": pStaff,
+  "workbench/staff/evidence": pStaffEvidence,
+  "workbench/staff/illegal": pStaffIllegal,
+  "workbench/staff/verify": pStaffVerify,
+  "code": pCode,
+  "code/ob-contact": () => pCodeDetail("ob-contact"),
+  "code/ob-fee": () => pCodeDetail("ob-fee"),
+  "code/ob-tax": () => pCodeDetail("ob-tax"),
+  "code/ob-occupancy": () => pCodeDetail("ob-occupancy"),
+  "code/ob-owner-cap": () => pCodeDetail("ob-owner-cap"),
+  "code/ob-zoning": () => pCodeDetail("ob-zoning"),
+};
+
+function buildNav() {
+  document.getElementById("topnav").innerHTML = TOPS[persona].map((t) => '<a href="#/' + t[0] + '"' + (t[0].startsWith("workbench") ? ' id="top-wb"' : "") + ' data-top="' + t[0] + '">' + t[1] + "</a>").join("") +
+    (persona === "staff" ? '<a href="btora/paths-overview.html" data-top="paths">Delivery × folds</a>' : "");
+}
+
+function render() {
+  (window.__maps || []).forEach((h) => { try { h.map.remove(); } catch (e) {} });
+  window.__maps = [];
+  buildNav();
+  syncThemeBtn();
+  const themeBtn = document.getElementById("theme-btn");
+  if (themeBtn) themeBtn.onclick = () => setTheme(theme === "light" ? "dark" : "light");
+  const route = location.hash.replace(/^#\/?/, "");
+  const fn = !allowed(route) ? () => pGate(route) : (ROUTES[route] || (() => p404(route)));
+  document.getElementById("app").innerHTML = fn() + '<footer>Metro Nashville-Davidson County · STR compliance</footer>';
+  const topFor = route === "" ? "" : TOPS[persona].map((t) => t[0]).filter((t) => t && (route === t || route.startsWith(t.split("/")[0] + "/"))).sort((a, b) => b.length - a.length)[0] || "";
+  document.querySelectorAll("#topnav a").forEach((a) => a.classList.toggle("active", a.dataset.top === (route === "" ? "" : topFor)));
+  document.querySelectorAll("#pseg button").forEach((b) => { b.classList.toggle("on", b.dataset.p === persona); b.onclick = () => setPersona(b.dataset.p); });
+  const wb = document.getElementById("top-wb");
+  if (wb) { wb.href = "#/" + workbenchHome(); wb.classList.toggle("active", route.startsWith("workbench/")); }
+  bindActions();
+  if (document.getElementById("home-map")) { try { initParcelMap("home-map"); } catch (e) { console.warn("[demo] home map failed:", e); } }
+  if (document.getElementById("geo-map")) { try { initParcelMap("geo-map"); } catch (e) { console.warn("[demo] geo map failed:", e); } }
+  if (document.getElementById("mt-map")) { try { initParcelMap("mt-map", { tableBody: "mt-rows" }); } catch (e) { console.warn("[demo] map-table failed:", e); } }
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener("hashchange", render);
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "provider": "btora",
+  "pulls": [
+    {
+      "pull_id": "btora-2026-09-01",
+      "observed_at": "2026-09-01"
+    },
+    {
+      "pull_id": "btora-2026-09-15",
+      "observed_at": "2026-09-15"
+    },
+    {
+      "pull_id": "btora-2026-10-01",
+      "observed_at": "2026-10-01"
+    }
+  ],
+  "per_city": 2400,
+  "generated_at": "2026-09-17",
+  "files": [
+    "listings_middletown.jsonl",
+    "listings_chicago.jsonl",
+    "listings_staugustine.jsonl",
+    "listings_talent.jsonl",
+    "listings_ftworth.jsonl"
+  ]
+}

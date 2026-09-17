@@ -1,0 +1,20 @@
+# Swarm ingest — Btora STR bookings (generated, btora-eo-v1)
+# 1. Raw vendor tables
+mutation { createDataset(cityId: "<CITY>", title: "btora_listings", pullerAdapter: "BTORA", pullerArgs: {pullMode: "snapshot"}) { id } }
+mutation { createDataset(cityId: "<CITY>", title: "btora_calendar", pullerAdapter: "BTORA", pullerArgs: {pullMode: "snapshot"}) { id } }
+# 2. Connector (one per city): Btora pull -> base tables
+mutation { createConnector(cityId: "<CITY>", name: "btora-pull", adapter: "BTORA", adapterArgs: {datasets: ["btora_listings","btora_calendar"]}, source: {datasetIds: ["<LISTINGS_ID>","<CALENDAR_ID>"]}) { id connectorUrl provenanceUrl } }
+# 3. Transformers (chained, EO rule btora-eo-v1)
+mutation { createTransformer(cityId: "<CITY>", name: "btora-geocode", runner: {geocoder: {columns: ["property.address"], source: "btora_listings"}}, source: {datasetId: "<LISTINGS_ID>"}) { id tableName } }
+mutation { createTransformer(cityId: "<CITY>", name: "btora-asset-map", runner: {assetMapper: {strategies: ["exact","fuzzy-hold","refuse-unlocated"], preFilter: "property.address IS NOT NULL"}}, source: {transformerId: "<GEOCODE_ID>"}) { id tableName } }
+mutation { createTransformer(cityId: "<CITY>", name: "btora-booking-sql", runner: {sql: {createSql: "SELECT listing_id, window_from, window_to, observed_at FROM btora_calendar WHERE first_observed_pull = :pull"}}, source: {datasetId: "<CALENDAR_ID>"}) { id tableName } }
+mutation { createTransformer(cityId: "<CITY>", name: "str-booking-attributes", runner: {attributeRules: {entity: "ASSET", tracksHistory: true, ruleSql: "license join + flag rules v1"}}, source: {transformerId: "<ASSETMAP_ID>"}) { id } }
+# 4. Event table + filters (the filterable map)
+mutation { createPlatformEventTable(input: {name: "str_booking"}) { id } }
+mutation { createPlatformEventFilter(input: {eventTableId: "<STR_BOOKING_ID>", name: "platform", mappingColumn: "platform", filterGroupId: "<GROUP>"}) { id } }
+mutation { createPlatformEventFilter(input: {eventTableId: "<STR_BOOKING_ID>", name: "stay_window", mappingColumn: "date_from,date_to", filterGroupId: "<GROUP>"}) { id } }
+# 5. Run + contract
+mutation { runTransformer(id: "<GEOCODE_ID>", isScheduled: true) { id } }
+mutation { assignTransformerDataContract(dataContractId: "<CONTRACT>", transformerId: "<BOOKINGSQL_ID>") { id } }
+# Slate reads: license table projection (slate/slate_registrations.jsonl) via GetLicenses{number,status,asset{parcelId}}.
+# Building Blocks reads: Asset{parcelId,address,latitude,longitude,licenses{number,status}} + str_booking event table + FilterGroup.

@@ -1,0 +1,20 @@
+{
+  "package": "str-booking-btora",
+  "datasets": [
+    "btora_listings",
+    "btora_calendar"
+  ],
+  "transformers": [
+    "btora-geocode",
+    "btora-asset-map",
+    "btora-booking-sql",
+    "str-booking-attributes"
+  ],
+  "eventTables": [
+    "str_booking"
+  ],
+  "filterGroup": "str_booking_filters",
+  "slate": "../slate/slate_registrations.jsonl",
+  "bb": "../bb/bb_assets.jsonl",
+  "rule": "btora-eo-v1"
+}

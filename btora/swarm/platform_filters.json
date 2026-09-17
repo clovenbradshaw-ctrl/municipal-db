@@ -1,0 +1,35 @@
+{
+  "filterGroup": "str_booking_filters",
+  "filters": [
+    {
+      "name": "platform",
+      "mappingColumn": "platform",
+      "type": "multi"
+    },
+    {
+      "name": "stay_window",
+      "mappingColumn": "date_from,date_to",
+      "type": "date-range"
+    },
+    {
+      "name": "match",
+      "mappingColumn": "match",
+      "type": "multi"
+    },
+    {
+      "name": "license",
+      "mappingColumn": "lic",
+      "type": "multi"
+    },
+    {
+      "name": "upcoming_only",
+      "mappingColumn": "date_to >= today",
+      "type": "binary"
+    },
+    {
+      "name": "unregistered_only",
+      "mappingColumn": "lic IN (NONE,EXPIRED)",
+      "type": "binary"
+    }
+  ]
+}
