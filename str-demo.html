@@ -24,22 +24,27 @@
   body { background: var(--bg); color: var(--ink); font: 13px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; margin: 0; }
   a { color: var(--link); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  header { display: flex; align-items: center; gap: 14px; padding: 12px 24px; border-bottom: 1px solid #10131a; background: #23262e; color: #e8eaf0; position: sticky; top: 0; z-index: 20; }
-  header .brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: .4px; }
+  header { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; padding: 12px 24px; border-bottom: 1px solid #10131a; background: #23262e; color: #e8eaf0; position: sticky; top: 0; z-index: 20; }
+  header .brand { font-weight: 800; font-size: 15px; color: #fff; letter-spacing: .4px; flex-shrink: 0; }
   header .brand small { display: block; font-weight: 400; font-size: 11px; color: #a8b1c3; letter-spacing: 0; }
-  header nav { display: flex; gap: 4px; flex-wrap: wrap; }
-  header nav a { color: #c3c9d4; font-size: 12.5px; padding: 6px 10px; border-radius: 6px; }
+  header nav { display: flex; gap: 4px; flex-wrap: wrap; min-width: 0; }
+  header nav a { color: #c3c9d4; font-size: 12.5px; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
   header nav a:hover { background: #2e333d; color: #fff; text-decoration: none; }
   header nav a.active { background: var(--brand); color: #fff; font-weight: 700; }
-  .pseg { display: flex; border: 1px solid #4a505c; border-radius: 24px; overflow: hidden; margin-left: auto; }
-  .pseg button { background: transparent; border: none; color: #c3c9d4; font-size: 12px; padding: 5px 14px; cursor: pointer; font-family: inherit; }
+  .pseg { display: flex; border: 1px solid #4a505c; border-radius: 24px; overflow: hidden; margin-left: auto; flex-shrink: 0; }
+  .pseg button { background: transparent; border: none; color: #c3c9d4; font-size: 12px; padding: 5px 14px; cursor: pointer; font-family: inherit; white-space: nowrap; }
   .pseg button.on { background: var(--brand); color: #fff; font-weight: 700; }
-  .iconbtn { background: transparent; border: 1px solid #4a505c; color: #c3c9d4; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px; line-height: 1; }
+  .iconbtn { background: transparent; border: 1px solid #4a505c; color: #c3c9d4; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 14px; line-height: 1; flex-shrink: 0; }
   .iconbtn:hover { border-color: var(--link); color: #fff; }
   .iconbtn.on { border-color: var(--brand); background: var(--brand); color: #fff; }
   .xsrc { display: none; }
   body.xray .xsrc { display: inline-block; font-size: 10px; font-weight: 400; color: var(--teal); border: 1px dashed var(--teal); border-radius: 4px; padding: 0 5px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
-  .modepill { font-size: 11.5px; border: 1px solid #8fabff; color: #8fabff; border-radius: 24px; padding: 3px 12px; white-space: nowrap; }
+  .modepill { font-size: 11.5px; border: 1px solid #8fabff; color: #8fabff; border-radius: 24px; padding: 3px 12px; white-space: nowrap; flex-shrink: 0; }
+  @media (max-width: 760px) {
+    header { padding: 10px 14px; }
+    .modepill { display: none; }
+    header nav { order: 3; flex-basis: 100%; }
+  }
   main { padding: 24px 32px 60px; max-width: 1100px; margin: 0 auto; }
   .crumb { font-size: 11.5px; color: var(--faint); margin-bottom: 6px; }
   h1 { font-size: 22px; margin: 0 0 4px; }
@@ -62,6 +67,41 @@
   .chip.warn { background: rgba(232,185,62,.15); color: var(--gold); }
   .chip.bad { background: rgba(220,70,70,.14); color: var(--bad); }
   .chip.mut { background: var(--panel2); color: var(--dim); }
+  /* ── compliance calendar (Job 9: upcoming booking dates for inspection) ── */
+  .heat { width: 100%; border-collapse: collapse; font-size: 11.5px; margin: 8px 0; }
+  .heat th { text-align: left; font-size: 10.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--faint); padding: 5px 6px; }
+  .heat td { padding: 4px; text-align: center; }
+  .heat td.addr { text-align: left; padding: 5px 8px 5px 0; white-space: nowrap; font-size: 12px; }
+  .heat .hc { height: 22px; border-radius: 4px; }
+  .heat .hc.s2 { background: #8a7ee0; } /* booked, strong signal */
+  .heat .hc.s1 { background: var(--gold); opacity: .75; } /* booked, inferred */
+  .heat .hc.s0 { background: var(--mock); border: 1px solid var(--line); } /* no signal */
+  .heat-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11px; color: var(--dim); margin: 8px 0 14px; }
+  .heat-legend i { width: 10px; height: 10px; display: inline-block; border-radius: 2px; margin-right: 4px; vertical-align: -1px; }
+  .cal-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .cal-toolbar .cal-month-label { font-weight: 700; font-size: 13px; min-width: 140px; text-align: center; }
+  .cal-fchip { padding: 3px 9px; font-size: 10.5px; border: 1px solid var(--line); background: var(--panel2); color: var(--dim); border-radius: 4px; cursor: pointer; }
+  .cal-fchip.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .cal-body { display: grid; grid-template-columns: 1fr 260px; gap: 12px; align-items: start; }
+  @media (max-width: 760px) { .cal-body { grid-template-columns: 1fr; } }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .cal-dow { font-size: 9.5px; text-transform: uppercase; letter-spacing: .5px; color: var(--faint); text-align: center; padding-bottom: 2px; }
+  .cal-cell { border: 1px solid var(--line); min-height: 56px; padding: 3px; font-size: 9.5px; cursor: pointer; border-radius: 4px; }
+  .cal-cell.empty { border-color: transparent; cursor: default; }
+  .cal-cell.today { border-color: var(--mode); border-width: 2px; }
+  .cal-cell.selected { background: var(--panel2); }
+  .cal-cell:hover:not(.empty) { background: var(--panel2); }
+  .cal-daynum { font-weight: 700; color: var(--dim); margin-bottom: 2px; }
+  .cal-cell.today .cal-daynum { color: var(--mode); }
+  .cal-chip { padding: 1px 3px; margin-bottom: 1px; border-radius: 2px; font-size: 8.5px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cal-chip.cal-scheduled { background: var(--mode); }
+  .cal-chip.cal-completed { background: var(--live); }
+  .cal-chip.cal-overdue { background: var(--bad); }
+  .cal-agenda { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--panel); }
+  .cal-agenda h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--dim); margin: 0 0 8px; }
+  .cal-record { border: 1px solid var(--line); border-radius: 6px; background: var(--panel2); padding: 7px 9px; margin-bottom: 8px; font-size: 11.5px; }
+  .cal-record-kind { font-weight: 700; text-transform: capitalize; }
+  .cal-record-note { color: var(--dim); margin: 4px 0; line-height: 1.4; }
   table.grid { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 8px 0; }
   table.grid th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--faint); border-bottom: 1px solid var(--line); padding: 6px 8px; }
   table.grid td { border-bottom: 1px solid var(--line); padding: 7px 8px; }
@@ -167,10 +207,72 @@ const TIMELINE = [
   ["08:16:10", "seg", "standing_301-demo → open"],
 ];
 
+/* ── compliance calendar (Job 9: "upcoming booking dates for inspection" —
+   no calendar exists in Slate or Building Blocks today, so this is the
+   demo's own answer). Two views share one small dummy dataset generated
+   deterministically over the known addresses:
+     - oversee/inspect: today's stops + a 7-day booking-likelihood heatmap
+       (addresses × days, PDF slide "Next 7 days — when each address is
+       likely in use": purple = booked/strong signal, gold = booked/
+       inferred, empty = no signal)
+     - oversee/calendar: a month grid + day agenda of compliance events
+       (inspections, notices, license renewals, tax audits), each entry
+       linking to the property profile when one exists. ── */
+const CAL_ADDRS = [...new Set([...PARCELS.map((p) => p.addr), "88 Example Ave", "14 Sample St", "52 Mock Ln"])];
+const CAL_KINDS = ["inspection", "notice", "license-renewal", "tax-audit"];
+const CAL_NOTES = {
+  "inspection": ["Field visit — verify guest capacity and posted permit.", "Follow-up inspection after a 311 complaint.", "Life-safety check (egress, smoke detectors)."],
+  "notice": ["Registration-obligation notice mailed to owner.", "Compliance notice re: expired license.", "Courtesy notice — renewal due within 30 days."],
+  "license-renewal": ["STR license renewal window opens.", "Renewal — payment and inspection both required.", "Late renewal — grace period ends."],
+  "tax-audit": ["Hotel/occupancy tax reconciliation against platform-reported revenue.", "Spot audit — booking count vs. remitted tax."],
+};
+function calMulberry32(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function calEpochDayUTC(y, m, d) { return Math.floor(Date.UTC(y, m, d) / 86400000); }
+function calTodayEpochDay() { return Math.floor(Date.now() / 86400000); }
+function calEpochDayToDate(ed) { return new Date(ed * 86400000); }
+function genCalRecords() {
+  const rand = calMulberry32(0xB00C1E);
+  const today = calTodayEpochDay();
+  const out = [];
+  let id = 1;
+  CAL_ADDRS.forEach((addr) => {
+    const n = 4 + Math.floor(rand() * 4); // 4-7 records per address
+    for (let i = 0; i < n; i++) {
+      const kind = CAL_KINDS[Math.floor(rand() * CAL_KINDS.length)];
+      const dayOffset = Math.floor(rand() * 150) - 75; // ~10 weeks back .. ~5 weeks ahead
+      const dateEpochDay = today + dayOffset;
+      const status = dayOffset < -2 ? (rand() < 0.8 ? "completed" : "overdue") : "scheduled";
+      const pool = CAL_NOTES[kind];
+      out.push({ id: id++, addr, kind, status, dateEpochDay, note: pool[Math.floor(rand() * pool.length)] });
+    }
+  });
+  return out;
+}
+const CAL_RECORDS = genCalRecords();
+function genHeatRow(addr) {
+  const rand = calMulberry32([...addr].reduce((h, c) => (h * 31 + c.charCodeAt(0)) | 0, 7));
+  const today = calTodayEpochDay();
+  return Array.from({ length: 7 }, (_, i) => {
+    const ed = today + i;
+    const r = calMulberry32((rand() * 1e9) | (ed & 0xff));
+    const roll = r();
+    return roll > 0.72 ? 2 : roll > 0.45 ? 1 : 0; // 2=strong, 1=inferred, 0=none
+  });
+}
+function calSlugFor(addr) { return Object.entries(PROPS).find(([, p]) => p.addr === addr)?.[0] || null; }
+function calAddrLink(addr) { const slug = calSlugFor(addr); return slug ? link("properties/" + slug, addr) : esc(addr); }
+
 /* ── nav config ── */
 const TOPS = {
   host: [["", "Home"], ["register", "Register"], ["code", "Code"], ["properties", "My properties"]],
-  staff: [["", "Home"], ["oversee/detection", "Oversee"], ["data/bridge", "Evidence"], ["code", "Code"], ["workbench/staff", "Workbench"]],
+  staff: [["", "Home"], ["oversee/detection", "Oversee"], ["oversee/calendar", "Calendar"], ["data/bridge", "Evidence"], ["code", "Code"], ["workbench/staff", "Workbench"]],
 };
 /* surfaces each persona may open — everything else renders a gate card.
    code (extracted obligations) is shared: hosts read the reasons, compliance reads the versions. */
@@ -259,6 +361,14 @@ function bindActions() {
   document.querySelectorAll(".respond").forEach((b) => { b.onclick = () => { b.disabled = true; b.textContent = "Response sent"; toast("Response sent — the notice stays attached for the record."); }; });
   const gs = document.getElementById("gate-switch");
   if (gs) gs.onclick = () => setPersona(gs.dataset.p);
+  if (document.getElementById("cal-prev")) {
+    const reCal = () => { document.getElementById("app").innerHTML = pCalendar() + '<footer>Metro Nashville-Davidson County · STR compliance</footer>'; bindActions(); };
+    document.getElementById("cal-prev").onclick = () => { const m = calMonth.m - 1; calMonth = m < 0 ? { y: calMonth.y - 1, m: 11 } : { y: calMonth.y, m }; calSelectedDay = null; reCal(); };
+    document.getElementById("cal-next").onclick = () => { const m = calMonth.m + 1; calMonth = m > 11 ? { y: calMonth.y + 1, m: 0 } : { y: calMonth.y, m }; calSelectedDay = null; reCal(); };
+    document.getElementById("cal-today").onclick = () => { const t = calEpochDayToDate(calTodayEpochDay()); calMonth = { y: t.getUTCFullYear(), m: t.getUTCMonth() }; calSelectedDay = calTodayEpochDay(); reCal(); };
+    document.querySelectorAll("[data-cal-kind]").forEach((b) => { b.onclick = () => { calKindFilter = b.dataset.calKind; calSelectedDay = null; reCal(); }; });
+    document.querySelectorAll("[data-cal-day]").forEach((c) => { c.onclick = () => { calSelectedDay = Number(c.dataset.calDay); reCal(); }; });
+  }
 }
 function pins(list) {
   return list.map((p, i) => '<div class="pin ' + (p[3] || "") + '" data-pin="' + i + '" style="left:' + p[0] + "%;top:" + p[1] + '%"></div><div class="pinlbl">' + p[2] + "</div>").join("");
@@ -666,14 +776,64 @@ function pMapTable() {
 }
 
 function pInspect() {
+  const today = calTodayEpochDay();
+  const dayLabels = Array.from({ length: 7 }, (_, i) => calEpochDayToDate(today + i).toLocaleDateString("en-US", { weekday: "short", timeZone: "UTC" }));
+  const heatAddrs = CAL_ADDRS.slice(0, 6);
+  const heatRows = heatAddrs.map((addr) => '<tr><td class="addr">' + calAddrLink(addr) + "</td>" +
+    genHeatRow(addr).map((s) => '<td><div class="hc s' + s + '"></div></td>').join("") + "</tr>").join("");
   return crumb([["", "Home"], ["oversee/inspect", "Inspections"]]) +
     "<h1>Field Console — Inspection Queue</h1>" +
-    '<p class="lede">Job 9: upcoming dates with bookings so inspectors can gather evidence.</p>' +
+    '<p class="lede">Job 9: upcoming dates with bookings so inspectors can gather evidence. Full month view: ' + link("oversee/calendar", "compliance calendar") + ".</p>" +
     '<div class="card"><h3>Today · 3 stops</h3>' + grid(["#", "Stop", "Match"],
       QUEUE.map((q) => [q.n, q.stop, matchChip(q.m)])) +
     '<button class="btn" id="log-obs">+ Log observation (photo · plates · guests)</button>' + "</div>" +
-    '<div class="card"><h3>Next 7 days — likely use</h3><p>88 Example Ave, 14 Sample St, 301 Demo Rd, 52 Mock Ln — each cell refreshes on the next vendor pull.</p></div>' +
+    '<div class="card"><h3>Next 7 days — when each address is likely in use</h3>' +
+    '<div style="overflow-x:auto;"><table class="heat"><thead><tr><th></th>' + dayLabels.map((d) => "<th>" + d + "</th>").join("") + "</tr></thead><tbody>" + heatRows + "</tbody></table></div>" +
+    '<div class="heat-legend"><span><i style="background:#8a7ee0"></i>booked, strong signal</span><span><i style="background:var(--gold);opacity:.75"></i>booked, inferred</span><span><i style="background:var(--mock);border:1px solid var(--line)"></i>no signal</span></div>' +
+    '<p class="src-link">Planning bar is deliberately lower-confidence than tax: a wasted trip costs an afternoon, a wrong assessment loses an appeal. Every cell refreshes on the next vendor pull.</p></div>' +
     pager(["oversee/detection", "Back: detection"], ["data/bridge", "Next: evidence"]);
+}
+
+/* ── full compliance calendar: month grid + day agenda over CAL_RECORDS ── */
+let calMonth = null, calSelectedDay = null, calKindFilter = "all";
+function pCalendar() {
+  if (!calMonth) { const t = calEpochDayToDate(calTodayEpochDay()); calMonth = { y: t.getUTCFullYear(), m: t.getUTCMonth() }; }
+  const records = CAL_RECORDS.filter((r) => calKindFilter === "all" || r.kind === calKindFilter);
+  const first = calEpochDayUTC(calMonth.y, calMonth.m, 1);
+  const startDow = calEpochDayToDate(first).getUTCDay();
+  const daysInMonth = new Date(Date.UTC(calMonth.y, calMonth.m + 1, 0)).getUTCDate();
+  const today = calTodayEpochDay();
+  const byDay = new Map();
+  records.forEach((r) => { if (!byDay.has(r.dateEpochDay)) byDay.set(r.dateEpochDay, []); byDay.get(r.dateEpochDay).push(r); });
+  const monthLabel = calEpochDayToDate(first).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
+  const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let cells = "";
+  for (let i = 0; i < startDow; i++) cells += '<div class="cal-cell empty"></div>';
+  for (let d = 1; d <= daysInMonth; d++) {
+    const ed = first + (d - 1);
+    const dayRecords = byDay.get(ed) || [];
+    const shown = dayRecords.slice(0, 2);
+    cells += '<div class="cal-cell ' + (ed === today ? "today" : "") + " " + (ed === calSelectedDay ? "selected" : "") + '" data-cal-day="' + ed + '">' +
+      '<div class="cal-daynum">' + d + "</div>" +
+      shown.map((r) => '<div class="cal-chip cal-' + r.status + '">' + r.kind + "</div>").join("") +
+      (dayRecords.length > shown.length ? '<div style="font-size:8.5px;color:var(--faint);">+' + (dayRecords.length - shown.length) + "</div>" : "") + "</div>";
+  }
+  if (calSelectedDay === null || !byDay.has(calSelectedDay)) {
+    const upcoming = records.filter((r) => r.dateEpochDay >= today).sort((a, b) => a.dateEpochDay - b.dateEpochDay);
+    calSelectedDay = upcoming.length ? upcoming[0].dateEpochDay : (records[0] ? records[0].dateEpochDay : null);
+  }
+  const agendaRecords = (byDay.get(calSelectedDay) || []).slice().sort((a, b) => a.id - b.id);
+  return crumb([["", "Home"], ["oversee/calendar", "Calendar"]]) +
+    "<h1>Compliance calendar</h1>" +
+    '<p class="lede">' + fmtNum(records.length) + " dummy records over " + CAL_ADDRS.length + " addresses — inspections, notices, renewals, tax audits. Same idea as " + link("oversee/inspect", "the 7-day inspection view") + ", zoomed out to a month.</p>" +
+    '<div class="cal-toolbar">' +
+    '<button class="btn sm" id="cal-prev">‹ prev</button><span class="cal-month-label">' + monthLabel + "</span><button class=\"btn sm\" id=\"cal-next\">next ›</button><button class=\"btn sm\" id=\"cal-today\">today</button>" +
+    ["all", ...CAL_KINDS].map((k) => '<button class="cal-fchip ' + (calKindFilter === k ? "on" : "") + '" data-cal-kind="' + k + '">' + k + "</button>").join("") + "</div>" +
+    '<div class="cal-body"><div><div class="cal-grid">' + DOW.map((d) => '<div class="cal-dow">' + d + "</div>").join("") + cells + "</div></div>" +
+    '<div class="cal-agenda"><h4>' + (calSelectedDay !== null ? calEpochDayToDate(calSelectedDay).toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "UTC" }) : "no records") + "</h4>" +
+    (agendaRecords.length ? agendaRecords.map((r) => '<div class="cal-record"><div class="cal-record-kind">' + r.kind + " " + chip(r.status, r.status === "completed" ? "ok" : r.status === "overdue" ? "bad" : "warn") + '</div><div class="cal-record-note">' + r.note + "</div><div>" + calAddrLink(r.addr) + "</div></div>").join("") : '<p class="src-link">Nothing scheduled this day.</p>') +
+    "</div></div>" +
+    pager(["oversee/inspect", "Back: inspections"], ["data/bridge", "Next: evidence"]);
 }
 
 function pBridge() {
@@ -948,6 +1108,7 @@ const ROUTES = {
   "oversee/detection": pDetection,
   "oversee/map-table": pMapTable,
   "oversee/inspect": pInspect,
+  "oversee/calendar": pCalendar,
   "data/bridge": pBridge,
   "data/tables": pTablesIndex,
   "data/tables/parcel": () => pTable("parcel"),
