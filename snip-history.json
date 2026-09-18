@@ -1,0 +1,2315 @@
+{
+  "title": "municipal-db schema snip product — folded from snip-events.json",
+  "generated": "2026-09-18T21:33:44.446Z",
+  "eot": "snip-events.json",
+  "method": "the EOT is the store; this JSON is the fold. Every DEF/EVA on a snip is the audit history of that cut (why / where / serves / verbatim result).",
+  "by_type": {
+    "schema-source": 3,
+    "schema-type": 33,
+    "need": 46,
+    "snip": 41
+  },
+  "snips": [
+    {
+      "anchor": "snip_001",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → Asset",
+      "type": "Asset",
+      "field": "address / fullAddress / geocoderAddress",
+      "offset": 4,
+      "len": 4000,
+      "sha": "f80948a791460e61",
+      "fields": [
+        "id",
+        "otherId",
+        "alias",
+        "realPropertyUniqueId",
+        "parcelId",
+        "commonName",
+        "cover",
+        "description",
+        "address",
+        "geocoderAddress",
+        "zipCode",
+        "landSize",
+        "addresses",
+        "addressMap",
+        "fullAddress",
+        "subAddress",
+        "city",
+        "gisCity",
+        "gisFeatures",
+        "gisFeature",
+        "latitude",
+        "longitude",
+        "polygon",
+        "envelope",
+        "assetIdentities",
+        "assetIdentityProfiles",
+        "assetImages",
+        "parent",
+        "children",
+        "assetLinks",
+        "assetScores",
+        "assessments",
+        "exactMatch",
+        "textDistance",
+        "assetType",
+        "parcelFilters",
+        "eventRelation",
+        "assetUnits",
+        "workflows",
+        "flows",
+        "flowEntities",
+        "projects",
+        "deletedAt",
+        "nUnits",
+        "flowAssetStatus",
+        "licenses",
+        "license",
+        "flowsInPublicStage",
+        "publiCityVisible",
+        "publiCityUrl",
+        "programEligibles",
+        "showOpportunityBanner",
+        "marketStatus",
+        "marketPlaceDescription",
+        "forms",
+        "managingAgency",
+        "buildingBlocksUrl"
+      ],
+      "verified": true,
+      "why": "evidences \"parcel.address\" — Slate Asset.address / fullAddress / geocoderAddress is the exact verbatim home for this demo field (slate_api_key_types.json → Asset)",
+      "where": {
+        "source": "slate_api_key_types.json → Asset",
+        "offset": 4,
+        "len": 4000
+      },
+      "serves": [
+        "parcel.address"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte 4"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_002",
+      "system": "Building Blocks",
+      "source": "bundle inventory ASSET",
+      "type": "ASSET",
+      "field": "address / addressMap / fullAddress",
+      "offset": 2481,
+      "len": 700,
+      "sha": "8486c4486a30b742",
+      "fields": [
+        "id",
+        "alias",
+        "parcelId",
+        "commonName",
+        "address",
+        "addressMap",
+        "addresses",
+        "assetType",
+        "assetLinks",
+        "marketStatus",
+        "contact",
+        "gisCity",
+        "latitude",
+        "longitude",
+        "polygon",
+        "parent",
+        "children",
+        "assessments",
+        "parcelFilters",
+        "licenses"
+      ],
+      "verified": true,
+      "why": "evidences \"parcel.address\" — Building Blocks ASSET.address / addressMap / fullAddress is the exact verbatim home for this demo field (bundle inventory ASSET)",
+      "where": {
+        "source": "bundle inventory ASSET",
+        "offset": 2481,
+        "len": 700
+      },
+      "serves": [
+        "parcel.address"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type ASSET cut verbatim from building-blocks-schema-inventory.md at byte 2481"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_003",
+      "system": "Swarm→universal",
+      "source": "universal/listings_*.jsonl",
+      "type": "listing.property",
+      "field": "property.address",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"parcel.address\" — Swarm→universal listing.property.property.address is the exact verbatim home for this demo field (universal/listings_*.jsonl)",
+      "where": {
+        "source": "universal/listings_*.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "parcel.address"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT listing.property cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_004",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → TransformerGeocoder",
+      "type": "TransformerGeocoder",
+      "field": "columns / source",
+      "offset": 650790,
+      "len": 8000,
+      "sha": "abe86374a1b6d64a",
+      "fields": [
+        "columns",
+        "source"
+      ],
+      "verified": true,
+      "why": "evidences \"parcel.lat/lng\" — Swarm TransformerGeocoder.columns / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → TransformerGeocoder)",
+      "where": {
+        "source": "swarm_graphql_schema.json → TransformerGeocoder",
+        "offset": 650790,
+        "len": 8000
+      },
+      "serves": [
+        "parcel.lat/lng"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT TransformerGeocoder cut verbatim from swarm_graphql_schema.json at byte 650790"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_005",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → FlowStageTask.attributes",
+      "type": "FlowStageTask",
+      "field": "attributes",
+      "offset": 790,
+      "len": 4000,
+      "sha": "59928d37dccfcd0a",
+      "fields": [
+        "isFlowAssignment",
+        "totalCount",
+        "noteCount",
+        "id",
+        "dateCreated",
+        "taskShortId",
+        "workflowStageTask",
+        "flowStage",
+        "flow",
+        "notes",
+        "documents",
+        "attributes",
+        "assignee",
+        "assignor",
+        "assignedOn",
+        "allowedAssigneeTags",
+        "setAssigneeAsFlowLead",
+        "completedAt",
+        "completedBy",
+        "workflowStageTaskCompletionReason",
+        "completionLevel",
+        "completionShortLabel",
+        "flowCompletedAt",
+        "flowStageCompletedAt",
+        "preFlowStageTask",
+        "postFlowStageTask",
+        "appointmentDate",
+        "appointmentDateUTC",
+        "isAppointment",
+        "calendarEvents",
+        "totalAppointmentDurationInMinutes",
+        "appointmentSubFlowStageTasks",
+        "scheduledBy",
+        "dueOnRaw",
+        "dueOn",
+        "dueOnUTC",
+        "isOverdue",
+        "isPending",
+        "scheduledFor",
+        "isFuture",
+        "assigneeAccepted",
+        "status",
+        "pointOfContact",
+        "link",
+        "isRequired",
+        "asset",
+        "assetProject",
+        "assetId",
+        "identityProfile",
+        "flowEntity",
+        "identityId",
+        "isReviewFlowAssets",
+        "isExternalReviewFlowAssets",
+        "isPayment",
+        "isPaymentProcessing",
+        "paymentDate",
+        "paymentAmount",
+        "paymentDescription",
+        "paymentModifiedBy",
+        "paymentModifiedOn",
+        "processingFee",
+        "paymentTransactions",
+        "isPaymentRefunded",
+        "lastPaymentMethodSelected",
+        "transaction",
+        "paymentEvents",
+        "receiptUrl",
+        "paymentLineItems",
+        "customPaymentLineItems",
+        "paymentIntentId",
+        "paymentIntent",
+        "paymentIntentsFromStripe",
+        "paymentChecks",
+        "paymentCash",
+        "authorizeNetTxId",
+        "authorizeNetTx",
+        "tsysTransactionId",
+        "tsysTransaction",
+        "tylerToken",
+        "tylerOrder",
+        "paymentusData",
+        "fstIdentifier"
+      ],
+      "verified": true,
+      "why": "evidences \"parcel.bedrooms\" — Slate FlowStageTask.attributes is the strong verbatim home for this demo field (slate_api_key_types.json → FlowStageTask.attributes)",
+      "where": {
+        "source": "slate_api_key_types.json → FlowStageTask.attributes",
+        "offset": 790,
+        "len": 4000
+      },
+      "serves": [
+        "parcel.bedrooms"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte 790"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_006",
+      "system": "Building Blocks",
+      "source": "bundle inventory ASSET_PROJECT_UNIT",
+      "type": "ASSET_PROJECT_UNIT / attribute",
+      "field": "unit attributes",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"parcel.bedrooms\" — Building Blocks ASSET_PROJECT_UNIT / attribute.unit attributes is the strong verbatim home for this demo field (bundle inventory ASSET_PROJECT_UNIT)",
+      "where": {
+        "source": "bundle inventory ASSET_PROJECT_UNIT",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "parcel.bedrooms"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type ASSET_PROJECT_UNIT / attribute cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_007",
+      "system": null,
+      "source": "grep of bundle + swarm + slate",
+      "type": null,
+      "field": null,
+      "offset": null,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "no field in any of the three systems could evidence \"parcel.zoning\" — named gap, never guessed",
+      "where": {
+        "source": "grep of bundle + swarm + slate",
+        "offset": null,
+        "len": 0
+      },
+      "serves": [
+        "parcel.zoning"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "anchor": "snip_008",
+      "system": "Building Blocks",
+      "source": "bundle inventory §6 assessments{owners,totalValue,year}",
+      "type": "ASSET attribute",
+      "field": "assessments / owner-referenced counts",
+      "offset": 12499,
+      "len": 700,
+      "sha": "b2f343bfb31197f9",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"parcel.evictions\" — Building Blocks ASSET attribute.assessments / owner-referenced counts is the analog verbatim home for this demo field (bundle inventory §6 assessments{owners,totalValue,year})",
+      "where": {
+        "source": "bundle inventory §6 assessments{owners,totalValue,year}",
+        "offset": 12499,
+        "len": 700
+      },
+      "serves": [
+        "parcel.evictions"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type ASSET attribute cut verbatim from building-blocks-schema-inventory.md at byte 12499"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_009",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → PlatformAttribute, AttributeRule",
+      "type": "PlatformAttribute / AttributeRule",
+      "field": "name / entity / rules",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"parcel.evictions\" — Swarm PlatformAttribute / AttributeRule.name / entity / rules is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformAttribute, AttributeRule)",
+      "where": {
+        "source": "swarm_graphql_schema.json → PlatformAttribute, AttributeRule",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "parcel.evictions"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT PlatformAttribute / AttributeRule cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_010",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → IdentityProfile",
+      "type": "IdentityProfile",
+      "field": "fullName / firstName / lastName",
+      "offset": 5381,
+      "len": 4000,
+      "sha": "c7a8dd795c84016c",
+      "fields": [
+        "id",
+        "dateCreated",
+        "dateUpdated",
+        "source",
+        "type",
+        "fullName",
+        "firstName",
+        "lastName",
+        "otherName",
+        "email",
+        "emailType",
+        "otherEmails",
+        "profilePicture",
+        "phone",
+        "phoneType",
+        "otherPhones",
+        "placeId",
+        "location",
+        "address",
+        "address2",
+        "city",
+        "state",
+        "zip",
+        "fullAddress",
+        "country",
+        "addressType",
+        "otherAddresses",
+        "duplicateIdentityProfilesByEmail",
+        "user",
+        "identity",
+        "isRawIdentity",
+        "assignedTasksCount",
+        "createdFlowsCount",
+        "documents",
+        "tags",
+        "createdBy",
+        "flowIdentityProfiles",
+        "totalCount",
+        "flowCount",
+        "linkedIdentityTypeNames",
+        "groupedProfileIds"
+      ],
+      "verified": true,
+      "why": "evidences \"owner.name\" — Slate IdentityProfile.fullName / firstName / lastName is the exact verbatim home for this demo field (slate_api_key_types.json → IdentityProfile)",
+      "where": {
+        "source": "slate_api_key_types.json → IdentityProfile",
+        "offset": 5381,
+        "len": 4000
+      },
+      "serves": [
+        "owner.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte 5381"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_011",
+      "system": "Building Blocks",
+      "source": "bundle inventory IDENTITY",
+      "type": "IDENTITY / IDENTITY_PROFILE",
+      "field": "fullName",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"owner.name\" — Building Blocks IDENTITY / IDENTITY_PROFILE.fullName is the exact verbatim home for this demo field (bundle inventory IDENTITY)",
+      "where": {
+        "source": "bundle inventory IDENTITY",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "owner.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type IDENTITY / IDENTITY_PROFILE cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_012",
+      "system": "Swarm→universal",
+      "source": "universal/listings_*.jsonl",
+      "type": "listing.host",
+      "field": "host.name",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"owner.name\" — Swarm→universal listing.host.host.name is the exact verbatim home for this demo field (universal/listings_*.jsonl)",
+      "where": {
+        "source": "universal/listings_*.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "owner.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT listing.host cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_013",
+      "system": "Building Blocks",
+      "source": "bundle inventory IDENTITY_PROFILE",
+      "type": "IDENTITY_PROFILE",
+      "field": "phone",
+      "offset": 2552,
+      "len": 700,
+      "sha": "2b82f29aa0daef26",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"owner.phone\" — Building Blocks IDENTITY_PROFILE.phone is the exact verbatim home for this demo field (bundle inventory IDENTITY_PROFILE)",
+      "where": {
+        "source": "bundle inventory IDENTITY_PROFILE",
+        "offset": 2552,
+        "len": 700
+      },
+      "serves": [
+        "owner.phone"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type IDENTITY_PROFILE cut verbatim from building-blocks-schema-inventory.md at byte 2552"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_014",
+      "system": "Swarm",
+      "source": "swarm/platform_attributes.jsonl",
+      "type": "platform_attributes",
+      "field": "owner_listings",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"owner.property_count\" — Swarm platform_attributes.owner_listings is the exact verbatim home for this demo field (swarm/platform_attributes.jsonl)",
+      "where": {
+        "source": "swarm/platform_attributes.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "owner.property_count"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT platform_attributes cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_015",
+      "system": "Building Blocks",
+      "source": "bundle inventory WORKFLOW.city",
+      "type": "Workflow / city",
+      "field": "city",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"municipality.name\" — Building Blocks Workflow / city.city is the exact verbatim home for this demo field (bundle inventory WORKFLOW.city)",
+      "where": {
+        "source": "bundle inventory WORKFLOW.city",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "municipality.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type Workflow / city cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_016",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → City",
+      "type": "City",
+      "field": "name / alias / location",
+      "offset": 76587,
+      "len": 8000,
+      "sha": "cf2efe7b6cbf535e",
+      "fields": [
+        "activityStream",
+        "alias",
+        "asanaProjectGid",
+        "asanaProjectLink",
+        "connectorStats",
+        "dataLead",
+        "docsUrl",
+        "dwSchema",
+        "id",
+        "jobsPaused",
+        "location",
+        "name",
+        "secrets",
+        "state",
+        "status"
+      ],
+      "verified": true,
+      "why": "evidences \"municipality.name\" — Swarm City.name / alias / location is the exact verbatim home for this demo field (swarm_graphql_schema.json → City)",
+      "where": {
+        "source": "swarm_graphql_schema.json → City",
+        "offset": 76587,
+        "len": 8000
+      },
+      "serves": [
+        "municipality.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT City cut verbatim from swarm_graphql_schema.json at byte 76587"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_017",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → State",
+      "type": "State",
+      "field": "name / abbreviation",
+      "offset": 76100,
+      "len": 8000,
+      "sha": "010e1c4f310773e2",
+      "fields": [
+        "abbreviation",
+        "cities",
+        "id",
+        "name"
+      ],
+      "verified": true,
+      "why": "evidences \"municipality.state\" — Swarm State.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State)",
+      "where": {
+        "source": "swarm_graphql_schema.json → State",
+        "offset": 76100,
+        "len": 8000
+      },
+      "serves": [
+        "municipality.state"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT State cut verbatim from swarm_graphql_schema.json at byte 76100"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_018",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → Workflow.city",
+      "type": "Workflow / city",
+      "field": "city",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"municipality.state\" — Slate Workflow / city.city is the analog verbatim home for this demo field (slate_api_key_types.json → Workflow.city)",
+      "where": {
+        "source": "slate_api_key_types.json → Workflow.city",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "municipality.state"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_019",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → Connector",
+      "type": "Connector",
+      "field": "connectorUrl / provenanceUrl / assetProvenanceUrl",
+      "offset": 91127,
+      "len": 8000,
+      "sha": "d1a8bdc7db9f952d",
+      "fields": [
+        "activityStream",
+        "adapter",
+        "adapterArgs",
+        "allowOverwriteWithNoRecords",
+        "assetProvenanceUrl",
+        "attribute",
+        "attributeStatus",
+        "attributes",
+        "baseTable",
+        "baseTableSql",
+        "builder",
+        "city",
+        "cityPackage",
+        "connectorUrl",
+        "createdAt",
+        "datasets",
+        "deletedAt",
+        "deletesTable",
+        "eventTables",
+        "events",
+        "factsTable",
+        "failStreak",
+        "flow",
+        "hasNote",
+        "healthFlags",
+        "id",
+        "idColumns",
+        "insertsTable",
+        "isDeletable",
+        "isUpdate",
+        "jobs",
+        "lastDataChangeAt",
+        "lastNote",
+        "lastSuccessfulPushAt",
+        "mappingTables",
+        "multiConnector",
+        "name",
+        "notes",
+        "packageComponent",
+        "pipelineExportDefaultLlmPrompt",
+        "pipelineProvenanceExport",
+        "postTransforms",
+        "preTransforms",
+        "provenanceUrl",
+        "pushMode",
+        "runInfo",
+        "schedules",
+        "schema",
+        "section",
+        "sources",
+        "sql",
+        "stage",
+        "staleStreak",
+        "targetDataElement",
+        "targetTable",
+        "targetTableColumns",
+        "targetTableSql",
+        "type",
+        "updatesTable",
+        "viewName"
+      ],
+      "verified": true,
+      "why": "evidences \"municipality.code_url\" — Swarm Connector.connectorUrl / provenanceUrl / assetProvenanceUrl is the analog verbatim home for this demo field (swarm_graphql_schema.json → Connector)",
+      "where": {
+        "source": "swarm_graphql_schema.json → Connector",
+        "offset": 91127,
+        "len": 8000
+      },
+      "serves": [
+        "municipality.code_url"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT Connector cut verbatim from swarm_graphql_schema.json at byte 91127"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_020",
+      "system": "Building Blocks",
+      "source": "bundle inventory LicenseType.ordinance",
+      "type": "LicenseType",
+      "field": "ordinance",
+      "offset": 4509,
+      "len": 700,
+      "sha": "3d2befe5f1aed085",
+      "fields": [
+        "name",
+        "unitLevel",
+        "unitType",
+        "durationInDays",
+        "renewalDaysBeforeExpiration",
+        "expireCalendarYear",
+        "expireCalendarDate",
+        "expirationDateFormulaScript",
+        "propertyEligibleFormulaScript",
+        "notifyRegistrantOnRenewal",
+        "workflow",
+        "registrationPortals",
+        "form",
+        "ordinance",
+        "contact",
+        "allowedAssetIdentityTypes",
+        "identityBased",
+        "maxProperties"
+      ],
+      "verified": true,
+      "why": "evidences \"municipality.chapter\" — Building Blocks LicenseType.ordinance is the analog verbatim home for this demo field (bundle inventory LicenseType.ordinance)",
+      "where": {
+        "source": "bundle inventory LicenseType.ordinance",
+        "offset": 4509,
+        "len": 700
+      },
+      "serves": [
+        "municipality.chapter"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type LicenseType cut verbatim from building-blocks-schema-inventory.md at byte 4509"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_021",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → State, City",
+      "type": "State / City",
+      "field": "name / abbreviation",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"jurisdiction.name\" — Swarm State / City.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State, City)",
+      "where": {
+        "source": "swarm_graphql_schema.json → State, City",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "jurisdiction.name"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT State / City cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_022",
+      "system": "Building Blocks",
+      "source": "bundle inventory WORKFLOW.city",
+      "type": "Workflow",
+      "field": "city",
+      "offset": 8705,
+      "len": 700,
+      "sha": "79df88002e15e53a",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"obligation.holder\" — Building Blocks Workflow.city is the analog verbatim home for this demo field (bundle inventory WORKFLOW.city)",
+      "where": {
+        "source": "bundle inventory WORKFLOW.city",
+        "offset": 8705,
+        "len": 700
+      },
+      "serves": [
+        "obligation.holder"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type Workflow cut verbatim from building-blocks-schema-inventory.md at byte 8705"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_023",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → AttributeRule",
+      "type": "AttributeRule",
+      "field": "rules / name / isPreset",
+      "offset": 62398,
+      "len": 8000,
+      "sha": "eee7cbff43bf04ae",
+      "fields": [
+        "id",
+        "isPreset",
+        "name",
+        "rules"
+      ],
+      "verified": true,
+      "why": "evidences \"kind.standing_criterion\" — Swarm AttributeRule.rules / name / isPreset is the analog verbatim home for this demo field (swarm_graphql_schema.json → AttributeRule)",
+      "where": {
+        "source": "swarm_graphql_schema.json → AttributeRule",
+        "offset": 62398,
+        "len": 8000
+      },
+      "serves": [
+        "kind.standing_criterion"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT AttributeRule cut verbatim from swarm_graphql_schema.json at byte 62398"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_024",
+      "system": "Building Blocks",
+      "source": "bundle inventory §7 WorkflowStageTaskPayment",
+      "type": "WorkflowStageTaskPayment",
+      "field": "defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription",
+      "offset": 8705,
+      "len": 700,
+      "sha": "79df88002e15e53a",
+      "fields": [
+        "defaultPaymentAmount",
+        "paymentDescription",
+        "paymentAmountPerAsset",
+        "paymentAmountPerUnit",
+        "allowPaymentAmountOverride",
+        "allowChecks",
+        "allowCash",
+        "autoAddProcessingFees",
+        "processingFeesPercentage",
+        "checksPayableTo",
+        "paymentAccount",
+        "paymentFormulaScript",
+        "appealConditionalLogicForm",
+        "autoApproveAppeals",
+        "appealsAssignee"
+      ],
+      "verified": true,
+      "why": "evidences \"fee-schedule.*\" — Building Blocks WorkflowStageTaskPayment.defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription is the exact verbatim home for this demo field (bundle inventory §7 WorkflowStageTaskPayment)",
+      "where": {
+        "source": "bundle inventory §7 WorkflowStageTaskPayment",
+        "offset": 8705,
+        "len": 700
+      },
+      "serves": [
+        "fee-schedule.*"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type WorkflowStageTaskPayment cut verbatim from building-blocks-schema-inventory.md at byte 8705"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_025",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → PlatformEventTable",
+      "type": "PlatformEventTable",
+      "field": "amountLabel / amountUnit / columns / tableName",
+      "offset": 263284,
+      "len": 8000,
+      "sha": "329c7a5867bd0b90",
+      "fields": [
+        "activeCityCount",
+        "amountLabel",
+        "amountUnit",
+        "baseTableExists",
+        "cityEventTable",
+        "columns",
+        "dateLabel",
+        "eventIdLabel",
+        "eventType",
+        "filters",
+        "form",
+        "hasStatus",
+        "hasType",
+        "icon",
+        "id",
+        "level",
+        "name",
+        "parentId",
+        "tableColumns",
+        "tableName"
+      ],
+      "verified": true,
+      "why": "evidences \"tax-schedule.*\" — Swarm PlatformEventTable.amountLabel / amountUnit / columns / tableName is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformEventTable)",
+      "where": {
+        "source": "swarm_graphql_schema.json → PlatformEventTable",
+        "offset": 263284,
+        "len": 8000
+      },
+      "serves": [
+        "tax-schedule.*"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT PlatformEventTable cut verbatim from swarm_graphql_schema.json at byte 263284"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_026",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → PlatformFilter",
+      "type": "PlatformFilter",
+      "field": "name / label / type / unit / mappingColumn / dataElement / value / sumOn / source",
+      "offset": 317709,
+      "len": 8000,
+      "sha": "f3ab44a9e0eb09c6",
+      "fields": [
+        "binary",
+        "cities",
+        "cityFilter",
+        "dataElement",
+        "description",
+        "entity",
+        "filterGroup",
+        "filterOrder",
+        "hideDate",
+        "id",
+        "inverted",
+        "label",
+        "mappingColumn",
+        "name",
+        "nullCheck",
+        "publiclyViewable",
+        "source",
+        "sumOn",
+        "totalCitiesWithEnabledFilter",
+        "type",
+        "unit"
+      ],
+      "verified": true,
+      "why": "evidences \"compliance-rule.*\" — Swarm PlatformFilter.name / label / type / unit / mappingColumn / dataElement / value / sumOn / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → PlatformFilter)",
+      "where": {
+        "source": "swarm_graphql_schema.json → PlatformFilter",
+        "offset": 317709,
+        "len": 8000
+      },
+      "serves": [
+        "compliance-rule.*"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT PlatformFilter cut verbatim from swarm_graphql_schema.json at byte 317709"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_027",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → License",
+      "type": "License",
+      "field": "number / licenseIdentifier",
+      "offset": 2173,
+      "len": 4000,
+      "sha": "ba10e1540dacf0d4",
+      "fields": [
+        "id",
+        "dateCreated",
+        "lastUpdated",
+        "type",
+        "number",
+        "status",
+        "licenseIdentifier",
+        "approvedOn",
+        "isDraft",
+        "isExpired",
+        "isRenewable",
+        "isInRenewalWindow",
+        "renewableFrom",
+        "expirationDate",
+        "lastNotifiedRegistrant",
+        "lastNotifiedExpiration",
+        "lastNotifiedRenewal",
+        "licenseChain",
+        "previousLicense",
+        "nextLicense",
+        "licenseDeregistrationReason",
+        "registrant",
+        "lastUpdatedBy",
+        "assetCount",
+        "submissionData",
+        "asset",
+        "assetUnit",
+        "assetProject",
+        "nUnits",
+        "flow",
+        "assets",
+        "flows",
+        "totalCount",
+        "tags",
+        "submissionProgress",
+        "deregistrationSubmission"
+      ],
+      "verified": true,
+      "why": "evidences \"registration.license_number\" — Slate License.number / licenseIdentifier is the exact verbatim home for this demo field (slate_api_key_types.json → License)",
+      "where": {
+        "source": "slate_api_key_types.json → License",
+        "offset": 2173,
+        "len": 4000
+      },
+      "serves": [
+        "registration.license_number"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte 2173"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_028",
+      "system": "Building Blocks",
+      "source": "bundle inventory LICENSE",
+      "type": "LICENSE",
+      "field": "number",
+      "offset": 2529,
+      "len": 700,
+      "sha": "6f78f7b1832334ef",
+      "fields": [
+        "id",
+        "number",
+        "status",
+        "isExpired",
+        "isRenewable",
+        "approvedOn",
+        "renewableFrom",
+        "expirationDate",
+        "lastNotifiedRegistrant",
+        "lastNotifiedExpiration",
+        "lastNotifiedRenewal",
+        "licenseChain",
+        "previousLicense",
+        "nextLicense",
+        "licenseDeregistrationReason",
+        "registrant",
+        "email",
+        "profilePicture",
+        "asset",
+        "assetUnit",
+        "parcelId",
+        "address",
+        "displayName",
+        "type",
+        "flow",
+        "workflow",
+        "tags",
+        "submissionData"
+      ],
+      "verified": true,
+      "why": "evidences \"registration.license_number\" — Building Blocks LICENSE.number is the exact verbatim home for this demo field (bundle inventory LICENSE)",
+      "where": {
+        "source": "bundle inventory LICENSE",
+        "offset": 2529,
+        "len": 700
+      },
+      "serves": [
+        "registration.license_number"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type LICENSE cut verbatim from building-blocks-schema-inventory.md at byte 2529"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_029",
+      "system": "Slate→btora",
+      "source": "btora/slate/slate_registrations.jsonl",
+      "type": "slate_licenses",
+      "field": "license_shown",
+      "offset": 0,
+      "len": 1831049,
+      "sha": "72b829d06dc6a67c",
+      "fields": [
+        "table",
+        "parcel",
+        "license_shown",
+        "status",
+        "platform",
+        "match"
+      ],
+      "verified": true,
+      "why": "evidences \"registration.license_number\" — Slate→btora slate_licenses.license_shown is the exact verbatim home for this demo field (btora/slate/slate_registrations.jsonl)",
+      "where": {
+        "source": "btora/slate/slate_registrations.jsonl",
+        "offset": 0,
+        "len": 1831049
+      },
+      "serves": [
+        "registration.license_number"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "first row cut verbatim from btora/slate/slate_registrations.jsonl"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_030",
+      "system": "Swarm→btora",
+      "source": "btora/swarm/dataset_btora_listings.jsonl",
+      "type": "dataset_btora_listings",
+      "field": "platform / listing_id / url / listed_at",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"listing.platform / listing_id / url / title / listed_at\" — Swarm→btora dataset_btora_listings.platform / listing_id / url / listed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl)",
+      "where": {
+        "source": "btora/swarm/dataset_btora_listings.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "listing.platform / listing_id / url / title / listed_at"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT dataset_btora_listings cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_031",
+      "system": "Swarm→universal",
+      "source": "universal/listings_*.jsonl",
+      "type": "universal listing",
+      "field": "platform / listing_id / url / title / listed_at",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"listing.platform / listing_id / url / title / listed_at\" — Swarm→universal universal listing.platform / listing_id / url / title / listed_at is the exact verbatim home for this demo field (universal/listings_*.jsonl)",
+      "where": {
+        "source": "universal/listings_*.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "listing.platform / listing_id / url / title / listed_at"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT universal listing cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_032",
+      "system": "Swarm→btora",
+      "source": "btora/swarm/transformer_booking_events.jsonl",
+      "type": "transformer_booking_events",
+      "field": "amount / amount_unit",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"listing.nightly_rate\" — Swarm→btora transformer_booking_events.amount / amount_unit is the exact verbatim home for this demo field (btora/swarm/transformer_booking_events.jsonl)",
+      "where": {
+        "source": "btora/swarm/transformer_booking_events.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "listing.nightly_rate"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT transformer_booking_events cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_033",
+      "system": "Swarm→btora",
+      "source": "btora/swarm/dataset_btora_calendar.jsonl",
+      "type": "dataset_btora_calendar",
+      "field": "window_from / window_to / status / observed_at",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"listing.bookings\" — Swarm→btora dataset_btora_calendar.window_from / window_to / status / observed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_calendar.jsonl)",
+      "where": {
+        "source": "btora/swarm/dataset_btora_calendar.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "listing.bookings"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT dataset_btora_calendar cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_034",
+      "system": "Swarm→btora",
+      "source": "btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl",
+      "type": "dataset_btora_listings / platform_attributes",
+      "field": "match / flags",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"listing.match\" — Swarm→btora dataset_btora_listings / platform_attributes.match / flags is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl)",
+      "where": {
+        "source": "btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "listing.match"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "OBJECT dataset_btora_listings / platform_attributes cut verbatim from swarm_graphql_schema.json at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_035",
+      "system": "Building Blocks",
+      "source": "bundle inventory FLOW_STAGE_TASK",
+      "type": "FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK",
+      "field": "task obligations",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"standing.distinction\" — Building Blocks FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK.task obligations is the strong verbatim home for this demo field (bundle inventory FLOW_STAGE_TASK)",
+      "where": {
+        "source": "bundle inventory FLOW_STAGE_TASK",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "standing.distinction"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_036",
+      "system": "Building Blocks",
+      "source": "bundle inventory §8",
+      "type": "AssetIdentity / GetSuggestedLinks",
+      "field": "ownedAssetCount / nameMatch / addressMatch",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"standing.responsible_agent\" — Building Blocks AssetIdentity / GetSuggestedLinks.ownedAssetCount / nameMatch / addressMatch is the strong verbatim home for this demo field (bundle inventory §8)",
+      "where": {
+        "source": "bundle inventory §8",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "standing.responsible_agent"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type AssetIdentity / GetSuggestedLinks cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_037",
+      "system": "Swarm",
+      "source": "swarm_graphql_schema.json → Note",
+      "type": "Note",
+      "field": "body / author / createdAt",
+      "offset": 120442,
+      "len": 8000,
+      "sha": "8b8cdce9b13b1dd2",
+      "fields": [
+        "author",
+        "body",
+        "createdAt",
+        "id"
+      ],
+      "verified": true,
+      "why": "evidences \"inspection.focus / note\" — Swarm Note.body / author / createdAt is the strong verbatim home for this demo field (swarm_graphql_schema.json → Note)",
+      "where": {
+        "source": "swarm_graphql_schema.json → Note",
+        "offset": 120442,
+        "len": 8000
+      },
+      "serves": [
+        "inspection.focus / note"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "OBJECT Note cut verbatim from swarm_graphql_schema.json at byte 120442"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_038",
+      "system": "Building Blocks",
+      "source": "bundle inventory §8 SnailMail",
+      "type": "SnailMail / SnailMailCampaign / OutreachMetrics",
+      "field": "campaign / reply-code tracking / metrics",
+      "offset": -1,
+      "len": 0,
+      "sha": "4f53cda18c2baa0c",
+      "fields": [],
+      "verified": false,
+      "why": "evidences \"notice.kind / channel / subject / sent_at\" — Building Blocks SnailMail / SnailMailCampaign / OutreachMetrics.campaign / reply-code tracking / metrics is the exact verbatim home for this demo field (bundle inventory §8 SnailMail)",
+      "where": {
+        "source": "bundle inventory §8 SnailMail",
+        "offset": -1,
+        "len": 0
+      },
+      "serves": [
+        "notice.kind / channel / subject / sent_at"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "gap",
+          "note": "type SnailMail / SnailMailCampaign / OutreachMetrics cut verbatim from building-blocks-schema-inventory.md at byte -1"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_039",
+      "system": "Slate",
+      "source": "slate_api_key_types.json → Document",
+      "type": "Document",
+      "field": "name / url / template",
+      "offset": 5938,
+      "len": 4000,
+      "sha": "67b04eba6f37a17b",
+      "fields": [
+        "id",
+        "url",
+        "fullUrl",
+        "label",
+        "name",
+        "owner",
+        "dateCreated",
+        "deletedOn",
+        "isPublicBuildingBlocks",
+        "isPublicPublicity",
+        "template",
+        "workflowStage",
+        "workflowStageTask",
+        "identityProfile",
+        "mergeData",
+        "reportData",
+        "sfdt",
+        "isSdft",
+        "isFolder",
+        "fileName",
+        "contextLabel",
+        "parent",
+        "children",
+        "childCount",
+        "totalCount"
+      ],
+      "verified": true,
+      "why": "evidences \"notice.kind / channel / subject / sent_at\" — Slate Document.name / url / template is the analog verbatim home for this demo field (slate_api_key_types.json → Document)",
+      "where": {
+        "source": "slate_api_key_types.json → Document",
+        "offset": 5938,
+        "len": 4000
+      },
+      "serves": [
+        "notice.kind / channel / subject / sent_at"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "field list cut verbatim from slate_api_key_types.json at byte 5938"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_040",
+      "system": "Building Blocks",
+      "source": "bundle inventory §3",
+      "type": "getAngelPlatformCityAttribute",
+      "field": "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl",
+      "offset": 2998,
+      "len": 700,
+      "sha": "19b78818cadeed27",
+      "fields": [
+        "id",
+        "name",
+        "cityAttribute",
+        "connectors",
+        "connectorUrl",
+        "provenanceUrl",
+        "assetProvenanceUrl",
+        "runInfo",
+        "failStreak",
+        "staleStreak",
+        "lastSuccessfulPushAt",
+        "lastDataChangeAt",
+        "stage",
+        "number"
+      ],
+      "verified": true,
+      "why": "evidences \"connector.health\" — Building Blocks getAngelPlatformCityAttribute.failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl is the exact verbatim home for this demo field (bundle inventory §3)",
+      "where": {
+        "source": "bundle inventory §3",
+        "offset": 2998,
+        "len": 700
+      },
+      "serves": [
+        "connector.health"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type getAngelPlatformCityAttribute cut verbatim from building-blocks-schema-inventory.md at byte 2998"
+        }
+      ]
+    },
+    {
+      "anchor": "snip_041",
+      "system": "Building Blocks",
+      "source": "bundle inventory §4",
+      "type": "IntegrationHealthDashboard",
+      "field": "provider / status / checkedAt / latencyMs",
+      "offset": 5748,
+      "len": 700,
+      "sha": "80a31edd00d0cd4f",
+      "fields": [
+        "type",
+        "provider",
+        "status",
+        "cityId",
+        "checkedAt",
+        "latencyMs",
+        "errorMessage",
+        "targetLabel",
+        "paymentAccountId",
+        "userId",
+        "authProviderId"
+      ],
+      "verified": true,
+      "why": "evidences \"connector.health\" — Building Blocks IntegrationHealthDashboard.provider / status / checkedAt / latencyMs is the exact verbatim home for this demo field (bundle inventory §4)",
+      "where": {
+        "source": "bundle inventory §4",
+        "offset": 5748,
+        "len": 700
+      },
+      "serves": [
+        "connector.health"
+      ],
+      "evals": [
+        {
+          "criterion": "verbatim",
+          "result": "verified",
+          "note": "type IntegrationHealthDashboard cut verbatim from building-blocks-schema-inventory.md at byte 5748"
+        }
+      ]
+    }
+  ],
+  "needs": [
+    {
+      "anchor": "need_parcel-address",
+      "need": "parcel.address",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_parcel-lat-lng",
+      "need": "parcel.lat/lng",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_parcel-apn",
+      "need": "parcel.apn",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_parcel-bedrooms",
+      "need": "parcel.bedrooms",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_parcel-zoning",
+      "need": "parcel.zoning",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_parcel-evictions",
+      "need": "parcel.evictions",
+      "entity": "parcel"
+    },
+    {
+      "anchor": "need_owner-name",
+      "need": "owner.name",
+      "entity": "owner"
+    },
+    {
+      "anchor": "need_owner-phone",
+      "need": "owner.phone",
+      "entity": "owner"
+    },
+    {
+      "anchor": "need_owner-mailing-address",
+      "need": "owner.mailing_address",
+      "entity": "owner"
+    },
+    {
+      "anchor": "need_owner-email",
+      "need": "owner.email",
+      "entity": "owner"
+    },
+    {
+      "anchor": "need_owner-property-count",
+      "need": "owner.property_count",
+      "entity": "owner"
+    },
+    {
+      "anchor": "need_municipality-name",
+      "need": "municipality.name",
+      "entity": "municipality"
+    },
+    {
+      "anchor": "need_municipality-state",
+      "need": "municipality.state",
+      "entity": "municipality"
+    },
+    {
+      "anchor": "need_municipality-county",
+      "need": "municipality.county",
+      "entity": "municipality"
+    },
+    {
+      "anchor": "need_municipality-code-url",
+      "need": "municipality.code_url",
+      "entity": "municipality"
+    },
+    {
+      "anchor": "need_municipality-chapter",
+      "need": "municipality.chapter",
+      "entity": "municipality"
+    },
+    {
+      "anchor": "need_jurisdiction-name",
+      "need": "jurisdiction.name",
+      "entity": "jurisdiction"
+    },
+    {
+      "anchor": "need_obligation-text",
+      "need": "obligation.text",
+      "entity": "obligation"
+    },
+    {
+      "anchor": "need_obligation-section",
+      "need": "obligation.section",
+      "entity": "obligation"
+    },
+    {
+      "anchor": "need_obligation-holder",
+      "need": "obligation.holder",
+      "entity": "obligation"
+    },
+    {
+      "anchor": "need_figure-party-modality",
+      "need": "figure.party / modality",
+      "entity": "figure"
+    },
+    {
+      "anchor": "need_kind-standing-criterion",
+      "need": "kind.standing_criterion",
+      "entity": "kind"
+    },
+    {
+      "anchor": "need_fee-schedule-",
+      "need": "fee-schedule.*",
+      "entity": "fee-schedule"
+    },
+    {
+      "anchor": "need_tax-schedule-",
+      "need": "tax-schedule.*",
+      "entity": "tax-schedule"
+    },
+    {
+      "anchor": "need_compliance-rule-",
+      "need": "compliance-rule.*",
+      "entity": "compliance-rule"
+    },
+    {
+      "anchor": "need_registration-license-number",
+      "need": "registration.license_number",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-status",
+      "need": "registration.status",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-issued-at",
+      "need": "registration.issued_at",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-expires-at",
+      "need": "registration.expires_at",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-holder",
+      "need": "registration.holder",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-units-bedrooms-guest-rooms-max-occupancy",
+      "need": "registration.units / bedrooms / guest_rooms / max_occupancy",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_registration-parking-plan",
+      "need": "registration.parking_plan",
+      "entity": "registration"
+    },
+    {
+      "anchor": "need_listing-platform-listing-id-url-title-listed-at",
+      "need": "listing.platform / listing_id / url / title / listed_at",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_listing-nightly-rate",
+      "need": "listing.nightly_rate",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_listing-host",
+      "need": "listing.host",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_listing-property",
+      "need": "listing.property",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_listing-bookings",
+      "need": "listing.bookings",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_listing-match",
+      "need": "listing.match",
+      "entity": "listing"
+    },
+    {
+      "anchor": "need_standing-distinction",
+      "need": "standing.distinction",
+      "entity": "standing"
+    },
+    {
+      "anchor": "need_standing-council-district",
+      "need": "standing.council_district",
+      "entity": "standing"
+    },
+    {
+      "anchor": "need_standing-request-nbr",
+      "need": "standing.request_nbr",
+      "entity": "standing"
+    },
+    {
+      "anchor": "need_standing-responsible-agent",
+      "need": "standing.responsible_agent",
+      "entity": "standing"
+    },
+    {
+      "anchor": "need_inspection-planned-for",
+      "need": "inspection.planned_for",
+      "entity": "inspection"
+    },
+    {
+      "anchor": "need_inspection-focus-note",
+      "need": "inspection.focus / note",
+      "entity": "inspection"
+    },
+    {
+      "anchor": "need_notice-kind-channel-subject-sent-at",
+      "need": "notice.kind / channel / subject / sent_at",
+      "entity": "notice"
+    },
+    {
+      "anchor": "need_connector-health",
+      "need": "connector.health",
+      "entity": "connector"
+    }
+  ],
+  "edges": [
+    {
+      "source": "snip_001",
+      "target": "need_parcel-address",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_002",
+      "target": "need_parcel-address",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_003",
+      "target": "need_parcel-address",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_001",
+      "target": "need_parcel-lat-lng",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_002",
+      "target": "need_parcel-lat-lng",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_004",
+      "target": "need_parcel-lat-lng",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_001",
+      "target": "need_parcel-apn",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_002",
+      "target": "need_parcel-apn",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_parcel-bedrooms",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_006",
+      "target": "need_parcel-bedrooms",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_003",
+      "target": "need_parcel-bedrooms",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_007",
+      "target": "need_parcel-zoning",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_008",
+      "target": "need_parcel-evictions",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_009",
+      "target": "need_parcel-evictions",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_010",
+      "target": "need_owner-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_011",
+      "target": "need_owner-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_012",
+      "target": "need_owner-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_010",
+      "target": "need_owner-phone",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_013",
+      "target": "need_owner-phone",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_010",
+      "target": "need_owner-mailing-address",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_013",
+      "target": "need_owner-mailing-address",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_010",
+      "target": "need_owner-email",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_013",
+      "target": "need_owner-email",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_008",
+      "target": "need_owner-property-count",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_014",
+      "target": "need_owner-property-count",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_015",
+      "target": "need_municipality-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_016",
+      "target": "need_municipality-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_017",
+      "target": "need_municipality-state",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_018",
+      "target": "need_municipality-state",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_007",
+      "target": "need_municipality-county",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_019",
+      "target": "need_municipality-code-url",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_020",
+      "target": "need_municipality-chapter",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_021",
+      "target": "need_jurisdiction-name",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_007",
+      "target": "need_obligation-text",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_020",
+      "target": "need_obligation-section",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_022",
+      "target": "need_obligation-holder",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_016",
+      "target": "need_obligation-holder",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_007",
+      "target": "need_figure-party-modality",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_023",
+      "target": "need_kind-standing-criterion",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_024",
+      "target": "need_fee-schedule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_020",
+      "target": "need_fee-schedule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_025",
+      "target": "need_tax-schedule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_tax-schedule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_026",
+      "target": "need_compliance-rule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_023",
+      "target": "need_compliance-rule-",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_027",
+      "target": "need_registration-license-number",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_028",
+      "target": "need_registration-license-number",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_029",
+      "target": "need_registration-license-number",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_027",
+      "target": "need_registration-status",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_028",
+      "target": "need_registration-status",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_014",
+      "target": "need_registration-status",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_027",
+      "target": "need_registration-issued-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_028",
+      "target": "need_registration-issued-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_027",
+      "target": "need_registration-expires-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_028",
+      "target": "need_registration-expires-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_027",
+      "target": "need_registration-holder",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_028",
+      "target": "need_registration-holder",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_registration-units-bedrooms-guest-rooms-max-occupancy",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_003",
+      "target": "need_registration-units-bedrooms-guest-rooms-max-occupancy",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_003",
+      "target": "need_registration-parking-plan",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_registration-parking-plan",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_030",
+      "target": "need_listing-platform-listing-id-url-title-listed-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_031",
+      "target": "need_listing-platform-listing-id-url-title-listed-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_032",
+      "target": "need_listing-nightly-rate",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_031",
+      "target": "need_listing-nightly-rate",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_031",
+      "target": "need_listing-host",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_031",
+      "target": "need_listing-property",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_033",
+      "target": "need_listing-bookings",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_032",
+      "target": "need_listing-bookings",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_034",
+      "target": "need_listing-match",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_035",
+      "target": "need_standing-distinction",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_standing-distinction",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_026",
+      "target": "need_standing-council-district",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_025",
+      "target": "need_standing-request-nbr",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_036",
+      "target": "need_standing-responsible-agent",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_inspection-planned-for",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_005",
+      "target": "need_inspection-focus-note",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_037",
+      "target": "need_inspection-focus-note",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_038",
+      "target": "need_notice-kind-channel-subject-sent-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_039",
+      "target": "need_notice-kind-channel-subject-sent-at",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_040",
+      "target": "need_connector-health",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_041",
+      "target": "need_connector-health",
+      "rel": "evidences"
+    },
+    {
+      "source": "snip_019",
+      "target": "need_connector-health",
+      "rel": "evidences"
+    }
+  ],
+  "violations": []
+}

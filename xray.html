@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>X-ray — schema needs → Slate / Building Blocks / Swarm</title>
+<style>
+  :root{--bg:#0f1216;--panel:#161b22;--panel2:#1c232d;--line:#2a3441;--ink:#e6e9ef;--dim:#9aa3b5;--faint:#697180;--accent:#e8b93e;--teal:#4cc3a0;}
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font:13px/1.5 -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;margin:0;padding:24px 28px 80px}
+  @media(max-width:700px){body{padding:16px 14px 60px}}
+  h1{font-size:21px;margin:0 0 6px}
+  .sub{color:var(--dim);max-width:980px;margin:0 0 16px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 4px;font-size:12px;color:var(--dim)}
+  .legend span{display:flex;align-items:center;gap:6px}.legend i{width:10px;height:10px;border-radius:2px}
+  .note{border-left:3px solid var(--accent);background:var(--panel);padding:10px 14px;border-radius:0 8px 8px 0;color:var(--dim);font-size:12.5px;margin:14px 0 22px}
+  .entity{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+  .entity>h2{margin:0 0 12px;font-size:14px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent)}
+  .need{border-top:1px dashed var(--line);padding:12px 0 4px}
+  .need:first-child{border-top:none}
+  .need-key{font-family:ui-monospace,monospace;font-size:12px;color:var(--ink);margin-bottom:8px;font-weight:700}
+  .cands{display:flex;flex-direction:column;gap:6px}
+  .cand{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--panel2)}
+  .cand.gap{border-style:dashed}
+  .cand-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px}
+  .cand .type{color:var(--teal);font-weight:700}
+  .cand code{background:#0c0f13;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:11.5px;color:var(--ink);word-break:break-all}
+  .cand-src{font-size:11px;color:var(--faint);margin-top:3px;font-family:ui-monospace,monospace}
+  .cand-note{font-size:11.5px;color:var(--dim);margin-top:4px}
+  .chip{display:inline-block;font-size:10px;font-weight:800;text-transform:uppercase;border-radius:4px;padding:1px 6px;letter-spacing:.6px}
+  .chip.exact{background:rgba(46,139,87,.16);color:#4cc38a;border:1px solid #2e8b57}
+  .chip.strong{background:rgba(30,107,184,.16);color:#7db4f0;border:1px solid #1e6bb8}
+  .chip.partial{background:rgba(184,134,11,.16);color:#e0c06a;border:1px solid #b8860b}
+  .chip.analog{background:rgba(138,90,68,.18);color:#d19a7c;border:1px solid #8a5a44}
+  .chip.gap{background:rgba(192,57,43,.16);color:#e88;border:1px solid #c0392b}
+  h2.sec{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin:34px 0 12px}
+  .corpus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+  .corpus-col{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .corpus-col h3{margin:0 0 6px;font-size:14px}
+  .src-note{font-size:11px;color:var(--faint);margin-bottom:10px}
+  .type{margin-bottom:8px;font-size:11.5px}
+  .type b{color:var(--ink);display:block;margin-bottom:2px}
+  .fields{color:var(--dim);line-height:1.5;word-break:break-word}
+  .deliv{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;font-size:11.5px}
+  .deliv .src{color:var(--faint);display:block;margin:2px 0 4px;font-family:ui-monospace,monospace;font-size:10.5px}
+  a{color:var(--teal)}
+  footer{margin-top:30px;font-size:11px;color:var(--faint);border-top:1px solid var(--line);padding-top:12px}
+</style>
+</head>
+<body>
+<h1>X-ray · schema needs → Slate / Building Blocks / Swarm</h1>
+<p class="sub">Every field the municipal-db demo needs, mapped to the vendor schema fields that could fulfill it — snipped verbatim from the schema sources we pulled (Slate API key-types, the Building Blocks production bundle, the Swarm GraphQL introspection, and the btora delivery pulls). A <span class="chip gap">gap</span> means none of the three systems has a field for it; it is named, not guessed.</p>
+<div class="legend"><span><i style="background:#2e8b57"></i><b>exact</b></span><span><i style="background:#1e6bb8"></i><b>strong</b></span><span><i style="background:#b8860b"></i><b>partial</b></span><span><i style="background:#8a5a44"></i><b>analog</b></span><span><i style="background:#c0392b"></i><b>gap</b></span><span><code>code</code> = exact field name as it appears in the source schema</span></div>
+<div class="note"><b>Three structural findings:</b> (1) <b>zoning</b> is the one hard gap — absent from every entity type in Building Blocks, from Swarm, and from Slate; the demo keeps it null, not guessed. (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's <code>listing.property</code> field-for-field — that shape is the demo's listing layer fulfilled as-is.</div>
+
+<h2 class="sec">field needs → candidates</h2>
+<section class="entity">
+    <h2>parcel</h2>
+    <div class="need">
+      <div class="need-key"><code>parcel.address</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">Asset</span> · <code>address / fullAddress / geocoderAddress</code></div><div class="cand-src">slate_api_key_types.json → Asset</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">ASSET</span> · <code>address / addressMap / fullAddress</code></div><div class="cand-src">bundle inventory ASSET</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">listing.property</span> · <code>property.address</code></div><div class="cand-src">universal/listings_*.jsonl</div><div class="cand-note">btora universal listing shape carries the geocoded address verbatim</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>parcel.lat/lng</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">Asset</span> · <code>latitude / longitude / polygon / envelope</code></div><div class="cand-src">slate_api_key_types.json → Asset</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">ASSET</span> · <code>latitude / longitude / polygon</code></div><div class="cand-src">bundle inventory ASSET (confirmed native)</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">TransformerGeocoder</span> · <code>columns / source</code></div><div class="cand-src">swarm_graphql_schema.json → TransformerGeocoder</div><div class="cand-note">geocoder feeds the parcel coords</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>parcel.apn</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">Asset</span> · <code>realPropertyUniqueId / parcelId / otherId</code></div><div class="cand-src">slate_api_key_types.json → Asset</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">ASSET</span> · <code>parcelId</code></div><div class="cand-src">bundle inventory ASSET</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>parcel.bedrooms</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>attributes</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask.attributes</div><div class="cand-note">declared per-unit attributes on the registration task</div></div><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Building Blocks</b> · <span class="type">ASSET_PROJECT_UNIT / attribute</span> · <code>unit attributes</code></div><div class="cand-src">bundle inventory ASSET_PROJECT_UNIT</div><div class="cand-note">confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">listing.property</span> · <code>property.bedrooms / property.beds</code></div><div class="cand-src">universal/listings_*.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>parcel.zoning</code></div>
+      <div class="cands"><div class="cand gap"><div class="cand-head"><span class="chip gap">gap</span><b>no candidate in Slate / Building Blocks / Swarm</b></div><div class="cand-note">NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>parcel.evictions</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Building Blocks</b> · <span class="type">ASSET attribute</span> · <code>assessments / owner-referenced counts</code></div><div class="cand-src">bundle inventory §6 assessments{owners,totalValue,year}</div><div class="cand-note">eviction filings are a data feed; the demo bridges them from landlordmapper.org</div></div><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">PlatformAttribute / AttributeRule</span> · <code>name / entity / rules</code></div><div class="cand-src">swarm_graphql_schema.json → PlatformAttribute, AttributeRule</div><div class="cand-note">an attribute rule could derive a repeat-eviction flag</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>owner</h2>
+    <div class="need">
+      <div class="need-key"><code>owner.name</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">IdentityProfile</span> · <code>fullName / firstName / lastName</code></div><div class="cand-src">slate_api_key_types.json → IdentityProfile</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">IDENTITY / IDENTITY_PROFILE</span> · <code>fullName</code></div><div class="cand-src">bundle inventory IDENTITY</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">listing.host</span> · <code>host.name</code></div><div class="cand-src">universal/listings_*.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>owner.phone</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">IdentityProfile</span> · <code>phone / otherPhones / phoneType</code></div><div class="cand-src">slate_api_key_types.json → IdentityProfile</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">IDENTITY_PROFILE</span> · <code>phone</code></div><div class="cand-src">bundle inventory IDENTITY_PROFILE</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>owner.mailing_address</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">IdentityProfile</span> · <code>address / address2 / city / state / zip / fullAddress</code></div><div class="cand-src">slate_api_key_types.json → IdentityProfile</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">IDENTITY_PROFILE</span> · <code>address / fullAddress</code></div><div class="cand-src">bundle inventory IDENTITY_PROFILE</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>owner.email</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">IdentityProfile</span> · <code>email / emailType / otherEmails</code></div><div class="cand-src">slate_api_key_types.json → IdentityProfile</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">IDENTITY_PROFILE</span> · <code>email</code></div><div class="cand-src">bundle inventory IDENTITY_PROFILE</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>owner.property_count</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Building Blocks</b> · <span class="type">ASSET attribute</span> · <code>owner property count / owner total suspected rentals</code></div><div class="cand-src">bundle inventory §8 GetSuggestedLinks ownedAssetCount / previouslyOwnedAssetCount</div><div class="cand-note">suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">platform_attributes</span> · <code>owner_listings</code></div><div class="cand-src">swarm/platform_attributes.jsonl</div><div class="cand-note">btora attribute row carries owner_listings count per parcel</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>municipality</h2>
+    <div class="need">
+      <div class="need-key"><code>municipality.name</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">Workflow / city</span> · <code>city</code></div><div class="cand-src">bundle inventory WORKFLOW.city</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">City</span> · <code>name / alias / location</code></div><div class="cand-src">swarm_graphql_schema.json → City</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>municipality.state</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">State</span> · <code>name / abbreviation</code></div><div class="cand-src">swarm_graphql_schema.json → State</div></div><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Slate</b> · <span class="type">Workflow / city</span> · <code>city</code></div><div class="cand-src">slate_api_key_types.json → Workflow.city</div><div class="cand-note">Slate scopes per city, state is implied</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>municipality.county</code></div>
+      <div class="cands"><div class="cand gap"><div class="cand-head"><span class="chip gap">gap</span><b>no candidate in Slate / Building Blocks / Swarm</b></div><div class="cand-note">no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>municipality.code_url</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">Connector</span> · <code>connectorUrl / provenanceUrl / assetProvenanceUrl</code></div><div class="cand-src">swarm_graphql_schema.json → Connector</div><div class="cand-note">the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>municipality.chapter</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Building Blocks</b> · <span class="type">LicenseType</span> · <code>ordinance</code></div><div class="cand-src">bundle inventory LicenseType.ordinance</div><div class="cand-note">LicenseType carries an ordinance pointer — the closest structural home for a chapter citation</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>jurisdiction</h2>
+    <div class="need">
+      <div class="need-key"><code>jurisdiction.name</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">State / City</span> · <code>name / abbreviation</code></div><div class="cand-src">swarm_graphql_schema.json → State, City</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>obligation</h2>
+    <div class="need">
+      <div class="need-key"><code>obligation.text</code></div>
+      <div class="cands"><div class="cand gap"><div class="cand-head"><span class="chip gap">gap</span><b>no candidate in Slate / Building Blocks / Swarm</b></div><div class="cand-note">none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>obligation.section</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Building Blocks</b> · <span class="type">LicenseType</span> · <code>ordinance</code></div><div class="cand-src">bundle inventory LicenseType.ordinance</div><div class="cand-note">an ordinance pointer is the only citation-shaped field; section numbers live in the code text</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>obligation.holder</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Building Blocks</b> · <span class="type">Workflow</span> · <code>city</code></div><div class="cand-src">bundle inventory WORKFLOW.city</div><div class="cand-note">the municipality that holds the obligation = the city scoping the workflow</div></div><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">City</span> · <code>name</code></div><div class="cand-src">swarm_graphql_schema.json → City</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>figure</h2>
+    <div class="need">
+      <div class="need-key"><code>figure.party / modality</code></div>
+      <div class="cands"><div class="cand gap"><div class="cand-head"><span class="chip gap">gap</span><b>no candidate in Slate / Building Blocks / Swarm</b></div><div class="cand-note">eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>kind</h2>
+    <div class="need">
+      <div class="need-key"><code>kind.standing_criterion</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">AttributeRule</span> · <code>rules / name / isPreset</code></div><div class="cand-src">swarm_graphql_schema.json → AttributeRule</div><div class="cand-note">AttributeRule is the closest standing-criterion container (a named, versioned rule)</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>fee-schedule</h2>
+    <div class="need">
+      <div class="need-key"><code>fee-schedule.*</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">WorkflowStageTaskPayment</span> · <code>defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription</code></div><div class="cand-src">bundle inventory §7 WorkflowStageTaskPayment</div><div class="cand-note">this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)</div></div><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Building Blocks</b> · <span class="type">LicenseType</span> · <code>registrationPortals / form</code></div><div class="cand-src">bundle inventory LicenseType</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>tax-schedule</h2>
+    <div class="need">
+      <div class="need-key"><code>tax-schedule.*</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">PlatformEventTable</span> · <code>amountLabel / amountUnit / columns / tableName</code></div><div class="cand-src">swarm_graphql_schema.json → PlatformEventTable</div><div class="cand-note">an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type</div></div><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>paymentAmount / paymentLineItems</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>compliance-rule</h2>
+    <div class="need">
+      <div class="need-key"><code>compliance-rule.*</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">PlatformFilter</span> · <code>name / label / type / unit / mappingColumn / dataElement / value / sumOn / source</code></div><div class="cand-src">swarm_graphql_schema.json → PlatformFilter</div><div class="cand-note">a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">AttributeRule</span> · <code>rules / name / isPreset</code></div><div class="cand-src">swarm_graphql_schema.json → AttributeRule</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>registration</h2>
+    <div class="need">
+      <div class="need-key"><code>registration.license_number</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">License</span> · <code>number / licenseIdentifier</code></div><div class="cand-src">slate_api_key_types.json → License</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">LICENSE</span> · <code>number</code></div><div class="cand-src">bundle inventory LICENSE</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate→btora</b> · <span class="type">slate_licenses</span> · <code>license_shown</code></div><div class="cand-src">btora/slate/slate_registrations.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.status</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">License</span> · <code>status / isExpired / isRenewable / isInRenewalWindow</code></div><div class="cand-src">slate_api_key_types.json → License</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">LICENSE</span> · <code>status / isExpired / isRenewable</code></div><div class="cand-src">bundle inventory LICENSE</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">platform_attributes</span> · <code>lic</code></div><div class="cand-src">swarm/platform_attributes.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.issued_at</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">License</span> · <code>approvedOn / dateCreated</code></div><div class="cand-src">slate_api_key_types.json → License</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">LICENSE</span> · <code>approvedOn</code></div><div class="cand-src">bundle inventory LICENSE</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.expires_at</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">License</span> · <code>expirationDate</code></div><div class="cand-src">slate_api_key_types.json → License</div><div class="cand-note">confirmed the forward-dated field (Job 3)</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">LICENSE</span> · <code>expirationDate</code></div><div class="cand-src">bundle inventory LICENSE.expirationDate (script-computed)</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.holder</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">License</span> · <code>registrant</code></div><div class="cand-src">slate_api_key_types.json → License.registrant</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">LICENSE</span> · <code>registrant / email / profilePicture</code></div><div class="cand-src">bundle inventory LICENSE.registrant</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.units / bedrooms / guest_rooms / max_occupancy</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>attributes (declared)</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask.attributes</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">listing.property</span> · <code>property.units / property.bedrooms / property.max_occupancy</code></div><div class="cand-src">universal/listings_*.jsonl</div><div class="cand-note">observed (from the platform), the thing the registry claims should match</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>registration.parking_plan</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">listing.property</span> · <code>property.parking_plan</code></div><div class="cand-src">universal/listings_*.jsonl</div></div><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>attributes (declared)</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask.attributes</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>listing</h2>
+    <div class="need">
+      <div class="need-key"><code>listing.platform / listing_id / url / title / listed_at</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→btora</b> · <span class="type">dataset_btora_listings</span> · <code>platform / listing_id / url / listed_at</code></div><div class="cand-src">btora/swarm/dataset_btora_listings.jsonl</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">universal listing</span> · <code>platform / listing_id / url / title / listed_at</code></div><div class="cand-src">universal/listings_*.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>listing.nightly_rate</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→btora</b> · <span class="type">transformer_booking_events</span> · <code>amount / amount_unit</code></div><div class="cand-src">btora/swarm/transformer_booking_events.jsonl</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">universal listing</span> · <code>nightly_rate</code></div><div class="cand-src">universal/listings_*.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>listing.host</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">universal listing</span> · <code>host{name,phone,address}</code></div><div class="cand-src">universal/listings_*.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>listing.property</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→universal</b> · <span class="type">universal listing</span> · <code>property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}</code></div><div class="cand-src">universal/listings_*.jsonl</div><div class="cand-note">this shape is the demo's listing.property — already matched field-for-field</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>listing.bookings</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→btora</b> · <span class="type">dataset_btora_calendar</span> · <code>window_from / window_to / status / observed_at</code></div><div class="cand-src">btora/swarm/dataset_btora_calendar.jsonl</div><div class="cand-note">the calendar windows are the booking evidence (Job 9)</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→btora</b> · <span class="type">transformer_booking_events</span> · <code>date_from / date_to / amount</code></div><div class="cand-src">btora/swarm/transformer_booking_events.jsonl</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>listing.match</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm→btora</b> · <span class="type">dataset_btora_listings / platform_attributes</span> · <code>match / flags</code></div><div class="cand-src">btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl</div><div class="cand-note">CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>standing</h2>
+    <div class="need">
+      <div class="need-key"><code>standing.distinction</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Building Blocks</b> · <span class="type">FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK</span> · <code>task obligations</code></div><div class="cand-src">bundle inventory FLOW_STAGE_TASK</div><div class="cand-note">obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel</div></div><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>workflowStageTask / status / dueOn</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>standing.council_district</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Swarm</b> · <span class="type">PlatformFilter</span> · <code>name / label / mappingColumn</code></div><div class="cand-src">swarm_graphql_schema.json → PlatformFilter</div><div class="cand-note">district is a filter dimension; the demo carries the 311 district on the standing</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>standing.request_nbr</code></div>
+      <div class="cands"><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Swarm</b> · <span class="type">PlatformEventTable</span> · <code>eventIdLabel / tableName</code></div><div class="cand-src">swarm_graphql_schema.json → PlatformEventTable</div><div class="cand-note">311 requests are an event table; the request number is its event id label</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>standing.responsible_agent</code></div>
+      <div class="cands"><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Building Blocks</b> · <span class="type">AssetIdentity / GetSuggestedLinks</span> · <code>ownedAssetCount / nameMatch / addressMatch</code></div><div class="cand-src">bundle inventory §8</div><div class="cand-note">the responsible agent is the identity matched to the parcel</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>inspection</h2>
+    <div class="need">
+      <div class="need-key"><code>inspection.planned_for</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>appointmentDate / appointmentDateUTC / scheduledFor / isAppointment</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask</div><div class="cand-note">the inspection IS a scheduled task on the flow</div></div></div>
+    </div><div class="need">
+      <div class="need-key"><code>inspection.focus / note</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Slate</b> · <span class="type">FlowStageTask</span> · <code>notes / noteCount</code></div><div class="cand-src">slate_api_key_types.json → FlowStageTask</div></div><div class="cand strong"><div class="cand-head"><span class="chip strong">strong</span><b>Swarm</b> · <span class="type">Note</span> · <code>body / author / createdAt</code></div><div class="cand-src">swarm_graphql_schema.json → Note</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>notice</h2>
+    <div class="need">
+      <div class="need-key"><code>notice.kind / channel / subject / sent_at</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">SnailMail / SnailMailCampaign / OutreachMetrics</span> · <code>campaign / reply-code tracking / metrics</code></div><div class="cand-src">bundle inventory §8 SnailMail</div><div class="cand-note">BB ships a full outreach subsystem — the notice's structural home</div></div><div class="cand analog"><div class="cand-head"><span class="chip analog">analog</span><b>Slate</b> · <span class="type">Document</span> · <code>name / url / template</code></div><div class="cand-src">slate_api_key_types.json → Document</div></div></div>
+    </div>
+  </section><section class="entity">
+    <h2>connector.health</h2>
+    <div class="need">
+      <div class="need-key"><code>connector.health</code></div>
+      <div class="cands"><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">getAngelPlatformCityAttribute</span> · <code>failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl</code></div><div class="cand-src">bundle inventory §3</div><div class="cand-note">the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Building Blocks</b> · <span class="type">IntegrationHealthDashboard</span> · <code>provider / status / checkedAt / latencyMs</code></div><div class="cand-src">bundle inventory §4</div></div><div class="cand exact"><div class="cand-head"><span class="chip exact">exact</span><b>Swarm</b> · <span class="type">Connector</span> · <code>failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / stage</code></div><div class="cand-src">swarm_graphql_schema.json → Connector</div></div></div>
+    </div>
+  </section>
+
+<h2 class="sec">verbatim schema corpus (what was snipped)</h2>
+<div class="corpus-grid">
+    <div class="corpus-col slate"><h3>Slate</h3><div class="src-note">verbatim top-level GraphQL types and their fields</div><div class="type"><b>Asset</b><div class="fields">id, otherId, alias, realPropertyUniqueId, parcelId, commonName, cover, description, address, geocoderAddress, zipCode, landSize, addresses, addressMap, fullAddress, subAddress, city, gisCity, gisFeatures, gisFeature, latitude, longitude, polygon, envelope, assetIdentities, assetIdentityProfiles, assetImages, parent, children, assetLinks, assetScores, assessments, exactMatch, textDistance, assetType, parcelFilters, eventRelation, assetUnits, workflows, flows, flowEntities, projects, deletedAt, nUnits, flowAssetStatus, licenses, license, flowsInPublicStage, publiCityVisible, publiCityUrl, programEligibles, showOpportunityBanner, marketStatus, marketPlaceDescription, forms, managingAgency, buildingBlocksUrl</div></div><div class="type"><b>FlowStageTask</b><div class="fields">isFlowAssignment, totalCount, noteCount, id, dateCreated, taskShortId, workflowStageTask, flowStage, flow, notes, documents, attributes, assignee, assignor, assignedOn, allowedAssigneeTags, setAssigneeAsFlowLead, completedAt, completedBy, workflowStageTaskCompletionReason, completionLevel, completionShortLabel, flowCompletedAt, flowStageCompletedAt, preFlowStageTask, postFlowStageTask, appointmentDate, appointmentDateUTC, isAppointment, calendarEvents, totalAppointmentDurationInMinutes, appointmentSubFlowStageTasks, scheduledBy, dueOnRaw, dueOn, dueOnUTC, isOverdue, isPending, scheduledFor, isFuture, assigneeAccepted, status, pointOfContact, link, isRequired, asset, assetProject, assetId, identityProfile, flowEntity, identityId, isReviewFlowAssets, isExternalReviewFlowAssets, isPayment, isPaymentProcessing, paymentDate, paymentAmount, paymentDescription, paymentModifiedBy, paymentModifiedOn, processingFee, paymentTransactions, isPaymentRefunded, lastPaymentMethodSelected, transaction, paymentEvents, receiptUrl, paymentLineItems, customPaymentLineItems, paymentIntentId, paymentIntent, paymentIntentsFromStripe, paymentChecks, paymentCash, authorizeNetTxId, authorizeNetTx, tsysTransactionId, tsysTransaction, tylerToken, tylerOrder, paymentusData, fstIdentifier</div></div><div class="type"><b>License</b><div class="fields">id, dateCreated, lastUpdated, type, number, status, licenseIdentifier, approvedOn, isDraft, isExpired, isRenewable, isInRenewalWindow, renewableFrom, expirationDate, lastNotifiedRegistrant, lastNotifiedExpiration, lastNotifiedRenewal, licenseChain, previousLicense, nextLicense, licenseDeregistrationReason, registrant, lastUpdatedBy, assetCount, submissionData, asset, assetUnit, assetProject, nUnits, flow, assets, flows, totalCount, tags, submissionProgress, deregistrationSubmission</div></div><div class="type"><b>PaymentTransaction</b><div class="fields">id, dateCreated, provider, transactionId, paymentLineItems, flowStageTask, type, paymentMethod, paymentSource, invoiceId, invoice</div></div><div class="type"><b>User</b><div class="fields">id, apiKeyId, parentUserId, name, organization, language, profilePicture, passwordExpired, identityProfile, username, email, department, title, enabled, userGroup, city, totalCount, surveyAssignmentCount, surveysCompletedCount, firstName, lastName, lastActivity, dateCreated, accessTokenExpiration, phone, textMessageConsent, alerts, authProvider, roles, mfaEnabled, notificationsEnabled, isCalendarConnected, googleCalendarRefreshToken, isGoogleCalendarConnected, googleCalendarNeedsReconnect, outlookCalendarRefreshToken, outlookDefaultCalendarId, isOutlookCalendarConnected, outlookCalendarNeedsReconnect, workflowAssociations, flowStageTaskCount, slateEmailSignature, slateTaskSummaryFrequency, completedFlowStageTaskCount, pendingFlowStageTaskCount, overdueFlowStageTaskCount, flowLeadFlowCount, color, betaCode, tags, userCities, hasParent, mergedTo, mergedFrom, emailVerified, phoneNumberVerified, notificationSettings, isSystem, tsysSavedCreditCard</div></div><div class="type"><b>Flow</b><div class="fields">id, flowShortId, name, deletedAt, deletedBy, assignee, assignedOn, workflow, project, currentStage, currentFlowStage, flowStages, flowStageTasks, activity, elapsedDays, tags, createdBy, createdAt, noteCount, totalCount, preFlow, postFlows, groupSize, groupTimestamp, groupedFlows, completedAt, completedBy, flowCloseReason, applicantName, applicantContact, applicantEmail, applicantPhone, applicantAddress, applicantAddress2, applicantCity, applicantState, applicantZip, applicantCountry, creatorFlowIdentityProfile, triggerForm, triggerData, publiclyViewable, flowIdentityProfiles, stripePayment, licenses, flowLead, firstAsset, assetCount, slateMigration, assetProjects, flowEntities, snailMailTrigger, snailMails, snailMailCampaign</div></div><div class="type"><b>Workflow</b><div class="fields">city, workflowGroup, color, id, name, rootStage, finalStage, preWorkflow, flows, flowCloseReasons, nextWorkflow, flowCount, documentTemplateKey, averageCompletionSeconds, stages, forms, documentTemplates, blockedAppointmentDates, staged, showIdentity, showInPublicityPopup, identityLabel, workflowIdentityTypes, identityBased, showUnits, unitCountQuestion, suspectedUnitLabel, reportedUnitLabel, showUnitNames, showAddressTableUnits, allowCreateUnits, canonicalizeUnits, showSuggestedProperties, maxProperties, licenseType, propertyEligibleFormulaScript, public, isReadOnly, postCreateFlowScript, sqlReports</div></div><div class="type"><b>IdentityProfile</b><div class="fields">id, dateCreated, dateUpdated, source, type, fullName, firstName, lastName, otherName, email, emailType, otherEmails, profilePicture, phone, phoneType, otherPhones, placeId, location, address, address2, city, state, zip, fullAddress, country, addressType, otherAddresses, duplicateIdentityProfilesByEmail, user, identity, isRawIdentity, assignedTasksCount, createdFlowsCount, documents, tags, createdBy, flowIdentityProfiles, totalCount, flowCount, linkedIdentityTypeNames, groupedProfileIds</div></div><div class="type"><b>Document</b><div class="fields">id, url, fullUrl, label, name, owner, dateCreated, deletedOn, isPublicBuildingBlocks, isPublicPublicity, template, workflowStage, workflowStageTask, identityProfile, mergeData, reportData, sfdt, isSdft, isFolder, fileName, contextLabel, parent, children, childCount, totalCount</div></div><div class="deliv"><b>slate_licenses</b> <span class="src">btora/slate/slate_registrations.jsonl</span><div class="fields">table, parcel, license_shown, status, platform, match</div></div><div class="deliv"><b>inspection_queue</b> <span class="src">btora/slate/slate_inspection_queue.jsonl</span><div class="fields">parcel, window, platform, match, lic, use, evidence</div></div></div>
+    <div class="corpus-col bb"><h3>Building Blocks</h3><div class="src-note">verbatim from the production JS bundle Columbus ships; the inventory doc is the extraction record</div><div class="type"><b>ASSET</b><div class="fields">id, alias, parcelId, commonName, address, addressMap, addresses, assetType, assetLinks, marketStatus, contact, gisCity, latitude, longitude, polygon, parent, children, assessments, parcelFilters, licenses</div></div><div class="type"><b>LICENSE</b><div class="fields">id, number, status, isExpired, isRenewable, approvedOn, renewableFrom, expirationDate, lastNotifiedRegistrant, lastNotifiedExpiration, lastNotifiedRenewal, licenseChain, previousLicense, nextLicense, licenseDeregistrationReason, registrant, email, profilePicture, asset, assetUnit, parcelId, address, displayName, type, flow, workflow, tags, submissionData</div></div><div class="type"><b>LicenseType</b><div class="fields">name, unitLevel, unitType, durationInDays, renewalDaysBeforeExpiration, expireCalendarYear, expireCalendarDate, expirationDateFormulaScript, propertyEligibleFormulaScript, notifyRegistrantOnRenewal, workflow, registrationPortals, form, ordinance, contact, allowedAssetIdentityTypes, identityBased, maxProperties</div></div><div class="type"><b>WorkflowStageTaskPayment</b><div class="fields">defaultPaymentAmount, paymentDescription, paymentAmountPerAsset, paymentAmountPerUnit, allowPaymentAmountOverride, allowChecks, allowCash, autoAddProcessingFees, processingFeesPercentage, checksPayableTo, paymentAccount, paymentFormulaScript, appealConditionalLogicForm, autoApproveAppeals, appealsAssignee</div></div><div class="type"><b>getAngelPlatformCityAttribute</b><div class="fields">id, name, cityAttribute, connectors, connectorUrl, provenanceUrl, assetProvenanceUrl, runInfo, failStreak, staleStreak, lastSuccessfulPushAt, lastDataChangeAt, stage, number</div></div><div class="type"><b>ProviderCredential</b><div class="fields">id, city, name, lastFour, isActive, createdAt, updatedAt, lastUsedAt, revokedAt, status, provider</div></div><div class="type"><b>IntegrationHealthDashboard</b><div class="fields">type, provider, status, cityId, checkedAt, latencyMs, errorMessage, targetLabel, paymentAccountId, userId, authProviderId</div></div><div class="type"><b>IdentityProfile</b><div class="fields">id, source, type, fullName, firstName, lastName, email, phone, address, city, state, zip, fullAddress, location</div></div><div class="type"><b>SnailMail</b><div class="fields">SnailMailCampaign, SnailMail, reply-code tracking, OutreachMetrics</div></div></div>
+    <div class="corpus-col swarm"><h3>Swarm</h3><div class="src-note">verbatim OBJECT/INTERFACE fields; + btora data pulls below</div><div class="type"><b>PlatformAttribute</b><div class="fields">cityAttribute, description, displayOnProfile, entity, filterGroup, filters, gisLayer, id, isPartitioned, name, tableName, type</div></div><div class="type"><b>PlatformCityAttribute</b><div class="fields">connectors, customLabel, id, multiValue</div></div><div class="type"><b>PlatformEventTable</b><div class="fields">activeCityCount, amountLabel, amountUnit, baseTableExists, cityEventTable, columns, dateLabel, eventIdLabel, eventType, filters, form, hasStatus, hasType, icon, id, level, name, parentId, tableColumns, tableName</div></div><div class="type"><b>PlatformFilter</b><div class="fields">binary, cities, cityFilter, dataElement, description, entity, filterGroup, filterOrder, hideDate, id, inverted, label, mappingColumn, name, nullCheck, publiclyViewable, source, sumOn, totalCitiesWithEnabledFilter, type, unit</div></div><div class="type"><b>EventTableColumn</b><div class="fields">category, customizable, id, instanceLabel, label, source, type, unit</div></div><div class="type"><b>Connector</b><div class="fields">activityStream, adapter, adapterArgs, allowOverwriteWithNoRecords, assetProvenanceUrl, attribute, attributeStatus, attributes, baseTable, baseTableSql, builder, city, cityPackage, connectorUrl, createdAt, datasets, deletedAt, deletesTable, eventTables, events, factsTable, failStreak, flow, hasNote, healthFlags, id, idColumns, insertsTable, isDeletable, isUpdate, jobs, lastDataChangeAt, lastNote, lastSuccessfulPushAt, mappingTables, multiConnector, name, notes, packageComponent, pipelineExportDefaultLlmPrompt, pipelineProvenanceExport, postTransforms, preTransforms, provenanceUrl, pushMode, runInfo, schedules, schema, section, sources, sql, stage, staleStreak, targetDataElement, targetTable, targetTableColumns, targetTableSql, type, updatesTable, viewName</div></div><div class="type"><b>Transformer</b><div class="fields">activityStream, city, cityPackage, configRegistryEntries, contractValidations, createdAt, dataContracts, deletedAt, flow, hasNote, healthFlags, id, isDeletable, jobs, metrics, name, packageComponent, rowCount, runInfo, runner, schema, section, skipIfUnchanged, table, tableName</div></div><div class="type"><b>TransformerAttributeRules</b><div class="fields">entity, inputFacts, ruleSql, rules, tracksHistory</div></div><div class="type"><b>TransformerAssetMapper</b><div class="fields">operations, postTransforms, preFilter, source, strategies, unnestAssetIds</div></div><div class="type"><b>Dataset</b><div class="fields">activityStream, city, cityId, cityPackage, cityShares, columns, connectors, contractValidations, createdAt, dataContracts, dataStoreObject, defaultSnapshotTransform, defaultTransformSql, deletedAt, description, events, failStreak, flow, hasNote, healthFlags, id, idColumns, isDeletable, isHighPriority, jobs, lastPulledAt, lastReload, loadedSnapshot, offlinePendingCustomer, packageComponent, previewData, pullMode, pullTimeout, pullerAdapter, pullerArgs, rawTableName, recordsetLastAppearedAtTableName, recordsetMapTableName, recordsetRawTableName, recordsetTrackLastAppearedAt, recordsetView, recordsetViewSql, rowCount, runInfo, schedules, schema, section, snapshots, sourceSystem, staleAfter, storeSnapshots, table, tableName, tags, title, url, usesPigeonScripts</div></div><div class="type"><b>AttributeRule</b><div class="fields">id, isPreset, name, rules</div></div><div class="type"><b>MetricValue</b><div class="fields">id, takenAt, value</div></div><div class="type"><b>Note</b><div class="fields">author, body, createdAt, id</div></div><div class="deliv"><b>btora_listings</b> <span class="src">btora/swarm/dataset_btora_listings.jsonl</span><div class="fields">dataset, pull_id, platform, listing_id, url, listed_at, bedrooms, nightly_rate, license_shown, match, parcel_anchor, lineage</div></div><div class="deliv"><b>btora_calendar</b> <span class="src">btora/swarm/dataset_btora_calendar.jsonl</span><div class="fields">dataset, listing_id, platform, window_from, window_to, status, observed_at, pull_id</div></div><div class="deliv"><b>platform_attributes</b> <span class="src">btora/swarm/platform_attributes.jsonl</span><div class="fields">attribute, entity, parcel_anchor, lic, match, flags, owner_listings, lineage</div></div><div class="deliv"><b>transformer_booking_events</b> <span class="src">btora/swarm/transformer_booking_events.jsonl</span><div class="fields">event_table, event_id, listing_id, platform, date_from, date_to, amount, amount_unit, parcel_anchor, match, lic, flags, observed_at, lineage</div></div><div class="deliv"><b>universal_listings</b> <span class="src">btora/universal/listings_*.jsonl</span><div class="fields">provider, pull_id, observed_at, platform, listing_id, url, title, listed_at, host{name,phone,address}, property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}, nightly_rate, calendar[{from,to,status,first_observed_pull,last_observed_pull}], match_hint</div></div></div>
+  </div>
+
+<h2 class="sec">snip audit history (folded from snip-events.json)</h2>
+<div class="note" style="margin-top:0;">This history is <b>not a static document</b> — it is folded from the committed event trace <code>snip-events.json</code> (EOT) into <code>snip-history.json</code>. Each row is a cut with its audit: <b>why</b> (the need it evidences), <b>where</b> (source file + byte offset), the integrity <code>sha</code>, and the verbatim EVA result. Re-run <code>node build-snip-eot.mjs</code> to re-fold.</div>
+  <div class="dbtable"><div class="dbtable-scroll"><table class="grid"><thead><tr><th>snip</th><th>system</th><th>type · field</th><th>where</th><th>verbatim</th><th>why</th><th>serves</th></tr></thead><tbody><tr>
+    <td><code>snip_001</code></td>
+    <td>Slate</td>
+    <td><code>Asset</code> · <code>address / fullAddress / geocoderAddress</code></td>
+    <td>slate_api_key_types.json → Asset · byte 4</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">f80948a791460e61</code></td>
+    <td class="cand-note">evidences &quot;parcel.address&quot; — Slate Asset.address / fullAddress / geocoderAddress is the exact verbatim home for this demo field (slate_api_key_types.json → Asset)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.address</code></td>
+  </tr><tr>
+    <td><code>snip_002</code></td>
+    <td>Building Blocks</td>
+    <td><code>ASSET</code> · <code>address / addressMap / fullAddress</code></td>
+    <td>bundle inventory ASSET · byte 2481</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">8486c4486a30b742</code></td>
+    <td class="cand-note">evidences &quot;parcel.address&quot; — Building Blocks ASSET.address / addressMap / fullAddress is the exact verbatim home for this demo field (bundle inventory ASSET)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.address</code></td>
+  </tr><tr>
+    <td><code>snip_003</code></td>
+    <td>Swarm→universal</td>
+    <td><code>listing.property</code> · <code>property.address</code></td>
+    <td>universal/listings_*.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;parcel.address&quot; — Swarm→universal listing.property.property.address is the exact verbatim home for this demo field (universal/listings_*.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.address</code></td>
+  </tr><tr>
+    <td><code>snip_004</code></td>
+    <td>Swarm</td>
+    <td><code>TransformerGeocoder</code> · <code>columns / source</code></td>
+    <td>swarm_graphql_schema.json → TransformerGeocoder · byte 650790</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">abe86374a1b6d64a</code></td>
+    <td class="cand-note">evidences &quot;parcel.lat/lng&quot; — Swarm TransformerGeocoder.columns / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → TransformerGeocoder)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.lat/lng</code></td>
+  </tr><tr>
+    <td><code>snip_005</code></td>
+    <td>Slate</td>
+    <td><code>FlowStageTask</code> · <code>attributes</code></td>
+    <td>slate_api_key_types.json → FlowStageTask.attributes · byte 790</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">59928d37dccfcd0a</code></td>
+    <td class="cand-note">evidences &quot;parcel.bedrooms&quot; — Slate FlowStageTask.attributes is the strong verbatim home for this demo field (slate_api_key_types.json → FlowStageTask.attributes)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.bedrooms</code></td>
+  </tr><tr>
+    <td><code>snip_006</code></td>
+    <td>Building Blocks</td>
+    <td><code>ASSET_PROJECT_UNIT / attribute</code> · <code>unit attributes</code></td>
+    <td>bundle inventory ASSET_PROJECT_UNIT · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;parcel.bedrooms&quot; — Building Blocks ASSET_PROJECT_UNIT / attribute.unit attributes is the strong verbatim home for this demo field (bundle inventory ASSET_PROJECT_UNIT)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.bedrooms</code></td>
+  </tr><tr>
+    <td><code>snip_007</code></td>
+    <td></td>
+    <td><code></code></td>
+    <td>grep of bundle + swarm + slate · byte null</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">no field in any of the three systems could evidence &quot;parcel.zoning&quot; — named gap, never guessed</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.zoning</code></td>
+  </tr><tr>
+    <td><code>snip_008</code></td>
+    <td>Building Blocks</td>
+    <td><code>ASSET attribute</code> · <code>assessments / owner-referenced counts</code></td>
+    <td>bundle inventory §6 assessments{owners,totalValue,year} · byte 12499</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">b2f343bfb31197f9</code></td>
+    <td class="cand-note">evidences &quot;parcel.evictions&quot; — Building Blocks ASSET attribute.assessments / owner-referenced counts is the analog verbatim home for this demo field (bundle inventory §6 assessments{owners,totalValue,year})</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.evictions</code></td>
+  </tr><tr>
+    <td><code>snip_009</code></td>
+    <td>Swarm</td>
+    <td><code>PlatformAttribute / AttributeRule</code> · <code>name / entity / rules</code></td>
+    <td>swarm_graphql_schema.json → PlatformAttribute, AttributeRule · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;parcel.evictions&quot; — Swarm PlatformAttribute / AttributeRule.name / entity / rules is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformAttribute, AttributeRule)</td>
+    <td><code style="font-size:10px;color:var(--dim)">parcel.evictions</code></td>
+  </tr><tr>
+    <td><code>snip_010</code></td>
+    <td>Slate</td>
+    <td><code>IdentityProfile</code> · <code>fullName / firstName / lastName</code></td>
+    <td>slate_api_key_types.json → IdentityProfile · byte 5381</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">c7a8dd795c84016c</code></td>
+    <td class="cand-note">evidences &quot;owner.name&quot; — Slate IdentityProfile.fullName / firstName / lastName is the exact verbatim home for this demo field (slate_api_key_types.json → IdentityProfile)</td>
+    <td><code style="font-size:10px;color:var(--dim)">owner.name</code></td>
+  </tr><tr>
+    <td><code>snip_011</code></td>
+    <td>Building Blocks</td>
+    <td><code>IDENTITY / IDENTITY_PROFILE</code> · <code>fullName</code></td>
+    <td>bundle inventory IDENTITY · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;owner.name&quot; — Building Blocks IDENTITY / IDENTITY_PROFILE.fullName is the exact verbatim home for this demo field (bundle inventory IDENTITY)</td>
+    <td><code style="font-size:10px;color:var(--dim)">owner.name</code></td>
+  </tr><tr>
+    <td><code>snip_012</code></td>
+    <td>Swarm→universal</td>
+    <td><code>listing.host</code> · <code>host.name</code></td>
+    <td>universal/listings_*.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;owner.name&quot; — Swarm→universal listing.host.host.name is the exact verbatim home for this demo field (universal/listings_*.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">owner.name</code></td>
+  </tr><tr>
+    <td><code>snip_013</code></td>
+    <td>Building Blocks</td>
+    <td><code>IDENTITY_PROFILE</code> · <code>phone</code></td>
+    <td>bundle inventory IDENTITY_PROFILE · byte 2552</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">2b82f29aa0daef26</code></td>
+    <td class="cand-note">evidences &quot;owner.phone&quot; — Building Blocks IDENTITY_PROFILE.phone is the exact verbatim home for this demo field (bundle inventory IDENTITY_PROFILE)</td>
+    <td><code style="font-size:10px;color:var(--dim)">owner.phone</code></td>
+  </tr><tr>
+    <td><code>snip_014</code></td>
+    <td>Swarm</td>
+    <td><code>platform_attributes</code> · <code>owner_listings</code></td>
+    <td>swarm/platform_attributes.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;owner.property_count&quot; — Swarm platform_attributes.owner_listings is the exact verbatim home for this demo field (swarm/platform_attributes.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">owner.property_count</code></td>
+  </tr><tr>
+    <td><code>snip_015</code></td>
+    <td>Building Blocks</td>
+    <td><code>Workflow / city</code> · <code>city</code></td>
+    <td>bundle inventory WORKFLOW.city · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;municipality.name&quot; — Building Blocks Workflow / city.city is the exact verbatim home for this demo field (bundle inventory WORKFLOW.city)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.name</code></td>
+  </tr><tr>
+    <td><code>snip_016</code></td>
+    <td>Swarm</td>
+    <td><code>City</code> · <code>name / alias / location</code></td>
+    <td>swarm_graphql_schema.json → City · byte 76587</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">cf2efe7b6cbf535e</code></td>
+    <td class="cand-note">evidences &quot;municipality.name&quot; — Swarm City.name / alias / location is the exact verbatim home for this demo field (swarm_graphql_schema.json → City)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.name</code></td>
+  </tr><tr>
+    <td><code>snip_017</code></td>
+    <td>Swarm</td>
+    <td><code>State</code> · <code>name / abbreviation</code></td>
+    <td>swarm_graphql_schema.json → State · byte 76100</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">010e1c4f310773e2</code></td>
+    <td class="cand-note">evidences &quot;municipality.state&quot; — Swarm State.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.state</code></td>
+  </tr><tr>
+    <td><code>snip_018</code></td>
+    <td>Slate</td>
+    <td><code>Workflow / city</code> · <code>city</code></td>
+    <td>slate_api_key_types.json → Workflow.city · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;municipality.state&quot; — Slate Workflow / city.city is the analog verbatim home for this demo field (slate_api_key_types.json → Workflow.city)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.state</code></td>
+  </tr><tr>
+    <td><code>snip_019</code></td>
+    <td>Swarm</td>
+    <td><code>Connector</code> · <code>connectorUrl / provenanceUrl / assetProvenanceUrl</code></td>
+    <td>swarm_graphql_schema.json → Connector · byte 91127</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">d1a8bdc7db9f952d</code></td>
+    <td class="cand-note">evidences &quot;municipality.code_url&quot; — Swarm Connector.connectorUrl / provenanceUrl / assetProvenanceUrl is the analog verbatim home for this demo field (swarm_graphql_schema.json → Connector)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.code_url</code></td>
+  </tr><tr>
+    <td><code>snip_020</code></td>
+    <td>Building Blocks</td>
+    <td><code>LicenseType</code> · <code>ordinance</code></td>
+    <td>bundle inventory LicenseType.ordinance · byte 4509</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">3d2befe5f1aed085</code></td>
+    <td class="cand-note">evidences &quot;municipality.chapter&quot; — Building Blocks LicenseType.ordinance is the analog verbatim home for this demo field (bundle inventory LicenseType.ordinance)</td>
+    <td><code style="font-size:10px;color:var(--dim)">municipality.chapter</code></td>
+  </tr><tr>
+    <td><code>snip_021</code></td>
+    <td>Swarm</td>
+    <td><code>State / City</code> · <code>name / abbreviation</code></td>
+    <td>swarm_graphql_schema.json → State, City · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;jurisdiction.name&quot; — Swarm State / City.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State, City)</td>
+    <td><code style="font-size:10px;color:var(--dim)">jurisdiction.name</code></td>
+  </tr><tr>
+    <td><code>snip_022</code></td>
+    <td>Building Blocks</td>
+    <td><code>Workflow</code> · <code>city</code></td>
+    <td>bundle inventory WORKFLOW.city · byte 8705</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">79df88002e15e53a</code></td>
+    <td class="cand-note">evidences &quot;obligation.holder&quot; — Building Blocks Workflow.city is the analog verbatim home for this demo field (bundle inventory WORKFLOW.city)</td>
+    <td><code style="font-size:10px;color:var(--dim)">obligation.holder</code></td>
+  </tr><tr>
+    <td><code>snip_023</code></td>
+    <td>Swarm</td>
+    <td><code>AttributeRule</code> · <code>rules / name / isPreset</code></td>
+    <td>swarm_graphql_schema.json → AttributeRule · byte 62398</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">eee7cbff43bf04ae</code></td>
+    <td class="cand-note">evidences &quot;kind.standing_criterion&quot; — Swarm AttributeRule.rules / name / isPreset is the analog verbatim home for this demo field (swarm_graphql_schema.json → AttributeRule)</td>
+    <td><code style="font-size:10px;color:var(--dim)">kind.standing_criterion</code></td>
+  </tr><tr>
+    <td><code>snip_024</code></td>
+    <td>Building Blocks</td>
+    <td><code>WorkflowStageTaskPayment</code> · <code>defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription</code></td>
+    <td>bundle inventory §7 WorkflowStageTaskPayment · byte 8705</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">79df88002e15e53a</code></td>
+    <td class="cand-note">evidences &quot;fee-schedule.*&quot; — Building Blocks WorkflowStageTaskPayment.defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription is the exact verbatim home for this demo field (bundle inventory §7 WorkflowStageTaskPayment)</td>
+    <td><code style="font-size:10px;color:var(--dim)">fee-schedule.*</code></td>
+  </tr><tr>
+    <td><code>snip_025</code></td>
+    <td>Swarm</td>
+    <td><code>PlatformEventTable</code> · <code>amountLabel / amountUnit / columns / tableName</code></td>
+    <td>swarm_graphql_schema.json → PlatformEventTable · byte 263284</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">329c7a5867bd0b90</code></td>
+    <td class="cand-note">evidences &quot;tax-schedule.*&quot; — Swarm PlatformEventTable.amountLabel / amountUnit / columns / tableName is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformEventTable)</td>
+    <td><code style="font-size:10px;color:var(--dim)">tax-schedule.*</code></td>
+  </tr><tr>
+    <td><code>snip_026</code></td>
+    <td>Swarm</td>
+    <td><code>PlatformFilter</code> · <code>name / label / type / unit / mappingColumn / dataElement / value / sumOn / source</code></td>
+    <td>swarm_graphql_schema.json → PlatformFilter · byte 317709</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">f3ab44a9e0eb09c6</code></td>
+    <td class="cand-note">evidences &quot;compliance-rule.*&quot; — Swarm PlatformFilter.name / label / type / unit / mappingColumn / dataElement / value / sumOn / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → PlatformFilter)</td>
+    <td><code style="font-size:10px;color:var(--dim)">compliance-rule.*</code></td>
+  </tr><tr>
+    <td><code>snip_027</code></td>
+    <td>Slate</td>
+    <td><code>License</code> · <code>number / licenseIdentifier</code></td>
+    <td>slate_api_key_types.json → License · byte 2173</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">ba10e1540dacf0d4</code></td>
+    <td class="cand-note">evidences &quot;registration.license_number&quot; — Slate License.number / licenseIdentifier is the exact verbatim home for this demo field (slate_api_key_types.json → License)</td>
+    <td><code style="font-size:10px;color:var(--dim)">registration.license_number</code></td>
+  </tr><tr>
+    <td><code>snip_028</code></td>
+    <td>Building Blocks</td>
+    <td><code>LICENSE</code> · <code>number</code></td>
+    <td>bundle inventory LICENSE · byte 2529</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">6f78f7b1832334ef</code></td>
+    <td class="cand-note">evidences &quot;registration.license_number&quot; — Building Blocks LICENSE.number is the exact verbatim home for this demo field (bundle inventory LICENSE)</td>
+    <td><code style="font-size:10px;color:var(--dim)">registration.license_number</code></td>
+  </tr><tr>
+    <td><code>snip_029</code></td>
+    <td>Slate→btora</td>
+    <td><code>slate_licenses</code> · <code>license_shown</code></td>
+    <td>btora/slate/slate_registrations.jsonl · byte 0</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">72b829d06dc6a67c</code></td>
+    <td class="cand-note">evidences &quot;registration.license_number&quot; — Slate→btora slate_licenses.license_shown is the exact verbatim home for this demo field (btora/slate/slate_registrations.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">registration.license_number</code></td>
+  </tr><tr>
+    <td><code>snip_030</code></td>
+    <td>Swarm→btora</td>
+    <td><code>dataset_btora_listings</code> · <code>platform / listing_id / url / listed_at</code></td>
+    <td>btora/swarm/dataset_btora_listings.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;listing.platform / listing_id / url / title / listed_at&quot; — Swarm→btora dataset_btora_listings.platform / listing_id / url / listed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">listing.platform / listing_id / url / title / listed_at</code></td>
+  </tr><tr>
+    <td><code>snip_031</code></td>
+    <td>Swarm→universal</td>
+    <td><code>universal listing</code> · <code>platform / listing_id / url / title / listed_at</code></td>
+    <td>universal/listings_*.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;listing.platform / listing_id / url / title / listed_at&quot; — Swarm→universal universal listing.platform / listing_id / url / title / listed_at is the exact verbatim home for this demo field (universal/listings_*.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">listing.platform / listing_id / url / title / listed_at</code></td>
+  </tr><tr>
+    <td><code>snip_032</code></td>
+    <td>Swarm→btora</td>
+    <td><code>transformer_booking_events</code> · <code>amount / amount_unit</code></td>
+    <td>btora/swarm/transformer_booking_events.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;listing.nightly_rate&quot; — Swarm→btora transformer_booking_events.amount / amount_unit is the exact verbatim home for this demo field (btora/swarm/transformer_booking_events.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">listing.nightly_rate</code></td>
+  </tr><tr>
+    <td><code>snip_033</code></td>
+    <td>Swarm→btora</td>
+    <td><code>dataset_btora_calendar</code> · <code>window_from / window_to / status / observed_at</code></td>
+    <td>btora/swarm/dataset_btora_calendar.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;listing.bookings&quot; — Swarm→btora dataset_btora_calendar.window_from / window_to / status / observed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_calendar.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">listing.bookings</code></td>
+  </tr><tr>
+    <td><code>snip_034</code></td>
+    <td>Swarm→btora</td>
+    <td><code>dataset_btora_listings / platform_attributes</code> · <code>match / flags</code></td>
+    <td>btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;listing.match&quot; — Swarm→btora dataset_btora_listings / platform_attributes.match / flags is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl)</td>
+    <td><code style="font-size:10px;color:var(--dim)">listing.match</code></td>
+  </tr><tr>
+    <td><code>snip_035</code></td>
+    <td>Building Blocks</td>
+    <td><code>FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK</code> · <code>task obligations</code></td>
+    <td>bundle inventory FLOW_STAGE_TASK · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;standing.distinction&quot; — Building Blocks FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK.task obligations is the strong verbatim home for this demo field (bundle inventory FLOW_STAGE_TASK)</td>
+    <td><code style="font-size:10px;color:var(--dim)">standing.distinction</code></td>
+  </tr><tr>
+    <td><code>snip_036</code></td>
+    <td>Building Blocks</td>
+    <td><code>AssetIdentity / GetSuggestedLinks</code> · <code>ownedAssetCount / nameMatch / addressMatch</code></td>
+    <td>bundle inventory §8 · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;standing.responsible_agent&quot; — Building Blocks AssetIdentity / GetSuggestedLinks.ownedAssetCount / nameMatch / addressMatch is the strong verbatim home for this demo field (bundle inventory §8)</td>
+    <td><code style="font-size:10px;color:var(--dim)">standing.responsible_agent</code></td>
+  </tr><tr>
+    <td><code>snip_037</code></td>
+    <td>Swarm</td>
+    <td><code>Note</code> · <code>body / author / createdAt</code></td>
+    <td>swarm_graphql_schema.json → Note · byte 120442</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">8b8cdce9b13b1dd2</code></td>
+    <td class="cand-note">evidences &quot;inspection.focus / note&quot; — Swarm Note.body / author / createdAt is the strong verbatim home for this demo field (swarm_graphql_schema.json → Note)</td>
+    <td><code style="font-size:10px;color:var(--dim)">inspection.focus / note</code></td>
+  </tr><tr>
+    <td><code>snip_038</code></td>
+    <td>Building Blocks</td>
+    <td><code>SnailMail / SnailMailCampaign / OutreachMetrics</code> · <code>campaign / reply-code tracking / metrics</code></td>
+    <td>bundle inventory §8 SnailMail · byte -1</td>
+    <td><span class="chip gap">gap</span> <code style="font-size:10px;color:var(--faint)">4f53cda18c2baa0c</code></td>
+    <td class="cand-note">evidences &quot;notice.kind / channel / subject / sent_at&quot; — Building Blocks SnailMail / SnailMailCampaign / OutreachMetrics.campaign / reply-code tracking / metrics is the exact verbatim home for this demo field (bundle inventory §8 SnailMail)</td>
+    <td><code style="font-size:10px;color:var(--dim)">notice.kind / channel / subject / sent_at</code></td>
+  </tr><tr>
+    <td><code>snip_039</code></td>
+    <td>Slate</td>
+    <td><code>Document</code> · <code>name / url / template</code></td>
+    <td>slate_api_key_types.json → Document · byte 5938</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">67b04eba6f37a17b</code></td>
+    <td class="cand-note">evidences &quot;notice.kind / channel / subject / sent_at&quot; — Slate Document.name / url / template is the analog verbatim home for this demo field (slate_api_key_types.json → Document)</td>
+    <td><code style="font-size:10px;color:var(--dim)">notice.kind / channel / subject / sent_at</code></td>
+  </tr><tr>
+    <td><code>snip_040</code></td>
+    <td>Building Blocks</td>
+    <td><code>getAngelPlatformCityAttribute</code> · <code>failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl</code></td>
+    <td>bundle inventory §3 · byte 2998</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">19b78818cadeed27</code></td>
+    <td class="cand-note">evidences &quot;connector.health&quot; — Building Blocks getAngelPlatformCityAttribute.failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl is the exact verbatim home for this demo field (bundle inventory §3)</td>
+    <td><code style="font-size:10px;color:var(--dim)">connector.health</code></td>
+  </tr><tr>
+    <td><code>snip_041</code></td>
+    <td>Building Blocks</td>
+    <td><code>IntegrationHealthDashboard</code> · <code>provider / status / checkedAt / latencyMs</code></td>
+    <td>bundle inventory §4 · byte 5748</td>
+    <td><span class="chip exact">verified</span> <code style="font-size:10px;color:var(--faint)">80a31edd00d0cd4f</code></td>
+    <td class="cand-note">evidences &quot;connector.health&quot; — Building Blocks IntegrationHealthDashboard.provider / status / checkedAt / latencyMs is the exact verbatim home for this demo field (bundle inventory §4)</td>
+    <td><code style="font-size:10px;color:var(--dim)">connector.health</code></td>
+  </tr></tbody></table></div></div>
+<footer>generated 2026-09-18 · every field cut from the real schema files · eoreader7 snip discipline: never generated, always cited</footer>
+</body>
+</html>

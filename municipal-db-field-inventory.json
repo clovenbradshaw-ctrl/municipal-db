@@ -1,0 +1,280 @@
+{
+  "title": "Municipal DB demo — full field inventory",
+  "generated": "2026-09-18",
+  "method": "folded both corpora with the real fold() from municipal-db.html (0 violations) and read the union of fields per entity type; cross-checked against every consumer the UI code actually reads",
+  "demo_root": "municipal-db/",
+  "layers": {
+    "0_demo_boot": "municipal-db.html boots off nashville-bridge-events.json (SEED_EVENTS) + deterministic genSTRData() dummy license/listing events; no network needed for the bridge",
+    "1_public_read_only": "nashville-geo.json — real Nashville parcels/violations/districts, fetched on demand for the geo view (PUBLIC_DATA)",
+    "2_bridge": "folded state derived from the bridge event log; workflow actions that DID materialize (inspection, notice) live here as events",
+    "3_compliance": "municipal-events.json (cmpState, in-memory only) — STR registration/enforcement workbench across 5 cities, never written to storage",
+    "4_calendar": "compliance-records.bin — 10,000 deterministic dummy compliance records packed into OPFS as fixed-width rows (not JSON)",
+    "5_str_demo_companion": "str-demo.html — separate host/compliance persona surface with its own inline dummy data + lazy geo-cells/*.json parcel map"
+  },
+  "runtime_files": {
+    "municipal-db.html": { "role": "main app (bridge + compliance workbench + geo + event log + recycle bin + jobs)", "loads": ["nashville-bridge-events.json", "nashville-geo.json", "municipal-events.json", "vendor/leaflet.js", "vendor/leaflet.css", "vendor/phosphor/*"] },
+    "str-demo.html": { "role": "STR oversight demo (host/compliance personas, municipal code surface, Leaflet parcel map)", "loads": ["geo-cells/*.json", "vendor/leaflet.js", "vendor/leaflet.css"] },
+    "municipal-events.json": { "role": "compliance workbench corpus (11,184 events)", "bytes": 4647166 },
+    "nashville-bridge-events.json": { "role": "Nashville bridge corpus (15,693 events)", "bytes": 5429203 },
+    "nashville-geo.json": { "role": "read-only public geo layer (22,988 properties / 43,298 violations / 35 districts)", "bytes": 8294298 },
+    "geo-cells/*.json": { "role": "per-viewport parcel cells for the lazy Leaflet map", "shape": "{ p: [[lng, lat, evictions, address, owner]...], v: [] }" },
+    "compliance-records.bin": { "role": "OPFS-backed binary compliance calendar (generated deterministically on first load, then read back)", "generated_by": "generateComplianceRecords + packComplianceRecords", "magic": "CMP1" },
+    "build-scripts": ["build-event-log.mjs", "build-minimal-schema.mjs", "build-nashville-demo.mjs", "evolve-edges.mjs", "seed-workbench.mjs"]
+  },
+  "event_model": {
+    "namespace": "io.matrix-events",
+    "principle": "State is never stored; it is derived by folding the event stream. The log is the store; a table appears only when something bears identity over time AND changes.",
+    "envelope": {
+      "type": { "type": "string", "required": true, "format": "io.matrix-events.{op}", "note": "op key ∈ nul|sig|ins|seg|con|syn|def|eva|rec; parsed by parseEventType" },
+      "content": { "type": "object", "required": true, "note": "op-specific; empty content is skipped by dispatch" },
+      "origin_server_ts": { "type": "number", "required": true, "note": "drives chronological() ordering and time-order-violation checks" },
+      "sender": { "type": "string", "required": true, "note": "matrix id, e.g. @michael:hyphae.social" },
+      "event_id": { "type": "string", "required": true, "note": "used as eventId on entities, connections, evaluations; undo/recycle-bin key" },
+      "anchor": { "type": "string", "required": false, "note": "INS only — denormalized copy of content.anchor (parity with Matrix); genSTRData writes it top-level" },
+      "_deleted": { "type": "boolean", "required": false, "note": "runtime recycle-bin flag; dispatch() treats flagged events as no-ops without removing them" },
+      "_deletedAt": { "type": "number", "required": false, "note": "runtime — undo timestamp, sorts the recycle bin" }
+    },
+    "operations": {
+      "ins": { "content": { "anchor": { "type": "string", "required": true }, "entity_type": { "type": "string", "required": true }, "payload": { "type": "object", "required": true, "note": "entity fields; becomes state.entities[anchor] = {...payload, _anchor, _type, _created, _sender, _eventId, _hwm}" } }, "stored": true },
+      "def": { "content": { "anchor": { "type": "string", "required": false, "note": "absent when path starts with _schema. — schema-level DEF" }, "path": { "type": "string", "required": true, "note": "dot path via setPath; may set nested entity fields or _schema.* keys" }, "value": { "type": "any", "required": true } }, "stored": true, "note": "also records entity._fieldTs[path] = ts and _updatedBy" },
+      "con": { "content": { "source_anchor": { "type": "string", "required": true }, "target_anchor": { "type": "string", "required": true }, "relation_type": { "type": "string", "required": true } }, "stored": true, "note": "fold drops any payload on CON — the app relies only on entity payloads + _schema for consumable data; missing endpoints push a cartesian_product violation" },
+      "eva": { "content": { "anchor": { "type": "string", "required": true }, "criterion": { "type": "string", "required": true }, "result": { "type": "string", "required": true }, "note": { "type": "string", "required": false } }, "stored": true, "note": "appends to entity._evaluations; pushes criterionless_judgment violation if entity._hwm < DEF.order" },
+      "seg": { "content": { "anchor": { "type": "string", "required": true }, "partition": { "type": "string", "required": true, "note": "open|resolved|violated|deleted (compliance workbench uses deleted for its recycle bin)" } }, "stored": true, "note": "sets state.partitions[anchor] and entity._partition" },
+      "rec": { "content": { "scope": { "type": "string", "required": true }, "before_frame": { "type": "any", "required": true }, "after_frame": { "type": "any", "required": true } }, "stored": true, "note": "appends to state.frames — the record of schema change; blind_restructuring violation if folded with no EVA and no frames" },
+      "syn": { "content": { "input_anchors": { "type": "string[]", "required": false }, "output": { "type": "object", "required": true } }, "stored": true, "note": "creates state.entities[syn_{eventId}] with _type '_synthesis' and _inputs" },
+      "nul": { "stored": false, "note": "existence triad, order 0" },
+      "sig": { "stored": false, "note": "existence triad, order 1" }
+    }
+  },
+  "fold_output": {
+    "state.entities": { "type": "object<anchor, entity>", "note": "INS payload + _meta; entity._hwm is the highest op order applied to it" },
+    "state.partitions": { "type": "object<anchor, partition>", "note": "from SEG" },
+    "state.connections": { "type": "array<{source,target,type,_ts,_sender,_eventId}>" },
+    "state.frames": { "type": "array<REC content + _ts,_sender,_eventId>" },
+    "state.schema": { "type": "object", "note": "from _schema.* DEFs via setPath" },
+    "state.cursor": { "type": "number", "note": "last event ts" },
+    "state._violations": { "type": "array", "note": "types: missing_ins, cartesian_product, criterionless_judgment, blind_restructuring" },
+    "state._undecryptable": { "type": "number", "note": "count of m.room.encrypted events" },
+    "entity_metadata_fields": {
+      "_anchor": { "type": "string", "source": "INS content.anchor" },
+      "_type": { "type": "string", "source": "INS content.entity_type" },
+      "_created": { "type": "number", "source": "INS origin_server_ts" },
+      "_sender": { "type": "string", "source": "event sender" },
+      "_eventId": { "type": "string", "source": "event_id" },
+      "_hwm": { "type": "number", "source": "max op order applied" },
+      "_partition": { "type": "string", "source": "SEG; read by isDeleted(), renderTable, standing history" },
+      "_updated": { "type": "number", "source": "DEF/SEG ts" },
+      "_updatedBy": { "type": "string", "source": "DEF sender" },
+      "_fieldTs": { "type": "object<path, ts>", "source": "DEF" },
+      "_evaluations": { "type": "array<{criterion,result,note,_ts,_sender,_eventId}>", "source": "EVA" },
+      "_inputs": { "type": "string[]", "source": "SYN only" }
+    }
+  },
+  "corpora": {
+    "bridge": {
+      "file": "nashville-bridge-events.json",
+      "loaded_by": "loadSeed() -> buildDemoCorpus() -> SEED_EVENTS; full corpus via connectBackend()",
+      "event_counts": { "ins": 8167, "con": 2543, "seg": 4932, "def": 51 },
+      "relations": {
+        "owns": { "source": "owner", "target": "parcel", "count": 2489, "note": "landlordmapper.org inference" },
+        "opened_against": { "source": "standing", "target": "parcel", "count": 49 },
+        "targets": { "source": "inspection", "target": "parcel", "count": 3 },
+        "about": { "source": "notice", "target": "parcel", "count": 2 },
+        "licenses": { "source": "license", "target": "parcel", "count": "generated", "note": "genSTRData dummy edge" },
+        "detected_at": { "source": "listing", "target": "parcel", "count": "generated", "note": "genSTRData dummy edge; UNLOCATED listings carry no edge" }
+      },
+      "def_paths": { "responsible_agent": "standing -> owner anchor (49)", "_schema.three_layer": "layer map", "_schema.data_gates": "data gates" },
+      "seg_partitions": { "open": 3432, "resolved": 1500 },
+      "generated_types": {
+        "license": "genSTRData() — deterministic per parcel anchor; 55% of parcels",
+        "listing": "genSTRData() — 70% of parcels; match CLEAR|MARGINAL|UNLOCATED"
+      }
+    },
+    "compliance": {
+      "file": "municipal-events.json",
+      "loaded_by": "loadCompSeed() -> COMP_EVENTS -> cmpState (in-memory only, no persistence)",
+      "event_counts": { "ins": 5716, "con": 5172, "def": 145, "eva": 104, "seg": 44, "rec": 3 },
+      "cities": { "middletown": "municipality_1b09307071e888", "chicago": "municipality_a8035cf65308a", "staugustine": "municipality_348f9b351b965", "talent": "municipality_12ffea31677787", "ftworth": "municipality_c79c856993a8f" },
+      "seg_partitions": { "open": "standings", "deleted": "workbench recycle bin via deleteEntity/restoreEntity" },
+      "rec_frames": { "chi-4-14-100-adjustment-authority": "law-freshness frame", "_schema": "workbench types frame", "_schema.workbench": "actor-edge relations frame" }
+    }
+  },
+  "entity_types": {
+    "bridge": {
+      "municipality": { "count": 1, "fields": { "name": { "type": "text", "required": true, "consumers": ["entityLabel"] }, "state": { "type": "text", "required": true }, "source": { "type": "text", "required": true, "note": "provenance pointer — the one thing that keeps the bridge honest" } }, "purpose": "Metro Nashville-Davidson County — the read-only layer's jurisdiction" },
+      "parcel": { "count": 2489, "fields": { "address": { "type": "text", "required": true, "consumers": ["entityLabel", "muniOf"] }, "evictions": { "type": "number", "required": true, "consumers": ["renderGeo (color scale)"] }, "first_file_date": { "type": "text", "required": true }, "last_file_date": { "type": "text", "required": true }, "lat": { "type": "number", "required": true, "consumers": ["renderGeo", "drawMap"] }, "lng": { "type": "number", "required": true, "consumers": ["renderGeo", "drawMap"] }, "zoning": { "type": "text|null", "required": false, "note": "null on every row — null, not guessed" } }, "purpose": "the 2,489 repeat-eviction properties the bridge materializes" },
+      "owner": { "count": 740, "fields": { "name": { "type": "text", "required": true }, "property_count": { "type": "number", "required": true } }, "purpose": "third-party (landlordmapper) inference, kept as asserted" },
+      "standing": { "count": 4932, "fields": { "distinction": { "type": "textarea", "required": true }, "consequence": { "type": "textarea", "required": false }, "address": { "type": "text", "required": true }, "request_nbr": { "type": "text", "required": true }, "council_district": { "type": "number", "required": true }, "received": { "type": "date", "required": true }, "source": { "type": "text", "required": true, "note": "metro nashville 311" }, "responsible_agent": { "type": "anchor", "required": false, "source_op": "DEF", "note": "owner anchor" } }, "purpose": "the only table whose whole reason is to change (open→resolved)" },
+      "inspection": { "count": 3, "fields": { "planned_for": { "type": "date", "required": true }, "focus": { "type": "textarea", "required": true }, "note": { "type": "textarea", "required": false } }, "purpose": "a workflow action that DID materialize as an event" },
+      "notice": { "count": 2, "fields": { "kind": { "type": "text", "required": true }, "channel": { "type": "select", "required": true, "values": ["portal", "email", "postcard"] }, "subject": { "type": "text", "required": true }, "sent_at": { "type": "date", "required": true } }, "purpose": "outreach materialized as an entity" },
+      "license": { "count": "generated", "fields": { "number": { "type": "text", "required": true, "note": "STR-xxxx" }, "status": { "type": "select", "required": true, "values": ["active", "pending", "expired"], "consumers": ["jobs render flag"] }, "guestrooms": { "type": "number", "required": true, "consumers": ["jobs render"] }, "max_guests": { "type": "number", "required": true }, "source": { "type": "text", "required": true, "note": "\"DUMMY — generated...\"" } }, "note": "Slate-style dummy; deterministic from parcel anchor" },
+      "listing": { "count": "generated", "fields": { "platform": { "type": "select", "required": true, "values": ["airbnb", "vrbo"] }, "observed_bedrooms": { "type": "number", "required": true, "consumers": ["jobs render"] }, "nightly_rate": { "type": "number", "required": true }, "match": { "type": "select", "required": true, "values": ["CLEAR", "MARGINAL", "UNLOCATED"], "consumers": ["renderGeo flag color", "jobs"] }, "source": { "type": "text", "required": true, "note": "\"DUMMY — generated...\"" } }, "note": "Azora-style dummy" }
+    },
+    "compliance": {
+      "municipality": { "count": 5, "fields": { "name": { "type": "text", "required": true, "consumers": ["entityLabel"] }, "state": { "type": "text", "required": true }, "county": { "type": "text", "required": true }, "code_url": { "type": "url", "required": true, "consumers": ["renderFieldValue url-link"] }, "chapter": { "type": "text", "required": true }, "state_preemption_status": { "type": "text", "required": false, "source_op": "DEF", "note": "e.g. St. Augustine grandfathered under Fla. Stat. 509.032(7)(b)" } }, "purpose": "reading-context boundary — one of the 7-table schema" },
+      "jurisdiction": { "count": 5, "fields": { "name": { "type": "text", "required": true, "note": "\"Rhode Island (state)\"" } }, "purpose": "thin reachability check (reachable-from)" },
+      "obligation": { "count": 146, "fields": { "holder": { "type": "text", "required": true, "consumers": ["standing history panel", "relSortKey"] }, "section": { "type": "text", "required": true, "consumers": ["relSortKey", "standing history"] }, "mark": { "type": "text|null", "required": false, "note": "subsection letter a/b/..." }, "text": { "type": "text", "required": true, "note": "verbatim clause — unmodified ground truth" }, "enumerated": { "type": "boolean", "required": true }, "source_url": { "type": "url", "required": true, "consumers": ["renderFieldValue url-link"] }, "figure-extraction": { "type": "text", "required": false, "source_op": "DEF", "note": "\"attempted\" — organ-gated figure canon, refused not guessed" }, "manually_restored": { "type": "boolean", "required": false, "source_op": "DEF" } }, "purpose": "the law — the bound EVAs read against" },
+      "figure": { "count": 45, "fields": { "party": { "type": "text", "required": true, "consumers": ["profile figure panel"] }, "modality": { "type": "text", "required": true, "note": "mandatory|..." }, "extraction_method": { "type": "text", "required": true, "note": "mechanical shall/must/may regex, shape-rejected — no LLM" } }, "purpose": "parameter reading on the clause, not its own record; linked via figured-as" },
+      "owner": { "count": 2421, "fields": { "name": { "type": "text", "required": true, "consumers": ["portfolio select", "runDetections ownerConcentration"] }, "phone": { "type": "text", "required": false }, "mailing_address": { "type": "text", "required": false, "consumers": ["computeFee principal-residence check", "runDetections nonOwnerRes"] }, "email": { "type": "text", "required": false } }, "purpose": "the real particulars a rule is tested against" },
+      "parcel": { "count": 3016, "fields": { "apn": { "type": "text", "required": true }, "address": { "type": "text", "required": true, "consumers": ["muniOf", "runDetections byStreet", "profile", "cal-goto"] }, "bedrooms": { "type": "number", "required": true, "consumers": ["computeFee"] }, "zoning": { "type": "text", "required": true, "consumers": ["runDetections isRes (starts with R/RES)", "profile"] } }, "purpose": "where a general fact becomes something you can act on" },
+      "standing": { "count": 26, "fields": { "distinction": { "type": "text", "required": true, "consumers": ["standing history panel"] }, "consequence": { "type": "text|null", "required": false }, "openedAt": { "type": "date", "required": true }, "resolvedAt": { "type": "date", "required": false, "source_op": "DEF" }, "violatedAt": { "type": "date", "required": false, "source_op": "DEF" } }, "purpose": "the only table whose job is to track change over time; partitioned open→resolved→violated" },
+      "kind": { "count": 3, "fields": { "name": { "type": "text", "required": true, "note": "registration-fee-formula | local-contact-distance-requirement | delegated-instrument" }, "description": { "type": "text", "required": true }, "standing_criterion": { "type": "text", "required": false, "source_op": "DEF", "note": "n>=3 independently eoreader7-read instances + shuffle/redeal null" } }, "purpose": "a provisional pattern held at arm's length" },
+      "fee-schedule": { "count": 5, "fields": { "for": { "type": "text", "required": true }, "scope": { "type": "text", "required": true }, "shape": { "type": "text", "required": true, "consumers": ["computeFee"], "values": ["per-bedroom-with-floor", "flat", "two-tier", "per-unit-plus-per-bedroom", "delegated"] }, "amount": { "type": "number", "required": false, "consumers": ["computeFee"] }, "floor": { "type": "number", "required": false, "consumers": ["computeFee"] }, "basis": { "type": "text", "required": false }, "principal_residence_flat": { "type": "number", "required": false, "consumers": ["computeFee"] }, "unit_amount": { "type": "number", "required": false, "consumers": ["computeFee"] }, "per_room": { "type": "number", "required": false, "consumers": ["computeFee"] }, "initial": { "type": "number", "required": false, "consumers": ["computeFee"] }, "renewal": { "type": "number", "required": false, "consumers": ["computeFee"] }, "instrument": { "type": "text", "required": false, "note": "delegated shapes carry instrument + citation and NO amount — the calculator refuses" }, "renewal_cycle": { "type": "text", "required": false }, "due": { "type": "text", "required": false }, "citation": { "type": "text", "required": true, "consumers": ["computeFee"] } } },
+      "tax-schedule": { "count": 5, "fields": { "subject": { "type": "text", "required": true }, "components": { "type": "json", "required": true, "shape": "[{label, rate, basis, citation}]", "consumers": ["computeTaxEstimate"] }, "total": { "type": "number", "required": false, "consumers": ["computeTaxEstimate"] }, "remittance": { "type": "text", "required": true }, "due_day": { "type": "number", "required": true }, "citation": { "type": "text", "required": true } } },
+      "compliance-rule": { "count": 8, "fields": { "measure": { "type": "text", "required": true, "values": ["contact-distance", "proximity-distance", "count-per-street", "count-per-owner", "zone-restricted", "occupancy-cap"] }, "scope": { "type": "text", "required": true }, "value": { "type": "number", "required": true }, "unit": { "type": "text", "required": true, "note": "mi|..." }, "subject": { "type": "text", "required": true }, "zone": { "type": "text", "required": false }, "demo": { "type": "boolean", "required": true, "note": "true = threshold has no verbatim clause; surfaced honestly" }, "citation": { "type": "text", "required": true } } },
+      "registration": { "count": 10, "fields": { "license_number": { "type": "text", "required": true, "consumers": ["profile registration status"] }, "status": { "type": "text", "required": true, "consumers": ["registrationOf -> unregistered detection (status !== active)"] }, "issued_at": { "type": "date", "required": true }, "expires_at": { "type": "date", "required": true }, "holder": { "type": "text", "required": true }, "units": { "type": "number", "required": true }, "bedrooms": { "type": "number", "required": true }, "guest_rooms": { "type": "number", "required": true }, "max_occupancy": { "type": "number", "required": true }, "parking_plan": { "type": "text", "required": true }, "citation": { "type": "text", "required": true } } },
+      "listing": { "count": 19, "fields": { "platform": { "type": "text", "required": true, "consumers": ["portfolio chip"] }, "listing_id": { "type": "text", "required": true }, "url": { "type": "url", "required": true, "consumers": ["view listing link"] }, "title": { "type": "text", "required": true, "consumers": ["portfolio", "inline edit"] }, "listed_at": { "type": "date", "required": true }, "host": { "type": "json", "required": true, "shape": "{name, phone, address}" }, "property": { "type": "json", "required": true, "shape": "{address, bedrooms, beds, units, guest_rooms, max_occupancy, property_type, zoning_claim, parking_plan, license_number}", "consumers": ["verify tab (license_number)", "portfolio (property_type, bedrooms)"] }, "bookings": { "type": "json", "required": true, "shape": "[{from: date, to: date}]", "consumers": ["runDetections evidenceWindows"] }, "nightly_rate": { "type": "number", "required": true } }, "required_on_listing": { "note": "_schema.types.listing.required_on_listing = [license_number, parking_plan, units, bedrooms, max_occupancy, host_contact]" } },
+      "notice": { "count": 1, "fields": { "kind": { "type": "text", "required": true, "note": "registration-obligation|amounts-owed|compliance-issue" }, "channel": { "type": "text", "required": true, "values": ["portal", "email", "postcard"] }, "to": { "type": "anchors", "required": true }, "about": { "type": "anchors", "required": true }, "subject": { "type": "text", "required": true, "consumers": ["notices tab"] }, "body": { "type": "textarea", "required": true, "consumers": ["notices tab"] }, "amounts": { "type": "json", "required": false, "shape": "[{label, amount, currency, citation}]" }, "sent_at": { "type": "date", "required": true } } },
+      "inspection": { "count": 1, "fields": { "planned_for": { "type": "date", "required": true }, "focus": { "type": "text", "required": true }, "note": { "type": "textarea", "required": true }, "listing": { "type": "anchors", "required": true }, "parcel": { "type": "anchors", "required": true }, "created_at": { "type": "date", "required": true } } }
+    }
+  },
+  "schema_defs": {
+    "types": {
+      "_schema.types.fee-schedule": { "fields": [["for", "text"], ["shape", "text"], ["amount", "number"], ["floor", "number"], ["basis", "text"], ["principal_residence_flat", "number"], ["unit_amount", "number"], ["per_room", "number"], ["initial", "number"], ["renewal", "number"], ["instrument", "text"], ["renewal_cycle", "text"], ["due", "text"], ["citation", "text"]], "note": "data dictionary; UI derives table/ddl/verification checklists from these DEFs" },
+      "_schema.types.tax-schedule": { "fields": [["subject", "text"], ["components", "json"], ["total", "number"], ["remittance", "text"], ["due_day", "number"], ["citation", "text"]] },
+      "_schema.types.compliance-rule": { "fields": [["measure", "text"], ["scope", "text"], ["value", "number"], ["unit", "text"], ["subject", "text"], ["zone", "text"], ["demo", "boolean"], ["citation", "text"]] },
+      "_schema.types.registration": { "fields": [["license_number", "text"], ["status", "text"], ["issued_at", "date"], ["expires_at", "date"], ["holder", "text"], ["units", "number"], ["bedrooms", "number"], ["guest_rooms", "number"], ["max_occupancy", "number"], ["parking_plan", "text"], ["citation", "text"]] },
+      "_schema.types.listing": { "fields": [["platform", "text"], ["listing_id", "text"], ["url", "text"], ["title", "text"], ["listed_at", "date"], ["host", "json"], ["property", "json"], ["bookings", "json"], ["nightly_rate", "number"]], "required_on_listing": ["license_number", "parking_plan", "units", "bedrooms", "max_occupancy", "host_contact"] },
+      "_schema.types.notice": { "fields": [["kind", "text"], ["to", "anchors"], ["about", "anchors"], ["channel", "text"], ["subject", "text"], ["body", "textarea"], ["amounts", "json"], ["sent_at", "date"]] },
+      "_schema.types.inspection": { "fields": [["planned_for", "date"], ["listing", "anchors"], ["parcel", "anchors"], ["focus", "text"], ["note", "text"], ["created_at", "date"]] }
+    },
+    "relations": {
+      "levied_by": { "source": "fee-schedule|tax-schedule", "target": "municipality" },
+      "mentioned_by": { "source": "tax-schedule", "target": "obligation" },
+      "enforced_by": { "source": "compliance-rule", "target": "obligation" },
+      "applies_in": { "source": "compliance-rule", "target": "municipality" },
+      "registers": { "source": "registration", "target": "parcel" },
+      "issued_by": { "source": "registration", "target": "municipality" },
+      "hosted_at": { "source": "listing", "target": "parcel" },
+      "listed_by": { "source": "listing", "target": "owner" },
+      "notifies_about": { "source": "notice", "target": "parcel" },
+      "sent_to": { "source": "notice", "target": "owner" },
+      "targets": { "source": "inspection", "target": "parcel" },
+      "scheduled_for": { "source": "inspection", "target": "listing" }
+    },
+    "workbench": {
+      "_schema.workbench": { "personas": ["landlord", "government"] },
+      "_schema.workbench.design_notes": "array of design notes (schema changes are REC frames, not code diffs)"
+    },
+    "bridge": { "_schema.three_layer": "layer 1 read-only / layer 2 workflows / layer 3 bridge", "_schema.data_gates": "data gates" }
+  },
+  "relations_all": {
+    "compliance_corpus": {
+      "reachable-from": { "count": 5, "source": "municipality", "target": "state jurisdiction" },
+      "holds": { "count": 146, "source": "obligation", "target": "municipality" },
+      "figured-as": { "count": 45, "source": "obligation", "target": "figure" },
+      "owns": { "count": 3520, "source": "owner", "target": "parcel" },
+      "grounds_in": { "count": 26, "source": "standing", "target": "obligation" },
+      "opened_against": { "count": 26, "source": "standing", "target": "parcel" },
+      "instantiates": { "count": 5, "source": "obligation", "target": "kind" },
+      "instantiates_flat_tiered_variant": { "count": 1, "source": "obligation", "target": "kind" },
+      "instantiates_timebound_variant": { "count": 1, "source": "obligation", "target": "kind" },
+      "is_local_representative_for": { "count": 132, "source": "owner/agent", "target": "owner" },
+      "is_emergency_contact_for": { "count": 131 },
+      "manages": { "count": 131 },
+      "married_to": { "count": 354 },
+      "principal_of": { "count": 1 },
+      "member_of": { "count": 301 },
+      "is_contact_for": { "count": 130 },
+      "is_local_responsible_party_for": { "count": 130 },
+      "levied_by": { "count": 10 },
+      "mentioned_by": { "count": 2 },
+      "applies_in": { "count": 8 },
+      "enforced_by": { "count": 5 },
+      "registers": { "count": 10 },
+      "issued_by": { "count": 10 },
+      "hosted_at": { "count": 19 },
+      "listed_by": { "count": 19 },
+      "notifies_about": { "count": 1 },
+      "sent_to": { "count": 1 },
+      "targets": { "count": 1 },
+      "scheduled_for": { "count": 1 }
+    },
+    "bridge_corpus": { "owns": 2489, "opened_against": 49, "targets": 3, "about": 2, "licenses": "generated", "detected_at": "generated" }
+  },
+  "evaluations": {
+    "compliance_corpus": {
+      "figure-extraction": { "count": 101, "target": "obligation", "result": "attempted", "note": "organ-gated figure canon" },
+      "cross-municipal-standing": { "count": 3, "target": "kind", "results": ["live_hypothesis", "provisionally_earned"], "note": "kind standing criteria" }
+    },
+    "bridge_corpus": "none (only DEFs)"
+  },
+  "calendar_records": {
+    "format": "fixed-width binary in OPFS (compliance-records.bin), NOT JSON",
+    "header": { "magic": "CMP1 (4 bytes)", "count": "u32 @4", "parcel_count": "u32 @8", "heap_start": "u32 @12", "header_size": 16 },
+    "parcel_table_entry": { "heap_offset": "u32", "length": "u16", "size": 6 },
+    "row": { "id": "u32 @0", "parcel_index": "u16 @4", "kind": "u8 @6", "status": "u8 @7", "date_epoch_day": "u32 @8", "note_offset": "u32 @12", "note_length": "u16 @16", "size": 18 },
+    "heap": "UTF-8 parcel anchors + notes",
+    "kinds": { "enum": ["inspection", "notice", "license-renewal", "tax-audit", "contact-verify", "occupancy-check"], "labels": { "inspection": "Inspection", "notice": "Notice", "license-renewal": "License Renewal", "tax-audit": "Tax Audit", "contact-verify": "Contact Verify", "occupancy-check": "Occupancy Check" } },
+    "statuses": { "enum": ["scheduled", "completed", "overdue", "flagged"] },
+    "record_fields": { "id": "number", "parcelAnchor": "anchor", "kind": "enum", "status": "enum", "dateEpochDay": "number", "note": "text" },
+    "generation": { "seed": "0xC0FFEE (mulberry32)", "target_count": 10000, "per_parcel": "ceil(10000 / parcel count)", "day_offset": "-150..+89", "parcel_source": "cmpState parcels" },
+    "consumers": ["renderCalWidgetHtml (upcoming/overdue/flagged)", "calendar view agenda", "profile 'view property's compliance calendar'"]
+  },
+  "geo_layer": {
+    "file": "nashville-geo.json",
+    "metadata": { "name": "text", "readOnly": true, "source": "text", "asOf": "ISO timestamp" },
+    "datasets": {
+      "properties": { "name": "text", "description": "text", "count": 22988, "features": [{ "type": "Feature", "properties": { "address": "text", "evictions": "number", "landlord": "text", "landlord_properties": "number", "first_file": "date", "last_file": "date" }, "geometry": { "type": "Point", "coordinates": "[lng, lat]" } }] },
+      "violations": { "name": "text", "description": "text", "count": 43298, "loaded": 4932, "features": [{ "type": "Feature", "properties": { "request_nbr": "text", "status": "OPEN|resolved", "problem": "text", "district": "number", "owner": "text", "received": "date", "result": "text" }, "geometry": { "type": "Point", "coordinates": "[lng, lat]" } }] },
+      "districts": { "name": "text", "description": "text", "count": 35, "rows": [{ "district": "number", "population": "number", "median_age": "number", "pct_black": "number", "pct_hispanic": "number", "pct_white": "number", "median_household_income": "number", "pct_child_poverty": "number", "unemployment_rate": "number", "pct_renter": "number|null" }] }
+    },
+    "consumers": ["renderGeo (canvas maps, districts table, open-violations-by-district pivot)"]
+  },
+  "ui_field_specs": {
+    "bridge_field_specs": {
+      "parcel": [["address", "text"], ["evictions", "number"], ["first_file_date", "text"], ["last_file_date", "text"], ["lat", "number"], ["lng", "number"]],
+      "owner": [["name", "text"], ["property_count", "number"]],
+      "standing": [["distinction", "textarea"], ["consequence", "textarea"], ["address", "text"], ["request_nbr", "text"], ["council_district", "number"], ["received", "date"], ["source", "text"], ["partition", "select", ["open", "resolved", "violated"]]],
+      "inspection": [["planned_for", "date"], ["focus", "textarea"], ["note", "textarea"]],
+      "notice": [["kind", "text"], ["channel", "select", ["portal", "email", "postcard"]], ["subject", "text"], ["sent_at", "date"]],
+      "municipality": [["name", "text"], ["state", "text"], ["source", "text"]],
+      "license": [["number", "text"], ["status", "select", ["active", "pending", "expired"]], ["guestrooms", "number"], ["max_guests", "number"], ["source", "text"]],
+      "listing": [["platform", "select", ["airbnb", "vrbo"]], ["observed_bedrooms", "number"], ["nightly_rate", "number"], ["match", "select", ["CLEAR", "MARGINAL", "UNLOCATED"]], ["source", "text"]]
+    },
+    "entity_label_order": "name || address || number || platform || distinction || focus || subject || text || party || apn || section || '{type} {anchor}'",
+    "routine_relations_collapsed_in_profile": ["owns", "opened_against", "targets", "about"]
+  },
+  "ui_read_fields": {
+    "computeFee": ["fee-schedule.shape", "fee-schedule.amount", "fee-schedule.floor", "fee-schedule.principal_residence_flat", "fee-schedule.unit_amount", "fee-schedule.per_room", "fee-schedule.initial", "fee-schedule.renewal", "fee-schedule.instrument", "fee-schedule.citation", "parcel.bedrooms", "parcel.address", "owner.mailing_address", "municipality anchor (via levied_by)"],
+    "computeTaxEstimate": ["tax-schedule.components[{label,rate,basis,citation}]", "tax-schedule.total"],
+    "runDetections": ["listing.platform", "listing.bookings[{from,to}]", "listing.property.license_number", "parcel.zoning", "parcel.address", "owner.name", "owner.mailing_address", "registration.status (via registers edge)", "hosted_at / listed_by edges"],
+    "renderProfile": "all entity fields + _evaluations + figure fields + outgoing/incoming connections",
+    "jobs_view": ["license.status", "license.guestrooms", "listing.observed_bedrooms", "listing.match", "parcel zoning/address"],
+    "calendar_widget": ["COMP_RECORDS {parcelAnchor, kind, status, dateEpochDay, note}", "state.entities[parcelAnchor] label"]
+  },
+  "ui_state_and_storage": {
+    "localStorage": { "nashville-3layer-events-v1": { "role": "persisted EVENTS (bridge log) after saveEvents(); best-effort under quota", "via": "window.storage wrapper (fs-like set/get)" }, "muni-cmp-persona": { "role": "landlord|government persona remember", "values": ["landlord", "government"] }, "str-theme": { "role": "str-demo dark|light theme", "values": ["dark", "light"] } },
+    "in_memory_view_state": { "currentView": "{kind: bridge|table|log|trash|geo|workflows|compliance|jobs|calendar, type?}", "tableSubview": "records|schema", "compPersona": "landlord|government", "compTab": "portfolio|notices", "compGovTab": "unregistered|evidence|illegal|verify", "compCity": "all|middletown|chicago|staugustine|talent|ftworth", "compOwner": "owner anchor", "compSelParcel": "listing anchor", "compTaxRev": "number", "compTaxPeriod": "monthly|quarterly|annual", "calMonth": "{y,m}", "calSelectedDay": "epoch day", "calKindFilter": "all|kind", "dataMode": "demo|backend", "profileStack": "anchor breadcrumb stack" },
+    "write_actions": { "record notice": "INS notice + CON notifies_about", "create inspection": "INS inspection + CON targets/scheduled_for", "inline field edit": "DEF on entity path", "delete/restore": "SEG deleted / SEG open", "undo": "_deleted flag + re-fold" }
+  },
+  "str_demo_companion": {
+    "personas": ["host", "staff"],
+    "routes_surfaces": { "host": ["", "register", "code", "properties"], "staff": ["", "oversee", "data", "code", "parcel", "workbench/staff"] },
+    "data_blocks": {
+      "LICENSES": [{ "n": "license number", "st": "active|pending|expired", "rooms": "number", "max": "number", "parcel": "address" }],
+      "LISTINGS": [{ "pf": "airbnb|vrbo", "beds": "number", "rate": "number", "match": "CLEAR|MARGINAL|UNLOCATED", "addr": "address" }],
+      "DETECTION": [{ "addr": "address", "match": "match", "reg": "ACTIVE|NONE|EXPIRED", "flag": "text" }],
+      "QUEUE": [{ "n": "number", "stop": "text", "m": "CLEAR|MARGINAL" }],
+      "TIMELINE": ["[time, op, label] event-log lines for the code surface"],
+      "PROPS": { "slug": { "addr": "text", "lic": "{n, st, rooms, max}", "list": "{pf, beds, rate, match}", "contact": "text", "notices": "[date, kind, subject, channel]" } },
+      "CAL_RECORDS": { "id": "number", "addr": "address", "kind": "inspection|notice|license-renewal|tax-audit", "status": "scheduled|completed|overdue|flagged", "dateEpochDay": "number", "note": "text" },
+      "geo_cells": { "cell_{x}_{y}.json": { "p": "[[lng, lat, evictions, address, owner], ...]", "v": "[] (violations)" } }
+    }
+  },
+  "field_union_counts": {
+    "note": "authoritative field unions from folding both corpora with the demo's real fold() — 0 violations",
+    "municipal-events.json": { "violations": 0, "types": 15, "entities": 5716, "municipality": 5, "jurisdiction": 5, "obligation": 146, "figure": 45, "owner": 2421, "parcel": 3016, "standing": 26, "kind": 3, "fee-schedule": 5, "tax-schedule": 5, "compliance-rule": 8, "registration": 10, "listing": 19, "notice": 1, "inspection": 1 },
+    "nashville-bridge-events.json": { "violations": 0, "types": 6, "entities": 8167, "municipality": 1, "parcel": 2489, "owner": 740, "standing": 4932, "inspection": 3, "notice": 2 }
+  },
+  "quick_check_contract": {
+    "note": "the minimal 'makes it work' surface — what must exist for the app to boot and render each view without a backend",
+    "boot": ["nashville-bridge-events.json fetchable", "fold() produces 0 violations", "genSTRData deterministic over parcel anchors", "SEED_EVENTS marker present in municipal-db.html"],
+    "bridge_view": ["parcel: address, evictions, lat, lng, first_file_date, last_file_date", "owner: name, property_count", "standing: distinction, address, request_nbr, council_district, received, source", "municipality: name, state, source"],
+    "table_view": ["FIELD_SPECS per type", "TABLE_PURPOSE text optional (collapsible)"],
+    "compliance_view": ["municipal-events.json fetchable", "MUNI_FOR_KEY anchors match the 5 municipality anchors", "fee-schedule + levied_by per city", "tax-schedule + components", "registration + registers edges", "listing + hosted_at/listed_by + property/bookings", "parcel: address, zoning, bedrooms", "owner: name, mailing_address"],
+    "geo_view": ["nashville-geo.json fetchable", "datasets.properties.features[] with lat/lng in GeoJSON Point", "datasets.violations.features[]", "datasets.districts.rows[]"],
+    "calendar_view": ["OPFS writable", "parcel anchors from cmpState"],
+    "profile_view": ["anchor link renders from any entity", "connections resolve to live entities"]
+  }
+}

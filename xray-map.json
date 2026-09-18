@@ -1,0 +1,2900 @@
+{
+  "title": "municipal-db schema needs → Slate / Building Blocks / Swarm fulfillment map",
+  "generated": "2026-09-18",
+  "method": "eoreader7 snip discipline applied mechanically: every candidate field is CUT from the real schema source files (verbatim, positionally), never generated. A need with no candidate in any of the three systems is marked gap — not guessed.",
+  "note": "zoning is the one hard gap across all three systems (confirmed absent in the BB bundle too); the law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
+  "corpus": {
+    "slate": {
+      "source": "slate_api_key_types.json (Slate API key-types pull)",
+      "note": "verbatim top-level GraphQL types and their fields",
+      "types": {
+        "Asset": [
+          "id",
+          "otherId",
+          "alias",
+          "realPropertyUniqueId",
+          "parcelId",
+          "commonName",
+          "cover",
+          "description",
+          "address",
+          "geocoderAddress",
+          "zipCode",
+          "landSize",
+          "addresses",
+          "addressMap",
+          "fullAddress",
+          "subAddress",
+          "city",
+          "gisCity",
+          "gisFeatures",
+          "gisFeature",
+          "latitude",
+          "longitude",
+          "polygon",
+          "envelope",
+          "assetIdentities",
+          "assetIdentityProfiles",
+          "assetImages",
+          "parent",
+          "children",
+          "assetLinks",
+          "assetScores",
+          "assessments",
+          "exactMatch",
+          "textDistance",
+          "assetType",
+          "parcelFilters",
+          "eventRelation",
+          "assetUnits",
+          "workflows",
+          "flows",
+          "flowEntities",
+          "projects",
+          "deletedAt",
+          "nUnits",
+          "flowAssetStatus",
+          "licenses",
+          "license",
+          "flowsInPublicStage",
+          "publiCityVisible",
+          "publiCityUrl",
+          "programEligibles",
+          "showOpportunityBanner",
+          "marketStatus",
+          "marketPlaceDescription",
+          "forms",
+          "managingAgency",
+          "buildingBlocksUrl"
+        ],
+        "FlowStageTask": [
+          "isFlowAssignment",
+          "totalCount",
+          "noteCount",
+          "id",
+          "dateCreated",
+          "taskShortId",
+          "workflowStageTask",
+          "flowStage",
+          "flow",
+          "notes",
+          "documents",
+          "attributes",
+          "assignee",
+          "assignor",
+          "assignedOn",
+          "allowedAssigneeTags",
+          "setAssigneeAsFlowLead",
+          "completedAt",
+          "completedBy",
+          "workflowStageTaskCompletionReason",
+          "completionLevel",
+          "completionShortLabel",
+          "flowCompletedAt",
+          "flowStageCompletedAt",
+          "preFlowStageTask",
+          "postFlowStageTask",
+          "appointmentDate",
+          "appointmentDateUTC",
+          "isAppointment",
+          "calendarEvents",
+          "totalAppointmentDurationInMinutes",
+          "appointmentSubFlowStageTasks",
+          "scheduledBy",
+          "dueOnRaw",
+          "dueOn",
+          "dueOnUTC",
+          "isOverdue",
+          "isPending",
+          "scheduledFor",
+          "isFuture",
+          "assigneeAccepted",
+          "status",
+          "pointOfContact",
+          "link",
+          "isRequired",
+          "asset",
+          "assetProject",
+          "assetId",
+          "identityProfile",
+          "flowEntity",
+          "identityId",
+          "isReviewFlowAssets",
+          "isExternalReviewFlowAssets",
+          "isPayment",
+          "isPaymentProcessing",
+          "paymentDate",
+          "paymentAmount",
+          "paymentDescription",
+          "paymentModifiedBy",
+          "paymentModifiedOn",
+          "processingFee",
+          "paymentTransactions",
+          "isPaymentRefunded",
+          "lastPaymentMethodSelected",
+          "transaction",
+          "paymentEvents",
+          "receiptUrl",
+          "paymentLineItems",
+          "customPaymentLineItems",
+          "paymentIntentId",
+          "paymentIntent",
+          "paymentIntentsFromStripe",
+          "paymentChecks",
+          "paymentCash",
+          "authorizeNetTxId",
+          "authorizeNetTx",
+          "tsysTransactionId",
+          "tsysTransaction",
+          "tylerToken",
+          "tylerOrder",
+          "paymentusData",
+          "fstIdentifier"
+        ],
+        "License": [
+          "id",
+          "dateCreated",
+          "lastUpdated",
+          "type",
+          "number",
+          "status",
+          "licenseIdentifier",
+          "approvedOn",
+          "isDraft",
+          "isExpired",
+          "isRenewable",
+          "isInRenewalWindow",
+          "renewableFrom",
+          "expirationDate",
+          "lastNotifiedRegistrant",
+          "lastNotifiedExpiration",
+          "lastNotifiedRenewal",
+          "licenseChain",
+          "previousLicense",
+          "nextLicense",
+          "licenseDeregistrationReason",
+          "registrant",
+          "lastUpdatedBy",
+          "assetCount",
+          "submissionData",
+          "asset",
+          "assetUnit",
+          "assetProject",
+          "nUnits",
+          "flow",
+          "assets",
+          "flows",
+          "totalCount",
+          "tags",
+          "submissionProgress",
+          "deregistrationSubmission"
+        ],
+        "PaymentTransaction": [
+          "id",
+          "dateCreated",
+          "provider",
+          "transactionId",
+          "paymentLineItems",
+          "flowStageTask",
+          "type",
+          "paymentMethod",
+          "paymentSource",
+          "invoiceId",
+          "invoice"
+        ],
+        "User": [
+          "id",
+          "apiKeyId",
+          "parentUserId",
+          "name",
+          "organization",
+          "language",
+          "profilePicture",
+          "passwordExpired",
+          "identityProfile",
+          "username",
+          "email",
+          "department",
+          "title",
+          "enabled",
+          "userGroup",
+          "city",
+          "totalCount",
+          "surveyAssignmentCount",
+          "surveysCompletedCount",
+          "firstName",
+          "lastName",
+          "lastActivity",
+          "dateCreated",
+          "accessTokenExpiration",
+          "phone",
+          "textMessageConsent",
+          "alerts",
+          "authProvider",
+          "roles",
+          "mfaEnabled",
+          "notificationsEnabled",
+          "isCalendarConnected",
+          "googleCalendarRefreshToken",
+          "isGoogleCalendarConnected",
+          "googleCalendarNeedsReconnect",
+          "outlookCalendarRefreshToken",
+          "outlookDefaultCalendarId",
+          "isOutlookCalendarConnected",
+          "outlookCalendarNeedsReconnect",
+          "workflowAssociations",
+          "flowStageTaskCount",
+          "slateEmailSignature",
+          "slateTaskSummaryFrequency",
+          "completedFlowStageTaskCount",
+          "pendingFlowStageTaskCount",
+          "overdueFlowStageTaskCount",
+          "flowLeadFlowCount",
+          "color",
+          "betaCode",
+          "tags",
+          "userCities",
+          "hasParent",
+          "mergedTo",
+          "mergedFrom",
+          "emailVerified",
+          "phoneNumberVerified",
+          "notificationSettings",
+          "isSystem",
+          "tsysSavedCreditCard"
+        ],
+        "Flow": [
+          "id",
+          "flowShortId",
+          "name",
+          "deletedAt",
+          "deletedBy",
+          "assignee",
+          "assignedOn",
+          "workflow",
+          "project",
+          "currentStage",
+          "currentFlowStage",
+          "flowStages",
+          "flowStageTasks",
+          "activity",
+          "elapsedDays",
+          "tags",
+          "createdBy",
+          "createdAt",
+          "noteCount",
+          "totalCount",
+          "preFlow",
+          "postFlows",
+          "groupSize",
+          "groupTimestamp",
+          "groupedFlows",
+          "completedAt",
+          "completedBy",
+          "flowCloseReason",
+          "applicantName",
+          "applicantContact",
+          "applicantEmail",
+          "applicantPhone",
+          "applicantAddress",
+          "applicantAddress2",
+          "applicantCity",
+          "applicantState",
+          "applicantZip",
+          "applicantCountry",
+          "creatorFlowIdentityProfile",
+          "triggerForm",
+          "triggerData",
+          "publiclyViewable",
+          "flowIdentityProfiles",
+          "stripePayment",
+          "licenses",
+          "flowLead",
+          "firstAsset",
+          "assetCount",
+          "slateMigration",
+          "assetProjects",
+          "flowEntities",
+          "snailMailTrigger",
+          "snailMails",
+          "snailMailCampaign"
+        ],
+        "Workflow": [
+          "city",
+          "workflowGroup",
+          "color",
+          "id",
+          "name",
+          "rootStage",
+          "finalStage",
+          "preWorkflow",
+          "flows",
+          "flowCloseReasons",
+          "nextWorkflow",
+          "flowCount",
+          "documentTemplateKey",
+          "averageCompletionSeconds",
+          "stages",
+          "forms",
+          "documentTemplates",
+          "blockedAppointmentDates",
+          "staged",
+          "showIdentity",
+          "showInPublicityPopup",
+          "identityLabel",
+          "workflowIdentityTypes",
+          "identityBased",
+          "showUnits",
+          "unitCountQuestion",
+          "suspectedUnitLabel",
+          "reportedUnitLabel",
+          "showUnitNames",
+          "showAddressTableUnits",
+          "allowCreateUnits",
+          "canonicalizeUnits",
+          "showSuggestedProperties",
+          "maxProperties",
+          "licenseType",
+          "propertyEligibleFormulaScript",
+          "public",
+          "isReadOnly",
+          "postCreateFlowScript",
+          "sqlReports"
+        ],
+        "IdentityProfile": [
+          "id",
+          "dateCreated",
+          "dateUpdated",
+          "source",
+          "type",
+          "fullName",
+          "firstName",
+          "lastName",
+          "otherName",
+          "email",
+          "emailType",
+          "otherEmails",
+          "profilePicture",
+          "phone",
+          "phoneType",
+          "otherPhones",
+          "placeId",
+          "location",
+          "address",
+          "address2",
+          "city",
+          "state",
+          "zip",
+          "fullAddress",
+          "country",
+          "addressType",
+          "otherAddresses",
+          "duplicateIdentityProfilesByEmail",
+          "user",
+          "identity",
+          "isRawIdentity",
+          "assignedTasksCount",
+          "createdFlowsCount",
+          "documents",
+          "tags",
+          "createdBy",
+          "flowIdentityProfiles",
+          "totalCount",
+          "flowCount",
+          "linkedIdentityTypeNames",
+          "groupedProfileIds"
+        ],
+        "Document": [
+          "id",
+          "url",
+          "fullUrl",
+          "label",
+          "name",
+          "owner",
+          "dateCreated",
+          "deletedOn",
+          "isPublicBuildingBlocks",
+          "isPublicPublicity",
+          "template",
+          "workflowStage",
+          "workflowStageTask",
+          "identityProfile",
+          "mergeData",
+          "reportData",
+          "sfdt",
+          "isSdft",
+          "isFolder",
+          "fileName",
+          "contextLabel",
+          "parent",
+          "children",
+          "childCount",
+          "totalCount"
+        ]
+      },
+      "delivery": {
+        "slate_licenses": {
+          "source": "btora/slate/slate_registrations.jsonl",
+          "fields": [
+            "table",
+            "parcel",
+            "license_shown",
+            "status",
+            "platform",
+            "match"
+          ]
+        },
+        "inspection_queue": {
+          "source": "btora/slate/slate_inspection_queue.jsonl",
+          "fields": [
+            "parcel",
+            "window",
+            "platform",
+            "match",
+            "lic",
+            "use",
+            "evidence"
+          ]
+        }
+      }
+    },
+    "buildingBlocks": {
+      "source": "index-px14EQkj.js bundle + building-blocks-schema-inventory.md",
+      "note": "verbatim from the production JS bundle Columbus ships; the inventory doc is the extraction record",
+      "types": {
+        "ASSET": [
+          "id",
+          "alias",
+          "parcelId",
+          "commonName",
+          "address",
+          "addressMap",
+          "addresses",
+          "assetType",
+          "assetLinks",
+          "marketStatus",
+          "contact",
+          "gisCity",
+          "latitude",
+          "longitude",
+          "polygon",
+          "parent",
+          "children",
+          "assessments",
+          "parcelFilters",
+          "licenses"
+        ],
+        "LICENSE": [
+          "id",
+          "number",
+          "status",
+          "isExpired",
+          "isRenewable",
+          "approvedOn",
+          "renewableFrom",
+          "expirationDate",
+          "lastNotifiedRegistrant",
+          "lastNotifiedExpiration",
+          "lastNotifiedRenewal",
+          "licenseChain",
+          "previousLicense",
+          "nextLicense",
+          "licenseDeregistrationReason",
+          "registrant",
+          "email",
+          "profilePicture",
+          "asset",
+          "assetUnit",
+          "parcelId",
+          "address",
+          "displayName",
+          "type",
+          "flow",
+          "workflow",
+          "tags",
+          "submissionData"
+        ],
+        "LicenseType": [
+          "name",
+          "unitLevel",
+          "unitType",
+          "durationInDays",
+          "renewalDaysBeforeExpiration",
+          "expireCalendarYear",
+          "expireCalendarDate",
+          "expirationDateFormulaScript",
+          "propertyEligibleFormulaScript",
+          "notifyRegistrantOnRenewal",
+          "workflow",
+          "registrationPortals",
+          "form",
+          "ordinance",
+          "contact",
+          "allowedAssetIdentityTypes",
+          "identityBased",
+          "maxProperties"
+        ],
+        "WorkflowStageTaskPayment": [
+          "defaultPaymentAmount",
+          "paymentDescription",
+          "paymentAmountPerAsset",
+          "paymentAmountPerUnit",
+          "allowPaymentAmountOverride",
+          "allowChecks",
+          "allowCash",
+          "autoAddProcessingFees",
+          "processingFeesPercentage",
+          "checksPayableTo",
+          "paymentAccount",
+          "paymentFormulaScript",
+          "appealConditionalLogicForm",
+          "autoApproveAppeals",
+          "appealsAssignee"
+        ],
+        "getAngelPlatformCityAttribute": [
+          "id",
+          "name",
+          "cityAttribute",
+          "connectors",
+          "connectorUrl",
+          "provenanceUrl",
+          "assetProvenanceUrl",
+          "runInfo",
+          "failStreak",
+          "staleStreak",
+          "lastSuccessfulPushAt",
+          "lastDataChangeAt",
+          "stage",
+          "number"
+        ],
+        "ProviderCredential": [
+          "id",
+          "city",
+          "name",
+          "lastFour",
+          "isActive",
+          "createdAt",
+          "updatedAt",
+          "lastUsedAt",
+          "revokedAt",
+          "status",
+          "provider"
+        ],
+        "IntegrationHealthDashboard": [
+          "type",
+          "provider",
+          "status",
+          "cityId",
+          "checkedAt",
+          "latencyMs",
+          "errorMessage",
+          "targetLabel",
+          "paymentAccountId",
+          "userId",
+          "authProviderId"
+        ],
+        "IdentityProfile": [
+          "id",
+          "source",
+          "type",
+          "fullName",
+          "firstName",
+          "lastName",
+          "email",
+          "phone",
+          "address",
+          "city",
+          "state",
+          "zip",
+          "fullAddress",
+          "location"
+        ],
+        "SnailMail": [
+          "SnailMailCampaign",
+          "SnailMail",
+          "reply-code tracking",
+          "OutreachMetrics"
+        ]
+      }
+    },
+    "swarm": {
+      "source": "swarm_graphql_schema.json (GraphQL introspection)",
+      "note": "verbatim OBJECT/INTERFACE fields; + btora data pulls below",
+      "types": {
+        "ActivityStream": [
+          "edges",
+          "id",
+          "pageMeta"
+        ],
+        "ActivityStreamConnectorChanged": [
+          "currentState",
+          "id",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamDatasetChanged": [
+          "currentState",
+          "id",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamEntryEdge": [
+          "cursor",
+          "id",
+          "node"
+        ],
+        "ActivityStreamFlaggedHealth": [
+          "activity",
+          "currentState",
+          "id",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamPackageDeleted": [
+          "cityId",
+          "id",
+          "packageId",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamPackageDeployed": [
+          "cityId",
+          "id",
+          "packageId",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamPackageManagedChanged": [
+          "body",
+          "currentState",
+          "id",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamPackageUpdated": [
+          "cityId",
+          "currentState",
+          "id",
+          "packageId",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamPost": [
+          "body",
+          "id",
+          "ts",
+          "user"
+        ],
+        "ActivityStreamTransformerChanged": [
+          "currentState",
+          "id",
+          "previousState",
+          "ts",
+          "user"
+        ],
+        "Angel": [
+          "activeInstanceIds",
+          "id",
+          "totalActiveInstances",
+          "version"
+        ],
+        "AngelDataStoreObject": [
+          "dataStore",
+          "path"
+        ],
+        "AsanaAssignee": [
+          "email",
+          "id",
+          "name"
+        ],
+        "AsanaTask": [
+          "assignee",
+          "completed",
+          "completedAt",
+          "createdAt",
+          "gid",
+          "id",
+          "modifiedAt",
+          "name",
+          "notes",
+          "url"
+        ],
+        "Asset": [
+          "blocksLink",
+          "id"
+        ],
+        "Attribute": [
+          "activeCityCount",
+          "entity",
+          "filterGroup",
+          "id",
+          "name"
+        ],
+        "AttributeRule": [
+          "id",
+          "isPreset",
+          "name",
+          "rules"
+        ],
+        "AwsS3DataStore": [
+          "accessKeyId",
+          "bucket",
+          "secretAccessKey"
+        ],
+        "Builder": [
+          "defaultSelect",
+          "from",
+          "group",
+          "having",
+          "join",
+          "mappingTables",
+          "select",
+          "where"
+        ],
+        "City": [
+          "activityStream",
+          "alias",
+          "asanaProjectGid",
+          "asanaProjectLink",
+          "connectorStats",
+          "dataLead",
+          "docsUrl",
+          "dwSchema",
+          "id",
+          "jobsPaused",
+          "location",
+          "name",
+          "secrets",
+          "state",
+          "status"
+        ],
+        "CityConfigSelectInput": [
+          "defaultKey",
+          "language",
+          "type",
+          "valueTypes"
+        ],
+        "CityLocation": [
+          "lat",
+          "lng"
+        ],
+        "CityPackage": [
+          "cityId",
+          "components",
+          "config",
+          "flow",
+          "id",
+          "package",
+          "version"
+        ],
+        "CityPackageComponent": [
+          "component",
+          "id",
+          "isPackageManaged",
+          "name",
+          "packageManagedAt",
+          "packageManagedBy",
+          "packageManagedReason"
+        ],
+        "CityPackageStatus": [
+          "cityId",
+          "dependencyStatuses",
+          "isConfigured",
+          "isDeployable",
+          "isDeployed",
+          "isUpToDate",
+          "packageId"
+        ],
+        "CitySection": [
+          "id",
+          "name"
+        ],
+        "CodeInput": [
+          "default",
+          "hint",
+          "language",
+          "type"
+        ],
+        "ConfigFieldCheck": [
+          "configFieldKey",
+          "error",
+          "result"
+        ],
+        "ConfigFieldUi": [
+          "description",
+          "input",
+          "label",
+          "question",
+          "rules"
+        ],
+        "ConfigRegistryBooleanValue": [
+          "value"
+        ],
+        "ConfigRegistryEntry": [
+          "id",
+          "insertedAt",
+          "key",
+          "scopeId",
+          "scopeName",
+          "scopeType",
+          "updatedAt",
+          "value",
+          "valueType"
+        ],
+        "ConfigRegistryListValue": [
+          "value"
+        ],
+        "ConfigRegistryStringValue": [
+          "value"
+        ],
+        "Connector": [
+          "activityStream",
+          "adapter",
+          "adapterArgs",
+          "allowOverwriteWithNoRecords",
+          "assetProvenanceUrl",
+          "attribute",
+          "attributeStatus",
+          "attributes",
+          "baseTable",
+          "baseTableSql",
+          "builder",
+          "city",
+          "cityPackage",
+          "connectorUrl",
+          "createdAt",
+          "datasets",
+          "deletedAt",
+          "deletesTable",
+          "eventTables",
+          "events",
+          "factsTable",
+          "failStreak",
+          "flow",
+          "hasNote",
+          "healthFlags",
+          "id",
+          "idColumns",
+          "insertsTable",
+          "isDeletable",
+          "isUpdate",
+          "jobs",
+          "lastDataChangeAt",
+          "lastNote",
+          "lastSuccessfulPushAt",
+          "mappingTables",
+          "multiConnector",
+          "name",
+          "notes",
+          "packageComponent",
+          "pipelineExportDefaultLlmPrompt",
+          "pipelineProvenanceExport",
+          "postTransforms",
+          "preTransforms",
+          "provenanceUrl",
+          "pushMode",
+          "runInfo",
+          "schedules",
+          "schema",
+          "section",
+          "sources",
+          "sql",
+          "stage",
+          "staleStreak",
+          "targetDataElement",
+          "targetTable",
+          "targetTableColumns",
+          "targetTableSql",
+          "type",
+          "updatesTable",
+          "viewName"
+        ],
+        "ConnectorAttribute": [
+          "id",
+          "logic",
+          "name"
+        ],
+        "ConnectorAttributeStatus": [
+          "missing",
+          "targetId"
+        ],
+        "ConnectorEventTable": [
+          "id",
+          "name",
+          "table"
+        ],
+        "ConnectorStage": [
+          "id",
+          "name",
+          "number"
+        ],
+        "ConnectorStat": [
+          "status",
+          "total"
+        ],
+        "ContractProperty": [
+          "businessName",
+          "checks",
+          "description",
+          "name",
+          "nullable",
+          "required",
+          "type",
+          "unique"
+        ],
+        "ContractPropertyResult": [
+          "message",
+          "property",
+          "status"
+        ],
+        "ContractResult": [
+          "checkedAt",
+          "contractName",
+          "results",
+          "status"
+        ],
+        "DataContract": [
+          "checks",
+          "description",
+          "id",
+          "insertedAt",
+          "name",
+          "schema",
+          "updatedAt"
+        ],
+        "DataContractCheck": [
+          "module",
+          "params"
+        ],
+        "DataStore": [
+          "adapter",
+          "city",
+          "id",
+          "name",
+          "objects"
+        ],
+        "DataStoreObject": [
+          "atime",
+          "ctime",
+          "mtime",
+          "name",
+          "path",
+          "size",
+          "type"
+        ],
+        "DataView": [
+          "id",
+          "nodes"
+        ],
+        "DataViewNode": [
+          "deps",
+          "id",
+          "position",
+          "type"
+        ],
+        "Dataset": [
+          "activityStream",
+          "city",
+          "cityId",
+          "cityPackage",
+          "cityShares",
+          "columns",
+          "connectors",
+          "contractValidations",
+          "createdAt",
+          "dataContracts",
+          "dataStoreObject",
+          "defaultSnapshotTransform",
+          "defaultTransformSql",
+          "deletedAt",
+          "description",
+          "events",
+          "failStreak",
+          "flow",
+          "hasNote",
+          "healthFlags",
+          "id",
+          "idColumns",
+          "isDeletable",
+          "isHighPriority",
+          "jobs",
+          "lastPulledAt",
+          "lastReload",
+          "loadedSnapshot",
+          "offlinePendingCustomer",
+          "packageComponent",
+          "previewData",
+          "pullMode",
+          "pullTimeout",
+          "pullerAdapter",
+          "pullerArgs",
+          "rawTableName",
+          "recordsetLastAppearedAtTableName",
+          "recordsetMapTableName",
+          "recordsetRawTableName",
+          "recordsetTrackLastAppearedAt",
+          "recordsetView",
+          "recordsetViewSql",
+          "rowCount",
+          "runInfo",
+          "schedules",
+          "schema",
+          "section",
+          "snapshots",
+          "sourceSystem",
+          "staleAfter",
+          "storeSnapshots",
+          "table",
+          "tableName",
+          "tags",
+          "title",
+          "url",
+          "usesPigeonScripts"
+        ],
+        "DatasetEvent": [
+          "createdAt",
+          "description",
+          "id",
+          "pulled",
+          "table",
+          "type"
+        ],
+        "DatasetReload": [
+          "id",
+          "jobs",
+          "triggeredBy"
+        ],
+        "DatasetSnapshot": [
+          "columns",
+          "deletedAt",
+          "id",
+          "restoredAt",
+          "sameAsPrevious",
+          "status",
+          "tableName",
+          "takenAt",
+          "totalRows",
+          "transform"
+        ],
+        "DatasetSnapshotTransform": [
+          "filterColumns",
+          "id",
+          "renameColumns",
+          "sql"
+        ],
+        "DependencyStatus": [
+          "id",
+          "isMet",
+          "packageId",
+          "type"
+        ],
+        "DeploymentStatus": [
+          "cityId",
+          "error",
+          "packageId",
+          "status"
+        ],
+        "Event": [
+          "dateCreated",
+          "deletes",
+          "description",
+          "id",
+          "inserts",
+          "pulled",
+          "table",
+          "type",
+          "updates"
+        ],
+        "EventTableColumn": [
+          "category",
+          "customizable",
+          "id",
+          "instanceLabel",
+          "label",
+          "source",
+          "type",
+          "unit"
+        ],
+        "EventTableSourceColumn": [
+          "exists",
+          "mappingTable",
+          "mappingTableExists",
+          "name",
+          "type"
+        ],
+        "FilterGroup": [
+          "id",
+          "name"
+        ],
+        "Flow": [
+          "id",
+          "links",
+          "steps"
+        ],
+        "FormField": [
+          "contract",
+          "default",
+          "hasComponentSpec",
+          "key",
+          "sourceKey",
+          "ui"
+        ],
+        "HealthFlag": [
+          "component",
+          "flaggedAt",
+          "flaggedBy",
+          "id",
+          "name",
+          "value"
+        ],
+        "InputFactPlatformAttribute": [
+          "allTime",
+          "attribute",
+          "attributeId",
+          "errors",
+          "id",
+          "includeHistory",
+          "sql"
+        ],
+        "InputFactPlatformGisLayer": [
+          "gisLayer",
+          "id",
+          "includeHistory",
+          "sql"
+        ],
+        "InputFactSql": [
+          "id",
+          "name",
+          "sql"
+        ],
+        "InputFactTransformer": [
+          "errors",
+          "id",
+          "selectColumns",
+          "sql",
+          "transformer"
+        ],
+        "InventoryContact": [
+          "cityId",
+          "email",
+          "id",
+          "name",
+          "phone"
+        ],
+        "InventoryDataset": [
+          "cityId",
+          "comments",
+          "dataMapType",
+          "dataModel",
+          "dataStewardContact",
+          "dataset",
+          "deletedAt",
+          "department",
+          "id",
+          "integrationMethod",
+          "nextSteps",
+          "schedule",
+          "source",
+          "sourceUrl",
+          "status",
+          "systemLocation",
+          "techContact",
+          "title",
+          "updatedAt",
+          "updatedByUser"
+        ],
+        "InventoryPublicLink": [
+          "id",
+          "url"
+        ],
+        "Job": [
+          "enqueuedAt",
+          "error",
+          "finishedAt",
+          "id",
+          "outcome",
+          "restoreId",
+          "snapshotId",
+          "startedAt",
+          "status",
+          "step",
+          "triggeredBy"
+        ],
+        "JobError": [
+          "detail",
+          "error",
+          "errorType",
+          "hint",
+          "message",
+          "postgresCode",
+          "stacktrace",
+          "summary"
+        ],
+        "JobQueueStats": [
+          "enqueued",
+          "started"
+        ],
+        "Link": [
+          "from",
+          "id",
+          "to"
+        ],
+        "LocalFileSystemDataStore": [
+          "homeDirectory"
+        ],
+        "MetricValue": [
+          "id",
+          "takenAt",
+          "value"
+        ],
+        "MultiConnector": [
+          "connectors",
+          "createdAt",
+          "createdBy",
+          "id",
+          "memberCount",
+          "name"
+        ],
+        "RootMutationType": [
+          "addConnectorsToMultiConnector",
+          "addEventTableColumn",
+          "assignDatasetDataContract",
+          "assignTransformerDataContract",
+          "clearCityCache",
+          "copyLinks",
+          "createActivityStreamPost",
+          "createAsanaTask",
+          "createCityInventoryContact",
+          "createCityInventoryDataset",
+          "createCitySecret",
+          "createConnector",
+          "createConnectorNote",
+          "createDataContract",
+          "createDataStore",
+          "createDataset",
+          "createDatasetSnapshotTransform",
+          "createDefaultInputComponent",
+          "createEventBaseTable",
+          "createMultiConnector",
+          "createPersonalAccessToken",
+          "createPlatformAttribute",
+          "createPlatformAttributeFilter",
+          "createPlatformEntityMappingTable",
+          "createPlatformEventFilter",
+          "createPlatformEventTable",
+          "createPlatformEventTableOption",
+          "createPlatformFilterGroup",
+          "createSection",
+          "createSourceSystem",
+          "createTransformer",
+          "createTransformerMetric",
+          "createViewsConnector",
+          "deleteActivityStreamPost",
+          "deleteCityConfigRegistryEntry",
+          "deleteCityPackage",
+          "deleteCityPackages",
+          "deleteCitySecret",
+          "deleteConnector",
+          "deleteDataContract",
+          "deleteDataStore",
+          "deleteDataStoreObject",
+          "deleteDataset",
+          "deleteDatasetSnapshot",
+          "deleteInventoryDataset",
+          "deleteNote",
+          "deletePackageConfigDraft",
+          "deletePlatformFilter",
+          "deleteSection",
+          "deleteTransformer",
+          "deployPackage",
+          "deployPackages",
+          "disablePlatformCityFilters",
+          "disconnectUserApp",
+          "enablePlatformCityFilters",
+          "enqueueScoreGeneration",
+          "flagHealth",
+          "generateDataStoreObjectUri",
+          "killJob",
+          "linkComponents",
+          "linkConnectors",
+          "logIn",
+          "logInWithToken",
+          "markDatasetOfflinePendingCustomer",
+          "moveConnectorsToSection",
+          "moveToSection",
+          "pullDataset",
+          "pushConnector",
+          "refreshCityFilterStats",
+          "reloadDataset",
+          "removeConnectorsFromMultiConnector",
+          "renameMultiConnector",
+          "resetHealthFlag",
+          "restoreDatasetSnapshot",
+          "revokePersonalAccessToken",
+          "runPackageFlow",
+          "runTransformer",
+          "setCityConfigRegistryEntry",
+          "setCityPackageComponentManaged",
+          "setPatternConfirmationStatus",
+          "setPlatformCityFiltersEnabled",
+          "setSnapshotTransformOnSnapshots",
+          "shareDatasetWithCity",
+          "shareDatasetsWithCity",
+          "testConnectorIdColumns",
+          "testDatasetIdColumns",
+          "transformDataset",
+          "unassignDatasetDataContract",
+          "unassignTransformerDataContract",
+          "ungroupMultiConnector",
+          "unlinkComponents",
+          "unlinkConnectors",
+          "updateActivityStreamPost",
+          "updateAsanaTask",
+          "updateAsanaTaskStatus",
+          "updateAttributeRule",
+          "updateCityAsanaProjectGid",
+          "updateCityDataLead",
+          "updateCityDocsUrl",
+          "updateCitySecret",
+          "updateCityStatus",
+          "updateConnector",
+          "updateDataContract",
+          "updateDataStoreAdapter",
+          "updateDatasetConfig",
+          "updateDatasetSnapshotTransform",
+          "updateEventTableColumn",
+          "updateEventTableColumns",
+          "updateEventTableInstanceColumn",
+          "updateFilterGroupOrders",
+          "updateFilterOrders",
+          "updateInventoryDataset",
+          "updatePlatformAttribute",
+          "updatePlatformCityAttribute",
+          "updatePlatformCityEventTable",
+          "updatePlatformCityFilter",
+          "updatePlatformEventTable",
+          "updatePlatformFilter",
+          "updatePlatformFilterGroup",
+          "updateSection",
+          "updateTransformer",
+          "updateTransformerAssetMapper",
+          "updateTransformerAttributeRules",
+          "updateTransformerContainer",
+          "updateTransformerGeocoder",
+          "updateTransformerJobSettings",
+          "updateTransformerSql",
+          "upsertPackageConfigDraft"
+        ],
+        "Note": [
+          "author",
+          "body",
+          "createdAt",
+          "id"
+        ],
+        "Package": [
+          "cityPackage",
+          "deployComponents",
+          "deployConfigFields",
+          "deprecated",
+          "deprecationMessage",
+          "deps",
+          "description",
+          "docs",
+          "groups",
+          "id",
+          "isAlpha",
+          "isConfig",
+          "module",
+          "name",
+          "qaSql",
+          "status",
+          "version"
+        ],
+        "PackageConfigDraft": [
+          "cityId",
+          "config",
+          "insertedAt",
+          "lastUpdatedBy",
+          "packageId",
+          "updatedAt"
+        ],
+        "PackageDeployComponent": [
+          "key",
+          "type"
+        ],
+        "PackageFilter": [
+          "cityStates",
+          "id",
+          "name"
+        ],
+        "PackageFilterCityState": [
+          "cityId",
+          "enabled"
+        ],
+        "PackageFilterGroup": [
+          "filters",
+          "parentId",
+          "parentKind",
+          "parentName"
+        ],
+        "PackageFilterStats": [
+          "enabledCityCount",
+          "filterCount"
+        ],
+        "PageMeta": [
+          "after",
+          "before",
+          "totalCount"
+        ],
+        "Pattern": [
+          "confirmedChangedAt",
+          "id",
+          "inPattern",
+          "isConfirmed",
+          "user",
+          "userId"
+        ],
+        "PersonalAccessToken": [
+          "expiresAt",
+          "id",
+          "insertedAt",
+          "lastUsedAt",
+          "name",
+          "tokenPrefix"
+        ],
+        "PersonalAccessTokenCreation": [
+          "personalAccessToken",
+          "token"
+        ],
+        "PlatformAttribute": [
+          "cityAttribute",
+          "description",
+          "displayOnProfile",
+          "entity",
+          "filterGroup",
+          "filters",
+          "gisLayer",
+          "id",
+          "isPartitioned",
+          "name",
+          "tableName",
+          "type"
+        ],
+        "PlatformAttributesPage": [
+          "entries",
+          "page",
+          "pageSize",
+          "totalCount"
+        ],
+        "PlatformCityAttribute": [
+          "connectors",
+          "customLabel",
+          "id",
+          "multiValue"
+        ],
+        "PlatformCityEventTable": [
+          "buildingBlocksPopup",
+          "customAmountLabel",
+          "customAmountUnit",
+          "customDateLabel",
+          "customEventIdLabel",
+          "customLabel",
+          "eventCount",
+          "hasIdentities",
+          "id",
+          "publicFromDate",
+          "publicStatuses",
+          "publicToDate",
+          "publicityVisible",
+          "publicityVisibleStatuses",
+          "publicityVisibleSubTypes",
+          "publiclyViewable",
+          "slatePublicVisible",
+          "slatePublicVisibleStatuses",
+          "slatePublicVisibleSubTypes"
+        ],
+        "PlatformCityFilter": [
+          "customLabel",
+          "dateHidden",
+          "description",
+          "disabled",
+          "id",
+          "isGeneratingStats",
+          "lastUpdateDate",
+          "maxDate",
+          "maxValue",
+          "minDate",
+          "minValue",
+          "multiSelectOptions",
+          "predefinedRanges",
+          "publicityFavorite",
+          "publicityVisible",
+          "publiclyViewable",
+          "quintiles",
+          "scheduled",
+          "slatePublicVisible",
+          "source",
+          "sourceLastUpdateDate",
+          "url"
+        ],
+        "PlatformEventTable": [
+          "activeCityCount",
+          "amountLabel",
+          "amountUnit",
+          "baseTableExists",
+          "cityEventTable",
+          "columns",
+          "dateLabel",
+          "eventIdLabel",
+          "eventType",
+          "filters",
+          "form",
+          "hasStatus",
+          "hasType",
+          "icon",
+          "id",
+          "level",
+          "name",
+          "parentId",
+          "tableColumns",
+          "tableName"
+        ],
+        "PlatformEventTablesPage": [
+          "entries",
+          "page",
+          "pageSize",
+          "totalCount"
+        ],
+        "PlatformFilter": [
+          "binary",
+          "cities",
+          "cityFilter",
+          "dataElement",
+          "description",
+          "entity",
+          "filterGroup",
+          "filterOrder",
+          "hideDate",
+          "id",
+          "inverted",
+          "label",
+          "mappingColumn",
+          "name",
+          "nullCheck",
+          "publiclyViewable",
+          "source",
+          "sumOn",
+          "totalCitiesWithEnabledFilter",
+          "type",
+          "unit"
+        ],
+        "PlatformFilterCity": [
+          "cityId",
+          "cityName",
+          "disabled",
+          "filterId",
+          "state"
+        ],
+        "PlatformFilterDeps": [
+          "cityId",
+          "deps",
+          "filterId",
+          "id"
+        ],
+        "PlatformFilterGroup": [
+          "attributes",
+          "filterOrder",
+          "filters",
+          "id",
+          "name",
+          "parent",
+          "subgroups",
+          "svgIcon"
+        ],
+        "PlatformFiltersPage": [
+          "entries",
+          "page",
+          "pageSize",
+          "totalCount"
+        ],
+        "PlatformForm": [
+          "id",
+          "name"
+        ],
+        "PlatformGisLayer": [
+          "customName",
+          "gisFeatureCount",
+          "id",
+          "lastUpdateDate",
+          "name",
+          "source",
+          "sourceLastUpdateDate",
+          "type"
+        ],
+        "PreviewData": [
+          "columns",
+          "exists",
+          "id",
+          "rows"
+        ],
+        "Puller": [
+          "alias",
+          "id",
+          "spec"
+        ],
+        "RootQueryType": [
+          "angel",
+          "asanaTasks",
+          "checkConfigFieldContract",
+          "checkConfigFieldContracts",
+          "city",
+          "cityConfigRegistry",
+          "cityConfigRegistryEntry",
+          "cityDataView",
+          "cityPackageStatuses",
+          "cityPackages",
+          "cityTable",
+          "connector",
+          "connectors",
+          "dataContract",
+          "dataContracts",
+          "dataLeads",
+          "dataStore",
+          "dataStores",
+          "dataset",
+          "datasets",
+          "getPattern",
+          "inventoryContacts",
+          "inventoryDatasets",
+          "inventoryPublicLink",
+          "jobQueueStats",
+          "metric",
+          "multiConnectors",
+          "package",
+          "packageConfigDraft",
+          "packageFilterStats",
+          "packageFilters",
+          "packages",
+          "platformAttribute",
+          "platformAttributes",
+          "platformCityAttribute",
+          "platformCityDataElements",
+          "platformCityEventTable",
+          "platformEventTable",
+          "platformEventTables",
+          "platformFilter",
+          "platformFilterDeps",
+          "platformFilterGroup",
+          "platformFilterGroups",
+          "platformFilters",
+          "puller",
+          "pullers",
+          "randomCityAsset",
+          "resolveConfigFieldDefault",
+          "runSql",
+          "scoreGenerationStatus",
+          "search",
+          "secretValue",
+          "sections",
+          "sourceSystems",
+          "states",
+          "table",
+          "timeline",
+          "transformer",
+          "transformerImage",
+          "transformerImages",
+          "transformerMetric",
+          "transformers",
+          "user"
+        ],
+        "ScoreGenerationStatus": [
+          "attempt",
+          "attemptedAt",
+          "cancelledAt",
+          "cityId",
+          "completedAt",
+          "errors",
+          "insertedAt",
+          "jobId",
+          "maxAttempts",
+          "scheduledAt",
+          "scoreId",
+          "status"
+        ],
+        "SearchSelectInput": [
+          "scope",
+          "type"
+        ],
+        "Secret": [
+          "description",
+          "id",
+          "lastAccessedDate",
+          "lastChangedDate",
+          "name"
+        ],
+        "SecretValue": [
+          "id",
+          "secret",
+          "secretString"
+        ],
+        "SelectInput": [
+          "default",
+          "options",
+          "type"
+        ],
+        "SftpDataStore": [
+          "host",
+          "password",
+          "port",
+          "privateKey",
+          "privateKeyPassPhrase",
+          "user"
+        ],
+        "SourceSystem": [
+          "id",
+          "name"
+        ],
+        "State": [
+          "abbreviation",
+          "cities",
+          "id",
+          "name"
+        ],
+        "Step": [
+          "entity",
+          "id",
+          "m"
+        ],
+        "RootSubscriptionType": [
+          "activityStreamEntryUpdated",
+          "addedTransformerMetric",
+          "cityConnectorCreated",
+          "cityConnectorDeleted",
+          "cityConnectorUpdated",
+          "cityDatasetUpdated",
+          "cityFilterStatsUpdated",
+          "cityTransformerCreated",
+          "cityUpdated",
+          "connectorEventCreated",
+          "connectorJobUpdated",
+          "datasetJobUpdated",
+          "deploymentStatus",
+          "flaggedHealth",
+          "inventoryContactCreated",
+          "inventoryDatasetCreated",
+          "inventoryDatasetDeleted",
+          "inventoryDatasetUpdated",
+          "registeredMetricValue",
+          "snapshotCreated",
+          "snapshotDeleted",
+          "snapshotUpdated",
+          "tableUpdated",
+          "transformerJobUpdated",
+          "updatedFlow",
+          "updatedFlowStep",
+          "updatedTransformerRunner"
+        ],
+        "Table": [
+          "columns",
+          "exists",
+          "id",
+          "name",
+          "previewData",
+          "rowCount",
+          "schema"
+        ],
+        "TableColumn": [
+          "id",
+          "name",
+          "type"
+        ],
+        "TestIdColumnsReport": [
+          "allCounts",
+          "idTest"
+        ],
+        "TextFieldInput": [
+          "default",
+          "hint",
+          "type"
+        ],
+        "Timeline": [
+          "asset",
+          "id",
+          "pattern",
+          "timeline"
+        ],
+        "TolemiFtpStore": [
+          "password",
+          "user"
+        ],
+        "Transformer": [
+          "activityStream",
+          "city",
+          "cityPackage",
+          "configRegistryEntries",
+          "contractValidations",
+          "createdAt",
+          "dataContracts",
+          "deletedAt",
+          "flow",
+          "hasNote",
+          "healthFlags",
+          "id",
+          "isDeletable",
+          "jobs",
+          "metrics",
+          "name",
+          "packageComponent",
+          "rowCount",
+          "runInfo",
+          "runner",
+          "schema",
+          "section",
+          "skipIfUnchanged",
+          "table",
+          "tableName"
+        ],
+        "TransformerAssetMapper": [
+          "operations",
+          "postTransforms",
+          "preFilter",
+          "source",
+          "strategies",
+          "unnestAssetIds"
+        ],
+        "TransformerAttributeRules": [
+          "entity",
+          "inputFacts",
+          "ruleSql",
+          "rules",
+          "tracksHistory"
+        ],
+        "TransformerAttributeRulesEntity": [
+          "customSql",
+          "entity",
+          "filters",
+          "id",
+          "sql"
+        ],
+        "TransformerContainer": [
+          "config",
+          "id",
+          "image"
+        ],
+        "TransformerGeocoder": [
+          "columns",
+          "source"
+        ],
+        "TransformerImage": [
+          "alias",
+          "id",
+          "spec"
+        ],
+        "TransformerMetric": [
+          "id",
+          "name",
+          "values"
+        ],
+        "TransformerSql": [
+          "createSql",
+          "postTransforms",
+          "preTransforms"
+        ],
+        "User": [
+          "defaultCityId",
+          "email",
+          "id",
+          "lastName",
+          "personalAccessTokens",
+          "userApps",
+          "username"
+        ],
+        "UserApp": [
+          "app",
+          "connected",
+          "id",
+          "oauthUrl",
+          "url"
+        ],
+        "UserSession": [
+          "accessToken",
+          "authorities",
+          "id",
+          "user"
+        ]
+      },
+      "delivery": {
+        "btora_listings": {
+          "source": "btora/swarm/dataset_btora_listings.jsonl",
+          "fields": [
+            "dataset",
+            "pull_id",
+            "platform",
+            "listing_id",
+            "url",
+            "listed_at",
+            "bedrooms",
+            "nightly_rate",
+            "license_shown",
+            "match",
+            "parcel_anchor",
+            "lineage"
+          ]
+        },
+        "btora_calendar": {
+          "source": "btora/swarm/dataset_btora_calendar.jsonl",
+          "fields": [
+            "dataset",
+            "listing_id",
+            "platform",
+            "window_from",
+            "window_to",
+            "status",
+            "observed_at",
+            "pull_id"
+          ]
+        },
+        "platform_attributes": {
+          "source": "btora/swarm/platform_attributes.jsonl",
+          "fields": [
+            "attribute",
+            "entity",
+            "parcel_anchor",
+            "lic",
+            "match",
+            "flags",
+            "owner_listings",
+            "lineage"
+          ]
+        },
+        "transformer_booking_events": {
+          "source": "btora/swarm/transformer_booking_events.jsonl",
+          "fields": [
+            "event_table",
+            "event_id",
+            "listing_id",
+            "platform",
+            "date_from",
+            "date_to",
+            "amount",
+            "amount_unit",
+            "parcel_anchor",
+            "match",
+            "lic",
+            "flags",
+            "observed_at",
+            "lineage"
+          ]
+        },
+        "universal_listings": {
+          "source": "btora/universal/listings_*.jsonl",
+          "fields": [
+            "provider",
+            "pull_id",
+            "observed_at",
+            "platform",
+            "listing_id",
+            "url",
+            "title",
+            "listed_at",
+            "host{name,phone,address}",
+            "property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}",
+            "nightly_rate",
+            "calendar[{from,to,status,first_observed_pull,last_observed_pull}]",
+            "match_hint"
+          ]
+        }
+      }
+    }
+  },
+  "confidence_scale": {
+    "exact": "exact",
+    "strong": "strong",
+    "partial": "partial",
+    "analog": "analog",
+    "gap": "gap"
+  },
+  "map": {
+    "parcel": [
+      {
+        "need": "parcel.address",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "Asset",
+            "field": "address / fullAddress / geocoderAddress",
+            "source": "slate_api_key_types.json → Asset",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "ASSET",
+            "field": "address / addressMap / fullAddress",
+            "source": "bundle inventory ASSET",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "listing.property",
+            "field": "property.address",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact",
+            "note": "btora universal listing shape carries the geocoded address verbatim"
+          }
+        ]
+      },
+      {
+        "need": "parcel.lat/lng",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "Asset",
+            "field": "latitude / longitude / polygon / envelope",
+            "source": "slate_api_key_types.json → Asset",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "ASSET",
+            "field": "latitude / longitude / polygon",
+            "source": "bundle inventory ASSET (confirmed native)",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm",
+            "type": "TransformerGeocoder",
+            "field": "columns / source",
+            "source": "swarm_graphql_schema.json → TransformerGeocoder",
+            "confidence": "exact",
+            "note": "geocoder feeds the parcel coords"
+          }
+        ]
+      },
+      {
+        "need": "parcel.apn",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "Asset",
+            "field": "realPropertyUniqueId / parcelId / otherId",
+            "source": "slate_api_key_types.json → Asset",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "ASSET",
+            "field": "parcelId",
+            "source": "bundle inventory ASSET",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "parcel.bedrooms",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "attributes",
+            "source": "slate_api_key_types.json → FlowStageTask.attributes",
+            "confidence": "strong",
+            "note": "declared per-unit attributes on the registration task"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "ASSET_PROJECT_UNIT / attribute",
+            "field": "unit attributes",
+            "source": "bundle inventory ASSET_PROJECT_UNIT",
+            "confidence": "strong",
+            "note": "confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "listing.property",
+            "field": "property.bedrooms / property.beds",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "parcel.zoning",
+        "cands": [
+          {
+            "system": null,
+            "type": null,
+            "field": null,
+            "source": "grep of bundle + swarm + slate",
+            "confidence": "gap",
+            "note": "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three"
+          }
+        ]
+      },
+      {
+        "need": "parcel.evictions",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "ASSET attribute",
+            "field": "assessments / owner-referenced counts",
+            "source": "bundle inventory §6 assessments{owners,totalValue,year}",
+            "confidence": "analog",
+            "note": "eviction filings are a data feed; the demo bridges them from landlordmapper.org"
+          },
+          {
+            "system": "Swarm",
+            "type": "PlatformAttribute / AttributeRule",
+            "field": "name / entity / rules",
+            "source": "swarm_graphql_schema.json → PlatformAttribute, AttributeRule",
+            "confidence": "analog",
+            "note": "an attribute rule could derive a repeat-eviction flag"
+          }
+        ]
+      }
+    ],
+    "owner": [
+      {
+        "need": "owner.name",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "IdentityProfile",
+            "field": "fullName / firstName / lastName",
+            "source": "slate_api_key_types.json → IdentityProfile",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "IDENTITY / IDENTITY_PROFILE",
+            "field": "fullName",
+            "source": "bundle inventory IDENTITY",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "listing.host",
+            "field": "host.name",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "owner.phone",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "IdentityProfile",
+            "field": "phone / otherPhones / phoneType",
+            "source": "slate_api_key_types.json → IdentityProfile",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "IDENTITY_PROFILE",
+            "field": "phone",
+            "source": "bundle inventory IDENTITY_PROFILE",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "owner.mailing_address",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "IdentityProfile",
+            "field": "address / address2 / city / state / zip / fullAddress",
+            "source": "slate_api_key_types.json → IdentityProfile",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "IDENTITY_PROFILE",
+            "field": "address / fullAddress",
+            "source": "bundle inventory IDENTITY_PROFILE",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "owner.email",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "IdentityProfile",
+            "field": "email / emailType / otherEmails",
+            "source": "slate_api_key_types.json → IdentityProfile",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "IDENTITY_PROFILE",
+            "field": "email",
+            "source": "bundle inventory IDENTITY_PROFILE",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "owner.property_count",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "ASSET attribute",
+            "field": "owner property count / owner total suspected rentals",
+            "source": "bundle inventory §8 GetSuggestedLinks ownedAssetCount / previouslyOwnedAssetCount",
+            "confidence": "strong",
+            "note": "suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data"
+          },
+          {
+            "system": "Swarm",
+            "type": "platform_attributes",
+            "field": "owner_listings",
+            "source": "swarm/platform_attributes.jsonl",
+            "confidence": "exact",
+            "note": "btora attribute row carries owner_listings count per parcel"
+          }
+        ]
+      }
+    ],
+    "municipality": [
+      {
+        "need": "municipality.name",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "Workflow / city",
+            "field": "city",
+            "source": "bundle inventory WORKFLOW.city",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm",
+            "type": "City",
+            "field": "name / alias / location",
+            "source": "swarm_graphql_schema.json → City",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "municipality.state",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "State",
+            "field": "name / abbreviation",
+            "source": "swarm_graphql_schema.json → State",
+            "confidence": "exact"
+          },
+          {
+            "system": "Slate",
+            "type": "Workflow / city",
+            "field": "city",
+            "source": "slate_api_key_types.json → Workflow.city",
+            "confidence": "analog",
+            "note": "Slate scopes per city, state is implied"
+          }
+        ]
+      },
+      {
+        "need": "municipality.county",
+        "cands": [
+          {
+            "system": null,
+            "type": null,
+            "field": null,
+            "source": "grep of all three",
+            "confidence": "gap",
+            "note": "no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)"
+          }
+        ]
+      },
+      {
+        "need": "municipality.code_url",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "Connector",
+            "field": "connectorUrl / provenanceUrl / assetProvenanceUrl",
+            "source": "swarm_graphql_schema.json → Connector",
+            "confidence": "analog",
+            "note": "the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host"
+          }
+        ]
+      },
+      {
+        "need": "municipality.chapter",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "LicenseType",
+            "field": "ordinance",
+            "source": "bundle inventory LicenseType.ordinance",
+            "confidence": "analog",
+            "note": "LicenseType carries an ordinance pointer — the closest structural home for a chapter citation"
+          }
+        ]
+      }
+    ],
+    "jurisdiction": [
+      {
+        "need": "jurisdiction.name",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "State / City",
+            "field": "name / abbreviation",
+            "source": "swarm_graphql_schema.json → State, City",
+            "confidence": "exact"
+          }
+        ]
+      }
+    ],
+    "obligation": [
+      {
+        "need": "obligation.text",
+        "cands": [
+          {
+            "system": null,
+            "type": null,
+            "field": null,
+            "source": "grep of all three",
+            "confidence": "gap",
+            "note": "none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth"
+          }
+        ]
+      },
+      {
+        "need": "obligation.section",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "LicenseType",
+            "field": "ordinance",
+            "source": "bundle inventory LicenseType.ordinance",
+            "confidence": "analog",
+            "note": "an ordinance pointer is the only citation-shaped field; section numbers live in the code text"
+          }
+        ]
+      },
+      {
+        "need": "obligation.holder",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "Workflow",
+            "field": "city",
+            "source": "bundle inventory WORKFLOW.city",
+            "confidence": "analog",
+            "note": "the municipality that holds the obligation = the city scoping the workflow"
+          },
+          {
+            "system": "Swarm",
+            "type": "City",
+            "field": "name",
+            "source": "swarm_graphql_schema.json → City",
+            "confidence": "analog"
+          }
+        ]
+      }
+    ],
+    "figure": [
+      {
+        "need": "figure.party / modality",
+        "cands": [
+          {
+            "system": null,
+            "type": null,
+            "field": null,
+            "source": "—",
+            "confidence": "gap",
+            "note": "eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction"
+          }
+        ]
+      }
+    ],
+    "kind": [
+      {
+        "need": "kind.standing_criterion",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "AttributeRule",
+            "field": "rules / name / isPreset",
+            "source": "swarm_graphql_schema.json → AttributeRule",
+            "confidence": "analog",
+            "note": "AttributeRule is the closest standing-criterion container (a named, versioned rule)"
+          }
+        ]
+      }
+    ],
+    "fee-schedule": [
+      {
+        "need": "fee-schedule.*",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "WorkflowStageTaskPayment",
+            "field": "defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription",
+            "source": "bundle inventory §7 WorkflowStageTaskPayment",
+            "confidence": "exact",
+            "note": "this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LicenseType",
+            "field": "registrationPortals / form",
+            "source": "bundle inventory LicenseType",
+            "confidence": "strong"
+          }
+        ]
+      }
+    ],
+    "tax-schedule": [
+      {
+        "need": "tax-schedule.*",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "PlatformEventTable",
+            "field": "amountLabel / amountUnit / columns / tableName",
+            "source": "swarm_graphql_schema.json → PlatformEventTable",
+            "confidence": "analog",
+            "note": "an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type"
+          },
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "paymentAmount / paymentLineItems",
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "analog"
+          }
+        ]
+      }
+    ],
+    "compliance-rule": [
+      {
+        "need": "compliance-rule.*",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "PlatformFilter",
+            "field": "name / label / type / unit / mappingColumn / dataElement / value / sumOn / source",
+            "source": "swarm_graphql_schema.json → PlatformFilter",
+            "confidence": "exact",
+            "note": "a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)"
+          },
+          {
+            "system": "Swarm",
+            "type": "AttributeRule",
+            "field": "rules / name / isPreset",
+            "source": "swarm_graphql_schema.json → AttributeRule",
+            "confidence": "exact"
+          }
+        ]
+      }
+    ],
+    "registration": [
+      {
+        "need": "registration.license_number",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "License",
+            "field": "number / licenseIdentifier",
+            "source": "slate_api_key_types.json → License",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LICENSE",
+            "field": "number",
+            "source": "bundle inventory LICENSE",
+            "confidence": "exact"
+          },
+          {
+            "system": "Slate→btora",
+            "type": "slate_licenses",
+            "field": "license_shown",
+            "source": "btora/slate/slate_registrations.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "registration.status",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "License",
+            "field": "status / isExpired / isRenewable / isInRenewalWindow",
+            "source": "slate_api_key_types.json → License",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LICENSE",
+            "field": "status / isExpired / isRenewable",
+            "source": "bundle inventory LICENSE",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm",
+            "type": "platform_attributes",
+            "field": "lic",
+            "source": "swarm/platform_attributes.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "registration.issued_at",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "License",
+            "field": "approvedOn / dateCreated",
+            "source": "slate_api_key_types.json → License",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LICENSE",
+            "field": "approvedOn",
+            "source": "bundle inventory LICENSE",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "registration.expires_at",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "License",
+            "field": "expirationDate",
+            "source": "slate_api_key_types.json → License",
+            "confidence": "exact",
+            "note": "confirmed the forward-dated field (Job 3)"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LICENSE",
+            "field": "expirationDate",
+            "source": "bundle inventory LICENSE.expirationDate (script-computed)",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "registration.holder",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "License",
+            "field": "registrant",
+            "source": "slate_api_key_types.json → License.registrant",
+            "confidence": "exact"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "LICENSE",
+            "field": "registrant / email / profilePicture",
+            "source": "bundle inventory LICENSE.registrant",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "registration.units / bedrooms / guest_rooms / max_occupancy",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "attributes (declared)",
+            "source": "slate_api_key_types.json → FlowStageTask.attributes",
+            "confidence": "strong"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "listing.property",
+            "field": "property.units / property.bedrooms / property.max_occupancy",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact",
+            "note": "observed (from the platform), the thing the registry claims should match"
+          }
+        ]
+      },
+      {
+        "need": "registration.parking_plan",
+        "cands": [
+          {
+            "system": "Swarm→universal",
+            "type": "listing.property",
+            "field": "property.parking_plan",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          },
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "attributes (declared)",
+            "source": "slate_api_key_types.json → FlowStageTask.attributes",
+            "confidence": "strong"
+          }
+        ]
+      }
+    ],
+    "listing": [
+      {
+        "need": "listing.platform / listing_id / url / title / listed_at",
+        "cands": [
+          {
+            "system": "Swarm→btora",
+            "type": "dataset_btora_listings",
+            "field": "platform / listing_id / url / listed_at",
+            "source": "btora/swarm/dataset_btora_listings.jsonl",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "universal listing",
+            "field": "platform / listing_id / url / title / listed_at",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "listing.nightly_rate",
+        "cands": [
+          {
+            "system": "Swarm→btora",
+            "type": "transformer_booking_events",
+            "field": "amount / amount_unit",
+            "source": "btora/swarm/transformer_booking_events.jsonl",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm→universal",
+            "type": "universal listing",
+            "field": "nightly_rate",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "listing.host",
+        "cands": [
+          {
+            "system": "Swarm→universal",
+            "type": "universal listing",
+            "field": "host{name,phone,address}",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "listing.property",
+        "cands": [
+          {
+            "system": "Swarm→universal",
+            "type": "universal listing",
+            "field": "property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}",
+            "source": "universal/listings_*.jsonl",
+            "confidence": "exact",
+            "note": "this shape is the demo's listing.property — already matched field-for-field"
+          }
+        ]
+      },
+      {
+        "need": "listing.bookings",
+        "cands": [
+          {
+            "system": "Swarm→btora",
+            "type": "dataset_btora_calendar",
+            "field": "window_from / window_to / status / observed_at",
+            "source": "btora/swarm/dataset_btora_calendar.jsonl",
+            "confidence": "exact",
+            "note": "the calendar windows are the booking evidence (Job 9)"
+          },
+          {
+            "system": "Swarm→btora",
+            "type": "transformer_booking_events",
+            "field": "date_from / date_to / amount",
+            "source": "btora/swarm/transformer_booking_events.jsonl",
+            "confidence": "exact"
+          }
+        ]
+      },
+      {
+        "need": "listing.match",
+        "cands": [
+          {
+            "system": "Swarm→btora",
+            "type": "dataset_btora_listings / platform_attributes",
+            "field": "match / flags",
+            "source": "btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl",
+            "confidence": "exact",
+            "note": "CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain"
+          }
+        ]
+      }
+    ],
+    "standing": [
+      {
+        "need": "standing.distinction",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK",
+            "field": "task obligations",
+            "source": "bundle inventory FLOW_STAGE_TASK",
+            "confidence": "strong",
+            "note": "obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel"
+          },
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "workflowStageTask / status / dueOn",
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "strong"
+          }
+        ]
+      },
+      {
+        "need": "standing.council_district",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "PlatformFilter",
+            "field": "name / label / mappingColumn",
+            "source": "swarm_graphql_schema.json → PlatformFilter",
+            "confidence": "strong",
+            "note": "district is a filter dimension; the demo carries the 311 district on the standing"
+          }
+        ]
+      },
+      {
+        "need": "standing.request_nbr",
+        "cands": [
+          {
+            "system": "Swarm",
+            "type": "PlatformEventTable",
+            "field": "eventIdLabel / tableName",
+            "source": "swarm_graphql_schema.json → PlatformEventTable",
+            "confidence": "analog",
+            "note": "311 requests are an event table; the request number is its event id label"
+          }
+        ]
+      },
+      {
+        "need": "standing.responsible_agent",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "AssetIdentity / GetSuggestedLinks",
+            "field": "ownedAssetCount / nameMatch / addressMatch",
+            "source": "bundle inventory §8",
+            "confidence": "strong",
+            "note": "the responsible agent is the identity matched to the parcel"
+          }
+        ]
+      }
+    ],
+    "inspection": [
+      {
+        "need": "inspection.planned_for",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "appointmentDate / appointmentDateUTC / scheduledFor / isAppointment",
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "exact",
+            "note": "the inspection IS a scheduled task on the flow"
+          }
+        ]
+      },
+      {
+        "need": "inspection.focus / note",
+        "cands": [
+          {
+            "system": "Slate",
+            "type": "FlowStageTask",
+            "field": "notes / noteCount",
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm",
+            "type": "Note",
+            "field": "body / author / createdAt",
+            "source": "swarm_graphql_schema.json → Note",
+            "confidence": "strong"
+          }
+        ]
+      }
+    ],
+    "notice": [
+      {
+        "need": "notice.kind / channel / subject / sent_at",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "SnailMail / SnailMailCampaign / OutreachMetrics",
+            "field": "campaign / reply-code tracking / metrics",
+            "source": "bundle inventory §8 SnailMail",
+            "confidence": "exact",
+            "note": "BB ships a full outreach subsystem — the notice's structural home"
+          },
+          {
+            "system": "Slate",
+            "type": "Document",
+            "field": "name / url / template",
+            "source": "slate_api_key_types.json → Document",
+            "confidence": "analog"
+          }
+        ]
+      }
+    ],
+    "connector.health": [
+      {
+        "need": "connector.health",
+        "cands": [
+          {
+            "system": "Building Blocks",
+            "type": "getAngelPlatformCityAttribute",
+            "field": "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl",
+            "source": "bundle inventory §3",
+            "confidence": "exact",
+            "note": "the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "IntegrationHealthDashboard",
+            "field": "provider / status / checkedAt / latencyMs",
+            "source": "bundle inventory §4",
+            "confidence": "exact"
+          },
+          {
+            "system": "Swarm",
+            "type": "Connector",
+            "field": "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / stage",
+            "source": "swarm_graphql_schema.json → Connector",
+            "confidence": "exact"
+          }
+        ]
+      }
+    ]
+  }
+}
