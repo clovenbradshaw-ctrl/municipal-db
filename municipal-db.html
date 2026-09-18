@@ -254,39 +254,41 @@ table.grid tr.row.expanded{background:var(--surface-2);}
 .cmp-framing-note{padding:10px;border:1px solid var(--border);margin:12px 16px;background:var(--surface-2);font-size:11px;line-height:1.55;color:var(--text-dim);}
 
 /* ── compliance calendar ── */
-.cal-widget{border:1px solid var(--border);margin:10px 16px;padding:10px 12px;background:#fff;}
-.cal-widget-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
-.cal-widget-head b{font-size:12.5px;color:var(--text-bright);}
-.cal-widget-row{display:flex;gap:8px;align-items:center;padding:3px 0;font-size:11.5px;border-top:1px solid var(--surface-3);}
+.cal-widget{border:1px solid var(--border);margin:10px 16px;padding:12px 14px;background:#fff;}
+.cal-widget-head{display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+.cal-widget-head b{font-size:15px;color:var(--text-bright);}
+.cal-widget-row{display:flex;gap:8px;align-items:center;padding:5px 0;font-size:13px;border-top:1px solid var(--surface-3);}
 .cal-widget-row .cw-date{width:78px;flex-shrink:0;color:var(--text-dim);font-variant-numeric:tabular-nums;}
-.cal-toolbar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--surface-2);}
-.cal-toolbar .cal-month-label{font-weight:700;font-size:13px;min-width:150px;text-align:center;}
-.cal-filter-chip{padding:3px 9px;font-size:10.5px;text-transform:lowercase;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:var(--mono);}
+.cal-kind-legend{display:flex;gap:10px 20px;flex-wrap:wrap;font-size:12.5px;color:var(--text);margin:10px 16px;padding:10px 12px;background:#fff;border:1px solid var(--border);}
+.cal-kind-legend b{font-weight:700;color:var(--text-bright);}
+.cal-toolbar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--surface-2);}
+.cal-toolbar .cal-month-label{font-weight:700;font-size:16px;min-width:160px;text-align:center;}
+.cal-filter-chip{padding:5px 12px;font-size:12.5px;font-weight:600;text-transform:none;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:var(--mono);}
 .cal-filter-chip.active{background:var(--text-bright);color:#fff;border-color:var(--text-bright);}
-.cal-scope-chip{padding:3px 9px;font-size:10.5px;border:1px solid var(--triad-structure);color:var(--triad-structure);background:#f1f0fb;font-weight:600;}
+.cal-scope-chip{padding:5px 12px;font-size:12.5px;border:1px solid var(--triad-structure);color:var(--triad-structure);background:#f1f0fb;font-weight:600;}
 .cal-scope-chip button{border:none;background:transparent;color:inherit;cursor:pointer;font-weight:700;margin-left:4px;}
-.cal-body{display:grid;grid-template-columns:minmax(0,1fr) 280px;min-height:0;height:calc(100% - 49px);}
-.cal-grid-wrap{overflow-y:auto;padding:12px 16px;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.cal-dow{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;text-align:center;padding-bottom:4px;}
-.cal-cell{border:1px solid var(--border);min-height:78px;padding:4px;font-size:10px;cursor:pointer;background:#fff;}
+.cal-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:0;height:calc(100% - 49px);}
+.cal-grid-wrap{overflow-y:auto;padding:14px 16px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.cal-dow{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);font-weight:700;text-align:center;padding-bottom:5px;}
+.cal-cell{border:1px solid var(--border);min-height:92px;padding:5px;font-size:11.5px;cursor:pointer;background:#fff;}
 .cal-cell.empty{border-color:transparent;cursor:default;background:transparent;}
 .cal-cell.today{border-color:var(--triad-structure);border-width:2px;}
 .cal-cell.selected{background:var(--surface-2);}
 .cal-cell:hover:not(.empty){background:var(--surface-2);}
-.cal-daynum{font-weight:700;color:var(--text-dim);margin-bottom:3px;font-variant-numeric:tabular-nums;}
+.cal-daynum{font-weight:700;font-size:13.5px;color:var(--text-dim);margin-bottom:4px;font-variant-numeric:tabular-nums;}
 .cal-cell.today .cal-daynum{color:var(--triad-structure);}
-.cal-chip{padding:1px 4px;margin-bottom:2px;border-radius:2px;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
+.cal-chip{padding:2px 5px;margin-bottom:2px;border-radius:3px;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff;}
 .cal-chip.cal-scheduled{background:var(--triad-structure);}
 .cal-chip.cal-completed{background:var(--triad-existence);}
 .cal-chip.cal-overdue{background:var(--triad-significance);}
 .cal-chip.cal-flagged{background:var(--signal);}
-.cal-more{font-size:9px;color:var(--text-faint);}
-.cal-agenda{border-left:1px solid var(--border);overflow-y:auto;padding:12px 14px;background:var(--surface-2);}
-.cal-agenda h4{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);margin:0 0 8px;}
-.cal-record{border:1px solid var(--border);background:#fff;padding:8px 9px;margin-bottom:8px;font-size:11.5px;}
-.cal-record-kind{font-weight:700;text-transform:capitalize;}
-.cal-record-note{color:var(--text-dim);margin:4px 0;line-height:1.4;}
+.cal-more{font-size:10.5px;font-weight:600;color:var(--text-faint);}
+.cal-agenda{border-left:1px solid var(--border);overflow-y:auto;padding:14px 16px;background:var(--surface-2);}
+.cal-agenda h4{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-dim);margin:0 0 10px;}
+.cal-record{border:1px solid var(--border);background:#fff;padding:10px 11px;margin-bottom:10px;font-size:13px;}
+.cal-record-kind{font-weight:700;font-size:14.5px;}
+.cal-record-note{color:var(--text-dim);margin:5px 0;line-height:1.45;}
 
 /* ── three-layer demo ── */
 .layer-note{max-width:820px;padding:10px 12px;border:1px solid var(--border);margin:12px 16px;background:var(--surface-2);font-size:12px;line-height:1.6;color:var(--text);border-left:4px solid var(--border-strong);}
@@ -943,6 +945,16 @@ const CAL_HEADER = 16, CAL_PARCEL_ENTRY = 6, CAL_ROW = 18;
 const CAL_TARGET_COUNT = 10000;
 const CAL_KINDS = ["inspection", "notice", "license-renewal", "tax-audit", "contact-verify", "occupancy-check"];
 const CAL_STATUSES = ["scheduled", "completed", "overdue", "flagged"];
+const CAL_KIND_LABELS = { "inspection": "Inspection", "notice": "Notice", "license-renewal": "License Renewal", "tax-audit": "Tax Audit", "contact-verify": "Contact Verify", "occupancy-check": "Occupancy Check" };
+const CAL_KIND_DESC = {
+  "inspection": "an in-person visit to check guestroom count, permit posting, or life-safety items",
+  "notice": "a letter or portal message sent to the registrant — a fee due, a compliance issue, a reminder",
+  "license-renewal": "the STR license's own renewal window opening, or the grace period on a late one",
+  "tax-audit": "reconciling what the platform reports in bookings against what was actually remitted",
+  "contact-verify": "re-checking the named emergency contact is within the 10-mile rule and still reachable",
+  "occupancy-check": "a spot-check on declared vs. actual guest count, often triggered by a complaint",
+};
+function calKindLabel(k) { return CAL_KIND_LABELS[k] || k; }
 const CAL_NOTES = {
   "inspection": ["Routine STR inspection — verify guest capacity and posted permit.", "Follow-up inspection after a 311 complaint.", "Annual life-safety inspection (egress, smoke detectors)."],
   "notice": ["Registration-obligation notice mailed to owner.", "Compliance notice re: expired license.", "Courtesy notice — renewal due within 30 days."],
@@ -1918,13 +1930,13 @@ function renderCalWidgetHtml() {
   const flagged = COMP_RECORDS.filter((r) => r.status === "flagged").length;
   return `<div class="cal-widget">
     <div class="cal-widget-head">
-      <b>📅 compliance calendar</b>
+      <b>📅 Compliance Calendar</b>
       <span class="cmp-compact">${fmtNum(COMP_RECORDS.length)} dummy records · ${fmtNum(overdue)} overdue · ${fmtNum(flagged)} flagged</span>
-      <button class="cmp-btn" style="margin-left:auto;" id="cal-widget-open">open full calendar →</button>
+      <button class="cmp-btn primary" style="margin-left:auto;font-weight:700;" id="cal-widget-open">open full calendar →</button>
     </div>
     ${upcoming.length ? upcoming.map((r) => {
       const p = state.entities[r.parcelAnchor];
-      return `<div class="cal-widget-row"><span class="cw-date">${epochDayToDate(r.dateEpochDay).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })}</span> <b>${r.kind}</b> — ${p ? entityLabel(p) : "unknown property"}</div>`;
+      return `<div class="cal-widget-row"><span class="cw-date">${epochDayToDate(r.dateEpochDay).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })}</span> <b>${calKindLabel(r.kind)}</b> — ${p ? entityLabel(p) : "unknown property"}</div>`;
     }).join("") : `<div class="cmp-empty" style="padding:4px 0;">Nothing scheduled.</div>`}
   </div>`;
 }
@@ -3206,7 +3218,7 @@ function renderCalendar() {
     const shown = dayRecords.slice(0, 3);
     cells += `<div class="cal-cell ${ed === today ? "today" : ""} ${ed === calSelectedDay ? "selected" : ""}" data-cal-day="${ed}">
       <div class="cal-daynum">${d}</div>
-      ${shown.map((r) => `<div class="cal-chip cal-${r.status}">${r.kind}</div>`).join("")}
+      ${shown.map((r) => `<div class="cal-chip cal-${r.status}">${calKindLabel(r.kind)}</div>`).join("")}
       ${dayRecords.length > shown.length ? `<div class="cal-more">+${dayRecords.length - shown.length} more</div>` : ""}
     </div>`;
   }
@@ -3219,13 +3231,14 @@ function renderCalendar() {
 
   main.innerHTML = `
     <div class="tv-head"><h2>compliance calendar</h2><span class="crumb">${fmtNum(records.length)} record${records.length === 1 ? "" : "s"}${filterAnchor ? " · filtered to one property" : ""}</span></div>
+    <div class="cal-kind-legend">${CAL_KINDS.map((k) => `<span><b>${calKindLabel(k)}:</b> ${CAL_KIND_DESC[k]}</span>`).join("")}</div>
     <div class="cal-toolbar">
       <button class="cmp-btn" id="cal-prev">‹ prev</button>
       <span class="cal-month-label">${monthLabel}</span>
       <button class="cmp-btn" id="cal-next">next ›</button>
       <button class="cmp-btn" id="cal-today">today</button>
       <span style="flex:1;"></span>
-      ${["all", ...CAL_KINDS].map((k) => `<button class="cal-filter-chip ${calKindFilter === k ? "active" : ""}" data-cal-kind="${k}">${k}</button>`).join("")}
+      ${["all", ...CAL_KINDS].map((k) => `<button class="cal-filter-chip ${calKindFilter === k ? "active" : ""}" data-cal-kind="${k}">${k === "all" ? "All" : calKindLabel(k)}</button>`).join("")}
       ${filterAnchor ? `<span class="cal-scope-chip">${filterEntity ? entityLabel(filterEntity) : "unknown property"}<button data-cal-clear-filter title="show all properties">✕</button></span>` : ""}
     </div>
     <div class="cal-body">
@@ -3237,7 +3250,7 @@ function renderCalendar() {
         ${agendaRecords.length ? agendaRecords.map((r) => {
           const p = state.entities[r.parcelAnchor];
           return `<div class="cal-record">
-            <div class="cal-record-kind">${r.kind} <span class="cmp-chip ${r.status === "completed" ? "ok" : r.status === "overdue" ? "bad" : r.status === "flagged" ? "warn" : "info"}">${r.status}</span></div>
+            <div class="cal-record-kind">${calKindLabel(r.kind)} <span class="cmp-chip ${r.status === "completed" ? "ok" : r.status === "overdue" ? "bad" : r.status === "flagged" ? "warn" : "info"}">${r.status}</span></div>
             <div class="cal-record-note">${r.note}</div>
             <button class="cmp-btn" data-cal-open-parcel="${r.parcelAnchor}">${p ? entityLabel(p) : "view property"} →</button>
           </div>`;
