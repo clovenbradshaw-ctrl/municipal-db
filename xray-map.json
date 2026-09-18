@@ -2019,6 +2019,12 @@
     "analog": "analog",
     "gap": "gap"
   },
+  "verification": {
+    "pass": true,
+    "checked": 85,
+    "verified": 85,
+    "unverified": 0
+  },
   "map": {
     "parcel": [
       {
@@ -2028,23 +2034,45 @@
             "system": "Slate",
             "type": "Asset",
             "field": "address / fullAddress / geocoderAddress",
+            "fields": [
+              "address",
+              "fullAddress",
+              "geocoderAddress"
+            ],
             "source": "slate_api_key_types.json → Asset",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → Asset"
           },
           {
             "system": "Building Blocks",
             "type": "ASSET",
             "field": "address / addressMap / fullAddress",
+            "fields": [
+              "address",
+              "addressMap",
+              "fullAddress"
+            ],
             "source": "bundle inventory ASSET",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm→universal",
             "type": "listing.property",
             "field": "property.address",
+            "fields": [
+              "address"
+            ],
             "source": "universal/listings_*.jsonl",
             "confidence": "exact",
-            "note": "btora universal listing shape carries the geocoded address verbatim"
+            "note": "btora universal listing shape carries the geocoded address verbatim",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
           }
         ]
       },
@@ -2055,23 +2083,47 @@
             "system": "Slate",
             "type": "Asset",
             "field": "latitude / longitude / polygon / envelope",
+            "fields": [
+              "latitude",
+              "longitude",
+              "polygon",
+              "envelope"
+            ],
             "source": "slate_api_key_types.json → Asset",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → Asset"
           },
           {
             "system": "Building Blocks",
             "type": "ASSET",
             "field": "latitude / longitude / polygon",
+            "fields": [
+              "latitude",
+              "longitude",
+              "polygon"
+            ],
             "source": "bundle inventory ASSET (confirmed native)",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "TransformerGeocoder",
             "field": "columns / source",
+            "fields": [
+              "columns",
+              "source"
+            ],
             "source": "swarm_graphql_schema.json → TransformerGeocoder",
             "confidence": "exact",
-            "note": "geocoder feeds the parcel coords"
+            "note": "geocoder feeds the parcel coords",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → TransformerGeocoder"
           }
         ]
       },
@@ -2082,15 +2134,29 @@
             "system": "Slate",
             "type": "Asset",
             "field": "realPropertyUniqueId / parcelId / otherId",
+            "fields": [
+              "realPropertyUniqueId",
+              "parcelId",
+              "otherId"
+            ],
             "source": "slate_api_key_types.json → Asset",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → Asset"
           },
           {
             "system": "Building Blocks",
             "type": "ASSET",
             "field": "parcelId",
+            "fields": [
+              "parcelId"
+            ],
             "source": "bundle inventory ASSET",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2101,24 +2167,43 @@
             "system": "Slate",
             "type": "FlowStageTask",
             "field": "attributes",
-            "source": "slate_api_key_types.json → FlowStageTask.attributes",
+            "fields": [
+              "attributes"
+            ],
+            "source": "slate_api_key_types.json → FlowStageTask",
             "confidence": "strong",
-            "note": "declared per-unit attributes on the registration task"
+            "note": "declared per-unit attributes on the registration task",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           },
           {
             "system": "Building Blocks",
-            "type": "ASSET_PROJECT_UNIT / attribute",
-            "field": "unit attributes",
+            "type": "ASSET_PROJECT_UNIT",
+            "field": "attributes",
+            "fields": [
+              "attributes"
+            ],
             "source": "bundle inventory ASSET_PROJECT_UNIT",
             "confidence": "strong",
-            "note": "confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)"
+            "note": "confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm→universal",
             "type": "listing.property",
             "field": "property.bedrooms / property.beds",
+            "fields": [
+              "bedrooms",
+              "beds"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
           }
         ]
       },
@@ -2129,9 +2214,13 @@
             "system": null,
             "type": null,
             "field": null,
+            "fields": [],
             "source": "grep of bundle + swarm + slate",
             "confidence": "gap",
-            "note": "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three"
+            "note": "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three",
+            "verified": true,
+            "missing": [],
+            "checked_against": "gap (named, nothing claimed)"
           }
         ]
       },
@@ -2140,19 +2229,32 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "ASSET attribute",
-            "field": "assessments / owner-referenced counts",
+            "type": "ASSET",
+            "field": "assessments",
+            "fields": [
+              "assessments"
+            ],
             "source": "bundle inventory §6 assessments{owners,totalValue,year}",
             "confidence": "analog",
-            "note": "eviction filings are a data feed; the demo bridges them from landlordmapper.org"
+            "note": "eviction filings are a data feed; the demo bridges them from landlordmapper.org",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
-            "type": "PlatformAttribute / AttributeRule",
-            "field": "name / entity / rules",
-            "source": "swarm_graphql_schema.json → PlatformAttribute, AttributeRule",
+            "type": "AttributeRule",
+            "field": "name / rules",
+            "fields": [
+              "name",
+              "rules"
+            ],
+            "source": "swarm_graphql_schema.json → AttributeRule",
             "confidence": "analog",
-            "note": "an attribute rule could derive a repeat-eviction flag"
+            "note": "an attribute rule could derive a repeat-eviction flag",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → AttributeRule"
           }
         ]
       }
@@ -2165,22 +2267,42 @@
             "system": "Slate",
             "type": "IdentityProfile",
             "field": "fullName / firstName / lastName",
+            "fields": [
+              "fullName",
+              "firstName",
+              "lastName"
+            ],
             "source": "slate_api_key_types.json → IdentityProfile",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → IdentityProfile"
           },
           {
             "system": "Building Blocks",
-            "type": "IDENTITY / IDENTITY_PROFILE",
+            "type": "IDENTITY_PROFILE",
             "field": "fullName",
-            "source": "bundle inventory IDENTITY",
-            "confidence": "exact"
+            "fields": [
+              "fullName"
+            ],
+            "source": "bundle inventory IDENTITY_PROFILE",
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm→universal",
             "type": "listing.host",
             "field": "host.name",
+            "fields": [
+              "name"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → host{}"
           }
         ]
       },
@@ -2191,15 +2313,29 @@
             "system": "Slate",
             "type": "IdentityProfile",
             "field": "phone / otherPhones / phoneType",
+            "fields": [
+              "phone",
+              "otherPhones",
+              "phoneType"
+            ],
             "source": "slate_api_key_types.json → IdentityProfile",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → IdentityProfile"
           },
           {
             "system": "Building Blocks",
             "type": "IDENTITY_PROFILE",
             "field": "phone",
+            "fields": [
+              "phone"
+            ],
             "source": "bundle inventory IDENTITY_PROFILE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2210,15 +2346,33 @@
             "system": "Slate",
             "type": "IdentityProfile",
             "field": "address / address2 / city / state / zip / fullAddress",
+            "fields": [
+              "address",
+              "address2",
+              "city",
+              "state",
+              "zip",
+              "fullAddress"
+            ],
             "source": "slate_api_key_types.json → IdentityProfile",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → IdentityProfile"
           },
           {
             "system": "Building Blocks",
             "type": "IDENTITY_PROFILE",
             "field": "address / fullAddress",
+            "fields": [
+              "address",
+              "fullAddress"
+            ],
             "source": "bundle inventory IDENTITY_PROFILE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2229,15 +2383,29 @@
             "system": "Slate",
             "type": "IdentityProfile",
             "field": "email / emailType / otherEmails",
+            "fields": [
+              "email",
+              "emailType",
+              "otherEmails"
+            ],
             "source": "slate_api_key_types.json → IdentityProfile",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → IdentityProfile"
           },
           {
             "system": "Building Blocks",
             "type": "IDENTITY_PROFILE",
             "field": "email",
+            "fields": [
+              "email"
+            ],
             "source": "bundle inventory IDENTITY_PROFILE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2246,19 +2414,32 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "ASSET attribute",
-            "field": "owner property count / owner total suspected rentals",
-            "source": "bundle inventory §8 GetSuggestedLinks ownedAssetCount / previouslyOwnedAssetCount",
+            "type": "GetSuggestedLinks",
+            "field": "ownedAssetCount / previouslyOwnedAssetCount",
+            "fields": [
+              "ownedAssetCount",
+              "previouslyOwnedAssetCount"
+            ],
+            "source": "bundle inventory §8 GetSuggestedLinks",
             "confidence": "strong",
-            "note": "suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data"
+            "note": "suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "platform_attributes",
             "field": "owner_listings",
-            "source": "swarm/platform_attributes.jsonl",
+            "fields": [
+              "owner_listings"
+            ],
+            "source": "btora/swarm/platform_attributes.jsonl",
             "confidence": "exact",
-            "note": "btora attribute row carries owner_listings count per parcel"
+            "note": "btora attribute row carries owner_listings count per parcel",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/platform_attributes.jsonl (first row)"
           }
         ]
       }
@@ -2269,17 +2450,31 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "Workflow / city",
+            "type": "Workflow",
             "field": "city",
+            "fields": [
+              "city"
+            ],
             "source": "bundle inventory WORKFLOW.city",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "City",
             "field": "name / alias / location",
+            "fields": [
+              "name",
+              "alias",
+              "location"
+            ],
             "source": "swarm_graphql_schema.json → City",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → City"
           }
         ]
       },
@@ -2290,16 +2485,29 @@
             "system": "Swarm",
             "type": "State",
             "field": "name / abbreviation",
+            "fields": [
+              "name",
+              "abbreviation"
+            ],
             "source": "swarm_graphql_schema.json → State",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → State"
           },
           {
             "system": "Slate",
-            "type": "Workflow / city",
+            "type": "Workflow",
             "field": "city",
+            "fields": [
+              "city"
+            ],
             "source": "slate_api_key_types.json → Workflow.city",
             "confidence": "analog",
-            "note": "Slate scopes per city, state is implied"
+            "note": "Slate scopes per city, state is implied",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → Workflow"
           }
         ]
       },
@@ -2310,9 +2518,13 @@
             "system": null,
             "type": null,
             "field": null,
+            "fields": [],
             "source": "grep of all three",
             "confidence": "gap",
-            "note": "no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)"
+            "note": "no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "gap (named, nothing claimed)"
           }
         ]
       },
@@ -2323,9 +2535,17 @@
             "system": "Swarm",
             "type": "Connector",
             "field": "connectorUrl / provenanceUrl / assetProvenanceUrl",
+            "fields": [
+              "connectorUrl",
+              "provenanceUrl",
+              "assetProvenanceUrl"
+            ],
             "source": "swarm_graphql_schema.json → Connector",
             "confidence": "analog",
-            "note": "the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host"
+            "note": "the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → Connector"
           }
         ]
       },
@@ -2336,9 +2556,15 @@
             "system": "Building Blocks",
             "type": "LicenseType",
             "field": "ordinance",
+            "fields": [
+              "ordinance"
+            ],
             "source": "bundle inventory LicenseType.ordinance",
             "confidence": "analog",
-            "note": "LicenseType carries an ordinance pointer — the closest structural home for a chapter citation"
+            "note": "LicenseType carries an ordinance pointer — the closest structural home for a chapter citation",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       }
@@ -2349,10 +2575,30 @@
         "cands": [
           {
             "system": "Swarm",
-            "type": "State / City",
+            "type": "State",
             "field": "name / abbreviation",
-            "source": "swarm_graphql_schema.json → State, City",
-            "confidence": "exact"
+            "fields": [
+              "name",
+              "abbreviation"
+            ],
+            "source": "swarm_graphql_schema.json → State",
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → State"
+          },
+          {
+            "system": "Swarm",
+            "type": "City",
+            "field": "name",
+            "fields": [
+              "name"
+            ],
+            "source": "swarm_graphql_schema.json → City",
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → City"
           }
         ]
       }
@@ -2365,9 +2611,13 @@
             "system": null,
             "type": null,
             "field": null,
+            "fields": [],
             "source": "grep of all three",
             "confidence": "gap",
-            "note": "none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth"
+            "note": "none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth",
+            "verified": true,
+            "missing": [],
+            "checked_against": "gap (named, nothing claimed)"
           }
         ]
       },
@@ -2378,9 +2628,15 @@
             "system": "Building Blocks",
             "type": "LicenseType",
             "field": "ordinance",
+            "fields": [
+              "ordinance"
+            ],
             "source": "bundle inventory LicenseType.ordinance",
             "confidence": "analog",
-            "note": "an ordinance pointer is the only citation-shaped field; section numbers live in the code text"
+            "note": "an ordinance pointer is the only citation-shaped field; section numbers live in the code text",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2391,16 +2647,28 @@
             "system": "Building Blocks",
             "type": "Workflow",
             "field": "city",
+            "fields": [
+              "city"
+            ],
             "source": "bundle inventory WORKFLOW.city",
             "confidence": "analog",
-            "note": "the municipality that holds the obligation = the city scoping the workflow"
+            "note": "the municipality that holds the obligation = the city scoping the workflow",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "City",
             "field": "name",
+            "fields": [
+              "name"
+            ],
             "source": "swarm_graphql_schema.json → City",
-            "confidence": "analog"
+            "confidence": "analog",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → City"
           }
         ]
       }
@@ -2413,9 +2681,13 @@
             "system": null,
             "type": null,
             "field": null,
+            "fields": [],
             "source": "—",
             "confidence": "gap",
-            "note": "eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction"
+            "note": "eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction",
+            "verified": true,
+            "missing": [],
+            "checked_against": "gap (named, nothing claimed)"
           }
         ]
       }
@@ -2428,9 +2700,17 @@
             "system": "Swarm",
             "type": "AttributeRule",
             "field": "rules / name / isPreset",
+            "fields": [
+              "rules",
+              "name",
+              "isPreset"
+            ],
             "source": "swarm_graphql_schema.json → AttributeRule",
             "confidence": "analog",
-            "note": "AttributeRule is the closest standing-criterion container (a named, versioned rule)"
+            "note": "AttributeRule is the closest standing-criterion container (a named, versioned rule)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → AttributeRule"
           }
         ]
       }
@@ -2443,16 +2723,33 @@
             "system": "Building Blocks",
             "type": "WorkflowStageTaskPayment",
             "field": "defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription",
+            "fields": [
+              "defaultPaymentAmount",
+              "paymentAmountPerAsset",
+              "paymentAmountPerUnit",
+              "paymentFormulaScript",
+              "paymentDescription"
+            ],
             "source": "bundle inventory §7 WorkflowStageTaskPayment",
             "confidence": "exact",
-            "note": "this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)"
+            "note": "this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Building Blocks",
             "type": "LicenseType",
             "field": "registrationPortals / form",
+            "fields": [
+              "registrationPortals",
+              "form"
+            ],
             "source": "bundle inventory LicenseType",
-            "confidence": "strong"
+            "confidence": "strong",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       }
@@ -2465,16 +2762,32 @@
             "system": "Swarm",
             "type": "PlatformEventTable",
             "field": "amountLabel / amountUnit / columns / tableName",
+            "fields": [
+              "amountLabel",
+              "amountUnit",
+              "columns",
+              "tableName"
+            ],
             "source": "swarm_graphql_schema.json → PlatformEventTable",
             "confidence": "analog",
-            "note": "an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type"
+            "note": "an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → PlatformEventTable"
           },
           {
             "system": "Slate",
             "type": "FlowStageTask",
             "field": "paymentAmount / paymentLineItems",
+            "fields": [
+              "paymentAmount",
+              "paymentLineItems"
+            ],
             "source": "slate_api_key_types.json → FlowStageTask",
-            "confidence": "analog"
+            "confidence": "analog",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           }
         ]
       }
@@ -2486,17 +2799,38 @@
           {
             "system": "Swarm",
             "type": "PlatformFilter",
-            "field": "name / label / type / unit / mappingColumn / dataElement / value / sumOn / source",
+            "field": "name / label / type / unit / mappingColumn / dataElement / sumOn / source",
+            "fields": [
+              "name",
+              "label",
+              "type",
+              "unit",
+              "mappingColumn",
+              "dataElement",
+              "sumOn",
+              "source"
+            ],
             "source": "swarm_graphql_schema.json → PlatformFilter",
             "confidence": "exact",
-            "note": "a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)"
+            "note": "a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → PlatformFilter"
           },
           {
             "system": "Swarm",
             "type": "AttributeRule",
             "field": "rules / name / isPreset",
+            "fields": [
+              "rules",
+              "name",
+              "isPreset"
+            ],
             "source": "swarm_graphql_schema.json → AttributeRule",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → AttributeRule"
           }
         ]
       }
@@ -2509,22 +2843,41 @@
             "system": "Slate",
             "type": "License",
             "field": "number / licenseIdentifier",
+            "fields": [
+              "number",
+              "licenseIdentifier"
+            ],
             "source": "slate_api_key_types.json → License",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → License"
           },
           {
             "system": "Building Blocks",
             "type": "LICENSE",
             "field": "number",
+            "fields": [
+              "number"
+            ],
             "source": "bundle inventory LICENSE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Slate→btora",
             "type": "slate_licenses",
             "field": "license_shown",
+            "fields": [
+              "license_shown"
+            ],
             "source": "btora/slate/slate_registrations.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/slate/slate_registrations.jsonl (first row)"
           }
         ]
       },
@@ -2535,22 +2888,45 @@
             "system": "Slate",
             "type": "License",
             "field": "status / isExpired / isRenewable / isInRenewalWindow",
+            "fields": [
+              "status",
+              "isExpired",
+              "isRenewable",
+              "isInRenewalWindow"
+            ],
             "source": "slate_api_key_types.json → License",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → License"
           },
           {
             "system": "Building Blocks",
             "type": "LICENSE",
             "field": "status / isExpired / isRenewable",
+            "fields": [
+              "status",
+              "isExpired",
+              "isRenewable"
+            ],
             "source": "bundle inventory LICENSE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "platform_attributes",
             "field": "lic",
-            "source": "swarm/platform_attributes.jsonl",
-            "confidence": "exact"
+            "fields": [
+              "lic"
+            ],
+            "source": "btora/swarm/platform_attributes.jsonl",
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/platform_attributes.jsonl (first row)"
           }
         ]
       },
@@ -2561,15 +2937,28 @@
             "system": "Slate",
             "type": "License",
             "field": "approvedOn / dateCreated",
+            "fields": [
+              "approvedOn",
+              "dateCreated"
+            ],
             "source": "slate_api_key_types.json → License",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → License"
           },
           {
             "system": "Building Blocks",
             "type": "LICENSE",
             "field": "approvedOn",
+            "fields": [
+              "approvedOn"
+            ],
             "source": "bundle inventory LICENSE",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2580,16 +2969,28 @@
             "system": "Slate",
             "type": "License",
             "field": "expirationDate",
+            "fields": [
+              "expirationDate"
+            ],
             "source": "slate_api_key_types.json → License",
             "confidence": "exact",
-            "note": "confirmed the forward-dated field (Job 3)"
+            "note": "confirmed the forward-dated field (Job 3)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → License"
           },
           {
             "system": "Building Blocks",
             "type": "LICENSE",
             "field": "expirationDate",
+            "fields": [
+              "expirationDate"
+            ],
             "source": "bundle inventory LICENSE.expirationDate (script-computed)",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2600,15 +3001,29 @@
             "system": "Slate",
             "type": "License",
             "field": "registrant",
+            "fields": [
+              "registrant"
+            ],
             "source": "slate_api_key_types.json → License.registrant",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → License"
           },
           {
             "system": "Building Blocks",
             "type": "LICENSE",
             "field": "registrant / email / profilePicture",
+            "fields": [
+              "registrant",
+              "email",
+              "profilePicture"
+            ],
             "source": "bundle inventory LICENSE.registrant",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       },
@@ -2618,17 +3033,31 @@
           {
             "system": "Slate",
             "type": "FlowStageTask",
-            "field": "attributes (declared)",
-            "source": "slate_api_key_types.json → FlowStageTask.attributes",
-            "confidence": "strong"
+            "field": "attributes",
+            "fields": [
+              "attributes"
+            ],
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "strong",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           },
           {
             "system": "Swarm→universal",
             "type": "listing.property",
             "field": "property.units / property.bedrooms / property.max_occupancy",
+            "fields": [
+              "units",
+              "bedrooms",
+              "max_occupancy"
+            ],
             "source": "universal/listings_*.jsonl",
             "confidence": "exact",
-            "note": "observed (from the platform), the thing the registry claims should match"
+            "note": "observed (from the platform), the thing the registry claims should match",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
           }
         ]
       },
@@ -2639,15 +3068,27 @@
             "system": "Swarm→universal",
             "type": "listing.property",
             "field": "property.parking_plan",
+            "fields": [
+              "parking_plan"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
           },
           {
             "system": "Slate",
             "type": "FlowStageTask",
-            "field": "attributes (declared)",
-            "source": "slate_api_key_types.json → FlowStageTask.attributes",
-            "confidence": "strong"
+            "field": "attributes",
+            "fields": [
+              "attributes"
+            ],
+            "source": "slate_api_key_types.json → FlowStageTask",
+            "confidence": "strong",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           }
         ]
       }
@@ -2660,15 +3101,34 @@
             "system": "Swarm→btora",
             "type": "dataset_btora_listings",
             "field": "platform / listing_id / url / listed_at",
+            "fields": [
+              "platform",
+              "listing_id",
+              "url",
+              "listed_at"
+            ],
             "source": "btora/swarm/dataset_btora_listings.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/dataset_btora_listings.jsonl (first row)"
           },
           {
             "system": "Swarm→universal",
             "type": "universal listing",
             "field": "platform / listing_id / url / title / listed_at",
+            "fields": [
+              "platform",
+              "listing_id",
+              "url",
+              "title",
+              "listed_at"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl (first row)"
           }
         ]
       },
@@ -2679,15 +3139,28 @@
             "system": "Swarm→btora",
             "type": "transformer_booking_events",
             "field": "amount / amount_unit",
+            "fields": [
+              "amount",
+              "amount_unit"
+            ],
             "source": "btora/swarm/transformer_booking_events.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/transformer_booking_events.jsonl (first row)"
           },
           {
             "system": "Swarm→universal",
             "type": "universal listing",
             "field": "nightly_rate",
+            "fields": [
+              "nightly_rate"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl (first row)"
           }
         ]
       },
@@ -2696,10 +3169,18 @@
         "cands": [
           {
             "system": "Swarm→universal",
-            "type": "universal listing",
-            "field": "host{name,phone,address}",
+            "type": "listing.host",
+            "field": "host.name / host.phone / host.address",
+            "fields": [
+              "name",
+              "phone",
+              "address"
+            ],
             "source": "universal/listings_*.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → host{}"
           }
         ]
       },
@@ -2708,11 +3189,28 @@
         "cands": [
           {
             "system": "Swarm→universal",
-            "type": "universal listing",
-            "field": "property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}",
+            "type": "listing.property",
+            "field": "property.address / property.city / property.lat / property.lng / property.bedrooms / property.beds / property.units / property.max_occupancy / property.property_type / property.zoning_claim / property.parking_plan / property.license_number",
+            "fields": [
+              "address",
+              "city",
+              "lat",
+              "lng",
+              "bedrooms",
+              "beds",
+              "units",
+              "max_occupancy",
+              "property_type",
+              "zoning_claim",
+              "parking_plan",
+              "license_number"
+            ],
             "source": "universal/listings_*.jsonl",
             "confidence": "exact",
-            "note": "this shape is the demo's listing.property — already matched field-for-field"
+            "note": "this shape is the demo's listing.property — already matched field-for-field",
+            "verified": true,
+            "missing": [],
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
           }
         ]
       },
@@ -2723,16 +3221,33 @@
             "system": "Swarm→btora",
             "type": "dataset_btora_calendar",
             "field": "window_from / window_to / status / observed_at",
+            "fields": [
+              "window_from",
+              "window_to",
+              "status",
+              "observed_at"
+            ],
             "source": "btora/swarm/dataset_btora_calendar.jsonl",
             "confidence": "exact",
-            "note": "the calendar windows are the booking evidence (Job 9)"
+            "note": "the calendar windows are the booking evidence (Job 9)",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/dataset_btora_calendar.jsonl (first row)"
           },
           {
             "system": "Swarm→btora",
             "type": "transformer_booking_events",
             "field": "date_from / date_to / amount",
+            "fields": [
+              "date_from",
+              "date_to",
+              "amount"
+            ],
             "source": "btora/swarm/transformer_booking_events.jsonl",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/transformer_booking_events.jsonl (first row)"
           }
         ]
       },
@@ -2741,11 +3256,31 @@
         "cands": [
           {
             "system": "Swarm→btora",
-            "type": "dataset_btora_listings / platform_attributes",
-            "field": "match / flags",
-            "source": "btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl",
+            "type": "dataset_btora_listings",
+            "field": "match",
+            "fields": [
+              "match"
+            ],
+            "source": "btora/swarm/dataset_btora_listings.jsonl",
             "confidence": "exact",
-            "note": "CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain"
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/dataset_btora_listings.jsonl (first row)"
+          },
+          {
+            "system": "Swarm→btora",
+            "type": "platform_attributes",
+            "field": "match / flags",
+            "fields": [
+              "match",
+              "flags"
+            ],
+            "source": "btora/swarm/platform_attributes.jsonl",
+            "confidence": "exact",
+            "note": "CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain",
+            "verified": true,
+            "missing": [],
+            "checked_against": "btora/swarm/platform_attributes.jsonl (first row)"
           }
         ]
       }
@@ -2756,18 +3291,32 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK",
-            "field": "task obligations",
+            "type": "FLOW_STAGE_TASK",
+            "field": "attributes",
+            "fields": [
+              "attributes"
+            ],
             "source": "bundle inventory FLOW_STAGE_TASK",
             "confidence": "strong",
-            "note": "obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel"
+            "note": "obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Slate",
             "type": "FlowStageTask",
             "field": "workflowStageTask / status / dueOn",
+            "fields": [
+              "workflowStageTask",
+              "status",
+              "dueOn"
+            ],
             "source": "slate_api_key_types.json → FlowStageTask",
-            "confidence": "strong"
+            "confidence": "strong",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           }
         ]
       },
@@ -2778,9 +3327,17 @@
             "system": "Swarm",
             "type": "PlatformFilter",
             "field": "name / label / mappingColumn",
+            "fields": [
+              "name",
+              "label",
+              "mappingColumn"
+            ],
             "source": "swarm_graphql_schema.json → PlatformFilter",
             "confidence": "strong",
-            "note": "district is a filter dimension; the demo carries the 311 district on the standing"
+            "note": "district is a filter dimension; the demo carries the 311 district on the standing",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → PlatformFilter"
           }
         ]
       },
@@ -2791,9 +3348,16 @@
             "system": "Swarm",
             "type": "PlatformEventTable",
             "field": "eventIdLabel / tableName",
+            "fields": [
+              "eventIdLabel",
+              "tableName"
+            ],
             "source": "swarm_graphql_schema.json → PlatformEventTable",
             "confidence": "analog",
-            "note": "311 requests are an event table; the request number is its event id label"
+            "note": "311 requests are an event table; the request number is its event id label",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → PlatformEventTable"
           }
         ]
       },
@@ -2802,11 +3366,19 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "AssetIdentity / GetSuggestedLinks",
+            "type": "GetSuggestedLinks",
             "field": "ownedAssetCount / nameMatch / addressMatch",
-            "source": "bundle inventory §8",
+            "fields": [
+              "ownedAssetCount",
+              "nameMatch",
+              "addressMatch"
+            ],
+            "source": "bundle inventory §8 GetSuggestedLinks",
             "confidence": "strong",
-            "note": "the responsible agent is the identity matched to the parcel"
+            "note": "the responsible agent is the identity matched to the parcel",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           }
         ]
       }
@@ -2819,9 +3391,18 @@
             "system": "Slate",
             "type": "FlowStageTask",
             "field": "appointmentDate / appointmentDateUTC / scheduledFor / isAppointment",
+            "fields": [
+              "appointmentDate",
+              "appointmentDateUTC",
+              "scheduledFor",
+              "isAppointment"
+            ],
             "source": "slate_api_key_types.json → FlowStageTask",
             "confidence": "exact",
-            "note": "the inspection IS a scheduled task on the flow"
+            "note": "the inspection IS a scheduled task on the flow",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           }
         ]
       },
@@ -2832,15 +3413,30 @@
             "system": "Slate",
             "type": "FlowStageTask",
             "field": "notes / noteCount",
+            "fields": [
+              "notes",
+              "noteCount"
+            ],
             "source": "slate_api_key_types.json → FlowStageTask",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → FlowStageTask"
           },
           {
             "system": "Swarm",
             "type": "Note",
             "field": "body / author / createdAt",
+            "fields": [
+              "body",
+              "author",
+              "createdAt"
+            ],
             "source": "swarm_graphql_schema.json → Note",
-            "confidence": "strong"
+            "confidence": "strong",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → Note"
           }
         ]
       }
@@ -2851,18 +3447,33 @@
         "cands": [
           {
             "system": "Building Blocks",
-            "type": "SnailMail / SnailMailCampaign / OutreachMetrics",
-            "field": "campaign / reply-code tracking / metrics",
+            "type": "SnailMailCampaign",
+            "field": "SnailMailCampaign / OutreachMetrics",
+            "fields": [
+              "SnailMailCampaign",
+              "OutreachMetrics"
+            ],
             "source": "bundle inventory §8 SnailMail",
-            "confidence": "exact",
-            "note": "BB ships a full outreach subsystem — the notice's structural home"
+            "confidence": "strong",
+            "note": "BB ships a full outreach subsystem — the notice's structural home",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Slate",
             "type": "Document",
             "field": "name / url / template",
+            "fields": [
+              "name",
+              "url",
+              "template"
+            ],
             "source": "slate_api_key_types.json → Document",
-            "confidence": "analog"
+            "confidence": "analog",
+            "verified": true,
+            "missing": [],
+            "checked_against": "slate_api_key_types.json → Document"
           }
         ]
       }
@@ -2875,23 +3486,53 @@
             "system": "Building Blocks",
             "type": "getAngelPlatformCityAttribute",
             "field": "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl",
+            "fields": [
+              "failStreak",
+              "staleStreak",
+              "lastSuccessfulPushAt",
+              "lastDataChangeAt",
+              "connectorUrl",
+              "provenanceUrl"
+            ],
             "source": "bundle inventory §3",
             "confidence": "exact",
-            "note": "the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row"
+            "note": "the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Building Blocks",
             "type": "IntegrationHealthDashboard",
             "field": "provider / status / checkedAt / latencyMs",
+            "fields": [
+              "provider",
+              "status",
+              "checkedAt",
+              "latencyMs"
+            ],
             "source": "bundle inventory §4",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md"
           },
           {
             "system": "Swarm",
             "type": "Connector",
             "field": "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / stage",
+            "fields": [
+              "failStreak",
+              "staleStreak",
+              "lastSuccessfulPushAt",
+              "lastDataChangeAt",
+              "stage"
+            ],
             "source": "swarm_graphql_schema.json → Connector",
-            "confidence": "exact"
+            "confidence": "exact",
+            "verified": true,
+            "missing": [],
+            "checked_against": "swarm_graphql_schema.json → Connector"
           }
         ]
       }

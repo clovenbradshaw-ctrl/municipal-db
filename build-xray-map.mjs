@@ -52,190 +52,199 @@ const universalListingShape = ["provider", "pull_id", "observed_at", "platform",
 // Each candidate: { system, type, field, source, confidence, note }
 // confidence: exact | strong | partial | analog | gap
 
+// Each candidate carries:
+//   system, type, field (display), source, confidence
+//   fields: literal field-name array, machine-verifiable against the real
+//           source bytes. This is what "snipped" means — the names below are
+//           the exact keys present in the pulled schema/data, verified at
+//           build time by the verifyCandidates pass. Prose about the mapping
+//           lives in note, never in fields.
 const candidates = {
   // —— parcel ——
   "parcel.address": [
-    { system: "Slate", type: "Asset", field: "address / fullAddress / geocoderAddress", source: "slate_api_key_types.json → Asset", confidence: "exact" },
-    { system: "Building Blocks", type: "ASSET", field: "address / addressMap / fullAddress", source: "bundle inventory ASSET", confidence: "exact" },
-    { system: "Swarm→universal", type: "listing.property", field: "property.address", source: "universal/listings_*.jsonl", confidence: "exact", note: "btora universal listing shape carries the geocoded address verbatim" },
+    { system: "Slate", type: "Asset", field: "address / fullAddress / geocoderAddress", fields: ["address", "fullAddress", "geocoderAddress"], source: "slate_api_key_types.json → Asset", confidence: "exact" },
+    { system: "Building Blocks", type: "ASSET", field: "address / addressMap / fullAddress", fields: ["address", "addressMap", "fullAddress"], source: "bundle inventory ASSET", confidence: "exact" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.address", fields: ["address"], source: "universal/listings_*.jsonl", confidence: "exact", note: "btora universal listing shape carries the geocoded address verbatim" },
   ],
   "parcel.lat/lng": [
-    { system: "Slate", type: "Asset", field: "latitude / longitude / polygon / envelope", source: "slate_api_key_types.json → Asset", confidence: "exact" },
-    { system: "Building Blocks", type: "ASSET", field: "latitude / longitude / polygon", source: "bundle inventory ASSET (confirmed native)", confidence: "exact" },
-    { system: "Swarm", type: "TransformerGeocoder", field: "columns / source", source: "swarm_graphql_schema.json → TransformerGeocoder", confidence: "exact", note: "geocoder feeds the parcel coords" },
+    { system: "Slate", type: "Asset", field: "latitude / longitude / polygon / envelope", fields: ["latitude", "longitude", "polygon", "envelope"], source: "slate_api_key_types.json → Asset", confidence: "exact" },
+    { system: "Building Blocks", type: "ASSET", field: "latitude / longitude / polygon", fields: ["latitude", "longitude", "polygon"], source: "bundle inventory ASSET (confirmed native)", confidence: "exact" },
+    { system: "Swarm", type: "TransformerGeocoder", field: "columns / source", fields: ["columns", "source"], source: "swarm_graphql_schema.json → TransformerGeocoder", confidence: "exact", note: "geocoder feeds the parcel coords" },
   ],
   "parcel.apn": [
-    { system: "Slate", type: "Asset", field: "realPropertyUniqueId / parcelId / otherId", source: "slate_api_key_types.json → Asset", confidence: "exact" },
-    { system: "Building Blocks", type: "ASSET", field: "parcelId", source: "bundle inventory ASSET", confidence: "exact" },
+    { system: "Slate", type: "Asset", field: "realPropertyUniqueId / parcelId / otherId", fields: ["realPropertyUniqueId", "parcelId", "otherId"], source: "slate_api_key_types.json → Asset", confidence: "exact" },
+    { system: "Building Blocks", type: "ASSET", field: "parcelId", fields: ["parcelId"], source: "bundle inventory ASSET", confidence: "exact" },
   ],
   "parcel.bedrooms": [
-    { system: "Slate", type: "FlowStageTask", field: "attributes", source: "slate_api_key_types.json → FlowStageTask.attributes", confidence: "strong", note: "declared per-unit attributes on the registration task" },
-    { system: "Building Blocks", type: "ASSET_PROJECT_UNIT / attribute", field: "unit attributes", source: "bundle inventory ASSET_PROJECT_UNIT", confidence: "strong", note: "confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)" },
-    { system: "Swarm→universal", type: "listing.property", field: "property.bedrooms / property.beds", source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Slate", type: "FlowStageTask", field: "attributes", fields: ["attributes"], source: "slate_api_key_types.json → FlowStageTask", confidence: "strong", note: "declared per-unit attributes on the registration task" },
+    { system: "Building Blocks", type: "ASSET_PROJECT_UNIT", field: "attributes", fields: ["attributes"], source: "bundle inventory ASSET_PROJECT_UNIT", confidence: "strong", note: "confirmed 'guestrooms' are FLOW_STAGE_TASK attrs (declared)" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.bedrooms / property.beds", fields: ["bedrooms", "beds"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "parcel.zoning": [
-    { system: null, type: null, field: null, source: "grep of bundle + swarm + slate", confidence: "gap", note: "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three" },
+    { system: null, type: null, field: null, fields: [], source: "grep of bundle + swarm + slate", confidence: "gap", note: "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three" },
   ],
   "parcel.evictions": [
-    { system: "Building Blocks", type: "ASSET attribute", field: "assessments / owner-referenced counts", source: "bundle inventory §6 assessments{owners,totalValue,year}", confidence: "analog", note: "eviction filings are a data feed; the demo bridges them from landlordmapper.org" },
-    { system: "Swarm", type: "PlatformAttribute / AttributeRule", field: "name / entity / rules", source: "swarm_graphql_schema.json → PlatformAttribute, AttributeRule", confidence: "analog", note: "an attribute rule could derive a repeat-eviction flag" },
+    { system: "Building Blocks", type: "ASSET", field: "assessments", fields: ["assessments"], source: "bundle inventory §6 assessments{owners,totalValue,year}", confidence: "analog", note: "eviction filings are a data feed; the demo bridges them from landlordmapper.org" },
+    { system: "Swarm", type: "AttributeRule", field: "name / rules", fields: ["name", "rules"], source: "swarm_graphql_schema.json → AttributeRule", confidence: "analog", note: "an attribute rule could derive a repeat-eviction flag" },
   ],
   // —— owner ——
   "owner.name": [
-    { system: "Slate", type: "IdentityProfile", field: "fullName / firstName / lastName", source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
-    { system: "Building Blocks", type: "IDENTITY / IDENTITY_PROFILE", field: "fullName", source: "bundle inventory IDENTITY", confidence: "exact" },
-    { system: "Swarm→universal", type: "listing.host", field: "host.name", source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Slate", type: "IdentityProfile", field: "fullName / firstName / lastName", fields: ["fullName", "firstName", "lastName"], source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
+    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "fullName", fields: ["fullName"], source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
+    { system: "Swarm→universal", type: "listing.host", field: "host.name", fields: ["name"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "owner.phone": [
-    { system: "Slate", type: "IdentityProfile", field: "phone / otherPhones / phoneType", source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
-    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "phone", source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
+    { system: "Slate", type: "IdentityProfile", field: "phone / otherPhones / phoneType", fields: ["phone", "otherPhones", "phoneType"], source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
+    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "phone", fields: ["phone"], source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
   ],
   "owner.mailing_address": [
-    { system: "Slate", type: "IdentityProfile", field: "address / address2 / city / state / zip / fullAddress", source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
-    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "address / fullAddress", source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
+    { system: "Slate", type: "IdentityProfile", field: "address / address2 / city / state / zip / fullAddress", fields: ["address", "address2", "city", "state", "zip", "fullAddress"], source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
+    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "address / fullAddress", fields: ["address", "fullAddress"], source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
   ],
   "owner.email": [
-    { system: "Slate", type: "IdentityProfile", field: "email / emailType / otherEmails", source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
-    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "email", source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
+    { system: "Slate", type: "IdentityProfile", field: "email / emailType / otherEmails", fields: ["email", "emailType", "otherEmails"], source: "slate_api_key_types.json → IdentityProfile", confidence: "exact" },
+    { system: "Building Blocks", type: "IDENTITY_PROFILE", field: "email", fields: ["email"], source: "bundle inventory IDENTITY_PROFILE", confidence: "exact" },
   ],
   "owner.property_count": [
-    { system: "Building Blocks", type: "ASSET attribute", field: "owner property count / owner total suspected rentals", source: "bundle inventory §8 GetSuggestedLinks ownedAssetCount / previouslyOwnedAssetCount", confidence: "strong", note: "suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data" },
-    { system: "Swarm", type: "platform_attributes", field: "owner_listings", source: "swarm/platform_attributes.jsonl", confidence: "exact", note: "btora attribute row carries owner_listings count per parcel" },
+    { system: "Building Blocks", type: "GetSuggestedLinks", field: "ownedAssetCount / previouslyOwnedAssetCount", fields: ["ownedAssetCount", "previouslyOwnedAssetCount"], source: "bundle inventory §8 GetSuggestedLinks", confidence: "strong", note: "suggested-links matcher returns ownedAssetCount — the count concept exists, instance value is data" },
+    { system: "Swarm", type: "platform_attributes", field: "owner_listings", fields: ["owner_listings"], source: "btora/swarm/platform_attributes.jsonl", confidence: "exact", note: "btora attribute row carries owner_listings count per parcel" },
   ],
   // —— municipality / jurisdiction ——
   "municipality.name": [
-    { system: "Building Blocks", type: "Workflow / city", field: "city", source: "bundle inventory WORKFLOW.city", confidence: "exact" },
-    { system: "Swarm", type: "City", field: "name / alias / location", source: "swarm_graphql_schema.json → City", confidence: "exact" },
+    { system: "Building Blocks", type: "Workflow", field: "city", fields: ["city"], source: "bundle inventory WORKFLOW.city", confidence: "exact" },
+    { system: "Swarm", type: "City", field: "name / alias / location", fields: ["name", "alias", "location"], source: "swarm_graphql_schema.json → City", confidence: "exact" },
   ],
   "municipality.state": [
-    { system: "Swarm", type: "State", field: "name / abbreviation", source: "swarm_graphql_schema.json → State", confidence: "exact" },
-    { system: "Slate", type: "Workflow / city", field: "city", source: "slate_api_key_types.json → Workflow.city", confidence: "analog", note: "Slate scopes per city, state is implied" },
+    { system: "Swarm", type: "State", field: "name / abbreviation", fields: ["name", "abbreviation"], source: "swarm_graphql_schema.json → State", confidence: "exact" },
+    { system: "Slate", type: "Workflow", field: "city", fields: ["city"], source: "slate_api_key_types.json → Workflow.city", confidence: "analog", note: "Slate scopes per city, state is implied" },
   ],
   "municipality.county": [
-    { system: null, type: null, field: null, source: "grep of all three", confidence: "gap", note: "no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)" },
+    { system: null, type: null, field: null, fields: [], source: "grep of all three", confidence: "gap", note: "no county concept in Slate/BB/Swarm; county is derived or imported (demo has it on the municipality entity itself)" },
   ],
   "municipality.code_url": [
-    { system: "Swarm", type: "Connector", field: "connectorUrl / provenanceUrl / assetProvenanceUrl", source: "swarm_graphql_schema.json → Connector", confidence: "analog", note: "the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host" },
+    { system: "Swarm", type: "Connector", field: "connectorUrl / provenanceUrl / assetProvenanceUrl", fields: ["connectorUrl", "provenanceUrl", "assetProvenanceUrl"], source: "swarm_graphql_schema.json → Connector", confidence: "analog", note: "the provenance-URL pattern; code_url points at the municipal code library (AmLegal/Municode), which none of the three host" },
   ],
   "municipality.chapter": [
-    { system: "Building Blocks", type: "LicenseType", field: "ordinance", source: "bundle inventory LicenseType.ordinance", confidence: "analog", note: "LicenseType carries an ordinance pointer — the closest structural home for a chapter citation" },
+    { system: "Building Blocks", type: "LicenseType", field: "ordinance", fields: ["ordinance"], source: "bundle inventory LicenseType.ordinance", confidence: "analog", note: "LicenseType carries an ordinance pointer — the closest structural home for a chapter citation" },
   ],
   "jurisdiction.name": [
-    { system: "Swarm", type: "State / City", field: "name / abbreviation", source: "swarm_graphql_schema.json → State, City", confidence: "exact" },
+    { system: "Swarm", type: "State", field: "name / abbreviation", fields: ["name", "abbreviation"], source: "swarm_graphql_schema.json → State", confidence: "exact" },
+    { system: "Swarm", type: "City", field: "name", fields: ["name"], source: "swarm_graphql_schema.json → City", confidence: "exact" },
   ],
   // —— obligation / figure / kind (the law) ——
   "obligation.text": [
-    { system: null, type: null, field: null, source: "grep of all three", confidence: "gap", note: "none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth" },
+    { system: null, type: null, field: null, fields: [], source: "grep of all three", confidence: "gap", note: "none of Slate/BB/Swarm host ordinance clause text — the law itself is read by eoreader7 from the code library; the demo keeps it verbatim as unmodified ground truth" },
   ],
   "obligation.section": [
-    { system: "Building Blocks", type: "LicenseType", field: "ordinance", source: "bundle inventory LicenseType.ordinance", confidence: "analog", note: "an ordinance pointer is the only citation-shaped field; section numbers live in the code text" },
+    { system: "Building Blocks", type: "LicenseType", field: "ordinance", fields: ["ordinance"], source: "bundle inventory LicenseType.ordinance", confidence: "analog", note: "an ordinance pointer is the only citation-shaped field; section numbers live in the code text" },
   ],
   "obligation.holder": [
-    { system: "Building Blocks", type: "Workflow", field: "city", source: "bundle inventory WORKFLOW.city", confidence: "analog", note: "the municipality that holds the obligation = the city scoping the workflow" },
-    { system: "Swarm", type: "City", field: "name", source: "swarm_graphql_schema.json → City", confidence: "analog" },
+    { system: "Building Blocks", type: "Workflow", field: "city", fields: ["city"], source: "bundle inventory WORKFLOW.city", confidence: "analog", note: "the municipality that holds the obligation = the city scoping the workflow" },
+    { system: "Swarm", type: "City", field: "name", fields: ["name"], source: "swarm_graphql_schema.json → City", confidence: "analog" },
   ],
   "figure.party / modality": [
-    { system: null, type: null, field: null, source: "—", confidence: "gap", note: "eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction" },
+    { system: null, type: null, field: null, fields: [], source: "—", confidence: "gap", note: "eoreader7 organ output (discoverRelationVocab/extractRelations) — a reading artifact, not a vendor-schema field; no vendor exposes clause-subject extraction" },
   ],
   "kind.standing_criterion": [
-    { system: "Swarm", type: "AttributeRule", field: "rules / name / isPreset", source: "swarm_graphql_schema.json → AttributeRule", confidence: "analog", note: "AttributeRule is the closest standing-criterion container (a named, versioned rule)" },
+    { system: "Swarm", type: "AttributeRule", field: "rules / name / isPreset", fields: ["rules", "name", "isPreset"], source: "swarm_graphql_schema.json → AttributeRule", confidence: "analog", note: "AttributeRule is the closest standing-criterion container (a named, versioned rule)" },
   ],
   // —— fee / tax / compliance-rule ——
   "fee-schedule.*": [
-    { system: "Building Blocks", type: "WorkflowStageTaskPayment", field: "defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription", source: "bundle inventory §7 WorkflowStageTaskPayment", confidence: "exact", note: "this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)" },
-    { system: "Building Blocks", type: "LicenseType", field: "registrationPortals / form", source: "bundle inventory LicenseType", confidence: "strong" },
+    { system: "Building Blocks", type: "WorkflowStageTaskPayment", field: "defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription", fields: ["defaultPaymentAmount", "paymentAmountPerAsset", "paymentAmountPerUnit", "paymentFormulaScript", "paymentDescription"], source: "bundle inventory §7 WorkflowStageTaskPayment", confidence: "exact", note: "this IS the per-city fee mechanism — richer than the demo's shape (appeals, overrides, per-unit vs per-asset)" },
+    { system: "Building Blocks", type: "LicenseType", field: "registrationPortals / form", fields: ["registrationPortals", "form"], source: "bundle inventory LicenseType", confidence: "strong" },
   ],
   "tax-schedule.*": [
-    { system: "Swarm", type: "PlatformEventTable", field: "amountLabel / amountUnit / columns / tableName", source: "swarm_graphql_schema.json → PlatformEventTable", confidence: "analog", note: "an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type" },
-    { system: "Slate", type: "FlowStageTask", field: "paymentAmount / paymentLineItems", source: "slate_api_key_types.json → FlowStageTask", confidence: "analog" },
+    { system: "Swarm", type: "PlatformEventTable", field: "amountLabel / amountUnit / columns / tableName", fields: ["amountLabel", "amountUnit", "columns", "tableName"], source: "swarm_graphql_schema.json → PlatformEventTable", confidence: "analog", note: "an occupancy-tax event table would hold rate components + remittance; the demo models it as its own type" },
+    { system: "Slate", type: "FlowStageTask", field: "paymentAmount / paymentLineItems", fields: ["paymentAmount", "paymentLineItems"], source: "slate_api_key_types.json → FlowStageTask", confidence: "analog" },
   ],
   "compliance-rule.*": [
-    { system: "Swarm", type: "PlatformFilter", field: "name / label / type / unit / mappingColumn / dataElement / value / sumOn / source", source: "swarm_graphql_schema.json → PlatformFilter", confidence: "exact", note: "a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)" },
-    { system: "Swarm", type: "AttributeRule", field: "rules / name / isPreset", source: "swarm_graphql_schema.json → AttributeRule", confidence: "exact" },
+    { system: "Swarm", type: "PlatformFilter", field: "name / label / type / unit / mappingColumn / dataElement / sumOn / source", fields: ["name", "label", "type", "unit", "mappingColumn", "dataElement", "sumOn", "source"], source: "swarm_graphql_schema.json → PlatformFilter", confidence: "exact", note: "a filter with a unit + mappingColumn + dataElement IS a measurable compliance rule (contact-distance, occupancy-cap…)" },
+    { system: "Swarm", type: "AttributeRule", field: "rules / name / isPreset", fields: ["rules", "name", "isPreset"], source: "swarm_graphql_schema.json → AttributeRule", confidence: "exact" },
   ],
   // —— registration / license ——
   "registration.license_number": [
-    { system: "Slate", type: "License", field: "number / licenseIdentifier", source: "slate_api_key_types.json → License", confidence: "exact" },
-    { system: "Building Blocks", type: "LICENSE", field: "number", source: "bundle inventory LICENSE", confidence: "exact" },
-    { system: "Slate→btora", type: "slate_licenses", field: "license_shown", source: "btora/slate/slate_registrations.jsonl", confidence: "exact" },
+    { system: "Slate", type: "License", field: "number / licenseIdentifier", fields: ["number", "licenseIdentifier"], source: "slate_api_key_types.json → License", confidence: "exact" },
+    { system: "Building Blocks", type: "LICENSE", field: "number", fields: ["number"], source: "bundle inventory LICENSE", confidence: "exact" },
+    { system: "Slate→btora", type: "slate_licenses", field: "license_shown", fields: ["license_shown"], source: "btora/slate/slate_registrations.jsonl", confidence: "exact" },
   ],
   "registration.status": [
-    { system: "Slate", type: "License", field: "status / isExpired / isRenewable / isInRenewalWindow", source: "slate_api_key_types.json → License", confidence: "exact" },
-    { system: "Building Blocks", type: "LICENSE", field: "status / isExpired / isRenewable", source: "bundle inventory LICENSE", confidence: "exact" },
-    { system: "Swarm", type: "platform_attributes", field: "lic", source: "swarm/platform_attributes.jsonl", confidence: "exact" },
+    { system: "Slate", type: "License", field: "status / isExpired / isRenewable / isInRenewalWindow", fields: ["status", "isExpired", "isRenewable", "isInRenewalWindow"], source: "slate_api_key_types.json → License", confidence: "exact" },
+    { system: "Building Blocks", type: "LICENSE", field: "status / isExpired / isRenewable", fields: ["status", "isExpired", "isRenewable"], source: "bundle inventory LICENSE", confidence: "exact" },
+    { system: "Swarm", type: "platform_attributes", field: "lic", fields: ["lic"], source: "btora/swarm/platform_attributes.jsonl", confidence: "exact" },
   ],
   "registration.issued_at": [
-    { system: "Slate", type: "License", field: "approvedOn / dateCreated", source: "slate_api_key_types.json → License", confidence: "exact" },
-    { system: "Building Blocks", type: "LICENSE", field: "approvedOn", source: "bundle inventory LICENSE", confidence: "exact" },
+    { system: "Slate", type: "License", field: "approvedOn / dateCreated", fields: ["approvedOn", "dateCreated"], source: "slate_api_key_types.json → License", confidence: "exact" },
+    { system: "Building Blocks", type: "LICENSE", field: "approvedOn", fields: ["approvedOn"], source: "bundle inventory LICENSE", confidence: "exact" },
   ],
   "registration.expires_at": [
-    { system: "Slate", type: "License", field: "expirationDate", source: "slate_api_key_types.json → License", confidence: "exact", note: "confirmed the forward-dated field (Job 3)" },
-    { system: "Building Blocks", type: "LICENSE", field: "expirationDate", source: "bundle inventory LICENSE.expirationDate (script-computed)", confidence: "exact" },
+    { system: "Slate", type: "License", field: "expirationDate", fields: ["expirationDate"], source: "slate_api_key_types.json → License", confidence: "exact", note: "confirmed the forward-dated field (Job 3)" },
+    { system: "Building Blocks", type: "LICENSE", field: "expirationDate", fields: ["expirationDate"], source: "bundle inventory LICENSE.expirationDate (script-computed)", confidence: "exact" },
   ],
   "registration.holder": [
-    { system: "Slate", type: "License", field: "registrant", source: "slate_api_key_types.json → License.registrant", confidence: "exact" },
-    { system: "Building Blocks", type: "LICENSE", field: "registrant / email / profilePicture", source: "bundle inventory LICENSE.registrant", confidence: "exact" },
+    { system: "Slate", type: "License", field: "registrant", fields: ["registrant"], source: "slate_api_key_types.json → License.registrant", confidence: "exact" },
+    { system: "Building Blocks", type: "LICENSE", field: "registrant / email / profilePicture", fields: ["registrant", "email", "profilePicture"], source: "bundle inventory LICENSE.registrant", confidence: "exact" },
   ],
   "registration.units / bedrooms / guest_rooms / max_occupancy": [
-    { system: "Slate", type: "FlowStageTask", field: "attributes (declared)", source: "slate_api_key_types.json → FlowStageTask.attributes", confidence: "strong" },
-    { system: "Swarm→universal", type: "listing.property", field: "property.units / property.bedrooms / property.max_occupancy", source: "universal/listings_*.jsonl", confidence: "exact", note: "observed (from the platform), the thing the registry claims should match" },
+    { system: "Slate", type: "FlowStageTask", field: "attributes", fields: ["attributes"], source: "slate_api_key_types.json → FlowStageTask", confidence: "strong" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.units / property.bedrooms / property.max_occupancy", fields: ["units", "bedrooms", "max_occupancy"], source: "universal/listings_*.jsonl", confidence: "exact", note: "observed (from the platform), the thing the registry claims should match" },
   ],
   "registration.parking_plan": [
-    { system: "Swarm→universal", type: "listing.property", field: "property.parking_plan", source: "universal/listings_*.jsonl", confidence: "exact" },
-    { system: "Slate", type: "FlowStageTask", field: "attributes (declared)", source: "slate_api_key_types.json → FlowStageTask.attributes", confidence: "strong" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.parking_plan", fields: ["parking_plan"], source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Slate", type: "FlowStageTask", field: "attributes", fields: ["attributes"], source: "slate_api_key_types.json → FlowStageTask", confidence: "strong" },
   ],
   // —— listing / bookings ——
   "listing.platform / listing_id / url / title / listed_at": [
-    { system: "Swarm→btora", type: "dataset_btora_listings", field: "platform / listing_id / url / listed_at", source: "btora/swarm/dataset_btora_listings.jsonl", confidence: "exact" },
-    { system: "Swarm→universal", type: "universal listing", field: "platform / listing_id / url / title / listed_at", source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Swarm→btora", type: "dataset_btora_listings", field: "platform / listing_id / url / listed_at", fields: ["platform", "listing_id", "url", "listed_at"], source: "btora/swarm/dataset_btora_listings.jsonl", confidence: "exact" },
+    { system: "Swarm→universal", type: "universal listing", field: "platform / listing_id / url / title / listed_at", fields: ["platform", "listing_id", "url", "title", "listed_at"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "listing.nightly_rate": [
-    { system: "Swarm→btora", type: "transformer_booking_events", field: "amount / amount_unit", source: "btora/swarm/transformer_booking_events.jsonl", confidence: "exact" },
-    { system: "Swarm→universal", type: "universal listing", field: "nightly_rate", source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Swarm→btora", type: "transformer_booking_events", field: "amount / amount_unit", fields: ["amount", "amount_unit"], source: "btora/swarm/transformer_booking_events.jsonl", confidence: "exact" },
+    { system: "Swarm→universal", type: "universal listing", field: "nightly_rate", fields: ["nightly_rate"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "listing.host": [
-    { system: "Swarm→universal", type: "universal listing", field: "host{name,phone,address}", source: "universal/listings_*.jsonl", confidence: "exact" },
+    { system: "Swarm→universal", type: "listing.host", field: "host.name / host.phone / host.address", fields: ["name", "phone", "address"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "listing.property": [
-    { system: "Swarm→universal", type: "universal listing", field: "property{address,city,lat,lng,bedrooms,beds,units,max_occupancy,property_type,zoning_claim,parking_plan,license_number}", source: "universal/listings_*.jsonl", confidence: "exact", note: "this shape is the demo's listing.property — already matched field-for-field" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.address / property.city / property.lat / property.lng / property.bedrooms / property.beds / property.units / property.max_occupancy / property.property_type / property.zoning_claim / property.parking_plan / property.license_number", fields: ["address", "city", "lat", "lng", "bedrooms", "beds", "units", "max_occupancy", "property_type", "zoning_claim", "parking_plan", "license_number"], source: "universal/listings_*.jsonl", confidence: "exact", note: "this shape is the demo's listing.property — already matched field-for-field" },
   ],
   "listing.bookings": [
-    { system: "Swarm→btora", type: "dataset_btora_calendar", field: "window_from / window_to / status / observed_at", source: "btora/swarm/dataset_btora_calendar.jsonl", confidence: "exact", note: "the calendar windows are the booking evidence (Job 9)" },
-    { system: "Swarm→btora", type: "transformer_booking_events", field: "date_from / date_to / amount", source: "btora/swarm/transformer_booking_events.jsonl", confidence: "exact" },
+    { system: "Swarm→btora", type: "dataset_btora_calendar", field: "window_from / window_to / status / observed_at", fields: ["window_from", "window_to", "status", "observed_at"], source: "btora/swarm/dataset_btora_calendar.jsonl", confidence: "exact", note: "the calendar windows are the booking evidence (Job 9)" },
+    { system: "Swarm→btora", type: "transformer_booking_events", field: "date_from / date_to / amount", fields: ["date_from", "date_to", "amount"], source: "btora/swarm/transformer_booking_events.jsonl", confidence: "exact" },
   ],
   "listing.match": [
-    { system: "Swarm→btora", type: "dataset_btora_listings / platform_attributes", field: "match / flags", source: "btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl", confidence: "exact", note: "CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain" },
+    { system: "Swarm→btora", type: "dataset_btora_listings", field: "match", fields: ["match"], source: "btora/swarm/dataset_btora_listings.jsonl", confidence: "exact" },
+    { system: "Swarm→btora", type: "platform_attributes", field: "match / flags", fields: ["match", "flags"], source: "btora/swarm/platform_attributes.jsonl", confidence: "exact", note: "CLEAR/MARGINAL/UNLOCATED + flags[] like held-back:address-uncertain" },
   ],
   // —— standing / inspection / notice ——
   "standing.distinction": [
-    { system: "Building Blocks", type: "FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK", field: "task obligations", source: "bundle inventory FLOW_STAGE_TASK", confidence: "strong", note: "obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel" },
-    { system: "Slate", type: "FlowStageTask", field: "workflowStageTask / status / dueOn", source: "slate_api_key_types.json → FlowStageTask", confidence: "strong" },
+    { system: "Building Blocks", type: "FLOW_STAGE_TASK", field: "attributes", fields: ["attributes"], source: "bundle inventory FLOW_STAGE_TASK", confidence: "strong", note: "obligations sit on FLOW_STAGE_TASK/ASSET_PROJECT — the standing is the task held against a parcel" },
+    { system: "Slate", type: "FlowStageTask", field: "workflowStageTask / status / dueOn", fields: ["workflowStageTask", "status", "dueOn"], source: "slate_api_key_types.json → FlowStageTask", confidence: "strong" },
   ],
   "standing.council_district": [
-    { system: "Swarm", type: "PlatformFilter", field: "name / label / mappingColumn", source: "swarm_graphql_schema.json → PlatformFilter", confidence: "strong", note: "district is a filter dimension; the demo carries the 311 district on the standing" },
+    { system: "Swarm", type: "PlatformFilter", field: "name / label / mappingColumn", fields: ["name", "label", "mappingColumn"], source: "swarm_graphql_schema.json → PlatformFilter", confidence: "strong", note: "district is a filter dimension; the demo carries the 311 district on the standing" },
   ],
   "standing.request_nbr": [
-    { system: "Swarm", type: "PlatformEventTable", field: "eventIdLabel / tableName", source: "swarm_graphql_schema.json → PlatformEventTable", confidence: "analog", note: "311 requests are an event table; the request number is its event id label" },
+    { system: "Swarm", type: "PlatformEventTable", field: "eventIdLabel / tableName", fields: ["eventIdLabel", "tableName"], source: "swarm_graphql_schema.json → PlatformEventTable", confidence: "analog", note: "311 requests are an event table; the request number is its event id label" },
   ],
   "standing.responsible_agent": [
-    { system: "Building Blocks", type: "AssetIdentity / GetSuggestedLinks", field: "ownedAssetCount / nameMatch / addressMatch", source: "bundle inventory §8", confidence: "strong", note: "the responsible agent is the identity matched to the parcel" },
+    { system: "Building Blocks", type: "GetSuggestedLinks", field: "ownedAssetCount / nameMatch / addressMatch", fields: ["ownedAssetCount", "nameMatch", "addressMatch"], source: "bundle inventory §8 GetSuggestedLinks", confidence: "strong", note: "the responsible agent is the identity matched to the parcel" },
   ],
   "inspection.planned_for": [
-    { system: "Slate", type: "FlowStageTask", field: "appointmentDate / appointmentDateUTC / scheduledFor / isAppointment", source: "slate_api_key_types.json → FlowStageTask", confidence: "exact", note: "the inspection IS a scheduled task on the flow" },
+    { system: "Slate", type: "FlowStageTask", field: "appointmentDate / appointmentDateUTC / scheduledFor / isAppointment", fields: ["appointmentDate", "appointmentDateUTC", "scheduledFor", "isAppointment"], source: "slate_api_key_types.json → FlowStageTask", confidence: "exact", note: "the inspection IS a scheduled task on the flow" },
   ],
   "inspection.focus / note": [
-    { system: "Slate", type: "FlowStageTask", field: "notes / noteCount", source: "slate_api_key_types.json → FlowStageTask", confidence: "exact" },
-    { system: "Swarm", type: "Note", field: "body / author / createdAt", source: "swarm_graphql_schema.json → Note", confidence: "strong" },
+    { system: "Slate", type: "FlowStageTask", field: "notes / noteCount", fields: ["notes", "noteCount"], source: "slate_api_key_types.json → FlowStageTask", confidence: "exact" },
+    { system: "Swarm", type: "Note", field: "body / author / createdAt", fields: ["body", "author", "createdAt"], source: "swarm_graphql_schema.json → Note", confidence: "strong" },
   ],
   "notice.kind / channel / subject / sent_at": [
-    { system: "Building Blocks", type: "SnailMail / SnailMailCampaign / OutreachMetrics", field: "campaign / reply-code tracking / metrics", source: "bundle inventory §8 SnailMail", confidence: "exact", note: "BB ships a full outreach subsystem — the notice's structural home" },
-    { system: "Slate", type: "Document", field: "name / url / template", source: "slate_api_key_types.json → Document", confidence: "analog" },
+    { system: "Building Blocks", type: "SnailMailCampaign", field: "SnailMailCampaign / OutreachMetrics", fields: ["SnailMailCampaign", "OutreachMetrics"], source: "bundle inventory §8 SnailMail", confidence: "strong", note: "BB ships a full outreach subsystem — the notice's structural home" },
+    { system: "Slate", type: "Document", field: "name / url / template", fields: ["name", "url", "template"], source: "slate_api_key_types.json → Document", confidence: "analog" },
   ],
   // —— provenance / health ——
   "connector.health": [
-    { system: "Building Blocks", type: "getAngelPlatformCityAttribute", field: "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl", source: "bundle inventory §3", confidence: "exact", note: "the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row" },
-    { system: "Building Blocks", type: "IntegrationHealthDashboard", field: "provider / status / checkedAt / latencyMs", source: "bundle inventory §4", confidence: "exact" },
-    { system: "Swarm", type: "Connector", field: "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / stage", source: "swarm_graphql_schema.json → Connector", confidence: "exact" },
+    { system: "Building Blocks", type: "getAngelPlatformCityAttribute", field: "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl", fields: ["failStreak", "staleStreak", "lastSuccessfulPushAt", "lastDataChangeAt", "connectorUrl", "provenanceUrl"], source: "bundle inventory §3", confidence: "exact", note: "the per-attribute connector-health lens — exactly the lineage the demo asserts on every btora row" },
+    { system: "Building Blocks", type: "IntegrationHealthDashboard", field: "provider / status / checkedAt / latencyMs", fields: ["provider", "status", "checkedAt", "latencyMs"], source: "bundle inventory §4", confidence: "exact" },
+    { system: "Swarm", type: "Connector", field: "failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / stage", fields: ["failStreak", "staleStreak", "lastSuccessfulPushAt", "lastDataChangeAt", "stage"], source: "swarm_graphql_schema.json → Connector", confidence: "exact" },
   ],
 };
 
@@ -289,8 +298,113 @@ const output = {
   note: "zoning is the one hard gap across all three systems (confirmed absent in the BB bundle too); the law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
   corpus,
   confidence_scale: CONF_LABEL,
+  verification: null, // filled below
   map: byEntity,
 };
+
+// ── 4b. verification pass — prove every candidate's fields exist in the
+// real source bytes, at build time. Each candidate gains:
+//   verified: true/false, missing: [names not found], checked_against
+// This is the machine check that separates "snipped" from "thought".
+const verify = (() => {
+  const bundle = fs.readFileSync(path.join(ROOT, "index-px14EQkj.js"), "utf8");
+  const bbMdText = fs.readFileSync(path.join(ROOT, "building-blocks-schema-inventory.md"), "utf8");
+  const readJsonlFirst = (rel) => {
+    try {
+      const line = fs.readFileSync(path.join(HERE, rel), "utf8").split("\n").find(Boolean);
+      return line ? JSON.parse(line) : null;
+    } catch { return null; }
+  };
+  const universalFirst = readJsonlFirst("btora/universal/listings_middletown.jsonl");
+
+  return (c) => {
+    if (c.confidence === "gap") return { verified: true, missing: [], checked_against: "gap (named, nothing claimed)" };
+    if (!c.fields || !c.fields.length) return { verified: false, missing: [], checked_against: "no literal fields declared" };
+
+    if (c.system === "Slate") {
+      const list = slate[c.type] || [];
+      const missing = c.fields.filter((f) => !list.includes(f));
+      return { verified: missing.length === 0, missing, checked_against: `slate_api_key_types.json → ${c.type}` };
+    }
+    if (c.system === "Building Blocks") {
+      // BB has no structured field list (minified bundle) — verify presence in bundle text + inventory doc
+      const missing = c.fields.filter((f) => bundle.indexOf(f) === -1 && bbMdText.indexOf(f) === -1);
+      return { verified: missing.length === 0, missing, checked_against: "index-px14EQkj.js (bundle substring) + building-blocks-schema-inventory.md" };
+    }
+    if (c.system === "Swarm") {
+      if (c.type === "platform_attributes") {
+        const row = readJsonlFirst("btora/swarm/platform_attributes.jsonl");
+        const keys = row ? Object.keys(row) : [];
+        const missing = c.fields.filter((f) => !keys.includes(f));
+        return { verified: missing.length === 0, missing, checked_against: "btora/swarm/platform_attributes.jsonl (first row)" };
+      }
+      const list = swarm[c.type] || [];
+      const missing = c.fields.filter((f) => !list.includes(f));
+      return { verified: missing.length === 0, missing, checked_against: `swarm_graphql_schema.json → ${c.type}` };
+    }
+    if (c.system === "Swarm→universal") {
+      const row = universalFirst;
+      if (!row) return { verified: false, missing: c.fields, checked_against: "universal/listings_*.jsonl (unreadable)" };
+      const keys = Object.keys(row);
+      if (c.type === "listing.property") {
+        const sub = row.property ? Object.keys(row.property) : [];
+        const missing = c.fields.filter((f) => !sub.includes(f));
+        return { verified: missing.length === 0, missing, checked_against: "universal/listings_middletown.jsonl → property{}" };
+      }
+      if (c.type === "listing.host") {
+        const sub = row.host ? Object.keys(row.host) : [];
+        const missing = c.fields.filter((f) => !sub.includes(f));
+        return { verified: missing.length === 0, missing, checked_against: "universal/listings_middletown.jsonl → host{}" };
+      }
+      const missing = c.fields.filter((f) => !keys.includes(f));
+      return { verified: missing.length === 0, missing, checked_against: "universal/listings_middletown.jsonl (first row)" };
+    }
+    if (c.system === "Swarm→btora") {
+      const map = {
+        dataset_btora_listings: "btora/swarm/dataset_btora_listings.jsonl",
+        dataset_btora_calendar: "btora/swarm/dataset_btora_calendar.jsonl",
+        platform_attributes: "btora/swarm/platform_attributes.jsonl",
+        transformer_booking_events: "btora/swarm/transformer_booking_events.jsonl",
+      };
+      const rel = map[c.type];
+      const row = rel ? readJsonlFirst(rel) : null;
+      const keys = row ? Object.keys(row) : [];
+      const missing = c.fields.filter((f) => !keys.includes(f));
+      return { verified: missing.length === 0, missing, checked_against: `${rel} (first row)` };
+    }
+    if (c.system === "Slate→btora") {
+      const row = readJsonlFirst("btora/slate/slate_registrations.jsonl");
+      const keys = row ? Object.keys(row) : [];
+      const missing = c.fields.filter((f) => !keys.includes(f));
+      return { verified: missing.length === 0, missing, checked_against: "btora/slate/slate_registrations.jsonl (first row)" };
+    }
+    return { verified: false, missing: c.fields, checked_against: "unrecognized system" };
+  };
+})();
+
+const vstat = { verified: 0, unverified: 0 };
+for (const [entity, rows] of Object.entries(output.map)) {
+  for (const r of rows) {
+    for (const c of r.cands) {
+      const v = verify(c);
+      c.verified = v.verified;
+      c.missing = v.missing;
+      c.checked_against = v.checked_against;
+      if (v.verified) vstat.verified++; else vstat.unverified++;
+    }
+  }
+}
+output.verification = {
+  pass: vstat.unverified === 0,
+  checked: vstat.verified + vstat.unverified,
+  verified: vstat.verified,
+  unverified: vstat.unverified,
+};
+console.log(`verification: ${vstat.verified}/${vstat.verified + vstat.unverified} candidates verified verbatim; ${vstat.unverified} unverified`);
+if (vstat.unverified) {
+  for (const [entity, rows] of Object.entries(output.map)) for (const r of rows) for (const c of r.cands)
+    if (!c.verified) console.log("  UNVERIFIED:", r.need, "→", c.system, c.type, c.missing.join(","));
+}
 
 fs.writeFileSync(path.join(HERE, "xray-map.json"), JSON.stringify(output, null, 2));
 console.log("-> xray-map.json");
@@ -299,7 +413,8 @@ console.log("-> xray-map.json");
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const chips = (cands) => cands.map((c) => {
   if (c.confidence === "gap") return `<div class="cand gap"><div class="cand-head"><span class="chip gap">gap</span><b>no candidate in Slate / Building Blocks / Swarm</b></div><div class="cand-note">${esc(c.note)}</div></div>`;
-  return `<div class="cand ${c.confidence}"><div class="cand-head"><span class="chip ${c.confidence}">${c.confidence}</span><b>${esc(c.system)}</b> · <span class="type">${esc(c.type)}</span> · <code>${esc(c.field)}</code></div><div class="cand-src">${esc(c.source)}</div>${c.note ? `<div class="cand-note">${esc(c.note)}</div>` : ""}</div>`;
+  const vchip = c.verified ? `<span class="chip exact" style="font-size:9px;">✓ snipped</span>` : `<span class="chip gap" style="font-size:9px;">✗ unverified</span>`;
+  return `<div class="cand ${c.confidence}"><div class="cand-head"><span class="chip ${c.confidence}">${c.confidence}</span>${vchip}<b>${esc(c.system)}</b> · <span class="type">${esc(c.type)}</span> · <code>${esc(c.field)}</code></div><div class="cand-src">${esc(c.source)} · ${esc(c.checked_against)}</div>${c.note ? `<div class="cand-note">${esc(c.note)}</div>` : ""}</div>`;
 }).join("");
 
 const sections = order.map((entity) => {
@@ -441,8 +556,9 @@ const docsSections = order.map((entity) => {
         ${cell(`<b>${esc(c.system)}</b>`)}
         ${cell(esc(c.type))}
         ${cell(`<code>${esc(c.field)}</code>`)}
-        ${cell(esc(c.confidence))}
-        ${cell(`${esc(c.source)}${c.note ? " — " + esc(c.note) : ""}`)}
+        ${cell(c.verified ? "✓ snipped" : "✗ unverified")}
+        ${cell(`${esc(c.confidence)}`)}
+        ${cell(`${esc(c.source)} — ${esc(c.checked_against)}${c.note ? " · " + esc(c.note) : ""}`)}
       </tr>`;
     });
     return candRows.join("");
@@ -450,7 +566,7 @@ const docsSections = order.map((entity) => {
   return `<section class="dentity">
     <h2>${esc(entity)}</h2>
     <table>
-      <thead><tr><th>Need</th><th>System</th><th>Type</th><th>Field(s)</th><th>Fit</th><th>Source / note</th></tr></thead>
+      <thead><tr><th>Need</th><th>System</th><th>Type</th><th>Field(s)</th><th>Verified</th><th>Fit</th><th>Source / note</th></tr></thead>
       <tbody>${tbody}</tbody>
     </table>
   </section>`;
