@@ -560,11 +560,10 @@ function hydrateLanes() {
   const here = location.hash;
   fetchFlags().then((flags) => {
     if (location.hash !== here || !document.getElementById("lane-act")) return;
-    const act = [], ver = [], wat = [];
+    const act = [], ver = [];
     flags.forEach((f, i) => {
       if (f.match === "MARGINAL") ver.push({ f, i });
       else if (f.lic === "none" || f.lic === "expired") act.push({ f, i });
-      else if (f.lic === "pending") wat.push({ f, i });
     });
     const item = (r, btn) => '<div style="padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;"><b>' + esc(r.f.addr) + "</b><br><span style='font-size:11.5px;color:var(--dim);'>" + matchChip(r.f.match) + " " + regChip(licReg(r.f.lic)) + " · " + esc(r.f.platform) + " · $" + r.f.rate + "</span> " + btn + "</div>";
     const fill = (id, list, btn, all) => {
@@ -575,9 +574,8 @@ function hydrateLanes() {
     };
     fill("lane-act", act, (r) => '<a href="#/parcel/' + r.i + '">Open →</a>', '<a href="#/oversee/detection">view all</a>');
     fill("lane-verify", ver, (r) => '<a href="#/workbench/staff/verify">Verify →</a>', '<a href="#/workbench/staff/verify">verify queue</a>');
-    fill("lane-watch", wat, (r) => '<a href="#/parcel/' + r.i + '">Open →</a>', '<a href="#/oversee/map-table">monitor</a>');
   }).catch(() => {
-    ["lane-act", "lane-verify", "lane-watch"].forEach((id) => {
+    ["lane-act", "lane-verify"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.innerHTML = "<p>Queue failed to load.</p>";
     });
@@ -630,6 +628,17 @@ function pHomeHost() {
       [["09/18", "Unsafe structure — 301 Demo Rd", '<a class="btn" href="#/properties/301-demo-rd">Respond</a>']]) + "</div>";
 }
 
+function calHomeWidgetHtml() {
+  const today = calTodayEpochDay();
+  const upcoming = CAL_RECORDS.filter((r) => r.status === "scheduled" && r.dateEpochDay >= today).sort((a, b) => a.dateEpochDay - b.dateEpochDay).slice(0, 3);
+  const overdue = CAL_RECORDS.filter((r) => r.status === "overdue").length;
+  return '<div class="card"><h3>Calendar ' + (overdue ? chip(overdue + " overdue", "bad") : "") + "</h3>" +
+    (upcoming.length ? upcoming.map((r) => '<div style="padding:7px 0;border-bottom:1px solid var(--line);font-size:12.5px;"><b>' +
+      calEpochDayToDate(r.dateEpochDay).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) +
+      "</b> · " + r.kind + " — " + calAddrLink(r.addr) + "</div>").join("") : "<p>Nothing scheduled.</p>") +
+    '<p><a href="#/oversee/calendar">Full calendar →</a></p></div>';
+}
+
 function pHomeStaff() {
   return crumb([["", "Home"]]) +
     "<h1>STR compliance — today</h1>" +
@@ -638,7 +647,7 @@ function pHomeStaff() {
     '<div class="cols">' +
     '<div class="card"><h3>Act now <span id="lane-act-n"></span></h3><div id="lane-act"><p>loading…</p></div><p><a href="#/oversee/detection">View all →</a></p></div>' +
     '<div class="card"><h3>Verify to release <span id="lane-verify-n"></span></h3><div id="lane-verify"><p>loading…</p></div><p><a href="#/workbench/staff/verify">Verify queue →</a></p></div>' +
-    '<div class="card"><h3>Watch <span id="lane-watch-n"></span></h3><div id="lane-watch"><p>loading…</p></div><p><a href="#/oversee/map-table">Monitor →</a></p></div>' +
+    calHomeWidgetHtml() +
     "</div>" +
     '<div class="card"><h3>Today&apos;s stops (3)</h3>' + grid(["Stop", "Window", ""],
       [["301 Demo Rd", "occupied until 11am", ""],
