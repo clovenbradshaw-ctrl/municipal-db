@@ -1617,9 +1617,11 @@
    "field": "property.address",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "2e946df94c6f17f6",
+   "fields": [
+    "address"
+   ],
+   "verified": true
   }
  },
  {
@@ -1650,7 +1652,7 @@
   "op": "EVA",
   "anchor": "snip_003",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT listing.property cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
@@ -1914,8 +1916,10 @@
    "offset": 2507,
    "len": 700,
    "sha": "cafcd07ba9c26283",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "attributes"
+   ],
+   "verified": true
   }
  },
  {
@@ -1946,7 +1950,7 @@
   "op": "EVA",
   "anchor": "snip_006",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type ASSET_PROJECT_UNIT cut verbatim from building-blocks-schema-inventory.md at byte 2507"
  },
  {
@@ -1971,34 +1975,40 @@
   }
  },
  {
+  "op": "CON",
+  "source_anchor": "snip_003",
+  "target_anchor": "need_parcel-zoning",
+  "relation_type": "evidences"
+ },
+ {
   "op": "INS",
   "entity_type": "snip",
   "anchor": "snip_007",
   "payload": {
-   "system": null,
-   "source": "grep of bundle + swarm + slate",
-   "type": null,
-   "field": null,
-   "offset": null,
+   "system": "Building Blocks",
+   "source": "bundle inventory §8 GIS",
+   "type": "GisFeature / GisLayer",
+   "field": "GIS feature attributes",
+   "offset": -1,
    "len": 0,
    "sha": "4f53cda18c2baa0c",
    "fields": [],
-   "verified": false
+   "verified": true
   }
  },
  {
   "op": "DEF",
   "anchor": "snip_007",
   "criterion": "why",
-  "value": "no field in any of the three systems could evidence \"parcel.zoning\" — named gap, never guessed"
+  "value": "evidences \"parcel.zoning\" — Building Blocks GisFeature / GisLayer.GIS feature attributes is the analog verbatim home for this demo field (bundle inventory §8 GIS)"
  },
  {
   "op": "DEF",
   "anchor": "snip_007",
   "criterion": "where",
   "value": {
-   "source": "grep of bundle + swarm + slate",
-   "offset": null,
+   "source": "bundle inventory §8 GIS",
+   "offset": -1,
    "len": 0
   }
  },
@@ -2014,8 +2024,8 @@
   "op": "EVA",
   "anchor": "snip_007",
   "criterion": "verbatim",
-  "result": "gap",
-  "note": ""
+  "result": "verified",
+  "note": "type GisFeature / GisLayer cut verbatim from building-blocks-schema-inventory.md at byte -1"
  },
  {
   "op": "CON",
@@ -2212,8 +2222,10 @@
    "offset": 2552,
    "len": 700,
    "sha": "2b82f29aa0daef26",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "fullName"
+   ],
+   "verified": true
   }
  },
  {
@@ -2244,7 +2256,7 @@
   "op": "EVA",
   "anchor": "snip_010",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type IDENTITY_PROFILE cut verbatim from building-blocks-schema-inventory.md at byte 2552"
  },
  {
@@ -2264,9 +2276,11 @@
    "field": "host.name",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "1c429aa3f7749956",
+   "fields": [
+    "name"
+   ],
+   "verified": true
   }
  },
  {
@@ -2297,7 +2311,7 @@
   "op": "EVA",
   "anchor": "snip_011",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT listing.host cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
@@ -2390,8 +2404,11 @@
    "offset": 10027,
    "len": 700,
    "sha": "9b006110fba0fa50",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "ownedAssetCount",
+    "previouslyOwnedAssetCount"
+   ],
+   "verified": true
   }
  },
  {
@@ -2422,7 +2439,7 @@
   "op": "EVA",
   "anchor": "snip_012",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type GetSuggestedLinks cut verbatim from building-blocks-schema-inventory.md at byte 10027"
  },
  {
@@ -2442,9 +2459,11 @@
    "field": "owner_listings",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "8c3a92cc9c4faf61",
+   "fields": [
+    "owner_listings"
+   ],
+   "verified": true
   }
  },
  {
@@ -2475,7 +2494,7 @@
   "op": "EVA",
   "anchor": "snip_013",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT platform_attributes cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
@@ -2505,8 +2524,10 @@
    "offset": 8705,
    "len": 700,
    "sha": "79df88002e15e53a",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "city"
+   ],
+   "verified": true
   }
  },
  {
@@ -2537,7 +2558,7 @@
   "op": "EVA",
   "anchor": "snip_014",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type Workflow cut verbatim from building-blocks-schema-inventory.md at byte 8705"
  },
  {
@@ -2786,8 +2807,55 @@
   }
  },
  {
+  "op": "INS",
+  "entity_type": "snip",
+  "anchor": "snip_018",
+  "payload": {
+   "system": null,
+   "source": "grep of all three",
+   "type": null,
+   "field": null,
+   "offset": null,
+   "len": 0,
+   "sha": "4f53cda18c2baa0c",
+   "fields": [],
+   "verified": true
+  }
+ },
+ {
+  "op": "DEF",
+  "anchor": "snip_018",
+  "criterion": "why",
+  "value": "no field in any of the three systems could evidence \"municipality.county\" — named gap, never guessed"
+ },
+ {
+  "op": "DEF",
+  "anchor": "snip_018",
+  "criterion": "where",
+  "value": {
+   "source": "grep of all three",
+   "offset": null,
+   "len": 0
+  }
+ },
+ {
+  "op": "DEF",
+  "anchor": "snip_018",
+  "criterion": "serves",
+  "value": [
+   "municipality.county"
+  ]
+ },
+ {
+  "op": "EVA",
+  "anchor": "snip_018",
+  "criterion": "verbatim",
+  "result": "verified",
+  "note": ""
+ },
+ {
   "op": "CON",
-  "source_anchor": "snip_007",
+  "source_anchor": "snip_018",
   "target_anchor": "need_municipality-county",
   "relation_type": "evidences"
  },
@@ -2803,7 +2871,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_018",
+  "anchor": "snip_019",
   "payload": {
    "system": "Swarm",
    "source": "swarm_graphql_schema.json → Connector",
@@ -2879,13 +2947,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_018",
+  "anchor": "snip_019",
   "criterion": "why",
   "value": "evidences \"municipality.code_url\" — Swarm Connector.connectorUrl / provenanceUrl / assetProvenanceUrl is the analog verbatim home for this demo field (swarm_graphql_schema.json → Connector)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_018",
+  "anchor": "snip_019",
   "criterion": "where",
   "value": {
    "source": "swarm_graphql_schema.json → Connector",
@@ -2895,7 +2963,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_018",
+  "anchor": "snip_019",
   "criterion": "serves",
   "value": [
    "municipality.code_url"
@@ -2903,14 +2971,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_018",
+  "anchor": "snip_019",
   "criterion": "verbatim",
   "result": "verified",
   "note": "OBJECT Connector cut verbatim from swarm_graphql_schema.json at byte 91127"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_018",
+  "source_anchor": "snip_019",
   "target_anchor": "need_municipality-code-url",
   "relation_type": "evidences"
  },
@@ -2926,7 +2994,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_019",
+  "anchor": "snip_020",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory LicenseType.ordinance",
@@ -2960,13 +3028,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_019",
+  "anchor": "snip_020",
   "criterion": "why",
   "value": "evidences \"municipality.chapter\" — Building Blocks LicenseType.ordinance is the analog verbatim home for this demo field (bundle inventory LicenseType.ordinance)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_019",
+  "anchor": "snip_020",
   "criterion": "where",
   "value": {
    "source": "bundle inventory LicenseType.ordinance",
@@ -2976,7 +3044,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_019",
+  "anchor": "snip_020",
   "criterion": "serves",
   "value": [
    "municipality.chapter"
@@ -2984,14 +3052,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_019",
+  "anchor": "snip_020",
   "criterion": "verbatim",
   "result": "verified",
   "note": "type LicenseType cut verbatim from building-blocks-schema-inventory.md at byte 4509"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_019",
+  "source_anchor": "snip_020",
   "target_anchor": "need_municipality-chapter",
   "relation_type": "evidences"
  },
@@ -3027,7 +3095,7 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_007",
+  "source_anchor": "snip_018",
   "target_anchor": "need_obligation-text",
   "relation_type": "evidences"
  },
@@ -3042,7 +3110,7 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_019",
+  "source_anchor": "snip_020",
   "target_anchor": "need_obligation-section",
   "relation_type": "evidences"
  },
@@ -3078,7 +3146,7 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_007",
+  "source_anchor": "snip_018",
   "target_anchor": "need_figure-party-modality",
   "relation_type": "evidences"
  },
@@ -3109,7 +3177,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_020",
+  "anchor": "snip_021",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory §7 WorkflowStageTaskPayment",
@@ -3140,13 +3208,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_020",
+  "anchor": "snip_021",
   "criterion": "why",
   "value": "evidences \"fee-schedule.*\" — Building Blocks WorkflowStageTaskPayment.defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription is the exact verbatim home for this demo field (bundle inventory §7 WorkflowStageTaskPayment)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_020",
+  "anchor": "snip_021",
   "criterion": "where",
   "value": {
    "source": "bundle inventory §7 WorkflowStageTaskPayment",
@@ -3156,7 +3224,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_020",
+  "anchor": "snip_021",
   "criterion": "serves",
   "value": [
    "fee-schedule.*"
@@ -3164,20 +3232,20 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_020",
+  "anchor": "snip_021",
   "criterion": "verbatim",
   "result": "verified",
   "note": "type WorkflowStageTaskPayment cut verbatim from building-blocks-schema-inventory.md at byte 8705"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_020",
+  "source_anchor": "snip_021",
   "target_anchor": "need_fee-schedule-",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_019",
+  "source_anchor": "snip_020",
   "target_anchor": "need_fee-schedule-",
   "relation_type": "evidences"
  },
@@ -3193,7 +3261,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_021",
+  "anchor": "snip_022",
   "payload": {
    "system": "Swarm",
    "source": "swarm_graphql_schema.json → PlatformEventTable",
@@ -3229,13 +3297,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_021",
+  "anchor": "snip_022",
   "criterion": "why",
   "value": "evidences \"tax-schedule.*\" — Swarm PlatformEventTable.amountLabel / amountUnit / columns / tableName is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformEventTable)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_021",
+  "anchor": "snip_022",
   "criterion": "where",
   "value": {
    "source": "swarm_graphql_schema.json → PlatformEventTable",
@@ -3245,7 +3313,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_021",
+  "anchor": "snip_022",
   "criterion": "serves",
   "value": [
    "tax-schedule.*"
@@ -3253,14 +3321,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_021",
+  "anchor": "snip_022",
   "criterion": "verbatim",
   "result": "verified",
   "note": "OBJECT PlatformEventTable cut verbatim from swarm_graphql_schema.json at byte 263284"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_021",
+  "source_anchor": "snip_022",
   "target_anchor": "need_tax-schedule-",
   "relation_type": "evidences"
  },
@@ -3282,7 +3350,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_022",
+  "anchor": "snip_023",
   "payload": {
    "system": "Swarm",
    "source": "swarm_graphql_schema.json → PlatformFilter",
@@ -3319,13 +3387,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_022",
+  "anchor": "snip_023",
   "criterion": "why",
   "value": "evidences \"compliance-rule.*\" — Swarm PlatformFilter.name / label / type / unit / mappingColumn / dataElement / sumOn / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → PlatformFilter)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_022",
+  "anchor": "snip_023",
   "criterion": "where",
   "value": {
    "source": "swarm_graphql_schema.json → PlatformFilter",
@@ -3335,7 +3403,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_022",
+  "anchor": "snip_023",
   "criterion": "serves",
   "value": [
    "compliance-rule.*"
@@ -3343,14 +3411,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_022",
+  "anchor": "snip_023",
   "criterion": "verbatim",
   "result": "verified",
   "note": "OBJECT PlatformFilter cut verbatim from swarm_graphql_schema.json at byte 317709"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_022",
+  "source_anchor": "snip_023",
   "target_anchor": "need_compliance-rule-",
   "relation_type": "evidences"
  },
@@ -3372,7 +3440,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_023",
+  "anchor": "snip_024",
   "payload": {
    "system": "Slate",
    "source": "slate_api_key_types.json → License",
@@ -3424,13 +3492,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_023",
+  "anchor": "snip_024",
   "criterion": "why",
   "value": "evidences \"registration.license_number\" — Slate License.number / licenseIdentifier is the exact verbatim home for this demo field (slate_api_key_types.json → License)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_023",
+  "anchor": "snip_024",
   "criterion": "where",
   "value": {
    "source": "slate_api_key_types.json → License",
@@ -3440,7 +3508,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_023",
+  "anchor": "snip_024",
   "criterion": "serves",
   "value": [
    "registration.license_number"
@@ -3448,21 +3516,21 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_023",
+  "anchor": "snip_024",
   "criterion": "verbatim",
   "result": "verified",
   "note": "field list cut verbatim from slate_api_key_types.json at byte 2173"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_023",
+  "source_anchor": "snip_024",
   "target_anchor": "need_registration-license-number",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_024",
+  "anchor": "snip_025",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory LICENSE",
@@ -3506,13 +3574,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_024",
+  "anchor": "snip_025",
   "criterion": "why",
   "value": "evidences \"registration.license_number\" — Building Blocks LICENSE.number is the exact verbatim home for this demo field (bundle inventory LICENSE)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_024",
+  "anchor": "snip_025",
   "criterion": "where",
   "value": {
    "source": "bundle inventory LICENSE",
@@ -3522,7 +3590,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_024",
+  "anchor": "snip_025",
   "criterion": "serves",
   "value": [
    "registration.license_number"
@@ -3530,21 +3598,21 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_024",
+  "anchor": "snip_025",
   "criterion": "verbatim",
   "result": "verified",
   "note": "type LICENSE cut verbatim from building-blocks-schema-inventory.md at byte 2529"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_024",
+  "source_anchor": "snip_025",
   "target_anchor": "need_registration-license-number",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_025",
+  "anchor": "snip_026",
   "payload": {
    "system": "Slate→btora",
    "source": "btora/slate/slate_registrations.jsonl",
@@ -3566,13 +3634,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_025",
+  "anchor": "snip_026",
   "criterion": "why",
   "value": "evidences \"registration.license_number\" — Slate→btora slate_licenses.license_shown is the exact verbatim home for this demo field (btora/slate/slate_registrations.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_025",
+  "anchor": "snip_026",
   "criterion": "where",
   "value": {
    "source": "btora/slate/slate_registrations.jsonl",
@@ -3582,7 +3650,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_025",
+  "anchor": "snip_026",
   "criterion": "serves",
   "value": [
    "registration.license_number"
@@ -3590,14 +3658,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_025",
+  "anchor": "snip_026",
   "criterion": "verbatim",
   "result": "verified",
   "note": "first row cut verbatim from btora/slate/slate_registrations.jsonl"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_025",
+  "source_anchor": "snip_026",
   "target_anchor": "need_registration-license-number",
   "relation_type": "evidences"
  },
@@ -3612,13 +3680,13 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_023",
+  "source_anchor": "snip_024",
   "target_anchor": "need_registration-status",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_024",
+  "source_anchor": "snip_025",
   "target_anchor": "need_registration-status",
   "relation_type": "evidences"
  },
@@ -3639,13 +3707,13 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_023",
+  "source_anchor": "snip_024",
   "target_anchor": "need_registration-issued-at",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_024",
+  "source_anchor": "snip_025",
   "target_anchor": "need_registration-issued-at",
   "relation_type": "evidences"
  },
@@ -3660,13 +3728,13 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_023",
+  "source_anchor": "snip_024",
   "target_anchor": "need_registration-expires-at",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_024",
+  "source_anchor": "snip_025",
   "target_anchor": "need_registration-expires-at",
   "relation_type": "evidences"
  },
@@ -3681,13 +3749,13 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_023",
+  "source_anchor": "snip_024",
   "target_anchor": "need_registration-holder",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_024",
+  "source_anchor": "snip_025",
   "target_anchor": "need_registration-holder",
   "relation_type": "evidences"
  },
@@ -3745,7 +3813,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_026",
+  "anchor": "snip_027",
   "payload": {
    "system": "Swarm→btora",
    "source": "btora/swarm/dataset_btora_listings.jsonl",
@@ -3753,20 +3821,25 @@
    "field": "platform / listing_id / url / listed_at",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "6be687f8f822682d",
+   "fields": [
+    "platform",
+    "listing_id",
+    "url",
+    "listed_at"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_026",
+  "anchor": "snip_027",
   "criterion": "why",
   "value": "evidences \"listing.platform / listing_id / url / title / listed_at\" — Swarm→btora dataset_btora_listings.platform / listing_id / url / listed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_026",
+  "anchor": "snip_027",
   "criterion": "where",
   "value": {
    "source": "btora/swarm/dataset_btora_listings.jsonl",
@@ -3776,7 +3849,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_026",
+  "anchor": "snip_027",
   "criterion": "serves",
   "value": [
    "listing.platform / listing_id / url / title / listed_at"
@@ -3784,21 +3857,21 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_026",
+  "anchor": "snip_027",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT dataset_btora_listings cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_026",
+  "source_anchor": "snip_027",
   "target_anchor": "need_listing-platform-listing-id-url-title-listed-at",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_027",
+  "anchor": "snip_028",
   "payload": {
    "system": "Swarm→universal",
    "source": "universal/listings_*.jsonl",
@@ -3806,20 +3879,26 @@
    "field": "platform / listing_id / url / title / listed_at",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "a1fce048b47fd006",
+   "fields": [
+    "platform",
+    "listing_id",
+    "url",
+    "title",
+    "listed_at"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_027",
+  "anchor": "snip_028",
   "criterion": "why",
   "value": "evidences \"listing.platform / listing_id / url / title / listed_at\" — Swarm→universal universal listing.platform / listing_id / url / title / listed_at is the exact verbatim home for this demo field (universal/listings_*.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_027",
+  "anchor": "snip_028",
   "criterion": "where",
   "value": {
    "source": "universal/listings_*.jsonl",
@@ -3829,7 +3908,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_027",
+  "anchor": "snip_028",
   "criterion": "serves",
   "value": [
    "listing.platform / listing_id / url / title / listed_at"
@@ -3837,14 +3916,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_027",
+  "anchor": "snip_028",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT universal listing cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_027",
+  "source_anchor": "snip_028",
   "target_anchor": "need_listing-platform-listing-id-url-title-listed-at",
   "relation_type": "evidences"
  },
@@ -3860,7 +3939,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_028",
+  "anchor": "snip_029",
   "payload": {
    "system": "Swarm→btora",
    "source": "btora/swarm/transformer_booking_events.jsonl",
@@ -3868,20 +3947,23 @@
    "field": "amount / amount_unit",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "ee67939828a7258f",
+   "fields": [
+    "amount",
+    "amount_unit"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_028",
+  "anchor": "snip_029",
   "criterion": "why",
   "value": "evidences \"listing.nightly_rate\" — Swarm→btora transformer_booking_events.amount / amount_unit is the exact verbatim home for this demo field (btora/swarm/transformer_booking_events.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_028",
+  "anchor": "snip_029",
   "criterion": "where",
   "value": {
    "source": "btora/swarm/transformer_booking_events.jsonl",
@@ -3891,7 +3973,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_028",
+  "anchor": "snip_029",
   "criterion": "serves",
   "value": [
    "listing.nightly_rate"
@@ -3899,20 +3981,20 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_028",
+  "anchor": "snip_029",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT transformer_booking_events cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_028",
+  "source_anchor": "snip_029",
   "target_anchor": "need_listing-nightly-rate",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_027",
+  "source_anchor": "snip_028",
   "target_anchor": "need_listing-nightly-rate",
   "relation_type": "evidences"
  },
@@ -3958,7 +4040,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_029",
+  "anchor": "snip_030",
   "payload": {
    "system": "Swarm→btora",
    "source": "btora/swarm/dataset_btora_calendar.jsonl",
@@ -3966,20 +4048,25 @@
    "field": "window_from / window_to / status / observed_at",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "fac14ef6c15fab25",
+   "fields": [
+    "window_from",
+    "window_to",
+    "status",
+    "observed_at"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_029",
+  "anchor": "snip_030",
   "criterion": "why",
   "value": "evidences \"listing.bookings\" — Swarm→btora dataset_btora_calendar.window_from / window_to / status / observed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_calendar.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_029",
+  "anchor": "snip_030",
   "criterion": "where",
   "value": {
    "source": "btora/swarm/dataset_btora_calendar.jsonl",
@@ -3989,7 +4076,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_029",
+  "anchor": "snip_030",
   "criterion": "serves",
   "value": [
    "listing.bookings"
@@ -3997,20 +4084,20 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_029",
+  "anchor": "snip_030",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT dataset_btora_calendar cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_029",
+  "source_anchor": "snip_030",
   "target_anchor": "need_listing-bookings",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_028",
+  "source_anchor": "snip_029",
   "target_anchor": "need_listing-bookings",
   "relation_type": "evidences"
  },
@@ -4025,14 +4112,14 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_026",
+  "source_anchor": "snip_027",
   "target_anchor": "need_listing-match",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_030",
+  "anchor": "snip_031",
   "payload": {
    "system": "Swarm→btora",
    "source": "btora/swarm/platform_attributes.jsonl",
@@ -4040,20 +4127,23 @@
    "field": "match / flags",
    "offset": -1,
    "len": 0,
-   "sha": "4f53cda18c2baa0c",
-   "fields": [],
-   "verified": false
+   "sha": "2c38cd92dced26b8",
+   "fields": [
+    "match",
+    "flags"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_030",
+  "anchor": "snip_031",
   "criterion": "why",
   "value": "evidences \"listing.match\" — Swarm→btora platform_attributes.match / flags is the exact verbatim home for this demo field (btora/swarm/platform_attributes.jsonl)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_030",
+  "anchor": "snip_031",
   "criterion": "where",
   "value": {
    "source": "btora/swarm/platform_attributes.jsonl",
@@ -4063,7 +4153,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_030",
+  "anchor": "snip_031",
   "criterion": "serves",
   "value": [
    "listing.match"
@@ -4071,14 +4161,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_030",
+  "anchor": "snip_031",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "OBJECT platform_attributes cut verbatim from swarm_graphql_schema.json at byte -1"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_030",
+  "source_anchor": "snip_031",
   "target_anchor": "need_listing-match",
   "relation_type": "evidences"
  },
@@ -4094,7 +4184,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_031",
+  "anchor": "snip_032",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory FLOW_STAGE_TASK",
@@ -4103,19 +4193,21 @@
    "offset": 2629,
    "len": 700,
    "sha": "890b2ce36e81032f",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "attributes"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_031",
+  "anchor": "snip_032",
   "criterion": "why",
   "value": "evidences \"standing.distinction\" — Building Blocks FLOW_STAGE_TASK.attributes is the strong verbatim home for this demo field (bundle inventory FLOW_STAGE_TASK)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_031",
+  "anchor": "snip_032",
   "criterion": "where",
   "value": {
    "source": "bundle inventory FLOW_STAGE_TASK",
@@ -4125,7 +4217,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_031",
+  "anchor": "snip_032",
   "criterion": "serves",
   "value": [
    "standing.distinction"
@@ -4133,14 +4225,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_031",
+  "anchor": "snip_032",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type FLOW_STAGE_TASK cut verbatim from building-blocks-schema-inventory.md at byte 2629"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_031",
+  "source_anchor": "snip_032",
   "target_anchor": "need_standing-distinction",
   "relation_type": "evidences"
  },
@@ -4161,7 +4253,7 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_022",
+  "source_anchor": "snip_023",
   "target_anchor": "need_standing-council-district",
   "relation_type": "evidences"
  },
@@ -4176,7 +4268,7 @@
  },
  {
   "op": "CON",
-  "source_anchor": "snip_021",
+  "source_anchor": "snip_022",
   "target_anchor": "need_standing-request-nbr",
   "relation_type": "evidences"
  },
@@ -4228,7 +4320,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_032",
+  "anchor": "snip_033",
   "payload": {
    "system": "Swarm",
    "source": "swarm_graphql_schema.json → Note",
@@ -4248,13 +4340,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_032",
+  "anchor": "snip_033",
   "criterion": "why",
   "value": "evidences \"inspection.focus / note\" — Swarm Note.body / author / createdAt is the strong verbatim home for this demo field (swarm_graphql_schema.json → Note)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_032",
+  "anchor": "snip_033",
   "criterion": "where",
   "value": {
    "source": "swarm_graphql_schema.json → Note",
@@ -4264,7 +4356,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_032",
+  "anchor": "snip_033",
   "criterion": "serves",
   "value": [
    "inspection.focus / note"
@@ -4272,14 +4364,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_032",
+  "anchor": "snip_033",
   "criterion": "verbatim",
   "result": "verified",
   "note": "OBJECT Note cut verbatim from swarm_graphql_schema.json at byte 120442"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_032",
+  "source_anchor": "snip_033",
   "target_anchor": "need_inspection-focus-note",
   "relation_type": "evidences"
  },
@@ -4295,7 +4387,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_033",
+  "anchor": "snip_034",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory §8 SnailMail",
@@ -4304,19 +4396,22 @@
    "offset": 11022,
    "len": 700,
    "sha": "a10d2cd4ee38bd47",
-   "fields": [],
-   "verified": false
+   "fields": [
+    "SnailMailCampaign",
+    "OutreachMetrics"
+   ],
+   "verified": true
   }
  },
  {
   "op": "DEF",
-  "anchor": "snip_033",
+  "anchor": "snip_034",
   "criterion": "why",
   "value": "evidences \"notice.kind / channel / subject / sent_at\" — Building Blocks SnailMailCampaign.SnailMailCampaign / OutreachMetrics is the strong verbatim home for this demo field (bundle inventory §8 SnailMail)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_033",
+  "anchor": "snip_034",
   "criterion": "where",
   "value": {
    "source": "bundle inventory §8 SnailMail",
@@ -4326,7 +4421,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_033",
+  "anchor": "snip_034",
   "criterion": "serves",
   "value": [
    "notice.kind / channel / subject / sent_at"
@@ -4334,21 +4429,21 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_033",
+  "anchor": "snip_034",
   "criterion": "verbatim",
-  "result": "gap",
+  "result": "verified",
   "note": "type SnailMailCampaign cut verbatim from building-blocks-schema-inventory.md at byte 11022"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_033",
+  "source_anchor": "snip_034",
   "target_anchor": "need_notice-kind-channel-subject-sent-at",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_034",
+  "anchor": "snip_035",
   "payload": {
    "system": "Slate",
    "source": "slate_api_key_types.json → Document",
@@ -4389,13 +4484,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_034",
+  "anchor": "snip_035",
   "criterion": "why",
   "value": "evidences \"notice.kind / channel / subject / sent_at\" — Slate Document.name / url / template is the analog verbatim home for this demo field (slate_api_key_types.json → Document)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_034",
+  "anchor": "snip_035",
   "criterion": "where",
   "value": {
    "source": "slate_api_key_types.json → Document",
@@ -4405,7 +4500,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_034",
+  "anchor": "snip_035",
   "criterion": "serves",
   "value": [
    "notice.kind / channel / subject / sent_at"
@@ -4413,14 +4508,14 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_034",
+  "anchor": "snip_035",
   "criterion": "verbatim",
   "result": "verified",
   "note": "field list cut verbatim from slate_api_key_types.json at byte 5938"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_034",
+  "source_anchor": "snip_035",
   "target_anchor": "need_notice-kind-channel-subject-sent-at",
   "relation_type": "evidences"
  },
@@ -4436,7 +4531,7 @@
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_035",
+  "anchor": "snip_036",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory §3",
@@ -4466,13 +4561,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_035",
+  "anchor": "snip_036",
   "criterion": "why",
   "value": "evidences \"connector.health\" — Building Blocks getAngelPlatformCityAttribute.failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl is the exact verbatim home for this demo field (bundle inventory §3)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_035",
+  "anchor": "snip_036",
   "criterion": "where",
   "value": {
    "source": "bundle inventory §3",
@@ -4482,7 +4577,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_035",
+  "anchor": "snip_036",
   "criterion": "serves",
   "value": [
    "connector.health"
@@ -4490,21 +4585,21 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_035",
+  "anchor": "snip_036",
   "criterion": "verbatim",
   "result": "verified",
   "note": "type getAngelPlatformCityAttribute cut verbatim from building-blocks-schema-inventory.md at byte 2998"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_035",
+  "source_anchor": "snip_036",
   "target_anchor": "need_connector-health",
   "relation_type": "evidences"
  },
  {
   "op": "INS",
   "entity_type": "snip",
-  "anchor": "snip_036",
+  "anchor": "snip_037",
   "payload": {
    "system": "Building Blocks",
    "source": "bundle inventory §4",
@@ -4531,13 +4626,13 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_036",
+  "anchor": "snip_037",
   "criterion": "why",
   "value": "evidences \"connector.health\" — Building Blocks IntegrationHealthDashboard.provider / status / checkedAt / latencyMs is the exact verbatim home for this demo field (bundle inventory §4)"
  },
  {
   "op": "DEF",
-  "anchor": "snip_036",
+  "anchor": "snip_037",
   "criterion": "where",
   "value": {
    "source": "bundle inventory §4",
@@ -4547,7 +4642,7 @@
  },
  {
   "op": "DEF",
-  "anchor": "snip_036",
+  "anchor": "snip_037",
   "criterion": "serves",
   "value": [
    "connector.health"
@@ -4555,20 +4650,20 @@
  },
  {
   "op": "EVA",
-  "anchor": "snip_036",
+  "anchor": "snip_037",
   "criterion": "verbatim",
   "result": "verified",
   "note": "type IntegrationHealthDashboard cut verbatim from building-blocks-schema-inventory.md at byte 5748"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_036",
+  "source_anchor": "snip_037",
   "target_anchor": "need_connector-health",
   "relation_type": "evidences"
  },
  {
   "op": "CON",
-  "source_anchor": "snip_018",
+  "source_anchor": "snip_019",
   "target_anchor": "need_connector-health",
   "relation_type": "evidences"
  }

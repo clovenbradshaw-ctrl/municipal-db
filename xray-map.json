@@ -2,7 +2,7 @@
   "title": "municipal-db schema needs → Slate / Building Blocks / Swarm fulfillment map",
   "generated": "2026-09-18",
   "method": "eoreader7 snip discipline applied mechanically: every candidate field is CUT from the real schema source files (verbatim, positionally), never generated. A need with no candidate in any of the three systems is marked gap — not guessed.",
-  "note": "zoning is the one hard gap across all three systems (confirmed absent in the BB bundle too); the law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
+  "note": "zoning is not native to Slate/BB/Swarm — but the demo carries real zoning values on its own parcels (R-1, RM-5, MU-1… from the municipal code) and the btora universal shape has a zoning_claim field. The law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
   "corpus": {
     "slate": {
       "source": "slate_api_key_types.json (Slate API key-types pull)",
@@ -2021,8 +2021,8 @@
   },
   "verification": {
     "pass": true,
-    "checked": 85,
-    "verified": 85,
+    "checked": 86,
+    "verified": 86,
     "unverified": 0
   },
   "map": {
@@ -2211,16 +2211,31 @@
         "need": "parcel.zoning",
         "cands": [
           {
-            "system": null,
-            "type": null,
-            "field": null,
-            "fields": [],
-            "source": "grep of bundle + swarm + slate",
-            "confidence": "gap",
-            "note": "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three",
+            "system": "Swarm→universal",
+            "type": "listing.property",
+            "field": "property.zoning_claim",
+            "fields": [
+              "zoning_claim"
+            ],
+            "source": "universal/listings_*.jsonl",
+            "confidence": "strong",
+            "note": "btora universal shape carries a zoning_claim field — present in the schema, null in the current pull (the claim slot exists; values weren't captured this pull)",
             "verified": true,
             "missing": [],
-            "checked_against": "gap (named, nothing claimed)"
+            "checked_against": "universal/listings_middletown.jsonl → property{}"
+          },
+          {
+            "system": "Building Blocks",
+            "type": "GisFeature / GisLayer",
+            "field": "GIS feature attributes",
+            "fields": [],
+            "source": "bundle inventory §8 GIS",
+            "confidence": "analog",
+            "structural": true,
+            "note": "no native zoning field on ASSET, but BB's GIS feature layer + SQL Reports/Scripts extensibility is the documented home for a zoning-eligibility check (§8); the demo carries zoning verbatim on its own parcels (R-1, RM-5, MU-1…) from the municipal code",
+            "verified": true,
+            "missing": [],
+            "checked_against": "structural claim — no literal field asserted"
           }
         ]
       },

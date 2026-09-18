@@ -21,7 +21,7 @@
 <body>
 <h1>Municipal-DB Schema Needs → Slate / Building Blocks / Swarm Fulfillment Map</h1>
 <p class="sub">Every field the municipal-db demo needs, mapped to the vendor schema fields that could fulfill it. Fields are snipped verbatim from the schema sources we pulled (Slate API key-types, the Building Blocks production bundle, the Swarm GraphQL introspection, and the btora delivery pulls) — nothing is generated. Fit: <b>exact</b> = the field exists under that name; <b>strong</b> = same concept, one hop / per-unit attribute; <b>analog</b> = closest structural equivalent; <b>GAP</b> = none of the three systems has a field for it.</p>
-<p class="sub"><b>Three structural findings:</b> (1) <b>zoning</b> is the one hard gap — absent from every entity type in Building Blocks, from Swarm, and from Slate; the demo keeps it null, not guessed. (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's listing.property field-for-field — that shape is the demo's listing layer fulfilled as-is.</p>
+<p class="sub"><b>Three structural findings:</b> (1) <b>zoning</b> is not native to any of the three vendor schemas — but it is not absent from the world: the demo's own parcels carry real zoning values verbatim from the municipal code (R-1, RM-5, MU-1…), and the btora universal listing shape has a <code>zoning_claim</code> field (present, null in the current pull). (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's listing.property field-for-field — that shape is the demo's listing layer fulfilled as-is.</p>
 
 <h2>Field Needs → Candidates</h2>
 <section class="dentity">
@@ -117,12 +117,22 @@
         <td>exact</td>
         <td>universal/listings_*.jsonl — universal/listings_middletown.jsonl → property{}</td>
       </tr><tr>
-          <td><b>parcel.zoning</b></td>
-          <td><b>No candidate in Slate / Building Blocks / Swarm</b></td>
-          <td>—</td><td>—</td>
-          <td><b>GAP</b></td>
-          <td>NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three</td>
-        </tr><tr>
+        <td><b>parcel.zoning</b></td>
+        <td><b>Swarm→universal</b></td>
+        <td>listing.property</td>
+        <td><code>property.zoning_claim</code></td>
+        <td>✓ snipped</td>
+        <td>strong</td>
+        <td>universal/listings_*.jsonl — universal/listings_middletown.jsonl → property{} · btora universal shape carries a zoning_claim field — present in the schema, null in the current pull (the claim slot exists; values weren't captured this pull)</td>
+      </tr><tr>
+        <td><b>parcel.zoning</b></td>
+        <td><b>Building Blocks</b></td>
+        <td>GisFeature / GisLayer</td>
+        <td><code>GIS feature attributes</code></td>
+        <td>✓ snipped</td>
+        <td>analog</td>
+        <td>bundle inventory §8 GIS — structural claim — no literal field asserted · no native zoning field on ASSET, but BB's GIS feature layer + SQL Reports/Scripts extensibility is the documented home for a zoning-eligibility check (§8); the demo carries zoning verbatim on its own parcels (R-1, RM-5, MU-1…) from the municipal code</td>
+      </tr><tr>
         <td><b>parcel.evictions</b></td>
         <td><b>Building Blocks</b></td>
         <td>ASSET</td>
@@ -833,17 +843,17 @@
     <td><code>snip_005</code></td>
     <td>Slate</td>
     <td><code>FlowStageTask</code> · <code>attributes</code></td>
-    <td>slate_api_key_types.json → FlowStageTask.attributes · byte 790</td>
+    <td>slate_api_key_types.json → FlowStageTask · byte 790</td>
     <td>verified</td>
-    <td>evidences &quot;parcel.bedrooms&quot; — Slate FlowStageTask.attributes is the strong verbatim home for this demo field (slate_api_key_types.json → FlowStageTask.attributes)</td>
+    <td>evidences &quot;parcel.bedrooms&quot; — Slate FlowStageTask.attributes is the strong verbatim home for this demo field (slate_api_key_types.json → FlowStageTask)</td>
     <td>parcel.bedrooms</td>
   </tr><tr>
     <td><code>snip_006</code></td>
     <td>Building Blocks</td>
-    <td><code>ASSET_PROJECT_UNIT / attribute</code> · <code>unit attributes</code></td>
-    <td>bundle inventory ASSET_PROJECT_UNIT · byte -1</td>
+    <td><code>ASSET_PROJECT_UNIT</code> · <code>attributes</code></td>
+    <td>bundle inventory ASSET_PROJECT_UNIT · byte 2507</td>
     <td>gap</td>
-    <td>evidences &quot;parcel.bedrooms&quot; — Building Blocks ASSET_PROJECT_UNIT / attribute.unit attributes is the strong verbatim home for this demo field (bundle inventory ASSET_PROJECT_UNIT)</td>
+    <td>evidences &quot;parcel.bedrooms&quot; — Building Blocks ASSET_PROJECT_UNIT.attributes is the strong verbatim home for this demo field (bundle inventory ASSET_PROJECT_UNIT)</td>
     <td>parcel.bedrooms</td>
   </tr><tr>
     <td><code>snip_007</code></td>
@@ -855,22 +865,14 @@
     <td>parcel.zoning</td>
   </tr><tr>
     <td><code>snip_008</code></td>
-    <td>Building Blocks</td>
-    <td><code>ASSET attribute</code> · <code>assessments / owner-referenced counts</code></td>
-    <td>bundle inventory §6 assessments{owners,totalValue,year} · byte 12499</td>
-    <td>gap</td>
-    <td>evidences &quot;parcel.evictions&quot; — Building Blocks ASSET attribute.assessments / owner-referenced counts is the analog verbatim home for this demo field (bundle inventory §6 assessments{owners,totalValue,year})</td>
+    <td>Swarm</td>
+    <td><code>AttributeRule</code> · <code>name / rules</code></td>
+    <td>swarm_graphql_schema.json → AttributeRule · byte 62398</td>
+    <td>verified</td>
+    <td>evidences &quot;parcel.evictions&quot; — Swarm AttributeRule.name / rules is the analog verbatim home for this demo field (swarm_graphql_schema.json → AttributeRule)</td>
     <td>parcel.evictions</td>
   </tr><tr>
     <td><code>snip_009</code></td>
-    <td>Swarm</td>
-    <td><code>PlatformAttribute / AttributeRule</code> · <code>name / entity / rules</code></td>
-    <td>swarm_graphql_schema.json → PlatformAttribute, AttributeRule · byte -1</td>
-    <td>gap</td>
-    <td>evidences &quot;parcel.evictions&quot; — Swarm PlatformAttribute / AttributeRule.name / entity / rules is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformAttribute, AttributeRule)</td>
-    <td>parcel.evictions</td>
-  </tr><tr>
-    <td><code>snip_010</code></td>
     <td>Slate</td>
     <td><code>IdentityProfile</code> · <code>fullName / firstName / lastName</code></td>
     <td>slate_api_key_types.json → IdentityProfile · byte 5381</td>
@@ -878,15 +880,15 @@
     <td>evidences &quot;owner.name&quot; — Slate IdentityProfile.fullName / firstName / lastName is the exact verbatim home for this demo field (slate_api_key_types.json → IdentityProfile)</td>
     <td>owner.name</td>
   </tr><tr>
-    <td><code>snip_011</code></td>
+    <td><code>snip_010</code></td>
     <td>Building Blocks</td>
-    <td><code>IDENTITY / IDENTITY_PROFILE</code> · <code>fullName</code></td>
-    <td>bundle inventory IDENTITY · byte -1</td>
+    <td><code>IDENTITY_PROFILE</code> · <code>fullName</code></td>
+    <td>bundle inventory IDENTITY_PROFILE · byte 2552</td>
     <td>gap</td>
-    <td>evidences &quot;owner.name&quot; — Building Blocks IDENTITY / IDENTITY_PROFILE.fullName is the exact verbatim home for this demo field (bundle inventory IDENTITY)</td>
+    <td>evidences &quot;owner.name&quot; — Building Blocks IDENTITY_PROFILE.fullName is the exact verbatim home for this demo field (bundle inventory IDENTITY_PROFILE)</td>
     <td>owner.name</td>
   </tr><tr>
-    <td><code>snip_012</code></td>
+    <td><code>snip_011</code></td>
     <td>Swarm→universal</td>
     <td><code>listing.host</code> · <code>host.name</code></td>
     <td>universal/listings_*.jsonl · byte -1</td>
@@ -894,31 +896,31 @@
     <td>evidences &quot;owner.name&quot; — Swarm→universal listing.host.host.name is the exact verbatim home for this demo field (universal/listings_*.jsonl)</td>
     <td>owner.name</td>
   </tr><tr>
-    <td><code>snip_013</code></td>
+    <td><code>snip_012</code></td>
     <td>Building Blocks</td>
-    <td><code>IDENTITY_PROFILE</code> · <code>phone</code></td>
-    <td>bundle inventory IDENTITY_PROFILE · byte 2552</td>
+    <td><code>GetSuggestedLinks</code> · <code>ownedAssetCount / previouslyOwnedAssetCount</code></td>
+    <td>bundle inventory §8 GetSuggestedLinks · byte 10027</td>
     <td>gap</td>
-    <td>evidences &quot;owner.phone&quot; — Building Blocks IDENTITY_PROFILE.phone is the exact verbatim home for this demo field (bundle inventory IDENTITY_PROFILE)</td>
-    <td>owner.phone</td>
-  </tr><tr>
-    <td><code>snip_014</code></td>
-    <td>Swarm</td>
-    <td><code>platform_attributes</code> · <code>owner_listings</code></td>
-    <td>swarm/platform_attributes.jsonl · byte -1</td>
-    <td>gap</td>
-    <td>evidences &quot;owner.property_count&quot; — Swarm platform_attributes.owner_listings is the exact verbatim home for this demo field (swarm/platform_attributes.jsonl)</td>
+    <td>evidences &quot;owner.property_count&quot; — Building Blocks GetSuggestedLinks.ownedAssetCount / previouslyOwnedAssetCount is the strong verbatim home for this demo field (bundle inventory §8 GetSuggestedLinks)</td>
     <td>owner.property_count</td>
   </tr><tr>
-    <td><code>snip_015</code></td>
-    <td>Building Blocks</td>
-    <td><code>Workflow / city</code> · <code>city</code></td>
-    <td>bundle inventory WORKFLOW.city · byte -1</td>
+    <td><code>snip_013</code></td>
+    <td>Swarm</td>
+    <td><code>platform_attributes</code> · <code>owner_listings</code></td>
+    <td>btora/swarm/platform_attributes.jsonl · byte -1</td>
     <td>gap</td>
-    <td>evidences &quot;municipality.name&quot; — Building Blocks Workflow / city.city is the exact verbatim home for this demo field (bundle inventory WORKFLOW.city)</td>
+    <td>evidences &quot;owner.property_count&quot; — Swarm platform_attributes.owner_listings is the exact verbatim home for this demo field (btora/swarm/platform_attributes.jsonl)</td>
+    <td>owner.property_count</td>
+  </tr><tr>
+    <td><code>snip_014</code></td>
+    <td>Building Blocks</td>
+    <td><code>Workflow</code> · <code>city</code></td>
+    <td>bundle inventory WORKFLOW.city · byte 8705</td>
+    <td>gap</td>
+    <td>evidences &quot;municipality.name&quot; — Building Blocks Workflow.city is the exact verbatim home for this demo field (bundle inventory WORKFLOW.city)</td>
     <td>municipality.name</td>
   </tr><tr>
-    <td><code>snip_016</code></td>
+    <td><code>snip_015</code></td>
     <td>Swarm</td>
     <td><code>City</code> · <code>name / alias / location</code></td>
     <td>swarm_graphql_schema.json → City · byte 76587</td>
@@ -926,7 +928,7 @@
     <td>evidences &quot;municipality.name&quot; — Swarm City.name / alias / location is the exact verbatim home for this demo field (swarm_graphql_schema.json → City)</td>
     <td>municipality.name</td>
   </tr><tr>
-    <td><code>snip_017</code></td>
+    <td><code>snip_016</code></td>
     <td>Swarm</td>
     <td><code>State</code> · <code>name / abbreviation</code></td>
     <td>swarm_graphql_schema.json → State · byte 76100</td>
@@ -934,15 +936,15 @@
     <td>evidences &quot;municipality.state&quot; — Swarm State.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State)</td>
     <td>municipality.state</td>
   </tr><tr>
-    <td><code>snip_018</code></td>
+    <td><code>snip_017</code></td>
     <td>Slate</td>
-    <td><code>Workflow / city</code> · <code>city</code></td>
-    <td>slate_api_key_types.json → Workflow.city · byte -1</td>
-    <td>gap</td>
-    <td>evidences &quot;municipality.state&quot; — Slate Workflow / city.city is the analog verbatim home for this demo field (slate_api_key_types.json → Workflow.city)</td>
+    <td><code>Workflow</code> · <code>city</code></td>
+    <td>slate_api_key_types.json → Workflow.city · byte 4715</td>
+    <td>verified</td>
+    <td>evidences &quot;municipality.state&quot; — Slate Workflow.city is the analog verbatim home for this demo field (slate_api_key_types.json → Workflow.city)</td>
     <td>municipality.state</td>
   </tr><tr>
-    <td><code>snip_019</code></td>
+    <td><code>snip_018</code></td>
     <td>Swarm</td>
     <td><code>Connector</code> · <code>connectorUrl / provenanceUrl / assetProvenanceUrl</code></td>
     <td>swarm_graphql_schema.json → Connector · byte 91127</td>
@@ -950,7 +952,7 @@
     <td>evidences &quot;municipality.code_url&quot; — Swarm Connector.connectorUrl / provenanceUrl / assetProvenanceUrl is the analog verbatim home for this demo field (swarm_graphql_schema.json → Connector)</td>
     <td>municipality.code_url</td>
   </tr><tr>
-    <td><code>snip_020</code></td>
+    <td><code>snip_019</code></td>
     <td>Building Blocks</td>
     <td><code>LicenseType</code> · <code>ordinance</code></td>
     <td>bundle inventory LicenseType.ordinance · byte 4509</td>
@@ -958,31 +960,7 @@
     <td>evidences &quot;municipality.chapter&quot; — Building Blocks LicenseType.ordinance is the analog verbatim home for this demo field (bundle inventory LicenseType.ordinance)</td>
     <td>municipality.chapter</td>
   </tr><tr>
-    <td><code>snip_021</code></td>
-    <td>Swarm</td>
-    <td><code>State / City</code> · <code>name / abbreviation</code></td>
-    <td>swarm_graphql_schema.json → State, City · byte -1</td>
-    <td>gap</td>
-    <td>evidences &quot;jurisdiction.name&quot; — Swarm State / City.name / abbreviation is the exact verbatim home for this demo field (swarm_graphql_schema.json → State, City)</td>
-    <td>jurisdiction.name</td>
-  </tr><tr>
-    <td><code>snip_022</code></td>
-    <td>Building Blocks</td>
-    <td><code>Workflow</code> · <code>city</code></td>
-    <td>bundle inventory WORKFLOW.city · byte 8705</td>
-    <td>gap</td>
-    <td>evidences &quot;obligation.holder&quot; — Building Blocks Workflow.city is the analog verbatim home for this demo field (bundle inventory WORKFLOW.city)</td>
-    <td>obligation.holder</td>
-  </tr><tr>
-    <td><code>snip_023</code></td>
-    <td>Swarm</td>
-    <td><code>AttributeRule</code> · <code>rules / name / isPreset</code></td>
-    <td>swarm_graphql_schema.json → AttributeRule · byte 62398</td>
-    <td>verified</td>
-    <td>evidences &quot;kind.standing_criterion&quot; — Swarm AttributeRule.rules / name / isPreset is the analog verbatim home for this demo field (swarm_graphql_schema.json → AttributeRule)</td>
-    <td>kind.standing_criterion</td>
-  </tr><tr>
-    <td><code>snip_024</code></td>
+    <td><code>snip_020</code></td>
     <td>Building Blocks</td>
     <td><code>WorkflowStageTaskPayment</code> · <code>defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription</code></td>
     <td>bundle inventory §7 WorkflowStageTaskPayment · byte 8705</td>
@@ -990,7 +968,7 @@
     <td>evidences &quot;fee-schedule.*&quot; — Building Blocks WorkflowStageTaskPayment.defaultPaymentAmount / paymentAmountPerAsset / paymentAmountPerUnit / paymentFormulaScript / paymentDescription is the exact verbatim home for this demo field (bundle inventory §7 WorkflowStageTaskPayment)</td>
     <td>fee-schedule.*</td>
   </tr><tr>
-    <td><code>snip_025</code></td>
+    <td><code>snip_021</code></td>
     <td>Swarm</td>
     <td><code>PlatformEventTable</code> · <code>amountLabel / amountUnit / columns / tableName</code></td>
     <td>swarm_graphql_schema.json → PlatformEventTable · byte 263284</td>
@@ -998,15 +976,15 @@
     <td>evidences &quot;tax-schedule.*&quot; — Swarm PlatformEventTable.amountLabel / amountUnit / columns / tableName is the analog verbatim home for this demo field (swarm_graphql_schema.json → PlatformEventTable)</td>
     <td>tax-schedule.*</td>
   </tr><tr>
-    <td><code>snip_026</code></td>
+    <td><code>snip_022</code></td>
     <td>Swarm</td>
-    <td><code>PlatformFilter</code> · <code>name / label / type / unit / mappingColumn / dataElement / value / sumOn / source</code></td>
+    <td><code>PlatformFilter</code> · <code>name / label / type / unit / mappingColumn / dataElement / sumOn / source</code></td>
     <td>swarm_graphql_schema.json → PlatformFilter · byte 317709</td>
     <td>verified</td>
-    <td>evidences &quot;compliance-rule.*&quot; — Swarm PlatformFilter.name / label / type / unit / mappingColumn / dataElement / value / sumOn / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → PlatformFilter)</td>
+    <td>evidences &quot;compliance-rule.*&quot; — Swarm PlatformFilter.name / label / type / unit / mappingColumn / dataElement / sumOn / source is the exact verbatim home for this demo field (swarm_graphql_schema.json → PlatformFilter)</td>
     <td>compliance-rule.*</td>
   </tr><tr>
-    <td><code>snip_027</code></td>
+    <td><code>snip_023</code></td>
     <td>Slate</td>
     <td><code>License</code> · <code>number / licenseIdentifier</code></td>
     <td>slate_api_key_types.json → License · byte 2173</td>
@@ -1014,7 +992,7 @@
     <td>evidences &quot;registration.license_number&quot; — Slate License.number / licenseIdentifier is the exact verbatim home for this demo field (slate_api_key_types.json → License)</td>
     <td>registration.license_number</td>
   </tr><tr>
-    <td><code>snip_028</code></td>
+    <td><code>snip_024</code></td>
     <td>Building Blocks</td>
     <td><code>LICENSE</code> · <code>number</code></td>
     <td>bundle inventory LICENSE · byte 2529</td>
@@ -1022,7 +1000,7 @@
     <td>evidences &quot;registration.license_number&quot; — Building Blocks LICENSE.number is the exact verbatim home for this demo field (bundle inventory LICENSE)</td>
     <td>registration.license_number</td>
   </tr><tr>
-    <td><code>snip_029</code></td>
+    <td><code>snip_025</code></td>
     <td>Slate→btora</td>
     <td><code>slate_licenses</code> · <code>license_shown</code></td>
     <td>btora/slate/slate_registrations.jsonl · byte 0</td>
@@ -1030,7 +1008,7 @@
     <td>evidences &quot;registration.license_number&quot; — Slate→btora slate_licenses.license_shown is the exact verbatim home for this demo field (btora/slate/slate_registrations.jsonl)</td>
     <td>registration.license_number</td>
   </tr><tr>
-    <td><code>snip_030</code></td>
+    <td><code>snip_026</code></td>
     <td>Swarm→btora</td>
     <td><code>dataset_btora_listings</code> · <code>platform / listing_id / url / listed_at</code></td>
     <td>btora/swarm/dataset_btora_listings.jsonl · byte -1</td>
@@ -1038,7 +1016,7 @@
     <td>evidences &quot;listing.platform / listing_id / url / title / listed_at&quot; — Swarm→btora dataset_btora_listings.platform / listing_id / url / listed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl)</td>
     <td>listing.platform / listing_id / url / title / listed_at</td>
   </tr><tr>
-    <td><code>snip_031</code></td>
+    <td><code>snip_027</code></td>
     <td>Swarm→universal</td>
     <td><code>universal listing</code> · <code>platform / listing_id / url / title / listed_at</code></td>
     <td>universal/listings_*.jsonl · byte -1</td>
@@ -1046,7 +1024,7 @@
     <td>evidences &quot;listing.platform / listing_id / url / title / listed_at&quot; — Swarm→universal universal listing.platform / listing_id / url / title / listed_at is the exact verbatim home for this demo field (universal/listings_*.jsonl)</td>
     <td>listing.platform / listing_id / url / title / listed_at</td>
   </tr><tr>
-    <td><code>snip_032</code></td>
+    <td><code>snip_028</code></td>
     <td>Swarm→btora</td>
     <td><code>transformer_booking_events</code> · <code>amount / amount_unit</code></td>
     <td>btora/swarm/transformer_booking_events.jsonl · byte -1</td>
@@ -1054,7 +1032,7 @@
     <td>evidences &quot;listing.nightly_rate&quot; — Swarm→btora transformer_booking_events.amount / amount_unit is the exact verbatim home for this demo field (btora/swarm/transformer_booking_events.jsonl)</td>
     <td>listing.nightly_rate</td>
   </tr><tr>
-    <td><code>snip_033</code></td>
+    <td><code>snip_029</code></td>
     <td>Swarm→btora</td>
     <td><code>dataset_btora_calendar</code> · <code>window_from / window_to / status / observed_at</code></td>
     <td>btora/swarm/dataset_btora_calendar.jsonl · byte -1</td>
@@ -1062,31 +1040,23 @@
     <td>evidences &quot;listing.bookings&quot; — Swarm→btora dataset_btora_calendar.window_from / window_to / status / observed_at is the exact verbatim home for this demo field (btora/swarm/dataset_btora_calendar.jsonl)</td>
     <td>listing.bookings</td>
   </tr><tr>
-    <td><code>snip_034</code></td>
+    <td><code>snip_030</code></td>
     <td>Swarm→btora</td>
-    <td><code>dataset_btora_listings / platform_attributes</code> · <code>match / flags</code></td>
-    <td>btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl · byte -1</td>
+    <td><code>platform_attributes</code> · <code>match / flags</code></td>
+    <td>btora/swarm/platform_attributes.jsonl · byte -1</td>
     <td>gap</td>
-    <td>evidences &quot;listing.match&quot; — Swarm→btora dataset_btora_listings / platform_attributes.match / flags is the exact verbatim home for this demo field (btora/swarm/dataset_btora_listings.jsonl, platform_attributes.jsonl)</td>
+    <td>evidences &quot;listing.match&quot; — Swarm→btora platform_attributes.match / flags is the exact verbatim home for this demo field (btora/swarm/platform_attributes.jsonl)</td>
     <td>listing.match</td>
   </tr><tr>
-    <td><code>snip_035</code></td>
+    <td><code>snip_031</code></td>
     <td>Building Blocks</td>
-    <td><code>FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK</code> · <code>task obligations</code></td>
-    <td>bundle inventory FLOW_STAGE_TASK · byte -1</td>
+    <td><code>FLOW_STAGE_TASK</code> · <code>attributes</code></td>
+    <td>bundle inventory FLOW_STAGE_TASK · byte 2629</td>
     <td>gap</td>
-    <td>evidences &quot;standing.distinction&quot; — Building Blocks FLOW_STAGE_TASK / WORKFLOW_STAGE_TASK.task obligations is the strong verbatim home for this demo field (bundle inventory FLOW_STAGE_TASK)</td>
+    <td>evidences &quot;standing.distinction&quot; — Building Blocks FLOW_STAGE_TASK.attributes is the strong verbatim home for this demo field (bundle inventory FLOW_STAGE_TASK)</td>
     <td>standing.distinction</td>
   </tr><tr>
-    <td><code>snip_036</code></td>
-    <td>Building Blocks</td>
-    <td><code>AssetIdentity / GetSuggestedLinks</code> · <code>ownedAssetCount / nameMatch / addressMatch</code></td>
-    <td>bundle inventory §8 · byte -1</td>
-    <td>gap</td>
-    <td>evidences &quot;standing.responsible_agent&quot; — Building Blocks AssetIdentity / GetSuggestedLinks.ownedAssetCount / nameMatch / addressMatch is the strong verbatim home for this demo field (bundle inventory §8)</td>
-    <td>standing.responsible_agent</td>
-  </tr><tr>
-    <td><code>snip_037</code></td>
+    <td><code>snip_032</code></td>
     <td>Swarm</td>
     <td><code>Note</code> · <code>body / author / createdAt</code></td>
     <td>swarm_graphql_schema.json → Note · byte 120442</td>
@@ -1094,15 +1064,15 @@
     <td>evidences &quot;inspection.focus / note&quot; — Swarm Note.body / author / createdAt is the strong verbatim home for this demo field (swarm_graphql_schema.json → Note)</td>
     <td>inspection.focus / note</td>
   </tr><tr>
-    <td><code>snip_038</code></td>
+    <td><code>snip_033</code></td>
     <td>Building Blocks</td>
-    <td><code>SnailMail / SnailMailCampaign / OutreachMetrics</code> · <code>campaign / reply-code tracking / metrics</code></td>
-    <td>bundle inventory §8 SnailMail · byte -1</td>
+    <td><code>SnailMailCampaign</code> · <code>SnailMailCampaign / OutreachMetrics</code></td>
+    <td>bundle inventory §8 SnailMail · byte 11022</td>
     <td>gap</td>
-    <td>evidences &quot;notice.kind / channel / subject / sent_at&quot; — Building Blocks SnailMail / SnailMailCampaign / OutreachMetrics.campaign / reply-code tracking / metrics is the exact verbatim home for this demo field (bundle inventory §8 SnailMail)</td>
+    <td>evidences &quot;notice.kind / channel / subject / sent_at&quot; — Building Blocks SnailMailCampaign.SnailMailCampaign / OutreachMetrics is the strong verbatim home for this demo field (bundle inventory §8 SnailMail)</td>
     <td>notice.kind / channel / subject / sent_at</td>
   </tr><tr>
-    <td><code>snip_039</code></td>
+    <td><code>snip_034</code></td>
     <td>Slate</td>
     <td><code>Document</code> · <code>name / url / template</code></td>
     <td>slate_api_key_types.json → Document · byte 5938</td>
@@ -1110,7 +1080,7 @@
     <td>evidences &quot;notice.kind / channel / subject / sent_at&quot; — Slate Document.name / url / template is the analog verbatim home for this demo field (slate_api_key_types.json → Document)</td>
     <td>notice.kind / channel / subject / sent_at</td>
   </tr><tr>
-    <td><code>snip_040</code></td>
+    <td><code>snip_035</code></td>
     <td>Building Blocks</td>
     <td><code>getAngelPlatformCityAttribute</code> · <code>failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl</code></td>
     <td>bundle inventory §3 · byte 2998</td>
@@ -1118,7 +1088,7 @@
     <td>evidences &quot;connector.health&quot; — Building Blocks getAngelPlatformCityAttribute.failStreak / staleStreak / lastSuccessfulPushAt / lastDataChangeAt / connectorUrl / provenanceUrl is the exact verbatim home for this demo field (bundle inventory §3)</td>
     <td>connector.health</td>
   </tr><tr>
-    <td><code>snip_041</code></td>
+    <td><code>snip_036</code></td>
     <td>Building Blocks</td>
     <td><code>IntegrationHealthDashboard</code> · <code>provider / status / checkedAt / latencyMs</code></td>
     <td>bundle inventory §4 · byte 5748</td>

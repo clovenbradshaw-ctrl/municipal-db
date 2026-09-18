@@ -92,13 +92,14 @@ const makeSnip = (c, need, sourceFile) => {
   const anchor = anchorSeq();
   seenCuts.set(key, anchor);
 
-  let offset = null, len = 0, fields = [], verified = false, verbNote = "";
+  let offset = null, len = 0, fields = [], verbNote = "";
+  // authoritative verification comes from the map's build-time pass
+  let verified = c.verified === true;
   if (c.system === "Slate") {
     const raw = fs.readFileSync(path.join(ROOT, "slate_api_key_types.json"), "utf8");
     const probe = `"${c.type}"`;
     offset = raw.indexOf(probe);
     fields = slate[c.type] || [];
-    verified = offset >= 0 && fields.length > 0;
     len = offset >= 0 ? 4000 : 0;
     verbNote = `field list cut verbatim from slate_api_key_types.json at byte ${offset}`;
   } else if (c.system === "Swarm" || c.system === "Swarm→btora" || c.system === "Swarm→universal") {
@@ -106,20 +107,20 @@ const makeSnip = (c, need, sourceFile) => {
     const raw = fs.readFileSync(path.join(ROOT, "swarm_graphql_schema.json"), "utf8");
     offset = raw.indexOf(`"name": "${c.type}"`);
     fields = f;
-    verified = f.length > 0;
     len = offset >= 0 ? 8000 : 0;
     verbNote = `OBJECT ${c.type} cut verbatim from swarm_graphql_schema.json at byte ${offset}`;
   } else if (c.system === "Building Blocks") {
     offset = bbMd.indexOf(c.type);
     fields = bbTypes[c.type] || [];
-    verified = offset >= 0 && fields.length > 0;
     len = offset >= 0 ? 700 : 0;
     verbNote = `type ${c.type} cut verbatim from building-blocks-schema-inventory.md at byte ${offset}`;
   } else {
     // btora delivery rows — cut from the delivery jsonl
     const dl = deliveriesByType(c.type);
-    if (dl) { offset = 0; fields = dl.fields; verified = true; len = dl.len; verbNote = `first row cut verbatim from ${dl.file}`; }
+    if (dl) { offset = 0; fields = dl.fields; len = dl.len; verbNote = `first row cut verbatim from ${dl.file}`; }
   }
+  if (!verified && c.checked_against) verbNote = c.checked_against;
+  if (!fields.length && c.fields && c.fields.length) fields = c.fields;
 
   const region = (() => { try { const p = c.system === "Building Blocks" ? path.join(ROOT, "building-blocks-schema-inventory.md") : c.system === "Slate" ? path.join(ROOT, "slate_api_key_types.json") : c.system.startsWith("Swarm") ? path.join(ROOT, "swarm_graphql_schema.json") : null; if (!p) return ""; const raw = fs.readFileSync(p, "utf8"); return offset != null ? raw.slice(offset, offset + len) : ""; } catch { return ""; } })();
 

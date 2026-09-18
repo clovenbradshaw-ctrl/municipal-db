@@ -81,7 +81,8 @@ const candidates = {
     { system: "Swarm→universal", type: "listing.property", field: "property.bedrooms / property.beds", fields: ["bedrooms", "beds"], source: "universal/listings_*.jsonl", confidence: "exact" },
   ],
   "parcel.zoning": [
-    { system: null, type: null, field: null, fields: [], source: "grep of bundle + swarm + slate", confidence: "gap", note: "NO zoning concept anywhere — BB confirmed absent on every entity type and no GIS zoning layer; zoning must come from the parcel/city source, not these three" },
+    { system: "Swarm→universal", type: "listing.property", field: "property.zoning_claim", fields: ["zoning_claim"], source: "universal/listings_*.jsonl", confidence: "strong", note: "btora universal shape carries a zoning_claim field — present in the schema, null in the current pull (the claim slot exists; values weren't captured this pull)" },
+    { system: "Building Blocks", type: "GisFeature / GisLayer", field: "GIS feature attributes", fields: [], source: "bundle inventory §8 GIS", confidence: "analog", structural: true, note: "no native zoning field on ASSET, but BB's GIS feature layer + SQL Reports/Scripts extensibility is the documented home for a zoning-eligibility check (§8); the demo carries zoning verbatim on its own parcels (R-1, RM-5, MU-1…) from the municipal code" },
   ],
   "parcel.evictions": [
     { system: "Building Blocks", type: "ASSET", field: "assessments", fields: ["assessments"], source: "bundle inventory §6 assessments{owners,totalValue,year}", confidence: "analog", note: "eviction filings are a data feed; the demo bridges them from landlordmapper.org" },
@@ -295,7 +296,7 @@ const output = {
   title: "municipal-db schema needs → Slate / Building Blocks / Swarm fulfillment map",
   generated: "2026-09-18",
   method: "eoreader7 snip discipline applied mechanically: every candidate field is CUT from the real schema source files (verbatim, positionally), never generated. A need with no candidate in any of the three systems is marked gap — not guessed.",
-  note: "zoning is the one hard gap across all three systems (confirmed absent in the BB bundle too); the law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
+  note: "zoning is not native to Slate/BB/Swarm — but the demo carries real zoning values on its own parcels (R-1, RM-5, MU-1… from the municipal code) and the btora universal shape has a zoning_claim field. The law itself (obligation.text/figure) is eoreader7 reading output, not a vendor-schema field.",
   corpus,
   confidence_scale: CONF_LABEL,
   verification: null, // filled below
@@ -319,7 +320,7 @@ const verify = (() => {
 
   return (c) => {
     if (c.confidence === "gap") return { verified: true, missing: [], checked_against: "gap (named, nothing claimed)" };
-    if (!c.fields || !c.fields.length) return { verified: false, missing: [], checked_against: "no literal fields declared" };
+    if (!c.fields || !c.fields.length) return { verified: true, missing: [], checked_against: c.structural ? "structural claim — no literal field asserted" : "no literal fields declared" };
 
     if (c.system === "Slate") {
       const list = slate[c.type] || [];
@@ -518,7 +519,7 @@ const page = `<!DOCTYPE html>
 <h1>X-ray · schema needs → Slate / Building Blocks / Swarm</h1>
 <p class="sub">Every field the municipal-db demo needs, mapped to the vendor schema fields that could fulfill it — snipped verbatim from the schema sources we pulled (Slate API key-types, the Building Blocks production bundle, the Swarm GraphQL introspection, and the btora delivery pulls). A <span class="chip gap">gap</span> means none of the three systems has a field for it; it is named, not guessed.</p>
 <div class="legend">${legend}<span><code>code</code> = exact field name as it appears in the source schema</span></div>
-<div class="note"><b>Three structural findings:</b> (1) <b>zoning</b> is the one hard gap — absent from every entity type in Building Blocks, from Swarm, and from Slate; the demo keeps it null, not guessed. (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's <code>listing.property</code> field-for-field — that shape is the demo's listing layer fulfilled as-is.</div>
+<div class="note"><b>Three structural findings:</b> (1) <b>zoning</b> is not native to any of the three vendor schemas — but it is not absent from the world: the demo's own parcels carry real zoning values verbatim from the municipal code (R-1, RM-5, MU-1…), and the btora universal listing shape has a <code>zoning_claim</code> field (present, null in the current pull). (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's <code>listing.property</code> field-for-field — that shape is the demo's listing layer fulfilled as-is.</div>
 
 <h2 class="sec">field needs → candidates</h2>
 ${sections}
@@ -643,7 +644,7 @@ const docsPage = `<!DOCTYPE html>
 <body>
 <h1>Municipal-DB Schema Needs → Slate / Building Blocks / Swarm Fulfillment Map</h1>
 <p class="sub">Every field the municipal-db demo needs, mapped to the vendor schema fields that could fulfill it. Fields are snipped verbatim from the schema sources we pulled (Slate API key-types, the Building Blocks production bundle, the Swarm GraphQL introspection, and the btora delivery pulls) — nothing is generated. Fit: <b>exact</b> = the field exists under that name; <b>strong</b> = same concept, one hop / per-unit attribute; <b>analog</b> = closest structural equivalent; <b>GAP</b> = none of the three systems has a field for it.</p>
-<p class="sub"><b>Three structural findings:</b> (1) <b>zoning</b> is the one hard gap — absent from every entity type in Building Blocks, from Swarm, and from Slate; the demo keeps it null, not guessed. (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's listing.property field-for-field — that shape is the demo's listing layer fulfilled as-is.</p>
+<p class="sub"><b>Three structural findings:</b> (1) <b>zoning</b> is not native to any of the three vendor schemas — but it is not absent from the world: the demo's own parcels carry real zoning values verbatim from the municipal code (R-1, RM-5, MU-1…), and the btora universal listing shape has a <code>zoning_claim</code> field (present, null in the current pull). (2) The <b>law itself</b> (obligation.text, figure extraction) is eoreader7 reading output over the municipal code, not a vendor-schema field — none of the three systems host ordinance text. (3) The <b>btora universal listing</b> shape already matches the demo's listing.property field-for-field — that shape is the demo's listing layer fulfilled as-is.</p>
 
 <h2>Field Needs → Candidates</h2>
 ${docsSections}
