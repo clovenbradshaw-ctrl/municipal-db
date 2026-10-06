@@ -12,7 +12,7 @@
   --text:#1a1a17; --text-dim:#5a574e; --text-bright:#000; --text-faint:#8e8a7d;
   --triad-existence:#0e7a52;     /* NUL SIG INS · ∅ ○ ● */
   --triad-structure:#4731a8;     /* SEG CON SYN · ｜ ⤫ △ */
-  --triad-significance:#a91d1d;  /* DEF EVA REC · ⊢ ⊨ ⊛ */
+  --triad-significance:#a91d1d;  /* DEF EVA REC · ⊢ ⊨ ◉ */
   --signal:#8a6300;
   --green:var(--triad-existence); --blue:var(--triad-structure); --red:var(--triad-significance); --yellow:var(--signal);
   --mono: ui-monospace,'SF Mono','Menlo','Monaco','Consolas','Liberation Mono',monospace;
@@ -403,7 +403,7 @@ table.grid tr.row.expanded{background:var(--surface-2);}
     <button class="sb-toggle" id="sb-toggle" title="Menu" aria-label="Toggle sidebar">☰</button>
     <span class="brand">nashville · 3-layer demo</span>
     <a class="topbar-link" href="str-demo.html">↗ STR oversight demo</a>
-    <a class="topbar-link" href="xray.html" title="X-ray: schema needs → Slate / Building Blocks / Swarm">◉ x-ray schema map</a>
+    <a class="topbar-link" href="xray.html" title="X-ray: schema needs → Slate / Building Blocks / Swarm">◆ x-ray schema map</a>
     <span class="stats" id="stats"></span>
   </div>
   <div class="shell-body">
@@ -511,7 +511,7 @@ const OP = {
   SYN: { key: 'syn', glyph: '△', triad: 'structure',    order: 5, stored: true  },
   DEF: { key: 'def', glyph: '⊢', triad: 'significance', order: 6, stored: true  },
   EVA: { key: 'eva', glyph: '⊨', triad: 'significance', order: 7, stored: true  },
-  REC: { key: 'rec', glyph: '⊛', triad: 'significance', order: 8, stored: true  },
+  REC: { key: 'rec', glyph: '◉', triad: 'significance', order: 8, stored: true  },
 };
 
 function eventType(op) {
